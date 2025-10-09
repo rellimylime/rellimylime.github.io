@@ -1,0 +1,315 @@
+---
+title: "Hire Me"
+toc: false
+---
+
+<div class="hero-section">
+  <h1 class="hero-title">💼 Hire Me</h1>
+  <p class="hero-subtitle">Let's turn your data into insights and your ideas into impact</p>
+</div>
+
+<div class="section-card">
+  <h2>🌟 What I Bring to the Table</h2>
+  <p>I'm not just a data scientist — I'm a creative problem-solver who believes that the best solutions come from combining technical rigor with human empathy. Whether you need help with environmental data analysis, creative data visualization, or just want to learn how to make sense of your data, I'm here to help.</p>
+  
+  <p><em>"The best data science happens when we combine technical excellence with creative storytelling and genuine care for the communities we serve."</em></p>
+  
+  <div style="background: var(--bg-light); padding: 2rem; border-radius: 10px; margin: 2rem 0;">
+    <h4>Why Work With Me?</h4>
+    <ul>
+      <li><strong>Interdisciplinary Expertise:</strong> I bring together mathematics, environmental science, and creative thinking</li>
+      <li><strong>Community-Centered Approach:</strong> All my work prioritizes real-world impact and community benefit</li>
+      <li><strong>Clear Communication:</strong> I make complex data accessible and actionable for any audience</li>
+      <li><strong>Creative Problem-Solving:</strong> I approach challenges with both analytical rigor and creative innovation</li>
+    </ul>
+  </div>
+</div>
+
+<div class="section-card">
+  <h2>🛠️ Services I Offer</h2>
+  
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">📊</div>
+      <h4>Data Analysis & Visualization</h4>
+      <p>Transform your raw data into beautiful, actionable insights. I specialize in environmental data, but I love working with any dataset that tells a meaningful story.</p>
+      <ul>
+        <li>Statistical analysis and modeling</li>
+        <li>Custom data visualizations</li>
+        <li>Interactive dashboards</li>
+        <li>Data storytelling and reporting</li>
+      </ul>
+      <div style="margin-top: 1rem;">
+        <strong>Starting at:</strong> $150/hour
+      </div>
+    </div>
+    
+    <div class="service-card">
+      <div class="service-icon">🌍</div>
+      <h4>Environmental Data Science</h4>
+      <p>Specialized expertise in remote sensing, satellite imagery analysis, and environmental monitoring. Perfect for conservation organizations, research institutions, and environmental consultants.</p>
+      <ul>
+        <li>Satellite imagery analysis</li>
+        <li>Machine learning for environmental monitoring</li>
+        <li>GIS and spatial analysis</li>
+        <li>Environmental impact assessments</li>
+      </ul>
+      <div style="margin-top: 1rem;">
+        <strong>Starting at:</strong> $200/hour
+      </div>
+    </div>
+    
+    <div class="service-card">
+      <div class="service-icon">🎓</div>
+      <h4>Data Science Tutoring</h4>
+      <p>One-on-one tutoring for students, professionals, or anyone who wants to learn data science. I adapt my teaching style to your learning preferences and goals.</p>
+      <ul>
+        <li>Python and R programming</li>
+        <li>Machine learning fundamentals</li>
+        <li>Statistical analysis</li>
+        <li>Data visualization best practices</li>
+      </ul>
+      <div style="margin-top: 1rem;">
+        <strong>Starting at:</strong> $100/hour
+      </div>
+    </div>
+    
+    <div class="service-card">
+      <div class="service-icon">🎨</div>
+      <h4>Creative Data Visualization</h4>
+      <p>Transform your data into compelling visual stories that engage and inspire. Perfect for presentations, reports, websites, and social media.</p>
+      <ul>
+        <li>Custom infographics</li>
+        <li>Interactive web visualizations</li>
+        <li>Data-driven art and illustrations</li>
+        <li>Presentation design</li>
+      </ul>
+      <div style="margin-top: 1rem;">
+        <strong>Starting at:</strong> $125/hour
+      </div>
+    </div>
+    
+    <div class="service-card">
+      <div class="service-icon">📝</div>
+      <h4>Research Consulting</h4>
+      <p>Expert guidance on research design, methodology, and analysis. I help researchers, students, and organizations design robust studies and interpret their results.</p>
+      <ul>
+        <li>Research design and methodology</li>
+        <li>Statistical analysis planning</li>
+        <li>Literature review and synthesis</li>
+        <li>Grant writing and proposal development</li>
+      </ul>
+      <div style="margin-top: 1rem;">
+        <strong>Starting at:</strong> $175/hour
+      </div>
+    </div>
+    
+    <div class="service-card">
+      <div class="service-icon">🗣️</div>
+      <h4>Workshops & Training</h4>
+      <p>Custom workshops for teams, organizations, or conferences. I design interactive sessions that combine technical skills with creative thinking and real-world applications.</p>
+      <ul>
+        <li>Data science fundamentals</li>
+        <li>Environmental data analysis</li>
+        <li>Data visualization design</li>
+        <li>Science communication</li>
+      </ul>
+      <div style="margin-top: 1rem;">
+        <strong>Starting at:</strong> $500/day
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-card">
+  <h2>🎯 Specialized Expertise</h2>
+  
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
+    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 10px; border-left: 4px solid var(--primary-color);">
+      <h4 style="color: var(--primary-color);">🛰️ Remote Sensing</h4>
+      <ul>
+        <li>Sentinel-1/2, Landsat, Planet imagery</li>
+        <li>Google Earth Engine</li>
+        <li>Machine learning for image classification</li>
+        <li>Time series analysis</li>
+      </ul>
+    </div>
+    
+    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 10px; border-left: 4px solid var(--secondary-color);">
+      <h4 style="color: var(--secondary-color);">🤖 Machine Learning</h4>
+      <ul>
+        <li>Deep learning (PyTorch, TensorFlow)</li>
+        <li>Computer vision applications</li>
+        <li>Time series forecasting</li>
+        <li>Model deployment and optimization</li>
+      </ul>
+    </div>
+    
+    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 10px; border-left: 4px solid var(--accent-color);">
+      <h4 style="color: var(--accent-color);">💻 Programming</h4>
+      <ul>
+        <li>Python (pandas, numpy, scikit-learn)</li>
+        <li>R (tidyverse, spatial packages)</li>
+        <li>JavaScript (D3.js, web development)</li>
+        <li>SQL and database management</li>
+      </ul>
+    </div>
+    
+    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 10px; border-left: 4px solid var(--creative-color);">
+      <h4 style="color: var(--creative-color);">📊 Visualization</h4>
+      <ul>
+        <li>Matplotlib, Seaborn, Plotly</li>
+        <li>Tableau, PowerBI</li>
+        <li>Custom web visualizations</li>
+        <li>Infographic design</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="section-card">
+  <h2>💼 Project Examples</h2>
+  <p>Here are some examples of the types of projects I've worked on and the impact they've had:</p>
+  
+  <div class="blog-post">
+    <h3>Conservation Organization Data Dashboard</h3>
+    <div class="blog-meta">Client: Local Environmental NGO • Duration: 3 months</div>
+    <p><strong>Challenge:</strong> A conservation organization had years of wildlife monitoring data but no way to visualize or analyze it effectively.</p>
+    
+    <p><strong>Solution:</strong> I created a custom web dashboard that combines their field data with satellite imagery to track habitat changes over time. The dashboard includes interactive maps, trend analysis, and automated reporting features.</p>
+    
+    <p><strong>Impact:</strong> The organization used the dashboard to secure $50,000 in additional funding and identify three new priority conservation areas.</p>
+  </div>
+  
+  <div class="blog-post">
+    <h3>Graduate Student Research Support</h3>
+    <div class="blog-meta">Client: PhD Student in Environmental Science • Duration: 6 months</div>
+    <p><strong>Challenge:</strong> A PhD student needed help with statistical analysis and data visualization for their dissertation on climate change impacts.</p>
+    
+    <p><strong>Solution:</strong> I provided tutoring in R programming, helped design robust statistical models, and created publication-quality visualizations. I also helped with literature review and methodology development.</p>
+    
+    <p><strong>Impact:</strong> The student successfully defended their dissertation and published two peer-reviewed papers based on our collaborative work.</p>
+  </div>
+  
+  <div class="blog-post">
+    <h3>Corporate Sustainability Reporting</h3>
+    <div class="blog-meta">Client: Tech Company • Duration: 2 months</div>
+    <p><strong>Challenge:</strong> A tech company needed to create compelling visualizations for their annual sustainability report.</p>
+    
+    <p><strong>Solution:</strong> I analyzed their environmental data, created custom infographics, and designed an interactive web visualization that made their sustainability efforts engaging and accessible to stakeholders.</p>
+    
+    <p><strong>Impact:</strong> The report received positive feedback from investors and helped the company improve their ESG ratings.</p>
+  </div>
+</div>
+
+<div class="section-card">
+  <h2>📅 Availability & Process</h2>
+  
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin: 2rem 0;">
+    <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+      <h4 style="color: var(--primary-color);">⏰ Current Availability</h4>
+      <p><strong>Hours per week:</strong> 10-15 hours available</p>
+      <p><strong>Project timeline:</strong> 2-6 months typical</p>
+      <p><strong>Response time:</strong> Within 24 hours</p>
+    </div>
+    
+    <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+      <h4 style="color: var(--secondary-color);">🔄 My Process</h4>
+      <ol>
+        <li><strong>Discovery Call:</strong> Understand your needs and goals</li>
+        <li><strong>Proposal:</strong> Detailed project plan and timeline</li>
+        <li><strong>Collaboration:</strong> Regular check-ins and feedback</li>
+        <li><strong>Delivery:</strong> Final deliverables and documentation</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="section-card">
+  <h2>💰 Pricing & Packages</h2>
+  <p>I believe in transparent, fair pricing that reflects the value of the work and the impact it creates. Here's how I structure my pricing:</p>
+  
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
+    <div style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; padding: 2rem; border-radius: 15px; text-align: center;">
+      <h3 style="color: white;">Hourly Rate</h3>
+      <p style="font-size: 2rem; margin: 1rem 0;"><strong>$100-200/hour</strong></p>
+      <p>Depending on project complexity and expertise required</p>
+    </div>
+    
+    <div style="background: linear-gradient(135deg, var(--secondary-color), var(--accent-color)); color: white; padding: 2rem; border-radius: 15px; text-align: center;">
+      <h3 style="color: white;">Project-Based</h3>
+      <p style="font-size: 2rem; margin: 1rem 0;"><strong>$1,000-10,000</strong></p>
+      <p>Fixed price for complete projects with defined scope</p>
+    </div>
+    
+    <div style="background: linear-gradient(135deg, var(--accent-color), var(--creative-color)); color: white; padding: 2rem; border-radius: 15px; text-align: center;">
+      <h3 style="color: white;">Retainer</h3>
+      <p style="font-size: 2rem; margin: 1rem 0;"><strong>$2,000/month</strong></p>
+      <p>Ongoing support and consultation for regular clients</p>
+    </div>
+  </div>
+  
+  <div style="background: var(--bg-light); padding: 2rem; border-radius: 10px; margin: 2rem 0;">
+    <h4>💡 Pricing Factors</h4>
+    <ul>
+      <li><strong>Project Complexity:</strong> More complex analyses and custom solutions cost more</li>
+      <li><strong>Timeline:</strong> Rush projects may incur additional fees</li>
+      <li><strong>Data Requirements:</strong> Projects requiring data collection or cleaning cost more</li>
+      <li><strong>Deliverables:</strong> Custom visualizations and reports are priced accordingly</li>
+    </ul>
+  </div>
+</div>
+
+<div class="section-card">
+  <h2>🎯 Ideal Clients</h2>
+  <p>I work best with clients who share my values and are committed to creating positive impact. Here's who I love working with:</p>
+  
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 2rem 0;">
+    <div style="text-align: center; padding: 1.5rem; background: var(--bg-light); border-radius: 10px;">
+      <h4 style="color: var(--primary-color);">🌍 Environmental Organizations</h4>
+      <p>NGOs, conservation groups, and environmental consultants working on meaningful projects</p>
+    </div>
+    
+    <div style="text-align: center; padding: 1.5rem; background: var(--bg-light); border-radius: 10px;">
+      <h4 style="color: var(--secondary-color);">🎓 Students & Researchers</h4>
+      <p>Graduate students, postdocs, and researchers who need expert guidance on data analysis</p>
+    </div>
+    
+    <div style="text-align: center; padding: 1.5rem; background: var(--bg-light); border-radius: 10px;">
+      <h4 style="color: var(--accent-color);">🏢 Mission-Driven Companies</h4>
+      <p>Companies committed to sustainability and social impact who want to measure and communicate their progress</p>
+    </div>
+    
+    <div style="text-align: center; padding: 1.5rem; background: var(--bg-light); border-radius: 10px;">
+      <h4 style="color: var(--creative-color);">🎨 Creative Professionals</h4>
+      <p>Artists, designers, and communicators who want to incorporate data into their creative work</p>
+    </div>
+  </div>
+</div>
+
+<div class="section-card">
+  <h2>📞 Let's Get Started</h2>
+  <p>Ready to turn your data into insights? Here's how to get started:</p>
+  
+  <div style="background: var(--bg-light); padding: 2rem; border-radius: 10px; margin: 2rem 0;">
+    <h4>🚀 Getting Started Process</h4>
+    <ol>
+      <li><strong>Send me an email</strong> describing your project, timeline, and budget</li>
+      <li><strong>Schedule a discovery call</strong> to discuss your needs in detail</li>
+      <li><strong>Receive a detailed proposal</strong> with timeline, deliverables, and pricing</li>
+      <li><strong>Sign a simple contract</strong> and get started on your project</li>
+    </ol>
+  </div>
+  
+  <div style="text-align: center; margin: 2rem 0;">
+    <a href="mailto:ermiller@ucsb.edu?subject=Project Inquiry" class="btn-custom">Start Your Project</a>
+  </div>
+</div>
+
+<div class="fun-divider"></div>
+
+<div class="section-card" style="text-align: center; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white;">
+  <h2 style="color: white;">Let's Create Something Amazing Together! ✨</h2>
+  <p>Whether you need help with data analysis, want to learn new skills, or have a creative project in mind, I'd love to hear from you. Let's turn your data into insights and your ideas into impact!</p>
+  <a href="mailto:ermiller@ucsb.edu" class="btn-custom" style="background: white; color: var(--primary-color);">Get In Touch</a>
+</div>

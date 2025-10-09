@@ -1,0 +1,203 @@
+---
+title: "Art & Poetry"
+toc: false
+---
+
+<div class="hero-section">
+  <h1 class="hero-title">🎨 Art & Poetry</h1>
+  <p class="hero-subtitle">Where data meets creativity, and pixels become poetry</p>
+</div>
+
+<div class="section-card">
+  <h2>🌈 My Creative Philosophy</h2>
+  <p>I believe that art and science aren't opposites — they're different ways of seeing the same beautiful, complex world. When I'm not analyzing satellite imagery, you'll find me with paint on my hands, camera in hand, or scribbling poetry about the intersection of data and life.</p>
+  
+  <p><em>"The best data visualizations are art, and the best art tells a story with the precision of good data."</em></p>
+</div>
+
+<div class="section-card">
+  <h2>🎨 Visual Art</h2>
+  <p>From abstract landscapes inspired by satellite imagery to portraits of my kelp-eating dog, here's a glimpse into my visual world.</p>
+  
+  <div class="art-grid">
+    <div class="art-item">
+      <img src="placeholder-art-1.jpg" alt="Abstract landscape painting">
+      <div class="art-item-content">
+        <h4>Data Dreams</h4>
+        <p>Acrylic on canvas • 2024</p>
+        <p>Inspired by the patterns I see in satellite imagery of Sub-Saharan Africa</p>
+      </div>
+    </div>
+    
+    <div class="art-item">
+      <img src="placeholder-art-2.jpg" alt="Dog portrait">
+      <div class="art-item-content">
+        <h4>Kelp Enthusiast</h4>
+        <p>Watercolor • 2024</p>
+        <p>My dog's obsession with seaweed, captured in paint</p>
+      </div>
+    </div>
+    
+    <div class="art-item">
+      <img src="placeholder-art-3.jpg" alt="Beach cleanup illustration">
+      <div class="art-item-content">
+        <h4>Beach Cleanup Day</h4>
+        <p>Digital illustration • 2024</p>
+        <p>Celebrating community action and environmental care</p>
+      </div>
+    </div>
+    
+    <div class="art-item">
+      <img src="placeholder-art-4.jpg" alt="Mathematical art">
+      <div class="art-item-content">
+        <h4>Golden Ratio Study</h4>
+        <p>Ink and watercolor • 2023</p>
+        <p>Where mathematics meets visual beauty</p>
+      </div>
+    </div>
+  </div>
+  
+  <div style="text-align: center; margin: 2rem 0;">
+    <p><em>More artwork coming soon! I'm always creating new pieces inspired by my research and daily adventures.</em></p>
+  </div>
+</div>
+
+<div class="section-card">
+  <h2>📸 Photography</h2>
+  <p>Capturing the weird beauty of the world through my lens — from the patterns in kelp forests to the geometry of research labs.</p>
+  
+  <div class="art-grid">
+    <div class="art-item">
+      <img src="placeholder-photo-1.jpg" alt="Kelp forest underwater">
+      <div class="art-item-content">
+        <h4>Underwater Patterns</h4>
+        <p>Underwater photography • Isla Vista</p>
+        <p>The organic geometry of kelp forests</p>
+      </div>
+    </div>
+    
+    <div class="art-item">
+      <img src="placeholder-photo-2.jpg" alt="Research lab">
+      <div class="art-item-content">
+        <h4>Lab Life</h4>
+        <p>Documentary photography • UCSB</p>
+        <p>The beauty in scientific workspaces</p>
+      </div>
+    </div>
+    
+    <div class="art-item">
+      <img src="placeholder-photo-3.jpg" alt="Beach cleanup">
+      <div class="art-item-content">
+        <h4>Community Action</h4>
+        <p>Street photography • Beach cleanup</p>
+        <p>People coming together for the environment</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-card">
+  <h2>✍️ Poetry</h2>
+  <p>Words that dance between the technical and the human, finding beauty in data and meaning in algorithms.</p>
+  
+  <div class="blog-post">
+    <h3>Satellite Dreams</h3>
+    <div class="blog-meta">Written during a late night analyzing irrigation patterns • 2024</div>
+    <p><em>
+    From space, the Earth is a canvas<br>
+    of green and brown and blue<br>
+    I trace the lines of human need<br>
+    across the satellite view<br><br>
+    
+    Each pixel tells a story<br>
+    of water, soil, and sun<br>
+    of farmers and their families<br>
+    of work that's never done<br><br>
+    
+    I teach the computer to see<br>
+    what we've been ignoring<br>
+    turning terabytes into hope<br>
+    and data into caring
+    </em></p>
+  </div>
+  
+  <div class="blog-post">
+    <h3>Kelp Dog Ode</h3>
+    <div class="blog-meta">Inspired by my dog's seaweed obsession • 2024</div>
+    <p><em>
+    My dog thinks kelp is the world's best snack<br>
+    she'll eat it fresh or dried<br>
+    from the beach or from the water<br>
+    with uncontainable pride<br><br>
+    
+    I tell her it's not normal<br>
+    but she doesn't seem to care<br>
+    she's found her perfect food<br>
+    and it's everywhere<br><br>
+    
+    Maybe she knows something<br>
+    about the ocean's gifts<br>
+    that we humans are still learning<br>
+    as our understanding shifts
+    </em></p>
+  </div>
+  
+  <div class="blog-post">
+    <h3>Data Becomes Action</h3>
+    <div class="blog-meta">After organizing my first big beach cleanup • 2023</div>
+    <p><em>
+    We started with numbers<br>
+    plastic pieces counted<br>
+    beach surveys conducted<br>
+    data points mounted<br><br>
+    
+    But numbers don't clean beaches<br>
+    or change human hearts<br>
+    so we put down our spreadsheets<br>
+    and picked up our parts<br><br>
+    
+    Fifty people showed up<br>
+    with gloves and with hope<br>
+    proving that data becomes action<br>
+    when we stop being spectators<br>
+    and start being scope
+    </em></p>
+  </div>
+</div>
+
+<div class="section-card">
+  <h2>🎨 Commission Work</h2>
+  <p>I occasionally take commissions for custom artwork, data visualizations, and creative projects. Whether you want a portrait of your pet, a visualization of your research, or something completely unique, let's create something beautiful together!</p>
+  
+  <div style="text-align: center; margin: 2rem 0;">
+    <a href="mailto:ermiller@ucsb.edu?subject=Art Commission Inquiry" class="btn-custom">Get a Quote</a>
+  </div>
+  
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">🎨</div>
+      <h4>Custom Artwork</h4>
+      <p>Paintings, drawings, and digital art tailored to your vision</p>
+    </div>
+    
+    <div class="service-card">
+      <div class="service-icon">📊</div>
+      <h4>Data Visualization Art</h4>
+      <p>Beautiful, artistic representations of your data and research</p>
+    </div>
+    
+    <div class="service-card">
+      <div class="service-icon">📸</div>
+      <h4>Photography</h4>
+      <p>Event photography, portraits, and documentary work</p>
+    </div>
+  </div>
+</div>
+
+<div class="fun-divider"></div>
+
+<div class="section-card" style="text-align: center; background: linear-gradient(135deg, var(--creative-color), var(--accent-color)); color: white;">
+  <h2 style="color: white;">Let's Create Together! ✨</h2>
+  <p>Whether you're looking for custom artwork, want to collaborate on a creative project, or just want to chat about the intersection of art and science, I'd love to connect!</p>
+  <a href="mailto:ermiller@ucsb.edu" class="btn-custom" style="background: white; color: var(--creative-color);">Start a Conversation</a>
+</div>

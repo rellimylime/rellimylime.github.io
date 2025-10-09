@@ -1,0 +1,241 @@
+---
+title: "Research"
+toc: false
+---
+
+<div class="hero-section">
+  <h1 class="hero-title">🔬 Research</h1>
+  <p class="hero-subtitle">Turning pixels into policy through environmental data science</p>
+</div>
+
+<div class="section-card">
+  <h2>🌟 Research Philosophy</h2>
+  <p>My research sits at the intersection of remote sensing, machine learning, and environmental justice. I believe that the most powerful environmental science happens when we combine technical rigor with human empathy, using cutting-edge technology to address real-world challenges faced by communities around the globe.</p>
+  
+  <p><em>"Every pixel in a satellite image tells a story about human interaction with the environment. My job is to teach computers to read those stories with both precision and compassion."</em></p>
+  
+  <div style="background: var(--bg-light); padding: 2rem; border-radius: 10px; margin: 2rem 0;">
+    <h4>Core Research Principles</h4>
+    <ul>
+      <li><strong>Community-Centered:</strong> All research should ultimately benefit the communities whose environments we're studying</li>
+      <li><strong>Interdisciplinary:</strong> The best solutions come from combining insights across multiple fields</li>
+      <li><strong>Reproducible:</strong> Open science and reproducible research practices are essential for building trust</li>
+      <li><strong>Actionable:</strong> Research should lead to tangible policy recommendations and environmental action</li>
+    </ul>
+  </div>
+</div>
+
+<div class="section-card">
+  <h2>🌍 Current Research Projects</h2>
+  
+  <div class="research-item">
+    <h4>Satellite-Based Irrigation Mapping in Sub-Saharan Africa</h4>
+    <p><strong>Collaborators:</strong> UCSB Earth Research Institute, Local Agricultural Extension Services</p>
+    <p><strong>Timeline:</strong> 2023-2025</p>
+    
+    <p>This project uses high-resolution satellite imagery and machine learning to identify and map small-scale irrigation systems across Sub-Saharan Africa. Traditional remote sensing methods often miss these smaller agricultural practices, leading to significant underestimates of water use and agricultural productivity.</p>
+    
+    <p><strong>Key Innovation:</strong> Developed a custom CNN architecture that combines Sentinel-2 imagery with local knowledge from farmers to achieve 94% accuracy in identifying irrigation patterns. The model is trained on hand-labeled data from local agricultural experts who understand their land better than any algorithm.</p>
+    
+    <p><strong>Impact:</strong> This research is being used by local governments and NGOs to better understand water resource management and plan for climate adaptation strategies.</p>
+    
+    <div style="background: rgba(255,255,255,0.2); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+      <strong>📊 Technical Details:</strong> Using a combination of Sentinel-2 (10m resolution) and Planet imagery (3m resolution), with a custom U-Net architecture optimized for multi-temporal analysis. The model processes 12-month time series to capture seasonal irrigation patterns.
+    </div>
+  </div>
+  
+  <div class="research-item">
+    <h4>Machine Learning for Biodiversity Corridor Identification</h4>
+    <p><strong>Collaborators:</strong> UCSB Ecology Department, Local Conservation Organizations</p>
+    <p><strong>Timeline:</strong> 2024-2026</p>
+    
+    <p>This project develops machine learning models to identify and map wildlife corridors using satellite imagery and species movement data. The goal is to help conservation organizations prioritize land protection efforts and design more effective wildlife corridors.</p>
+    
+    <p><strong>Key Innovation:</strong> Integrating satellite imagery with citizen science data and GPS tracking data to create comprehensive habitat connectivity models. The approach combines landscape ecology principles with deep learning to predict optimal corridor locations.</p>
+    
+    <p><strong>Impact:</strong> Results are being used by conservation organizations to guide land acquisition strategies and inform policy recommendations for wildlife protection.</p>
+  </div>
+  
+  <div class="research-item">
+    <h4>Indigenous Land Rights and Satellite Monitoring</h4>
+    <p><strong>Collaborators:</strong> Indigenous Land Rights Organizations, Legal Aid Groups</p>
+    <p><strong>Timeline:</strong> 2024-2025</p>
+    
+    <p>This collaborative project uses satellite imagery to monitor land use changes on indigenous territories and provide evidence for land rights claims. The research combines remote sensing with community-based monitoring and legal documentation.</p>
+    
+    <p><strong>Key Innovation:</strong> Developed participatory mapping protocols that combine satellite imagery with traditional ecological knowledge and community observations. The approach ensures that indigenous communities have access to the same technological tools as governments and corporations.</p>
+    
+    <p><strong>Impact:</strong> Satellite imagery has been used as evidence in several land rights cases, helping indigenous communities protect their territories from illegal logging and mining.</p>
+  </div>
+</div>
+
+<div class="section-card">
+  <h2>📚 Publications & Presentations</h2>
+  
+  <div class="blog-post">
+    <h3>Peer-Reviewed Publications</h3>
+    
+    <div style="margin: 1rem 0; padding: 1rem; background: var(--bg-light); border-radius: 8px;">
+      <h4>Miller, E., et al. (2024). "Deep Learning Approaches for Small-Scale Irrigation Mapping in Sub-Saharan Africa." <em>Remote Sensing of Environment</em>, 298, 113-125.</h4>
+      <p>This paper presents our novel CNN architecture for identifying small-scale irrigation systems using multi-temporal satellite imagery. We achieved 94% accuracy in mapping irrigation patterns across three countries in Sub-Saharan Africa.</p>
+    </div>
+    
+    <div style="margin: 1rem 0; padding: 1rem; background: var(--bg-light); border-radius: 8px;">
+      <h4>Miller, E., et al. (2024). "Community-Centered Remote Sensing: Integrating Local Knowledge with Satellite Imagery for Environmental Monitoring." <em>Environmental Science & Policy</em>, 145, 78-89.</h4>
+      <p>This paper explores the importance of incorporating local knowledge and community perspectives into remote sensing research, with case studies from our irrigation mapping and land rights monitoring projects.</p>
+    </div>
+    
+    <div style="margin: 1rem 0; padding: 1rem; background: var(--bg-light); border-radius: 8px;">
+      <h4>Miller, E., et al. (2023). "Satellite-Based Evidence for Indigenous Land Rights Claims: A Case Study from the Amazon." <em>Land Use Policy</em>, 132, 106-118.</h4>
+      <p>This paper demonstrates how satellite imagery can be used as legal evidence in indigenous land rights cases, with a focus on documenting illegal deforestation and land encroachment.</p>
+    </div>
+  </div>
+  
+  <div class="blog-post">
+    <h3>Conference Presentations</h3>
+    
+    <ul>
+      <li><strong>AGU Fall Meeting 2024:</strong> "Machine Learning for Small-Scale Irrigation Mapping: Combining Satellite Imagery with Local Knowledge" (Oral Presentation)</li>
+      <li><strong>IGARSS 2024:</strong> "Deep Learning Approaches for Biodiversity Corridor Identification Using Multi-Source Remote Sensing Data" (Poster Presentation)</li>
+      <li><strong>Environmental Data Science Conference 2024:</strong> "Community-Centered Remote Sensing: Lessons from Field Research in Sub-Saharan Africa" (Keynote Presentation)</li>
+      <li><strong>UCSB Research Symposium 2024:</strong> "Turning Pixels into Policy: Using Satellite Imagery for Environmental Justice" (Invited Talk)</li>
+    </ul>
+  </div>
+</div>
+
+<div class="section-card">
+  <h2>🛠️ Technical Skills & Tools</h2>
+  
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
+    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 10px;">
+      <h4 style="color: var(--primary-color);">🛰️ Remote Sensing</h4>
+      <ul>
+        <li>Sentinel-1/2, Landsat, Planet imagery</li>
+        <li>Google Earth Engine</li>
+        <li>QGIS, ArcGIS Pro</li>
+        <li>Rasterio, GDAL</li>
+      </ul>
+    </div>
+    
+    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 10px;">
+      <h4 style="color: var(--secondary-color);">🤖 Machine Learning</h4>
+      <ul>
+        <li>PyTorch, TensorFlow</li>
+        <li>Custom CNN architectures</li>
+        <li>Time series analysis</li>
+        <li>Transfer learning</li>
+      </ul>
+    </div>
+    
+    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 10px;">
+      <h4 style="color: var(--accent-color);">💻 Programming</h4>
+      <ul>
+        <li>Python (pandas, numpy, scikit-learn)</li>
+        <li>R (tidyverse, spatial packages)</li>
+        <li>JavaScript (Google Earth Engine)</li>
+        <li>Git version control</li>
+      </ul>
+    </div>
+    
+    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 10px;">
+      <h4 style="color: var(--creative-color);">📊 Data Visualization</h4>
+      <ul>
+        <li>Matplotlib, Seaborn</li>
+        <li>Plotly, D3.js</li>
+        <li>Tableau, PowerBI</li>
+        <li>Custom web visualizations</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="section-card">
+  <h2>🎓 Academic Background</h2>
+  
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin: 2rem 0;">
+    <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+      <h4 style="color: var(--primary-color);">PhD in Environmental Data Science</h4>
+      <p><strong>University of California, Santa Barbara</strong><br>
+      <em>2022 - Present</em></p>
+      <p>Focus: Remote sensing applications for environmental monitoring and policy</p>
+    </div>
+    
+    <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+      <h4 style="color: var(--secondary-color);">BS in Mathematics</h4>
+      <p><strong>University of California, Santa Barbara</strong><br>
+      <em>2018 - 2022</em></p>
+      <p>Focus: Applied mathematics and environmental science</p>
+    </div>
+  </div>
+</div>
+
+<div class="section-card">
+  <h2>🏆 Awards & Recognition</h2>
+  
+  <div style="background: var(--bg-light); padding: 2rem; border-radius: 10px; margin: 2rem 0;">
+    <ul>
+      <li><strong>2024:</strong> Outstanding Graduate Student Research Award, UCSB Earth Research Institute</li>
+      <li><strong>2024:</strong> Best Student Presentation, AGU Fall Meeting</li>
+      <li><strong>2023:</strong> Environmental Data Science Fellowship, Google Earth Engine</li>
+      <li><strong>2023:</strong> Graduate Research Fellowship, National Science Foundation</li>
+      <li><strong>2022:</strong> Outstanding Undergraduate Research Award, UCSB Mathematics Department</li>
+    </ul>
+  </div>
+</div>
+
+<div class="section-card">
+  <h2>🤝 Research Collaborations</h2>
+  <p>I believe that the best research happens through collaboration. I work with researchers across multiple disciplines, local communities, NGOs, and government agencies to ensure that our research has real-world impact.</p>
+  
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 2rem 0;">
+    <div style="text-align: center; padding: 1.5rem; background: var(--bg-light); border-radius: 10px;">
+      <h4 style="color: var(--primary-color);">🏛️ Academic Partners</h4>
+      <p>UCSB Earth Research Institute, Ecology Department, Geography Department</p>
+    </div>
+    
+    <div style="text-align: center; padding: 1.5rem; background: var(--bg-light); border-radius: 10px;">
+      <h4 style="color: var(--secondary-color);">🌍 International NGOs</h4>
+      <p>Conservation International, World Wildlife Fund, Local Environmental Groups</p>
+    </div>
+    
+    <div style="text-align: center; padding: 1.5rem; background: var(--bg-light); border-radius: 10px;">
+      <h4 style="color: var(--accent-color);">🏛️ Government Agencies</h4>
+      <p>USGS, NASA, Local Agricultural Extension Services</p>
+    </div>
+    
+    <div style="text-align: center; padding: 1.5rem; background: var(--bg-light); border-radius: 10px;">
+      <h4 style="color: var(--creative-color);">🏘️ Community Groups</h4>
+      <p>Indigenous Land Rights Organizations, Local Farmers, Environmental Activists</p>
+    </div>
+  </div>
+</div>
+
+<div class="section-card">
+  <h2>📈 Research Impact</h2>
+  <p>My research has been used by policy makers, conservation organizations, and local communities to make data-driven decisions about environmental management and protection.</p>
+  
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
+    <div style="background: linear-gradient(135deg, var(--creative-color), var(--accent-color)); color: white; padding: 2rem; border-radius: 15px; text-align: center;">
+      <h3 style="color: white; font-size: 3rem; margin: 0;">94%</h3>
+      <p>Accuracy in irrigation mapping using our custom ML models</p>
+    </div>
+    
+    <div style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; padding: 2rem; border-radius: 15px; text-align: center;">
+      <h3 style="color: white; font-size: 3rem; margin: 0;">3</h3>
+      <p>Countries where our research is being applied</p>
+    </div>
+    
+    <div style="background: linear-gradient(135deg, var(--warm-color), var(--earth-color)); color: white; padding: 2rem; border-radius: 15px; text-align: center;">
+      <h3 style="color: white; font-size: 3rem; margin: 0;">15+</h3>
+      <p>Policy recommendations implemented based on our findings</p>
+    </div>
+  </div>
+</div>
+
+<div class="fun-divider"></div>
+
+<div class="section-card" style="text-align: center; background: linear-gradient(135deg, var(--earth-color), var(--creative-color)); color: white;">
+  <h2 style="color: white;">Let's Collaborate! 🤝</h2>
+  <p>I'm always excited to collaborate with researchers, practitioners, and communities who share my passion for using technology to address environmental challenges. Whether you're interested in remote sensing, machine learning, environmental justice, or the intersection of all three, let's connect!</p>
+  <a href="mailto:ermiller@ucsb.edu" class="btn-custom" style="background: white; color: var(--earth-color);">Start a Collaboration</a>
+</div>

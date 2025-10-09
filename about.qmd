@@ -1,9 +1,187 @@
 ---
 title: "About"
+toc: false
 ---
 
-About this site
+<div class="hero-section">
+  <h1 class="hero-title">👋 About Emily</h1>
+  <p class="hero-subtitle">Environmental Data Scientist • Artist • Beach Cleanup Organizer • Kelp-Eating Dog Parent</p>
+</div>
 
-```{r}
-1 + 1
-```
+<div class="section-card">
+  <h2>🌟 My Story</h2>
+  <p>Hi! I'm Emily, and I'm passionate about using data science to solve environmental challenges while never losing sight of the human stories behind the numbers. I believe that the most powerful research happens when we combine technical rigor with creative thinking and genuine care for the communities we serve.</p>
+  
+  <p>Currently, I'm a PhD student in Environmental Data Science at UCSB, where I'm turning pixels into policy by teaching computers to notice what we've been ignoring. My research uses satellite imagery and machine learning to track irrigation patterns and land use across Sub-Saharan Africa, but I'm equally excited about applying these tools to biodiversity conservation, wildlife corridors, and indigenous land rights.</p>
+  
+  <p>When I'm not staring at satellite images, you'll find me organizing beach cleanups in Isla Vista, painting abstract landscapes inspired by data patterns, or trying to convince my kelp-obsessed dog that there are other, more normal snacks available.</p>
+</div>
+
+<div class="section-card">
+  <h2>🎓 Academic Journey</h2>
+  <p>I started my academic journey as a pure math major, convinced that numbers and equations were the only things that made sense in an otherwise chaotic world. But I quickly discovered that math could be applied to real problems — like tracking deforestation, predicting climate patterns, and understanding how humans interact with the environment.</p>
+  
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin: 2rem 0;">
+    <div style="background: var(--bg-light); padding: 2rem; border-radius: 15px;">
+      <h4 style="color: var(--primary-color);">PhD in Environmental Data Science</h4>
+      <p><strong>University of California, Santa Barbara</strong><br>
+      <em>2022 - Present</em></p>
+      <p>Focus: Remote sensing applications for environmental monitoring and policy. Developing machine learning models to identify small-scale irrigation systems and support environmental justice initiatives.</p>
+    </div>
+    
+    <div style="background: var(--bg-light); padding: 2rem; border-radius: 15px;">
+      <h4 style="color: var(--secondary-color);">BS in Mathematics</h4>
+      <p><strong>University of California, Santa Barbara</strong><br>
+      <em>2018 - 2022</em></p>
+      <p>Focus: Applied mathematics and environmental science. Discovered my passion for using mathematical tools to address real-world environmental challenges.</p>
+    </div>
+  </div>
+</div>
+
+<div class="section-card">
+  <h2>🔬 Research Focus</h2>
+  <p>My research sits at the intersection of remote sensing, machine learning, and environmental justice. I'm particularly interested in how we can use satellite imagery and AI to support communities that are often overlooked by traditional environmental monitoring approaches.</p>
+  
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
+    <div style="background: linear-gradient(135deg, var(--creative-color), var(--accent-color)); color: white; padding: 2rem; border-radius: 15px; text-align: center;">
+      <h4 style="color: white;">🛰️ Remote Sensing</h4>
+      <p>Using satellite imagery to monitor environmental changes and support conservation efforts</p>
+    </div>
+    
+    <div style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; padding: 2rem; border-radius: 15px; text-align: center;">
+      <h4 style="color: white;">🤖 Machine Learning</h4>
+      <p>Developing AI models that can identify patterns humans might miss in environmental data</p>
+    </div>
+    
+    <div style="background: linear-gradient(135deg, var(--secondary-color), var(--earth-color)); color: white; padding: 2rem; border-radius: 15px; text-align: center;">
+      <h4 style="color: white;">🌍 Environmental Justice</h4>
+      <p>Ensuring that environmental monitoring and protection benefits all communities equally</p>
+    </div>
+  </div>
+</div>
+
+<div class="section-card">
+  <h2>🎨 Creative Side</h2>
+  <p>I believe that creativity and science aren't opposites — they're the same muscle flexing in different directions. When I'm not analyzing satellite imagery, you'll find me with paint on my hands, camera in hand, or scribbling poetry about the intersection of data and life.</p>
+  
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 2rem 0;">
+    <div style="text-align: center; padding: 1.5rem; background: var(--bg-light); border-radius: 10px;">
+      <h4 style="color: var(--primary-color);">🎨 Visual Art</h4>
+      <p>Paintings, drawings, and digital art inspired by data patterns and environmental themes</p>
+    </div>
+    
+    <div style="text-align: center; padding: 1.5rem; background: var(--bg-light); border-radius: 10px;">
+      <h4 style="color: var(--secondary-color);">📸 Photography</h4>
+      <p>Capturing the weird beauty of the world through my lens</p>
+    </div>
+    
+    <div style="text-align: center; padding: 1.5rem; background: var(--bg-light); border-radius: 10px;">
+      <h4 style="color: var(--accent-color);">✍️ Poetry</h4>
+      <p>Words that dance between the technical and the human</p>
+    </div>
+    
+    <div style="text-align: center; padding: 1.5rem; background: var(--bg-light); border-radius: 10px;">
+      <h4 style="color: var(--creative-color);">📊 Data Art</h4>
+      <p>Beautiful visualizations that tell compelling stories</p>
+    </div>
+  </div>
+</div>
+
+<div class="section-card">
+  <h2>🌊 Community Involvement</h2>
+  <p>Beyond the lab, I'm passionate about using my skills to make a positive impact in my local community and beyond.</p>
+  
+  <div class="blog-post">
+    <h3>Beach Cleanup Organizer</h3>
+    <div class="blog-meta">Isla Vista, CA • 2022-Present</div>
+    <p>I organize regular beach cleanups that bring together students, community members, and environmental enthusiasts. Our largest cleanup had 50+ volunteers and collected over 200 pounds of trash and microplastics. But the real impact isn't just in the numbers — it's in the conversations, the community connections, and the way data becomes a catalyst for change.</p>
+  </div>
+  
+  <div class="blog-post">
+    <h3>Environmental Education</h3>
+    <div class="blog-meta">Local Schools & Community Groups • 2023-Present</div>
+    <p>I volunteer with local schools and community groups to teach environmental science and data literacy. My goal is to make complex environmental concepts accessible and engaging for people of all ages, showing them how data science can be a powerful tool for environmental protection.</p>
+  </div>
+  
+  <div class="blog-post">
+    <h3>Research Collaboration</h3>
+    <div class="blog-meta">International Partners • 2022-Present</div>
+    <p>I work with researchers, NGOs, and local communities around the world to apply remote sensing and machine learning to environmental challenges. These collaborations ensure that my research has real-world impact and benefits the communities whose environments we're studying.</p>
+  </div>
+</div>
+
+<div class="section-card">
+  <h2>🐕 Personal Life</h2>
+  <p>When I'm not working on research or organizing beach cleanups, I'm usually hanging out with my kelp-obsessed dog, who thinks seaweed is the world's best snack. We spend a lot of time at the beach (where else would we be?), and I've learned more about marine ecosystems from her food preferences than from any textbook.</p>
+  
+  <p>I'm also an avid reader, a terrible but enthusiastic surfer, and someone who believes that the best ideas come from unexpected connections between seemingly unrelated things. I collect rocks from beaches around the world, have a growing collection of vintage cameras, and am always looking for new ways to combine my love of data with my love of creativity.</p>
+  
+  <div style="background: var(--bg-light); padding: 2rem; border-radius: 10px; margin: 2rem 0;">
+    <h4>🌈 Fun Facts About Me</h4>
+    <ul>
+      <li>🎓 Former math major who discovered data science was basically math with cooler applications</li>
+      <li>🌊 Beach cleanup enthusiast who once organized 50+ people to clean Isla Vista beaches</li>
+      <li>🎨 Self-taught artist who paints everything from abstract landscapes to data visualizations</li>
+      <li>🐕 Dog parent to a kelp-obsessed pup who thinks seaweed is the world's best snack</li>
+      <li>📊 Believes the best data stories are told with both rigor and a sense of humor</li>
+      <li>🌍 Passionate about using technology for environmental justice and conservation</li>
+      <li>📚 Collects rocks from beaches around the world (each one tells a geological story)</li>
+      <li>📸 Has a growing collection of vintage cameras and loves analog photography</li>
+      <li>🏄‍♀️ Terrible but enthusiastic surfer who believes in learning through failure</li>
+      <li>☕ Runs on coffee, curiosity, and the unreasonable hope that data can change the world</li>
+    </ul>
+  </div>
+</div>
+
+<div class="section-card">
+  <h2>🎯 Values & Mission</h2>
+  <p>My work is guided by a few core values that I believe are essential for creating meaningful impact through data science:</p>
+  
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
+    <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 5px solid var(--primary-color);">
+      <h4 style="color: var(--primary-color);">🌍 Environmental Justice</h4>
+      <p>All communities deserve access to clean environments and the tools to protect them. My research prioritizes supporting communities that are often overlooked by traditional environmental monitoring.</p>
+    </div>
+    
+    <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 5px solid var(--secondary-color);">
+      <h4 style="color: var(--secondary-color);">🤝 Community-Centered</h4>
+      <p>The best research happens in partnership with the communities it's meant to serve. I prioritize collaborative approaches that respect local knowledge and ensure community benefit.</p>
+    </div>
+    
+    <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 5px solid var(--accent-color);">
+      <h4 style="color: var(--accent-color);">🎨 Creative Innovation</h4>
+      <p>Some of the best solutions come from unexpected connections between seemingly unrelated ideas. I believe in combining technical rigor with creative thinking.</p>
+    </div>
+    
+    <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 5px solid var(--creative-color);">
+      <h4 style="color: var(--creative-color);">📊 Transparent Science</h4>
+      <p>Science should be open, reproducible, and accessible. I'm committed to transparent research practices and clear communication of complex concepts.</p>
+    </div>
+  </div>
+</div>
+
+<div class="section-card">
+  <h2>🚀 What's Next</h2>
+  <p>I'm excited about the future of environmental data science and the potential for technology to create positive change. Here's what I'm working toward:</p>
+  
+  <ul>
+    <li><strong>Completing my PhD</strong> and continuing to develop tools that support environmental justice and conservation</li>
+    <li><strong>Expanding my research</strong> to include more communities and environmental challenges around the world</li>
+    <li><strong>Building bridges</strong> between academic research and practical environmental action</li>
+    <li><strong>Mentoring the next generation</strong> of environmental data scientists who share my passion for impact</li>
+    <li><strong>Continuing to explore</strong> the intersection of art, science, and environmental advocacy</li>
+  </ul>
+</div>
+
+<div class="fun-divider"></div>
+
+<div class="section-card" style="text-align: center; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white;">
+  <h2 style="color: white;">Let's Connect! 🌟</h2>
+  <p>Whether you're interested in collaborating on research, want to learn more about environmental data science, or just want to chat about the intersection of creativity and science, I'd love to hear from you!</p>
+  
+  <div style="display: flex; justify-content: center; gap: 2rem; margin: 2rem 0; flex-wrap: wrap;">
+    <a href="mailto:ermiller@ucsb.edu" class="btn-custom" style="background: white; color: var(--primary-color);">Email Me</a>
+    <a href="https://www.linkedin.com/in/emily-miller-a0237233b/" class="btn-custom" style="background: white; color: var(--primary-color);">LinkedIn</a>
+    <a href="https://github.com/rellimylime" class="btn-custom" style="background: white; color: var(--primary-color);">GitHub</a>
+  </div>
+</div>

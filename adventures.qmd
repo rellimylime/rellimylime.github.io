@@ -1,0 +1,233 @@
+---
+title: "Adventures"
+toc: false
+---
+
+<div class="hero-section">
+  <h1 class="hero-title">📸 Random Adventures</h1>
+  <p class="hero-subtitle">Life happens between the data points</p>
+</div>
+
+<div class="section-card">
+  <h2>🌟 What This Is All About</h2>
+  <p>Welcome to the chaotic, beautiful, and often ridiculous moments that make up my life! This is where I share the random adventures, daily discoveries, and goofy moments that happen when you're not staring at satellite imagery. From beach cleanups gone hilariously wrong to my dog's latest kelp obsession, this is life unfiltered and unapologetically Emily.</p>
+  
+  <p><em>"The best adventures are the ones you never planned, and the best photos are the ones that capture genuine moments of joy, confusion, or pure ridiculousness."</em></p>
+</div>
+
+<div class="section-card">
+  <h2>🐕 Dog Adventures</h2>
+  <p>Meet the star of most of my unplanned adventures: my kelp-obsessed, seaweed-eating, beach-loving pup who thinks she's part mermaid.</p>
+  
+  <div class="art-grid">
+    <div class="art-item">
+      <img src="placeholder-dog-1.jpg" alt="Dog eating kelp">
+      <div class="art-item-content">
+        <h4>Kelp Connoisseur</h4>
+        <p>Beach day • 2024</p>
+        <p>When your dog has more sophisticated taste in seaweed than you do in wine</p>
+      </div>
+    </div>
+    
+    <div class="art-item">
+      <img src="placeholder-dog-2.jpg" alt="Dog at beach cleanup">
+      <div class="art-item-content">
+        <h4>Environmental Activist</h4>
+        <p>Beach cleanup • 2024</p>
+        <p>She may not understand why we're cleaning, but she's definitely helping</p>
+      </div>
+    </div>
+    
+    <div class="art-item">
+      <img src="placeholder-dog-3.jpg" alt="Dog in lab">
+      <div class="art-item-content">
+        <h4>Lab Assistant</h4>
+        <p>UCSB Research Lab • 2024</p>
+        <p>When your dog becomes your most dedicated research assistant</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-card">
+  <h2>🌊 Beach Life</h2>
+  <p>Living near the ocean means there's always something weird, wonderful, or completely unexpected happening on the beach.</p>
+  
+  <div class="art-grid">
+    <div class="art-item">
+      <img src="placeholder-beach-1.jpg" alt="Beach cleanup volunteers">
+      <div class="art-item-content">
+        <h4>Cleanup Crew</h4>
+        <p>Isla Vista Beach • 2024</p>
+        <p>When 50+ people show up to clean beaches and have fun doing it</p>
+      </div>
+    </div>
+    
+    <div class="art-item">
+      <img src="placeholder-beach-2.jpg" alt="Sunset research">
+      <div class="art-item-content">
+        <h4>Sunset Data Collection</h4>
+        <p>Evening beach walk • 2024</p>
+        <p>Sometimes the best research ideas come during sunset walks</p>
+      </div>
+    </div>
+    
+    <div class="art-item">
+      <img src="placeholder-beach-3.jpg" alt="Beach art">
+      <div class="art-item-content">
+        <h4>Sand Art Experiments</h4>
+        <p>Low tide creativity • 2024</p>
+        <p>When you try to make sand art but the ocean has other plans</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-card">
+  <h2>🔬 Lab Life</h2>
+  <p>Behind every serious research project is a lot of not-so-serious moments, failed experiments, and the occasional breakthrough that happens at 2 AM.</p>
+  
+  <div class="art-grid">
+    <div class="art-item">
+      <img src="placeholder-lab-1.jpg" alt="Late night coding">
+      <div class="art-item-content">
+        <h4>2 AM Breakthrough</h4>
+        <p>UCSB Lab • 2024</p>
+        <p>When the algorithm finally works at 2 AM and you're the only one there to celebrate</p>
+      </div>
+    </div>
+    
+    <div class="art-item">
+      <img src="placeholder-lab-2.jpg" alt="Satellite imagery">
+      <div class="art-item-content">
+        <h4>Data Art</h4>
+        <p>Research visualization • 2024</p>
+        <p>When your satellite imagery accidentally creates abstract art</p>
+      </div>
+    </div>
+    
+    <div class="art-item">
+      <img src="placeholder-lab-3.jpg" alt="Research notes">
+      <div class="art-item-content">
+        <h4>Research Notes</h4>
+        <p>Field notes • 2024</p>
+        <p>The chaotic beauty of research notes that only make sense to you</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-card">
+  <h2>🎨 Creative Chaos</h2>
+  <p>When inspiration strikes at the most inconvenient times, and you end up with paint everywhere and ideas scattered across multiple notebooks.</p>
+  
+  <div class="art-grid">
+    <div class="art-item">
+      <img src="placeholder-creative-1.jpg" alt="Paint everywhere">
+      <div class="art-item-content">
+        <h4>Paint Explosion</h4>
+        <p>Studio session • 2024</p>
+        <p>When you set out to paint a small landscape and end up painting yourself, your dog, and half the kitchen</p>
+      </div>
+    </div>
+    
+    <div class="art-item">
+      <img src="placeholder-creative-2.jpg" alt="Camera gear">
+      <div class="art-item-content">
+        <h4>Gear Enthusiast</h4>
+        <p>Photography adventure • 2024</p>
+        <p>When you bring way too much camera equipment for a simple beach walk</p>
+      </div>
+    </div>
+    
+    <div class="art-item">
+      <img src="placeholder-creative-3.jpg" alt="Poetry notes">
+      <div class="art-item-content">
+        <h4>Poetry in Progress</h4>
+        <p>Random notebook • 2024</p>
+        <p>Scribbled poems about data, dogs, and the meaning of life</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-card">
+  <h2>🤪 Random Moments</h2>
+  <p>The completely unexpected, wonderfully weird moments that make life interesting and definitely worth documenting.</p>
+  
+  <div class="blog-post">
+    <h3>When Your Dog Becomes a Social Media Star</h3>
+    <div class="blog-meta">Beach cleanup • 2024</div>
+    <p>My dog's kelp-eating antics somehow became the unofficial mascot of our beach cleanup group. Now people bring her seaweed as "treats" and she's basically a local celebrity. I never thought I'd be known as "the kelp dog's human" but here we are.</p>
+  </div>
+  
+  <div class="blog-post">
+    <h3>The Great Lab Coffee Spill of 2024</h3>
+    <div class="blog-meta">UCSB Research Lab • 2024</div>
+    <p>In a moment of pure clumsiness, I managed to spill coffee on my laptop, my research notes, and somehow my dog (who was visiting the lab). The result? A three-hour cleanup session, a very caffeinated dog, and a new rule about no beverages near the computers.</p>
+  </div>
+  
+  <div class="blog-post">
+    <h3>When Beach Cleanup Turns Into a Dance Party</h3>
+    <div class="blog-meta">Isla Vista Beach • 2024</div>
+    <p>What started as a serious environmental cleanup somehow evolved into a spontaneous dance party on the beach. Someone brought a speaker, the sunset was perfect, and suddenly we were all dancing while holding trash bags. Sometimes the best moments are completely unplanned.</p>
+  </div>
+</div>
+
+<div class="section-card">
+  <h2>🌍 Travel Adventures</h2>
+  <p>When research takes you places, and you discover that the best part of any trip is the unexpected detours and local discoveries.</p>
+  
+  <div class="art-grid">
+    <div class="art-item">
+      <img src="placeholder-travel-1.jpg" alt="Research field work">
+      <div class="art-item-content">
+        <h4>Field Research</h4>
+        <p>Sub-Saharan Africa • 2023</p>
+        <p>When satellite imagery becomes real landscapes you can touch</p>
+      </div>
+    </div>
+    
+    <div class="art-item">
+      <img src="placeholder-travel-2.jpg" alt="Local market">
+      <div class="art-item-content">
+        <h4>Local Discoveries</h4>
+        <p>Research trip • 2023</p>
+        <p>The best part of any research trip is discovering local markets and street food</p>
+      </div>
+    </div>
+    
+    <div class="art-item">
+      <img src="placeholder-travel-3.jpg" alt="Conference adventure">
+      <div class="art-item-content">
+        <h4>Conference Adventures</h4>
+        <p>Academic conference • 2024</p>
+        <p>When academic conferences become opportunities for unexpected adventures</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-card">
+  <h2>📱 Behind the Scenes</h2>
+  <p>The reality behind the photos: failed attempts, ridiculous outtakes, and the moments that never made it to social media.</p>
+  
+  <div style="background: var(--bg-light); padding: 2rem; border-radius: 10px; margin: 2rem 0;">
+    <h4>Confessions of a Chronic Over-Photographer</h4>
+    <p>I take approximately 47 photos of every "candid" moment. My phone storage is 80% blurry dog photos, 15% failed selfies, and 5% actual good pictures. But hey, that's what makes life interesting!</p>
+    
+    <h4>The Truth About Beach Cleanups</h4>
+    <p>Yes, we're saving the environment. But we're also mostly just people who really like being at the beach and found a socially acceptable way to spend all day there. The environmental impact is a happy bonus.</p>
+    
+    <h4>Lab Life Reality Check</h4>
+    <p>Research is 10% breakthrough moments, 20% actual work, and 70% trying to figure out why your code worked yesterday but doesn't work today. Also, a lot of coffee.</p>
+  </div>
+</div>
+
+<div class="fun-divider"></div>
+
+<div class="section-card" style="text-align: center; background: linear-gradient(135deg, var(--warm-color), var(--primary-color)); color: white;">
+  <h2 style="color: white;">Join the Adventure! 🚀</h2>
+  <p>Life's too short to be serious all the time. Whether you want to join a beach cleanup, collaborate on a research project, or just chat about the weird and wonderful moments that make life interesting, let's connect!</p>
+  <a href="mailto:ermiller@ucsb.edu" class="btn-custom" style="background: white; color: var(--warm-color);">Let's Be Adventure Buddies</a>
+</div>

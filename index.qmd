@@ -6,19 +6,85 @@ about:
   template: jolla
   image-width: 17em
   links: 
-    - text: LinkedIn
+    - icon: linkedin
+      text: LinkedIn
       href: "https://www.linkedin.com/in/emily-miller-a0237233b/"
-    - text: GitHub
+    - icon: github
+      text: GitHub
       href: "https://github.com/rellimylime"
-    - text: Email
+    - icon: envelope
+      text: Email
       href: "malto:ermiller@ucsb.edu" 
 ---
 
-Currently turning pixels into policy at UCSB — teaching computers to notice what we've been ignoring. My research uses satellite imagery to track irrigation patterns and land use across Sub-Saharan Africa. I'm excited about applying machine vision and deep learning to biodiversity conservation, wildlife corridors, and indigenous land rights — turning terabytes of satellite data into something more useful than a very expensive screensaver.
+<div class="hero-section">
+  <h1 class="hero-title">Hi, I'm Emily! 👋</h1>
+  <p class="hero-subtitle">Environmental Data Scientist • Artist • Beach Cleanup Organizer • Kelp-Eating Dog Parent</p>
+</div>
 
-Beyond the screen, I organize beach cleanups in Isla Vista and think a lot about how data becomes action, how models become movements, and whether my dog will ever stop eating kelp.
+<div class="section-card">
+  <h2>🧠 The Science Side</h2>
+  <p>Currently turning pixels into policy at UCSB — teaching computers to notice what we've been ignoring. My research uses satellite imagery to track irrigation patterns and land use across Sub-Saharan Africa. I'm excited about applying machine vision and deep learning to biodiversity conservation, wildlife corridors, and indigenous land rights — turning terabytes of satellite data into something more useful than a very expensive screensaver.</p>
+  
+  <p>Beyond the screen, I organize beach cleanups in Isla Vista and think a lot about how data becomes action, how models become movements, and whether my dog will ever stop eating kelp.</p>
+  
+  <p><strong>Equal parts quantitative rigor and unreasonable hope.</strong> ✨</p>
+</div>
 
-Equal parts quantitative rigor and unreasonable hope. 
+<div class="section-card">
+  <h2>🎨 The Creative Side</h2>
+  <p>When I'm not staring at satellite images, you'll find me with paint on my hands (and probably my clothes), camera in hand capturing the world's weird beauty, or scribbling poetry about data and dogs. I believe creativity and science aren't opposites — they're the same muscle flexing in different directions.</p>
+  
+  <div class="emoji-section">
+    🎨 📸 ✍️ 🐕 🌊 📊 🌍
+  </div>
+</div>
+
+<div class="section-card">
+  <h2>🚀 What You'll Find Here</h2>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
+    <div style="text-align: center; padding: 1.5rem; background: var(--bg-light); border-radius: 10px;">
+      <h4 style="color: var(--primary-color);">🎨 Art & Poetry</h4>
+      <p>My paintings, drawings, photos, and poems</p>
+    </div>
+    <div style="text-align: center; padding: 1.5rem; background: var(--bg-light); border-radius: 10px;">
+      <h4 style="color: var(--secondary-color);">📸 Adventures</h4>
+      <p>Random photos of life, travels, and dog antics</p>
+    </div>
+    <div style="text-align: center; padding: 1.5rem; background: var(--bg-light); border-radius: 10px;">
+      <h4 style="color: var(--accent-color);">✍️ Blog</h4>
+      <p>Thoughts on data, environment, and everything else</p>
+    </div>
+    <div style="text-align: center; padding: 1.5rem; background: var(--bg-light); border-radius: 10px;">
+      <h4 style="color: var(--creative-color);">🔬 Research</h4>
+      <p>My environmental data science work</p>
+    </div>
+    <div style="text-align: center; padding: 1.5rem; background: var(--bg-light); border-radius: 10px;">
+      <h4 style="color: var(--warm-color);">💼 Hire Me</h4>
+      <p>Data analysis, tutoring, consulting services</p>
+    </div>
+  </div>
+</div>
+
+<div class="fun-divider"></div>
+
+<div class="section-card">
+  <h2>🌈 Fun Facts About Me</h2>
+  <ul>
+    <li>🎓 Former math major who discovered data science was basically math with cooler applications</li>
+    <li>🌊 Beach cleanup enthusiast who once organized 50+ people to clean Isla Vista beaches</li>
+    <li>🎨 Self-taught artist who paints everything from abstract landscapes to data visualizations</li>
+    <li>🐕 Dog parent to a kelp-obsessed pup who thinks seaweed is the world's best snack</li>
+    <li>📊 Believes the best data stories are told with both rigor and a sense of humor</li>
+    <li>🌍 Passionate about using technology for environmental justice and conservation</li>
+  </ul>
+</div>
+
+<div class="section-card" style="text-align: center; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white;">
+  <h2 style="color: white;">Let's Connect! 🌟</h2>
+  <p>Whether you want to collaborate on environmental research, commission some art, or just chat about the intersection of creativity and data science, I'd love to hear from you!</p>
+  <a href="mailto:ermiller@ucsb.edu" class="btn-custom" style="background: white; color: var(--primary-color);">Get In Touch</a>
+</div> 
 
 
 

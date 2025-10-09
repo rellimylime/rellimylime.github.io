@@ -21,7 +21,7 @@ website:
         text: "🔬 Research"
       - href: services.qmd
         text: "💼 Hire Me"
-      - href: cv/MillerE_CV_08_2025.pdf
+      - href: cv.qmd
         text: "📄 Resume"
 
 format:

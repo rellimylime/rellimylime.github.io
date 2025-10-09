@@ -2,22 +2,24 @@
 
 /* Custom CSS Variables for Brand Colors */
 :root {
-  --primary-color: #FF6B6B; /* Coral */
-  --secondary-color: #4ECDC4; /* Teal */
-  --accent-color: #45B7D1; /* Sky Blue */
-  --creative-color: #96CEB4; /* Mint Green */
-  --earth-color: #6C5CE7; /* Purple */
-  --warm-color: #FECA57; /* Golden Yellow */
-  --text-dark: #2D3436;
-  --text-light: #636E72;
-  --bg-light: #F8F9FA;
-  --bg-cream: #FFF8E1;
+  --primary-color: #007f94; /* Main teal */
+  --secondary-color: #388d9f; /* Light teal */
+  --accent-color: #569aab; /* Medium teal */
+  --creative-color: #70a8b7; /* Soft teal */
+  --earth-color: #89b7c2; /* Light blue-teal */
+  --warm-color: #a1c5ce; /* Warm teal */
+  --text-dark: #142c31; /* Dark teal */
+  --text-light: #47808d; /* Medium tone */
+  --bg-light: #e7f0f3; /* Very light teal */
+  --bg-cream: #ffffff; /* Pure white */
+  --accent-complementary: #941500; /* Complementary red-orange */
+  --accent-analogous: #003594; /* Analogous blue */
 }
 
 /* Global Styles */
 body {
   font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #FFF8E1 0%, #F8F9FA 100%);
+  background: linear-gradient(135deg, var(--bg-cream) 0%, var(--bg-light) 100%);
   color: var(--text-dark);
   line-height: 1.6;
 }
@@ -275,7 +277,7 @@ h3 {
     var(--secondary-color), 
     var(--accent-color), 
     var(--creative-color), 
-    var(--warm-color));
+    var(--earth-color));
   border-radius: 2px;
   margin: 2rem 0;
 }
@@ -321,4 +323,41 @@ h3 {
 
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(45deg, var(--secondary-color), var(--accent-color));
+}
+
+/* PDF Embedding Styles */
+.pdf-container {
+  width: 100%;
+  height: 80vh;
+  border: 1px solid var(--primary-color);
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 2rem 0;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.pdf-embed {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* CV Specific Styles */
+.cv-section {
+  background: white;
+  border-radius: 15px;
+  padding: 2rem;
+  margin: 2rem 0;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  border-left: 5px solid var(--primary-color);
+}
+
+.cv-item {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--bg-light);
+}
+
+.cv-item:last-child {
+  border-bottom: none;
 }

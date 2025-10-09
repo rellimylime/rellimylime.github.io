@@ -4,30 +4,30 @@ toc: false
 ---
 
 <div class="hero-section">
-  <h1 class="hero-title">📄 Emily Miller</h1>
+  <h1 class="hero-title">Emily Miller</h1>
   <p class="hero-subtitle">Environmental Data Scientist • PhD Student • UCSB</p>
 </div>
 
 <div class="section-card">
-  <h2>📧 Contact Information</h2>
+  <h2>Contact Information</h2>
   <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 2rem 0;">
     <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 10px;">
-      <h4 style="color: var(--primary-color);">📧 Email</h4>
+      <h4 style="color: var(--primary-color);">Email</h4>
       <p><a href="mailto:ermiller@ucsb.edu">ermiller@ucsb.edu</a></p>
     </div>
     
     <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 10px;">
-      <h4 style="color: var(--secondary-color);">💼 LinkedIn</h4>
+      <h4 style="color: var(--secondary-color);">LinkedIn</h4>
       <p><a href="https://www.linkedin.com/in/emily-miller-a0237233b/" target="_blank">linkedin.com/in/emily-miller-a0237233b/</a></p>
     </div>
     
     <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 10px;">
-      <h4 style="color: var(--accent-color);">💻 GitHub</h4>
+      <h4 style="color: var(--accent-color);">GitHub</h4>
       <p><a href="https://github.com/rellimylime" target="_blank">github.com/rellimylime</a></p>
     </div>
     
     <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 10px;">
-      <h4 style="color: var(--creative-color);">📍 Location</h4>
+      <h4 style="color: var(--creative-color);">Location</h4>
       <p>Santa Barbara, CA</p>
     </div>
   </div>

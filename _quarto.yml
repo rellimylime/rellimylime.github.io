@@ -7,22 +7,22 @@ website:
   navbar:
     left:
       - href: index.qmd
-        text: "🏠 Home"
+        text: "Home"
     right:
       - href: about.qmd
-        text: "👋 About"
+        text: "About"
       - href: art.qmd
-        text: "🎨 Art & Poetry"
+        text: "Art & Poetry"
       - href: adventures.qmd
-        text: "📸 Adventures"
+        text: "Adventures"
       - href: blog.qmd
-        text: "✍️ Blog"
+        text: "Blog"
       - href: research.qmd
-        text: "🔬 Research"
+        text: "Research"
       - href: services.qmd
-        text: "💼 Hire Me"
+        text: "Services"
       - href: cv.qmd
-        text: "📄 Resume"
+        text: "Resume"
 
 format:
   html:

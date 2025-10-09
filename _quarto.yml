@@ -7,8 +7,22 @@ website:
   navbar:
     left:
       - href: index.qmd
-        text: Home
-      - about.qmd
+        text: "🏠 Home"
+    right:
+      - href: about.qmd
+        text: "👋 About"
+      - href: art.qmd
+        text: "🎨 Art & Poetry"
+      - href: adventures.qmd
+        text: "📸 Adventures"
+      - href: blog.qmd
+        text: "✍️ Blog"
+      - href: research.qmd
+        text: "🔬 Research"
+      - href: services.qmd
+        text: "💼 Hire Me"
+      - href: cv/Emily_Miller_2pg_Resume_filled_from_CV_v2.docx
+        text: "📄 Resume"
 
 format:
   html:

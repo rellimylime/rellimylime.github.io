@@ -7,3 +7,6 @@
 
 /.quarto/
 **/*.quarto_ipynb
+
+/styles.scss
+/images

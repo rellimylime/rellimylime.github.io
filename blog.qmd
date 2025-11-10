@@ -3,148 +3,143 @@ title: "Blog"
 toc: false
 ---
 
-<div class="hero-section">
-  <h1 class="hero-title">✍️ Blog</h1>
-  <p class="hero-subtitle">Thoughts on data, environment, creativity, and everything in between</p>
-</div>
+# ✍️ Blog
 
-<div class="section-card">
-  <h2>🌟 What You'll Find Here</h2>
-  <p>Welcome to my corner of the internet where I share thoughts on environmental data science, the intersection of creativity and research, and the weird and wonderful moments that happen when you're passionate about both pixels and poetry. Expect a mix of technical insights, personal reflections, and the occasional rant about why my dog won't stop eating kelp.</p>
-  
-  <p><em>"The best ideas come from unexpected connections between seemingly unrelated things — like satellite imagery and poetry, or data analysis and beach cleanups."</em></p>
-</div>
+*Thoughts on data, environment, creativity, and everything in between*
 
-<div class="section-card">
-  <h2>📚 Recent Posts</h2>
-  
-  <div class="blog-post">
-    <h3>Teaching Computers to See What We've Been Ignoring</h3>
-    <div class="blog-meta">December 15, 2024 • Environmental Data Science</div>
-    <p>There's something magical about watching a computer learn to recognize patterns in satellite imagery that human eyes have been overlooking for decades. In my latest research on irrigation patterns in Sub-Saharan Africa, I've been training machine learning models to identify small-scale farming practices that traditional remote sensing has missed...</p>
-    
-    <p>The challenge isn't just technical — it's about teaching algorithms to see with both precision and compassion. How do we ensure that our models don't just identify patterns, but understand the human stories behind them?</p>
-    
-    <p><strong>Key takeaway:</strong> The most powerful data science happens when we combine technical rigor with human empathy. Every pixel represents a real farmer, a real family, a real story of resilience and adaptation.</p>
-    
-    <div style="background: var(--bg-light); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
-      <strong>💡 Technical note:</strong> Using a combination of Sentinel-2 imagery and custom CNN architectures, we're achieving 94% accuracy in identifying small-scale irrigation systems. The key was training on hand-labeled data from local farmers who know their land better than any algorithm ever could.
-    </div>
-  </div>
-  
-  <div class="blog-post">
-    <h3>Why My Dog's Kelp Obsession Taught Me About Data Visualization</h3>
-    <div class="blog-meta">December 8, 2024 • Creative Data Science</div>
-    <p>My dog has an unhealthy obsession with kelp. She'll eat it fresh from the ocean, dried from the beach, or even (much to my embarrassment) straight from other people's seaweed snacks. At first, I thought this was just another quirky dog behavior. Then I realized it was teaching me something profound about data storytelling...</p>
-    
-    <p>Like my dog with kelp, people are drawn to data that feels natural and authentic. The best visualizations aren't just accurate — they're compelling. They tell a story that makes people want to dig deeper, to understand more, to care about the implications.</p>
-    
-    <p><strong>The kelp lesson:</strong> Sometimes the most effective way to communicate complex data is to find the human (or canine) connection that makes it relatable and memorable.</p>
-  </div>
-  
-  <div class="blog-post">
-    <h3>From Beach Cleanup to Policy Change: How Data Becomes Action</h3>
-    <div class="blog-meta">November 30, 2024 • Environmental Activism</div>
-    <p>Last month, I organized a beach cleanup in Isla Vista that brought together 50+ volunteers. We collected over 200 pounds of trash and microplastics. But the real impact wasn't just in the numbers — it was in the conversations, the community connections, and the way data became a catalyst for change...</p>
-    
-    <p>By documenting the types and sources of pollution we found, we created a dataset that local environmental groups are now using to advocate for policy changes. Our "random" beach cleanup became part of a larger movement toward ocean conservation.</p>
-    
-    <p><strong>The bigger picture:</strong> Every piece of data we collect, every pattern we identify, every story we tell has the potential to create real-world impact. The question isn't whether data can change the world — it's whether we're brave enough to use it that way.</p>
-  </div>
-  
-  <div class="blog-post">
-    <h3>The Art of Scientific Communication: Why Pretty Pictures Matter</h3>
-    <div class="blog-meta">November 22, 2024 • Science Communication</div>
-    <p>I spent three hours yesterday making a single data visualization. Three hours for one chart. My advisor would probably say I'm being inefficient, but I think those three hours were the most important part of my research process...</p>
-    
-    <p>Beautiful, clear visualizations don't just make data more accessible — they make it more credible. When people can see and understand your findings at a glance, they're more likely to trust your conclusions and act on your recommendations.</p>
-    
-    <p><strong>The visualization principle:</strong> If you can't explain your research in a single, compelling image, you probably don't understand it well enough yet. The process of creating that perfect visualization forces you to clarify your thinking and identify the most important insights.</p>
-  </div>
-  
-  <div class="blog-post">
-    <h3>Confessions of a Math Major Turned Environmental Scientist</h3>
-    <div class="blog-meta">November 15, 2024 • Personal Journey</div>
-    <p>I started college as a pure math major, convinced that numbers and equations were the only things that made sense in an otherwise chaotic world. Then I discovered that math could be applied to real problems — like tracking deforestation, predicting climate patterns, and understanding how humans interact with the environment...</p>
-    
-    <p>The transition wasn't always smooth. There were moments when I missed the clean elegance of pure mathematics, when real-world data felt messy and imperfect. But I learned that the messiness is where the magic happens — where mathematical rigor meets human complexity.</p>
-    
-    <p><strong>My advice to fellow math majors:</strong> Don't be afraid to apply your skills to problems that matter. The world needs more mathematicians who are willing to get their hands dirty with real data and real-world challenges.</p>
-  </div>
-</div>
+------------------------------------------------------------------------
 
-<div class="section-card">
-  <h2>🏷️ Categories</h2>
-  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 2rem 0;">
-    <div style="text-align: center; padding: 1.5rem; background: var(--bg-light); border-radius: 10px; border-left: 4px solid var(--primary-color);">
-      <h4 style="color: var(--primary-color); margin-bottom: 0.5rem;">🔬 Environmental Data Science</h4>
-      <p>Technical insights from my research on satellite imagery, machine learning, and environmental monitoring</p>
-    </div>
-    
-    <div style="text-align: center; padding: 1.5rem; background: var(--bg-light); border-radius: 10px; border-left: 4px solid var(--secondary-color);">
-      <h4 style="color: var(--secondary-color); margin-bottom: 0.5rem;">🎨 Creative Data Science</h4>
-      <p>Where art meets algorithms, and data visualization becomes storytelling</p>
-    </div>
-    
-    <div style="text-align: center; padding: 1.5rem; background: var(--bg-light); border-radius: 10px; border-left: 4px solid var(--accent-color);">
-      <h4 style="color: var(--accent-color); margin-bottom: 0.5rem;">🌍 Environmental Activism</h4>
-      <p>Thoughts on using data and technology for environmental justice and conservation</p>
-    </div>
-    
-    <div style="text-align: center; padding: 1.5rem; background: var(--bg-light); border-radius: 10px; border-left: 4px solid var(--creative-color);">
-      <h4 style="color: var(--creative-color); margin-bottom: 0.5rem;">📊 Science Communication</h4>
-      <p>How to make complex research accessible, engaging, and actionable</p>
-    </div>
-    
-    <div style="text-align: center; padding: 1.5rem; background: var(--bg-light); border-radius: 10px; border-left: 4px solid var(--warm-color);">
-      <h4 style="color: var(--warm-color); margin-bottom: 0.5rem;">🚀 Personal Journey</h4>
-      <p>Reflections on being a math major, environmental scientist, and creative human</p>
-    </div>
-    
-    <div style="text-align: center; padding: 1.5rem; background: var(--bg-light); border-radius: 10px; border-left: 4px solid var(--earth-color);">
-      <h4 style="color: var(--earth-color); margin-bottom: 0.5rem;">🐕 Life Lessons</h4>
-      <p>The wisdom that comes from dogs, beach cleanups, and unexpected adventures</p>
-    </div>
-  </div>
-</div>
+## 🌟 What You'll Find Here
 
-<div class="section-card">
-  <h2>📝 Writing Process</h2>
-  <p>I write about the intersection of data science and creativity, environmental research, and the human side of technology. My goal is to make complex topics accessible while maintaining scientific rigor and personal authenticity.</p>
-  
-  <div style="background: var(--bg-light); padding: 2rem; border-radius: 10px; margin: 2rem 0;">
-    <h4>My Writing Philosophy</h4>
-    <ul>
-      <li><strong>Authenticity over perfection:</strong> I'd rather share imperfect thoughts that spark conversation than polished pieces that say nothing new.</li>
-      <li><strong>Technical rigor with human warmth:</strong> Complex topics deserve clear explanations, but they also deserve to feel human and relatable.</li>
-      <li><strong>Data-driven storytelling:</strong> Every post is grounded in real research, real experiences, or real insights from the field.</li>
-      <li><strong>Creative connections:</strong> The best insights come from unexpected connections between seemingly unrelated ideas.</li>
-    </ul>
-  </div>
-</div>
+Welcome to my corner of the internet where I share thoughts on environmental data science, the intersection of creativity and research, and the weird and wonderful moments that happen when you're passionate about both pixels and poetry. Expect a mix of technical insights, personal reflections, and the occasional rant about why my dog won't stop eating kelp.
 
-<div class="section-card">
-  <h2>💌 Stay Updated</h2>
-  <p>Want to be notified when I publish new posts? I'm working on setting up a newsletter, but for now, the best way to stay updated is to follow me on social media or just check back here periodically.</p>
-  
-  <div style="text-align: center; margin: 2rem 0;">
-    <p><em>Coming soon: A monthly newsletter with research updates, creative insights, and the occasional poem about data visualization.</em></p>
-  </div>
-</div>
+> *"The best ideas come from unexpected connections between seemingly unrelated things — like satellite imagery and poetry, or data analysis and beach cleanups."*
 
-<div class="section-card">
-  <h2>🤝 Guest Posts & Collaborations</h2>
-  <p>I'm always interested in collaborating with other researchers, artists, and thinkers who are exploring the intersection of data science, environmental research, and creative expression. If you have an idea for a guest post, collaborative piece, or just want to chat about the possibilities, let's connect!</p>
-  
-  <div style="text-align: center; margin: 2rem 0;">
-    <a href="mailto:ermiller@ucsb.edu?subject=Blog Collaboration Inquiry" class="btn-custom">Let's Collaborate</a>
-  </div>
-</div>
+------------------------------------------------------------------------
 
-<div class="fun-divider"></div>
+## 📚 Recent Posts
 
-<div class="section-card" style="text-align: center; background: linear-gradient(135deg, var(--secondary-color), var(--accent-color)); color: white;">
-  <h2 style="color: white;">Join the Conversation! 💬</h2>
-  <p>I love hearing from readers! Whether you have questions about my research, want to discuss a blog post, or just want to share your own thoughts on data science and creativity, I'd love to connect.</p>
-  <a href="mailto:ermiller@ucsb.edu" class="btn-custom" style="background: white; color: var(--secondary-color);">Start a Discussion</a>
-</div>
+### Teaching Computers to See What We've Been Ignoring
+
+*December 15, 2024 • Environmental Data Science*
+
+There's something magical about watching a computer learn to recognize patterns in satellite imagery that human eyes have been overlooking for decades. In my latest research on irrigation patterns in Sub-Saharan Africa, I've been training machine learning models to identify small-scale farming practices that traditional remote sensing has missed...
+
+The challenge isn't just technical — it's about teaching algorithms to see with both precision and compassion. How do we ensure that our models don't just identify patterns, but understand the human stories behind them?
+
+**Key takeaway:** The most powerful data science happens when we combine technical rigor with human empathy. Every pixel represents a real farmer, a real family, a real story of resilience and adaptation.
+
+-   💡 *Technical note:* Using a combination of Sentinel-2 imagery and custom CNN architectures, we're achieving 94% accuracy in identifying small-scale irrigation systems. The key was training on hand-labeled data from local farmers who know their land better than any algorithm ever could.
+
+------------------------------------------------------------------------
+
+### Why My Dog's Kelp Obsession Taught Me About Data Visualization
+
+*December 8, 2024 • Creative Data Science*
+
+My dog has an unhealthy obsession with kelp. She'll eat it fresh from the ocean, dried from the beach, or even (much to my embarrassment) straight from other people's seaweed snacks. At first, I thought this was just another quirky dog behavior. Then I realized it was teaching me something profound about data storytelling...
+
+Like my dog with kelp, people are drawn to data that feels natural and authentic. The best visualizations aren't just accurate — they're compelling. They tell a story that makes people want to dig deeper, to understand more, to care about the implications.
+
+**The kelp lesson:** Sometimes the most effective way to communicate complex data is to find the human (or canine) connection that makes it relatable and memorable.
+
+------------------------------------------------------------------------
+
+### From Beach Cleanup to Policy Change: How Data Becomes Action
+
+*November 30, 2024 • Environmental Activism*
+
+Last month, I organized a beach cleanup in Isla Vista that brought together 50+ volunteers. We collected over 200 pounds of trash and microplastics. But the real impact wasn't just in the numbers — it was in the conversations, the community connections, and the way data became a catalyst for change...
+
+By documenting the types and sources of pollution we found, we created a dataset that local environmental groups are now using to advocate for policy changes. Our "random" beach cleanup became part of a larger movement toward ocean conservation.
+
+**The bigger picture:** Every piece of data we collect, every pattern we identify, every story we tell has the potential to create real-world impact. The question isn't whether data can change the world — it's whether we're brave enough to use it that way.
+
+------------------------------------------------------------------------
+
+### The Art of Scientific Communication: Why Pretty Pictures Matter
+
+*November 22, 2024 • Science Communication*
+
+I spent three hours yesterday making a single data visualization. Three hours for one chart. My advisor would probably say I'm being inefficient, but I think those three hours were the most important part of my research process...
+
+Beautiful, clear visualizations don't just make data more accessible — they make it more credible. When people can see and understand your findings at a glance, they're more likely to trust your conclusions and act on your recommendations.
+
+**The visualization principle:** If you can't explain your research in a single, compelling image, you probably don't understand it well enough yet. The process of creating that perfect visualization forces you to clarify your thinking and identify the most important insights.
+
+------------------------------------------------------------------------
+
+### Confessions of a Math Major Turned Environmental Scientist
+
+*November 15, 2024 • Personal Journey*
+
+I started college as a pure math major, convinced that numbers and equations were the only things that made sense in an otherwise chaotic world. Then I discovered that math could be applied to real problems — like tracking deforestation, predicting climate patterns, and understanding how humans interact with the environment...
+
+The transition wasn't always smooth. There were moments when I missed the clean elegance of pure mathematics, when real-world data felt messy and imperfect. But I learned that the messiness is where the magic happens — where mathematical rigor meets human complexity.
+
+**My advice to fellow math majors:** Don't be afraid to apply your skills to problems that matter. The world needs more mathematicians who are willing to get their hands dirty with real data and real-world challenges.
+
+------------------------------------------------------------------------
+
+## 🏷️ Categories
+
+### 🔬 Environmental Data Science
+
+Technical insights from my research on satellite imagery, machine learning, and environmental monitoring
+
+### 🎨 Creative Data Science
+
+Where art meets algorithms, and data visualization becomes storytelling
+
+### 🌍 Environmental Activism
+
+Thoughts on using data and technology for environmental justice and conservation
+
+### 📊 Science Communication
+
+How to make complex research accessible, engaging, and actionable
+
+### 🚀 Personal Journey
+
+Reflections on being a math major, environmental scientist, and creative human
+
+### 🐕 Life Lessons
+
+The wisdom that comes from dogs, beach cleanups, and unexpected adventures
+
+------------------------------------------------------------------------
+
+## 📝 Writing Process
+
+I write about the intersection of data science and creativity, environmental research, and the human side of technology. My goal is to make complex topics accessible while maintaining scientific rigor and personal authenticity.
+
+### My Writing Philosophy
+
+-   **Authenticity over perfection**: I'd rather share imperfect thoughts that spark conversation than polished pieces that say nothing new.
+-   **Technical rigor with human warmth**: Complex topics deserve clear explanations, but they also deserve to feel human and relatable.
+-   **Data-driven storytelling**: Every post is grounded in real research, real experiences, or real insights from the field.
+-   **Creative connections**: The best insights come from unexpected connections between seemingly unrelated ideas.
+
+------------------------------------------------------------------------
+
+## 💌 Stay Updated
+
+Want to be notified when I publish new posts? I'm working on setting up a newsletter, but for now, the best way to stay updated is to follow me on social media or just check back here periodically.
+
+*Coming soon: A monthly newsletter with research updates, creative insights, and the occasional poem about data visualization.*
+
+------------------------------------------------------------------------
+
+## 🤝 Guest Posts & Collaborations
+
+I'm always interested in collaborating with other researchers, artists, and thinkers who are exploring the intersection of data science, environmental research, and creative expression. If you have an idea for a guest post, collaborative piece, or just want to chat about the possibilities, let's connect!
+
+[Let's Collaborate](mailto:ermiller@ucsb.edu?subject=Blog%20Collaboration%20Inquiry)
+
+------------------------------------------------------------------------
+
+# Join the Conversation! 💬
+
+I love hearing from readers! Whether you have questions about my research, want to discuss a blog post, or just want to share your own thoughts on data science and creativity, I'd love to connect.
+
+[Start a Discussion](mailto:ermiller@ucsb.edu)

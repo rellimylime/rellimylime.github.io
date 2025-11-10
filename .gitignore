@@ -1,12 +1,50 @@
-.Rproj.user
+# R and RStudio files
+.Rproj.user/
 .Rhistory
 .Rdata
 .httr-oauth
-.DS_Store
-.quarto
+.RDataTmp
+.Rproj.user
 
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Quarto build artifacts and cache
+.quarto/
 /.quarto/
 **/*.quarto_ipynb
+_files/
+_freeze/
 
+# Generated output (rebuild from source)
+/docs/
+
+# Source map files
+*.css.map
+*.js.map
+
+# Node modules (if using any JS build tools)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment files
+.env
+.env.local
+
+# Dependencies (keep your source, ignore generated)
 /styles.scss
 /images

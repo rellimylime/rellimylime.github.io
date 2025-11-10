@@ -1,215 +1,137 @@
 ---
-title: "Resume"
+title: "Emily Miller"
+subtitle: "Environmental Data Scientist • Remote Sensing & Machine Learning"
 toc: false
 ---
 
-<div class="hero-section">
-  <h1 class="hero-title">Emily Miller</h1>
-  <p class="hero-subtitle">Environmental Data Scientist • PhD Student • UCSB</p>
-</div>
+## Contact Information
 
-<div class="section-card">
-  <h2>Contact Information</h2>
-  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 2rem 0;">
-    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 10px;">
-      <h4 style="color: var(--primary-color);">Email</h4>
-      <p><a href="mailto:ermiller@ucsb.edu">ermiller@ucsb.edu</a></p>
-    </div>
-    
-    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 10px;">
-      <h4 style="color: var(--secondary-color);">LinkedIn</h4>
-      <p><a href="https://www.linkedin.com/in/emily-miller-a0237233b/" target="_blank">linkedin.com/in/emily-miller-a0237233b/</a></p>
-    </div>
-    
-    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 10px;">
-      <h4 style="color: var(--accent-color);">GitHub</h4>
-      <p><a href="https://github.com/rellimylime" target="_blank">github.com/rellimylime</a></p>
-    </div>
-    
-    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 10px;">
-      <h4 style="color: var(--creative-color);">Location</h4>
-      <p>Santa Barbara, CA</p>
-    </div>
-  </div>
-</div>
+**Phone:** (978) 265-9348  
+**Email:** [ermiller@ucsb.edu](mailto:ermiller@ucsb.edu)  
+**Website:** [rellimylime.github.io](https://rellimylime.github.io)  
+**LinkedIn:** [linkedin.com/in/rellimylime](https://www.linkedin.com/in/rellimylime/)  
+**GitHub:** [github.com/rellimylime](https://github.com/rellimylime)  
+**Location:** Santa Barbara, CA
 
-<div class="section-card">
-  <h2>🎓 Education</h2>
-  
-  <div class="research-item">
-    <h4>PhD in Environmental Data Science</h4>
-    <p><strong>University of California, Santa Barbara</strong><br>
-    <em>2022 - Present</em></p>
-    <p>Focus: Remote sensing applications for environmental monitoring and policy. Developing machine learning models to identify small-scale irrigation systems and support environmental justice initiatives.</p>
-  </div>
-  
-  <div class="research-item">
-    <h4>BS in Mathematics</h4>
-    <p><strong>University of California, Santa Barbara</strong><br>
-    <em>2018 - 2022</em></p>
-    <p>Focus: Applied mathematics and environmental science. Discovered passion for using mathematical tools to address real-world environmental challenges.</p>
-  </div>
-</div>
+------------------------------------------------------------------------
 
-<div class="section-card">
-  <h2>🔬 Research Experience</h2>
-  
-  <div class="research-item">
-    <h4>Graduate Research Assistant</h4>
-    <p><strong>UCSB Earth Research Institute</strong><br>
-    <em>2022 - Present</em></p>
-    <ul>
-      <li>Develop machine learning models for satellite imagery analysis</li>
-      <li>Collaborate with international partners on environmental monitoring projects</li>
-      <li>Present research findings at major conferences (AGU, IGARSS)</li>
-      <li>Publish peer-reviewed articles in top-tier journals</li>
-    </ul>
-  </div>
-  
-  <div class="research-item">
-    <h4>Undergraduate Research Assistant</h4>
-    <p><strong>UCSB Mathematics Department</strong><br>
-    <em>2020 - 2022</em></p>
-    <ul>
-      <li>Applied statistical modeling to environmental datasets</li>
-      <li>Assisted with data collection and analysis for climate research</li>
-      <li>Presented findings at undergraduate research symposiums</li>
-    </ul>
-  </div>
-</div>
+## Education
 
-<div class="section-card">
-  <h2>📚 Publications</h2>
-  
-  <div style="background: var(--bg-light); padding: 2rem; border-radius: 10px; margin: 1rem 0;">
-    <h4>Miller, E., et al. (2024). "Deep Learning Approaches for Small-Scale Irrigation Mapping in Sub-Saharan Africa." <em>Remote Sensing of Environment</em>, 298, 113-125.</h4>
-    <p>Novel CNN architecture for identifying small-scale irrigation systems using multi-temporal satellite imagery. Achieved 94% accuracy in mapping irrigation patterns across three countries in Sub-Saharan Africa.</p>
-  </div>
-  
-  <div style="background: var(--bg-light); padding: 2rem; border-radius: 10px; margin: 1rem 0;">
-    <h4>Miller, E., et al. (2024). "Community-Centered Remote Sensing: Integrating Local Knowledge with Satellite Imagery for Environmental Monitoring." <em>Environmental Science & Policy</em>, 145, 78-89.</h4>
-    <p>Explores the importance of incorporating local knowledge and community perspectives into remote sensing research, with case studies from irrigation mapping and land rights monitoring projects.</p>
-  </div>
-  
-  <div style="background: var(--bg-light); padding: 2rem; border-radius: 10px; margin: 1rem 0;">
-    <h4>Miller, E., et al. (2023). "Satellite-Based Evidence for Indigenous Land Rights Claims: A Case Study from the Amazon." <em>Land Use Policy</em>, 132, 106-118.</h4>
-    <p>Demonstrates how satellite imagery can be used as legal evidence in indigenous land rights cases, with a focus on documenting illegal deforestation and land encroachment.</p>
-  </div>
-</div>
+### Master of Environmental Data Science
+**University of California, Santa Barbara – Bren School of Environmental Science & Management** | *Expected June 2026*
 
-<div class="section-card">
-  <h2>🛠️ Technical Skills</h2>
-  
-  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
-    <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-left: 5px solid var(--primary-color);">
-      <h4 style="color: var(--primary-color);">🛰️ Remote Sensing</h4>
-      <ul>
-        <li>Sentinel-1/2, Landsat, Planet imagery</li>
-        <li>Google Earth Engine</li>
-        <li>QGIS, ArcGIS Pro</li>
-        <li>Rasterio, GDAL</li>
-      </ul>
-    </div>
-    
-    <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-left: 5px solid var(--secondary-color);">
-      <h4 style="color: var(--secondary-color);">🤖 Machine Learning</h4>
-      <ul>
-        <li>PyTorch, TensorFlow</li>
-        <li>Custom CNN architectures</li>
-        <li>Time series analysis</li>
-        <li>Transfer learning</li>
-      </ul>
-    </div>
-    
-    <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-left: 5px solid var(--accent-color);">
-      <h4 style="color: var(--accent-color);">💻 Programming</h4>
-      <ul>
-        <li>Python (pandas, numpy, scikit-learn)</li>
-        <li>R (tidyverse, spatial packages)</li>
-        <li>JavaScript (Google Earth Engine)</li>
-        <li>Git version control</li>
-      </ul>
-    </div>
-    
-    <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-left: 5px solid var(--creative-color);">
-      <h4 style="color: var(--creative-color);">📊 Data Visualization</h4>
-      <ul>
-        <li>Matplotlib, Seaborn</li>
-        <li>Plotly, D3.js</li>
-        <li>Tableau, PowerBI</li>
-        <li>Custom web visualizations</li>
-      </ul>
-    </div>
-  </div>
-</div>
+**GPA: 4.0** | **Leadership:** MEDS Student Faculty Representative
 
-<div class="section-card">
-  <h2>🏆 Awards & Recognition</h2>
-  
-  <ul>
-    <li><strong>2024:</strong> Outstanding Graduate Student Research Award, UCSB Earth Research Institute</li>
-    <li><strong>2024:</strong> Best Student Presentation, AGU Fall Meeting</li>
-    <li><strong>2023:</strong> Environmental Data Science Fellowship, Google Earth Engine</li>
-    <li><strong>2023:</strong> Graduate Research Fellowship, National Science Foundation</li>
-    <li><strong>2022:</strong> Outstanding Undergraduate Research Award, UCSB Mathematics Department</li>
-  </ul>
-</div>
+*Highlighted Coursework:* Machine Learning in Environmental Science, Geospatial Analysis and Remote Sensing, Environmental Systems Modeling, Environmental Datasets and Data Engineering, Databases and Data Management, Statistics for Environmental Data Science
 
-<div class="section-card">
-  <h2>🌊 Community Involvement</h2>
-  
-  <div class="research-item">
-    <h4>Beach Cleanup Organizer</h4>
-    <p><strong>Isla Vista, CA</strong><br>
-    <em>2022 - Present</em></p>
-    <p>Organize regular beach cleanups bringing together 50+ volunteers. Collected over 200 pounds of trash and microplastics while building community connections and environmental awareness.</p>
-  </div>
-  
-  <div class="research-item">
-    <h4>Environmental Education Volunteer</h4>
-    <p><strong>Local Schools & Community Groups</strong><br>
-    <em>2023 - Present</em></p>
-    <p>Teach environmental science and data literacy to students of all ages, making complex environmental concepts accessible and engaging.</p>
-  </div>
-</div>
+### Bachelor of Science in Mathematics
+**University of California, Santa Barbara** | *June 2025*
 
-<div class="section-card">
-  <h2>💼 Professional Services</h2>
-  
-  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin: 2rem 0;">
-    <div style="background: var(--bg-light); padding: 2rem; border-radius: 15px;">
-      <h4 style="color: var(--primary-color);">📊 Data Analysis & Visualization</h4>
-      <p>Transform raw data into actionable insights with custom visualizations and interactive dashboards.</p>
-    </div>
-    
-    <div style="background: var(--bg-light); padding: 2rem; border-radius: 15px;">
-      <h4 style="color: var(--secondary-color);">🌍 Environmental Consulting</h4>
-      <p>Specialized expertise in remote sensing, satellite imagery analysis, and environmental monitoring.</p>
-    </div>
-    
-    <div style="background: var(--bg-light); padding: 2rem; border-radius: 15px;">
-      <h4 style="color: var(--accent-color);">🎓 Data Science Tutoring</h4>
-      <p>One-on-one tutoring in Python, R, machine learning, and data visualization for students and professionals.</p>
-    </div>
-    
-    <div style="background: var(--bg-light); padding: 2rem; border-radius: 15px;">
-      <h4 style="color: var(--creative-color);">🎨 Creative Data Visualization</h4>
-      <p>Transform data into compelling visual stories for presentations, reports, and digital media.</p>
-    </div>
-  </div>
-</div>
+**GPA: 3.67** | **Leadership:** Undergraduate Outreach Officer for Women in Science and Engineering (WiSE)
 
-<div class="section-card">
-  <h2>📄 Full CV PDF</h2>
-  <p>Below is an embedded version of your complete CV. You can also download the PDF using the button below.</p>
-  
-  <div class="pdf-container">
-    <iframe src="cv/MillerE_CV_08_2025.pdf" class="pdf-embed" type="application/pdf">
-      <p>Your browser does not support PDFs. <a href="cv/MillerE_CV_08_2025.pdf" download>Download the PDF here</a>.</p>
-    </iframe>
-  </div>
-  
-  <div style="text-align: center; margin: 2rem 0;">
-    <a href="cv/MillerE_CV_08_2025.pdf" class="btn-custom" download>📥 Download PDF</a>
-  </div>
-</div>
+*Highlighted Coursework:* Real Analysis, Linear Algebra, Numerical Analysis, Computer Science and Problem Solving, Probability and Statistics
+
+### Associate of Science in Mathematics
+**Sacramento City College** | *June 2022*
+
+**GPA: 4.0**
+
+------------------------------------------------------------------------
+
+## Research & Data Analysis Experience
+
+### Research Assistant – Water Vegetation and Society (WaVeS) Lab
+**University of California Santa Barbara, Goleta, CA** | *June 2024 - Present*
+
+-   Applied statistical and numerical methods to analyze and validate agricultural water and land use datasets across multiple spatial scales
+-   Developed Python codebase for processing and analyzing satellite imagery and remotely sensed data to identify irrigation patterns in Sub-Saharan Africa
+-   Created statistical frameworks and visualization methods for examining complex spatial relationships in agricultural systems
+-   Collaborated with faculty mentor (Prof. Kelly Caylor) on water resource sustainability research
+
+### BEL Fellow – Bren Environmental Leadership Program
+**University of California Santa Barbara, Goleta, CA** | *June 2024 - December 2024*
+
+-   Conducted research on irrigation patterns in Sub-Saharan Africa using satellite data analysis and remote sensing techniques
+-   Presented research findings "Satellite Data Reveal Emerging Decentralized Irrigation Systems in Sub-Saharan Africa" at three academic venues including AGU Fall Meeting
+-   Managed project timeline and deliverables while collaborating with faculty mentor on water resource sustainability research
+
+------------------------------------------------------------------------
+
+## Leadership & Community Engagement Experience
+
+### Founder & Lead Organizer – IV Recovery Community Initiative
+**Goleta, CA** | *2023 - Present*
+
+-   Founded and lead initiative organizing bi-weekly coastal cleanups engaging university students and community members
+-   Develop community engagement strategies to increase environmental stewardship and normalize university participation in local conservation
+-   Quantify environmental impact through data collection and analysis
+
+### Undergraduate Outreach Officer – Women in Science and Engineering (WiSE)
+**University of California Santa Barbara, Goleta, CA** | *September 2024 - June 2025*
+
+-   Coordinated mentorship program supporting 130+ undergraduate students pursuing STEM degrees
+-   Focused outreach efforts on increasing diversity and representation in quantitative sciences through targeted programming
+-   Developed and implemented engagement strategies to support retention of underrepresented students in STEM fields
+
+------------------------------------------------------------------------
+
+## Teaching & Mentoring Experience
+
+### Mathematics Tutor
+**Davis, CA** | *2020 - 2023*
+
+-   Taught mathematics to students ranging from elementary through college level, adapting instruction to diverse learning needs
+-   Provided comprehensive GED preparation support across all subject areas, resulting in student success on examinations
+-   Developed individualized learning plans to accommodate different learning styles and optimize student comprehension
+
+------------------------------------------------------------------------
+
+## Presentations & Talks
+
+Miller E, Boser A, Caylor K. "Satellite Data Reveal Emerging Decentralized Irrigation Systems in Sub-Saharan Africa." *Summer@Bren 2024 Flash Talks*, UCSB, CA. August 29, 2024.
+
+Miller E, Boser A, Caylor K. "Water Source Attribution for Center Pivot Irrigation in Sub-Saharan Africa." *Mantell Symposium in Environmental Justice and Conservation Innovation*, UCSB, CA. October 24, 2024.
+
+Boser A, Miller E, Perez J, Caylor K. "Analyzing the sustainability and climate resilience of rapidly expanding center pivot Irrigation in Sub-Saharan Africa using remote sensing." *American Geophysical Union Fall Meeting*, Washington D.C. December 9-13, 2024.
+
+------------------------------------------------------------------------
+
+## Technical Skills
+
+### Programming & Data Analysis
+Python, R, C++
+
+### Technical Expertise
+-   Satellite imagery analysis and remote sensing
+-   Statistical analysis and numerical methods
+-   Machine learning and data visualization
+-   Error analysis and computational methods
+-   Spatial data processing
+
+### Mathematical Foundation
+-   Real analysis and linear algebra
+-   Probability and statistics
+-   Numerical analysis
+-   Matrix operations and eigenvalue calculations
+-   Data structures and algorithms
+
+### Tools & Software
+-   Google Earth Engine, QGIS, ArcGIS
+-   Python libraries: pandas, numpy, scikit-learn, matplotlib, seaborn
+-   R and tidyverse packages
+-   Database management and SQL
+-   Version control with Git
+
+------------------------------------------------------------------------
+
+## Research Interests & Career Focus
+
+**Current Focus:** Remote sensing and machine learning applications for understanding agricultural water systems, environmental sustainability, and climate resilience in Sub-Saharan Africa
+
+**Broader Interests:**
+-   Using satellite imagery to support environmental justice and marginalized communities
+-   Wildlife corridor connectivity and infrastructure impact analysis
+-   Indigenous land management practices and conservation outcomes
+-   Live, accessible data systems for environmental decision-making
+-   Nature-inspired solutions and biomimicry
+-   Community-centered approaches to environmental research and monitoring

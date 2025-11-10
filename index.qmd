@@ -1,6 +1,7 @@
 ---
 title: "Emily Miller"
-image: "headshot.jpg"
+subtitle: "Environmental Data Scientist • Artist • Researcher"
+image: "images/headshot.jpg"
 toc: false
 about:
   template: jolla
@@ -14,72 +15,70 @@ about:
       href: "https://github.com/rellimylime"
     - icon: envelope
       text: Email
-      href: "malto:ermiller@ucsb.edu" 
+      href: "mailto:ermiller@ucsb.edu" 
 ---
 
-<div class="hero-section">
-  <h1 class="hero-title">Emily Miller</h1>
-  <p class="hero-subtitle">Environmental Data Scientist • Artist • Researcher</p>
-</div>
+## Research
 
-<div class="section-card">
-  <h2>Research</h2>
-  <p>Currently pursuing a PhD in Environmental Data Science at UCSB, where I develop machine learning models to analyze satellite imagery and track environmental changes across Sub-Saharan Africa. My research focuses on applying computer vision and deep learning techniques to biodiversity conservation, wildlife corridor mapping, and indigenous land rights monitoring.</p>
-  
-  <p>Beyond the laboratory, I am actively involved in community environmental initiatives and beach cleanup organizations in Isla Vista, exploring how data-driven insights can translate into meaningful environmental action.</p>
-  
-  <p><em>Equal parts quantitative rigor and unreasonable hope.</em></p>
-</div>
+Currently pursuing a PhD in Environmental Data Science at UCSB, where I develop machine learning models to analyze satellite imagery and track environmental changes across Sub-Saharan Africa. My research focuses on applying computer vision and deep learning techniques to biodiversity conservation, wildlife corridor mapping, and indigenous land rights monitoring.
 
-<div class="section-card">
-  <h2>Creative Practice</h2>
-  <p>Beyond the laboratory, I maintain an active creative practice that encompasses visual art, photography, and poetry. I believe that creativity and scientific inquiry are complementary forces — both require careful observation, pattern recognition, and the courage to explore the unknown.</p>
-  
-  <p>My artistic work often draws inspiration from the data patterns I encounter in my research, creating visual bridges between quantitative analysis and aesthetic expression.</p>
-</div>
+Beyond the laboratory, I am actively involved in community environmental initiatives and beach cleanup organizations in Isla Vista, exploring how data-driven insights can translate into meaningful environmental action.
 
-<div class="section-card">
-  <h2>Portfolio</h2>
-  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin: 2rem 0;">
-    <div style="text-align: left; padding: 2rem; background: var(--bg-light); border-left: 3px solid var(--primary-color);">
-      <h4 style="color: var(--primary-color); margin-bottom: 1rem;">Art & Poetry</h4>
-      <p>A collection of visual art, photography, and written works that explore the intersection of data and creativity.</p>
-    </div>
-    <div style="text-align: left; padding: 2rem; background: var(--bg-light); border-left: 3px solid var(--secondary-color);">
-      <h4 style="color: var(--secondary-color); margin-bottom: 1rem;">Adventures</h4>
-      <p>Documentation of fieldwork, travel, and life moments that inform my research and creative practice.</p>
-    </div>
-    <div style="text-align: left; padding: 2rem; background: var(--bg-light); border-left: 3px solid var(--accent-color);">
-      <h4 style="color: var(--accent-color); margin-bottom: 1rem;">Blog</h4>
-      <p>Reflections on environmental data science, research methodology, and the human side of technology.</p>
-    </div>
-    <div style="text-align: left; padding: 2rem; background: var(--bg-light); border-left: 3px solid var(--creative-color);">
-      <h4 style="color: var(--creative-color); margin-bottom: 1rem;">Research</h4>
-      <p>Publications, presentations, and ongoing projects in environmental remote sensing and machine learning.</p>
-    </div>
-    <div style="text-align: left; padding: 2rem; background: var(--bg-light); border-left: 3px solid var(--earth-color);">
-      <h4 style="color: var(--earth-color); margin-bottom: 1rem;">Services</h4>
-      <p>Data analysis, consulting, and educational services for environmental and research applications.</p>
-    </div>
-  </div>
-</div>
+*Equal parts quantitative rigor and unreasonable hope.*
 
-<div class="elegant-divider"></div>
+-   **Remote Sensing:** Machine learning for satellite imagery analysis and habitat mapping
+-   **Biodiversity:** Wildlife corridors and species tracking
+-   **Community Science:** Collaborations for local environmental impact
+-   **Publications and Talks:** Sharing results at conferences and in journals
 
-<div class="section-card">
-  <h2>Background</h2>
-  <p>A former mathematics major who discovered that data science offers the perfect intersection of analytical rigor and practical application. I am passionate about using technology to address environmental challenges while maintaining a commitment to community engagement and creative expression.</p>
-  
-  <p>My work spans the intersection of remote sensing, machine learning, and environmental justice, with a particular focus on making complex data accessible and actionable for communities around the world.</p>
-</div>
+## Creative Practice
 
-<div class="section-card" style="text-align: center; background: var(--primary-color); color: white;">
-  <h2 style="color: white;">Contact</h2>
-  <p>I welcome inquiries about research collaboration, creative projects, or consulting opportunities. Please feel free to reach out to discuss how we might work together.</p>
-  <a href="mailto:ermiller@ucsb.edu" class="btn-custom" style="background: white; color: var(--primary-color);">Get In Touch</a>
-</div> 
+Beyond the laboratory, I maintain an active creative practice that encompasses visual art, photography, and poetry. I believe that creativity and scientific inquiry are complementary forces — both require careful observation, pattern recognition, and the courage to explore the unknown.
 
+My artistic work often draws inspiration from the data patterns I encounter in my research, creating visual bridges between quantitative analysis and aesthetic expression.
 
+## Portfolio
 
+A curated intersection of research, art, and discovery:
 
+::: block-section
+### Art & Poetry
 
+Works bridging scientific patterns and visual storytelling. From paintings to data-driven art to poetry and text art.
+:::
+
+::: block-section
+### Adventures
+
+Fieldwork and rich experiences that fuel creative and scientific inquiry.
+:::
+
+::: block-section
+### Blog
+
+Essays and reflections on environmental data, art, and the creative process.
+:::
+
+::: block-section
+### Research
+
+Select publications and science projects in environmental change, remote sensing, and machine learning for conservation.
+:::
+
+::: block-section
+### Services
+
+Collaboration, consulting, and creative workshops at the intersection of science and art.
+:::
+
+## Background
+
+A former mathematics major who discovered that data science offers the perfect intersection of analytical rigor and practical application. I am passionate about using technology to address environmental challenges while maintaining a commitment to community engagement and creative expression.
+
+My work spans the intersection of remote sensing, machine learning, and environmental justice, with a particular focus on making complex data accessible and actionable for communities around the world.
+
+## Contact
+
+I welcome inquiries about research collaboration, creative projects, or consulting opportunities. Please feel free to reach out to discuss how we might work together.
+
+[Get In Touch](mailto:ermiller@ucsb.edu)

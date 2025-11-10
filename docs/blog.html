@@ -40,7 +40,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-e31584831b205ffbb2d98406f31c2a5b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-2904dbd21c13de947536d7d3eddd3716.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -70,7 +70,6 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -96,35 +95,39 @@ ul.task-list li input[type="checkbox"] {
     <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
-</ul>
-            <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
     <a class="nav-link" href="./about.html"> 
 <span class="menu-text">About</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./art.html"> 
-<span class="menu-text">Art &amp; Poetry</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./adventures.html"> 
-<span class="menu-text">Adventures</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link active" href="./blog.html" aria-current="page"> 
-<span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./research.html"> 
 <span class="menu-text">Research</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./services.html"> 
-<span class="menu-text">Services</span></a>
-  </li>  
-  <li class="nav-item">
     <a class="nav-link" href="./cv.html"> 
 <span class="menu-text">Resume</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-creative" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Creative</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-creative">    
+        <li>
+    <a class="dropdown-item" href="./art.html">
+ <span class="dropdown-text">Art &amp; Poetry</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./adventures.html">
+ <span class="dropdown-text">Adventures</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/rellimylime"> <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+<span class="menu-text"></span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -160,168 +163,126 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="hero-section">
-<h1 class="hero-title">
-✍️ Blog
-</h1>
-<p class="hero-subtitle">
-Thoughts on data, environment, creativity, and everything in between
-</p>
-</div>
-<div class="section-card">
-<h2 class="anchored">
-🌟 What You’ll Find Here
-</h2>
-<p>
-Welcome to my corner of the internet where I share thoughts on environmental data science, the intersection of creativity and research, and the weird and wonderful moments that happen when you’re passionate about both pixels and poetry. Expect a mix of technical insights, personal reflections, and the occasional rant about why my dog won’t stop eating kelp.
-</p>
-<p>
-<em>“The best ideas come from unexpected connections between seemingly unrelated things — like satellite imagery and poetry, or data analysis and beach cleanups.”</em>
-</p>
-</div>
-<div class="section-card">
-<h2 class="anchored">
-📚 Recent Posts
-</h2>
-<div class="blog-post">
-<pre><code>&lt;h3&gt;Teaching Computers to See What We've Been Ignoring&lt;/h3&gt;
-&lt;div class="blog-meta"&gt;December 15, 2024 • Environmental Data Science&lt;/div&gt;
-&lt;p&gt;There's something magical about watching a computer learn to recognize patterns in satellite imagery that human eyes have been overlooking for decades. In my latest research on irrigation patterns in Sub-Saharan Africa, I've been training machine learning models to identify small-scale farming practices that traditional remote sensing has missed...&lt;/p&gt;
-
-&lt;p&gt;The challenge isn't just technical — it's about teaching algorithms to see with both precision and compassion. How do we ensure that our models don't just identify patterns, but understand the human stories behind them?&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Key takeaway:&lt;/strong&gt; The most powerful data science happens when we combine technical rigor with human empathy. Every pixel represents a real farmer, a real family, a real story of resilience and adaptation.&lt;/p&gt;
-
-&lt;div style="background: var(--bg-light); padding: 1rem; border-radius: 8px; margin: 1rem 0;"&gt;
-  &lt;strong&gt;💡 Technical note:&lt;/strong&gt; Using a combination of Sentinel-2 imagery and custom CNN architectures, we're achieving 94% accuracy in identifying small-scale irrigation systems. The key was training on hand-labeled data from local farmers who know their land better than any algorithm ever could.
-&lt;/div&gt;</code></pre>
-</div>
-<div class="blog-post">
-<pre><code>&lt;h3&gt;Why My Dog's Kelp Obsession Taught Me About Data Visualization&lt;/h3&gt;
-&lt;div class="blog-meta"&gt;December 8, 2024 • Creative Data Science&lt;/div&gt;
-&lt;p&gt;My dog has an unhealthy obsession with kelp. She'll eat it fresh from the ocean, dried from the beach, or even (much to my embarrassment) straight from other people's seaweed snacks. At first, I thought this was just another quirky dog behavior. Then I realized it was teaching me something profound about data storytelling...&lt;/p&gt;
-
-&lt;p&gt;Like my dog with kelp, people are drawn to data that feels natural and authentic. The best visualizations aren't just accurate — they're compelling. They tell a story that makes people want to dig deeper, to understand more, to care about the implications.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;The kelp lesson:&lt;/strong&gt; Sometimes the most effective way to communicate complex data is to find the human (or canine) connection that makes it relatable and memorable.&lt;/p&gt;</code></pre>
-</div>
-<div class="blog-post">
-<pre><code>&lt;h3&gt;From Beach Cleanup to Policy Change: How Data Becomes Action&lt;/h3&gt;
-&lt;div class="blog-meta"&gt;November 30, 2024 • Environmental Activism&lt;/div&gt;
-&lt;p&gt;Last month, I organized a beach cleanup in Isla Vista that brought together 50+ volunteers. We collected over 200 pounds of trash and microplastics. But the real impact wasn't just in the numbers — it was in the conversations, the community connections, and the way data became a catalyst for change...&lt;/p&gt;
-
-&lt;p&gt;By documenting the types and sources of pollution we found, we created a dataset that local environmental groups are now using to advocate for policy changes. Our "random" beach cleanup became part of a larger movement toward ocean conservation.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;The bigger picture:&lt;/strong&gt; Every piece of data we collect, every pattern we identify, every story we tell has the potential to create real-world impact. The question isn't whether data can change the world — it's whether we're brave enough to use it that way.&lt;/p&gt;</code></pre>
-</div>
-<div class="blog-post">
-<pre><code>&lt;h3&gt;The Art of Scientific Communication: Why Pretty Pictures Matter&lt;/h3&gt;
-&lt;div class="blog-meta"&gt;November 22, 2024 • Science Communication&lt;/div&gt;
-&lt;p&gt;I spent three hours yesterday making a single data visualization. Three hours for one chart. My advisor would probably say I'm being inefficient, but I think those three hours were the most important part of my research process...&lt;/p&gt;
-
-&lt;p&gt;Beautiful, clear visualizations don't just make data more accessible — they make it more credible. When people can see and understand your findings at a glance, they're more likely to trust your conclusions and act on your recommendations.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;The visualization principle:&lt;/strong&gt; If you can't explain your research in a single, compelling image, you probably don't understand it well enough yet. The process of creating that perfect visualization forces you to clarify your thinking and identify the most important insights.&lt;/p&gt;</code></pre>
-</div>
-<div class="blog-post">
-<pre><code>&lt;h3&gt;Confessions of a Math Major Turned Environmental Scientist&lt;/h3&gt;
-&lt;div class="blog-meta"&gt;November 15, 2024 • Personal Journey&lt;/div&gt;
-&lt;p&gt;I started college as a pure math major, convinced that numbers and equations were the only things that made sense in an otherwise chaotic world. Then I discovered that math could be applied to real problems — like tracking deforestation, predicting climate patterns, and understanding how humans interact with the environment...&lt;/p&gt;
-
-&lt;p&gt;The transition wasn't always smooth. There were moments when I missed the clean elegance of pure mathematics, when real-world data felt messy and imperfect. But I learned that the messiness is where the magic happens — where mathematical rigor meets human complexity.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;My advice to fellow math majors:&lt;/strong&gt; Don't be afraid to apply your skills to problems that matter. The world needs more mathematicians who are willing to get their hands dirty with real data and real-world challenges.&lt;/p&gt;</code></pre>
-</div>
-</div>
-<div class="section-card">
-<h2 class="anchored">
-🏷️ Categories
-</h2>
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 2rem 0;">
-<pre><code>&lt;div style="text-align: center; padding: 1.5rem; background: var(--bg-light); border-radius: 10px; border-left: 4px solid var(--primary-color);"&gt;
-  &lt;h4 style="color: var(--primary-color); margin-bottom: 0.5rem;"&gt;🔬 Environmental Data Science&lt;/h4&gt;
-  &lt;p&gt;Technical insights from my research on satellite imagery, machine learning, and environmental monitoring&lt;/p&gt;
-&lt;/div&gt;
-
-&lt;div style="text-align: center; padding: 1.5rem; background: var(--bg-light); border-radius: 10px; border-left: 4px solid var(--secondary-color);"&gt;
-  &lt;h4 style="color: var(--secondary-color); margin-bottom: 0.5rem;"&gt;🎨 Creative Data Science&lt;/h4&gt;
-  &lt;p&gt;Where art meets algorithms, and data visualization becomes storytelling&lt;/p&gt;
-&lt;/div&gt;
-
-&lt;div style="text-align: center; padding: 1.5rem; background: var(--bg-light); border-radius: 10px; border-left: 4px solid var(--accent-color);"&gt;
-  &lt;h4 style="color: var(--accent-color); margin-bottom: 0.5rem;"&gt;🌍 Environmental Activism&lt;/h4&gt;
-  &lt;p&gt;Thoughts on using data and technology for environmental justice and conservation&lt;/p&gt;
-&lt;/div&gt;
-
-&lt;div style="text-align: center; padding: 1.5rem; background: var(--bg-light); border-radius: 10px; border-left: 4px solid var(--creative-color);"&gt;
-  &lt;h4 style="color: var(--creative-color); margin-bottom: 0.5rem;"&gt;📊 Science Communication&lt;/h4&gt;
-  &lt;p&gt;How to make complex research accessible, engaging, and actionable&lt;/p&gt;
-&lt;/div&gt;
-
-&lt;div style="text-align: center; padding: 1.5rem; background: var(--bg-light); border-radius: 10px; border-left: 4px solid var(--warm-color);"&gt;
-  &lt;h4 style="color: var(--warm-color); margin-bottom: 0.5rem;"&gt;🚀 Personal Journey&lt;/h4&gt;
-  &lt;p&gt;Reflections on being a math major, environmental scientist, and creative human&lt;/p&gt;
-&lt;/div&gt;
-
-&lt;div style="text-align: center; padding: 1.5rem; background: var(--bg-light); border-radius: 10px; border-left: 4px solid var(--earth-color);"&gt;
-  &lt;h4 style="color: var(--earth-color); margin-bottom: 0.5rem;"&gt;🐕 Life Lessons&lt;/h4&gt;
-  &lt;p&gt;The wisdom that comes from dogs, beach cleanups, and unexpected adventures&lt;/p&gt;
-&lt;/div&gt;</code></pre>
-</div>
-</div>
-<div class="section-card">
-<h2 class="anchored">
-📝 Writing Process
-</h2>
-<p>
-I write about the intersection of data science and creativity, environmental research, and the human side of technology. My goal is to make complex topics accessible while maintaining scientific rigor and personal authenticity.
-</p>
-<div style="background: var(--bg-light); padding: 2rem; border-radius: 10px; margin: 2rem 0;">
-<pre><code>&lt;h4&gt;My Writing Philosophy&lt;/h4&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Authenticity over perfection:&lt;/strong&gt; I'd rather share imperfect thoughts that spark conversation than polished pieces that say nothing new.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Technical rigor with human warmth:&lt;/strong&gt; Complex topics deserve clear explanations, but they also deserve to feel human and relatable.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Data-driven storytelling:&lt;/strong&gt; Every post is grounded in real research, real experiences, or real insights from the field.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Creative connections:&lt;/strong&gt; The best insights come from unexpected connections between seemingly unrelated ideas.&lt;/li&gt;
-&lt;/ul&gt;</code></pre>
-</div>
-</div>
-<div class="section-card">
-<h2 class="anchored">
-💌 Stay Updated
-</h2>
-<p>
-Want to be notified when I publish new posts? I’m working on setting up a newsletter, but for now, the best way to stay updated is to follow me on social media or just check back here periodically.
-</p>
-<div style="text-align: center; margin: 2rem 0;">
-<pre><code>&lt;p&gt;&lt;em&gt;Coming soon: A monthly newsletter with research updates, creative insights, and the occasional poem about data visualization.&lt;/em&gt;&lt;/p&gt;</code></pre>
-</div>
-</div>
-<div class="section-card">
-<h2 class="anchored">
-🤝 Guest Posts &amp; Collaborations
-</h2>
-<p>
-I’m always interested in collaborating with other researchers, artists, and thinkers who are exploring the intersection of data science, environmental research, and creative expression. If you have an idea for a guest post, collaborative piece, or just want to chat about the possibilities, let’s connect!
-</p>
-<div style="text-align: center; margin: 2rem 0;">
-<pre><code>&lt;a href="mailto:ermiller@ucsb.edu?subject=Blog Collaboration Inquiry" class="btn-custom"&gt;Let's Collaborate&lt;/a&gt;</code></pre>
-</div>
-</div>
-<div class="fun-divider">
-
-</div>
-<div class="section-card" style="text-align: center; background: linear-gradient(135deg, var(--secondary-color), var(--accent-color)); color: white;">
-<h2 style="color: white;" class="anchored">
-Join the Conversation! 💬
-</h2>
-<p>
-I love hearing from readers! Whether you have questions about my research, want to discuss a blog post, or just want to share your own thoughts on data science and creativity, I’d love to connect.
-</p>
-<p><a href="mailto:ermiller@ucsb.edu" class="btn-custom" style="background: white; color: var(--secondary-color);">Start a Discussion</a></p>
-</div>
+<section id="blog" class="level1">
+<h1>✍️ Blog</h1>
+<p><em>Thoughts on data, environment, creativity, and everything in between</em></p>
+<hr>
+<section id="what-youll-find-here" class="level2">
+<h2 class="anchored" data-anchor-id="what-youll-find-here">🌟 What You’ll Find Here</h2>
+<p>Welcome to my corner of the internet where I share thoughts on environmental data science, the intersection of creativity and research, and the weird and wonderful moments that happen when you’re passionate about both pixels and poetry. Expect a mix of technical insights, personal reflections, and the occasional rant about why my dog won’t stop eating kelp.</p>
+<blockquote class="blockquote">
+<p><em>“The best ideas come from unexpected connections between seemingly unrelated things — like satellite imagery and poetry, or data analysis and beach cleanups.”</em></p>
+</blockquote>
+<hr>
+</section>
+<section id="recent-posts" class="level2">
+<h2 class="anchored" data-anchor-id="recent-posts">📚 Recent Posts</h2>
+<section id="teaching-computers-to-see-what-weve-been-ignoring" class="level3">
+<h3 class="anchored" data-anchor-id="teaching-computers-to-see-what-weve-been-ignoring">Teaching Computers to See What We’ve Been Ignoring</h3>
+<p><em>December 15, 2024 • Environmental Data Science</em></p>
+<p>There’s something magical about watching a computer learn to recognize patterns in satellite imagery that human eyes have been overlooking for decades. In my latest research on irrigation patterns in Sub-Saharan Africa, I’ve been training machine learning models to identify small-scale farming practices that traditional remote sensing has missed…</p>
+<p>The challenge isn’t just technical — it’s about teaching algorithms to see with both precision and compassion. How do we ensure that our models don’t just identify patterns, but understand the human stories behind them?</p>
+<p><strong>Key takeaway:</strong> The most powerful data science happens when we combine technical rigor with human empathy. Every pixel represents a real farmer, a real family, a real story of resilience and adaptation.</p>
+<ul>
+<li>💡 <em>Technical note:</em> Using a combination of Sentinel-2 imagery and custom CNN architectures, we’re achieving 94% accuracy in identifying small-scale irrigation systems. The key was training on hand-labeled data from local farmers who know their land better than any algorithm ever could.</li>
+</ul>
+<hr>
+</section>
+<section id="why-my-dogs-kelp-obsession-taught-me-about-data-visualization" class="level3">
+<h3 class="anchored" data-anchor-id="why-my-dogs-kelp-obsession-taught-me-about-data-visualization">Why My Dog’s Kelp Obsession Taught Me About Data Visualization</h3>
+<p><em>December 8, 2024 • Creative Data Science</em></p>
+<p>My dog has an unhealthy obsession with kelp. She’ll eat it fresh from the ocean, dried from the beach, or even (much to my embarrassment) straight from other people’s seaweed snacks. At first, I thought this was just another quirky dog behavior. Then I realized it was teaching me something profound about data storytelling…</p>
+<p>Like my dog with kelp, people are drawn to data that feels natural and authentic. The best visualizations aren’t just accurate — they’re compelling. They tell a story that makes people want to dig deeper, to understand more, to care about the implications.</p>
+<p><strong>The kelp lesson:</strong> Sometimes the most effective way to communicate complex data is to find the human (or canine) connection that makes it relatable and memorable.</p>
+<hr>
+</section>
+<section id="from-beach-cleanup-to-policy-change-how-data-becomes-action" class="level3">
+<h3 class="anchored" data-anchor-id="from-beach-cleanup-to-policy-change-how-data-becomes-action">From Beach Cleanup to Policy Change: How Data Becomes Action</h3>
+<p><em>November 30, 2024 • Environmental Activism</em></p>
+<p>Last month, I organized a beach cleanup in Isla Vista that brought together 50+ volunteers. We collected over 200 pounds of trash and microplastics. But the real impact wasn’t just in the numbers — it was in the conversations, the community connections, and the way data became a catalyst for change…</p>
+<p>By documenting the types and sources of pollution we found, we created a dataset that local environmental groups are now using to advocate for policy changes. Our “random” beach cleanup became part of a larger movement toward ocean conservation.</p>
+<p><strong>The bigger picture:</strong> Every piece of data we collect, every pattern we identify, every story we tell has the potential to create real-world impact. The question isn’t whether data can change the world — it’s whether we’re brave enough to use it that way.</p>
+<hr>
+</section>
+<section id="the-art-of-scientific-communication-why-pretty-pictures-matter" class="level3">
+<h3 class="anchored" data-anchor-id="the-art-of-scientific-communication-why-pretty-pictures-matter">The Art of Scientific Communication: Why Pretty Pictures Matter</h3>
+<p><em>November 22, 2024 • Science Communication</em></p>
+<p>I spent three hours yesterday making a single data visualization. Three hours for one chart. My advisor would probably say I’m being inefficient, but I think those three hours were the most important part of my research process…</p>
+<p>Beautiful, clear visualizations don’t just make data more accessible — they make it more credible. When people can see and understand your findings at a glance, they’re more likely to trust your conclusions and act on your recommendations.</p>
+<p><strong>The visualization principle:</strong> If you can’t explain your research in a single, compelling image, you probably don’t understand it well enough yet. The process of creating that perfect visualization forces you to clarify your thinking and identify the most important insights.</p>
+<hr>
+</section>
+<section id="confessions-of-a-math-major-turned-environmental-scientist" class="level3">
+<h3 class="anchored" data-anchor-id="confessions-of-a-math-major-turned-environmental-scientist">Confessions of a Math Major Turned Environmental Scientist</h3>
+<p><em>November 15, 2024 • Personal Journey</em></p>
+<p>I started college as a pure math major, convinced that numbers and equations were the only things that made sense in an otherwise chaotic world. Then I discovered that math could be applied to real problems — like tracking deforestation, predicting climate patterns, and understanding how humans interact with the environment…</p>
+<p>The transition wasn’t always smooth. There were moments when I missed the clean elegance of pure mathematics, when real-world data felt messy and imperfect. But I learned that the messiness is where the magic happens — where mathematical rigor meets human complexity.</p>
+<p><strong>My advice to fellow math majors:</strong> Don’t be afraid to apply your skills to problems that matter. The world needs more mathematicians who are willing to get their hands dirty with real data and real-world challenges.</p>
+<hr>
+</section>
+</section>
+<section id="categories" class="level2">
+<h2 class="anchored" data-anchor-id="categories">🏷️ Categories</h2>
+<section id="environmental-data-science" class="level3">
+<h3 class="anchored" data-anchor-id="environmental-data-science">🔬 Environmental Data Science</h3>
+<p>Technical insights from my research on satellite imagery, machine learning, and environmental monitoring</p>
+</section>
+<section id="creative-data-science" class="level3">
+<h3 class="anchored" data-anchor-id="creative-data-science">🎨 Creative Data Science</h3>
+<p>Where art meets algorithms, and data visualization becomes storytelling</p>
+</section>
+<section id="environmental-activism" class="level3">
+<h3 class="anchored" data-anchor-id="environmental-activism">🌍 Environmental Activism</h3>
+<p>Thoughts on using data and technology for environmental justice and conservation</p>
+</section>
+<section id="science-communication" class="level3">
+<h3 class="anchored" data-anchor-id="science-communication">📊 Science Communication</h3>
+<p>How to make complex research accessible, engaging, and actionable</p>
+</section>
+<section id="personal-journey" class="level3">
+<h3 class="anchored" data-anchor-id="personal-journey">🚀 Personal Journey</h3>
+<p>Reflections on being a math major, environmental scientist, and creative human</p>
+</section>
+<section id="life-lessons" class="level3">
+<h3 class="anchored" data-anchor-id="life-lessons">🐕 Life Lessons</h3>
+<p>The wisdom that comes from dogs, beach cleanups, and unexpected adventures</p>
+<hr>
+</section>
+</section>
+<section id="writing-process" class="level2">
+<h2 class="anchored" data-anchor-id="writing-process">📝 Writing Process</h2>
+<p>I write about the intersection of data science and creativity, environmental research, and the human side of technology. My goal is to make complex topics accessible while maintaining scientific rigor and personal authenticity.</p>
+<section id="my-writing-philosophy" class="level3">
+<h3 class="anchored" data-anchor-id="my-writing-philosophy">My Writing Philosophy</h3>
+<ul>
+<li><strong>Authenticity over perfection</strong>: I’d rather share imperfect thoughts that spark conversation than polished pieces that say nothing new.</li>
+<li><strong>Technical rigor with human warmth</strong>: Complex topics deserve clear explanations, but they also deserve to feel human and relatable.</li>
+<li><strong>Data-driven storytelling</strong>: Every post is grounded in real research, real experiences, or real insights from the field.</li>
+<li><strong>Creative connections</strong>: The best insights come from unexpected connections between seemingly unrelated ideas.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="stay-updated" class="level2">
+<h2 class="anchored" data-anchor-id="stay-updated">💌 Stay Updated</h2>
+<p>Want to be notified when I publish new posts? I’m working on setting up a newsletter, but for now, the best way to stay updated is to follow me on social media or just check back here periodically.</p>
+<p><em>Coming soon: A monthly newsletter with research updates, creative insights, and the occasional poem about data visualization.</em></p>
+<hr>
+</section>
+<section id="guest-posts-collaborations" class="level2">
+<h2 class="anchored" data-anchor-id="guest-posts-collaborations">🤝 Guest Posts &amp; Collaborations</h2>
+<p>I’m always interested in collaborating with other researchers, artists, and thinkers who are exploring the intersection of data science, environmental research, and creative expression. If you have an idea for a guest post, collaborative piece, or just want to chat about the possibilities, let’s connect!</p>
+<p><a href="mailto:ermiller@ucsb.edu?subject=Blog%20Collaboration%20Inquiry">Let’s Collaborate</a></p>
+<hr>
+</section>
+</section>
+<section id="join-the-conversation" class="level1">
+<h1>Join the Conversation! 💬</h1>
+<p>I love hearing from readers! Whether you have questions about my research, want to discuss a blog post, or just want to share your own thoughts on data science and creativity, I’d love to connect.</p>
+<p><a href="mailto:ermiller@ucsb.edu">Start a Discussion</a></p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

@@ -8,28 +8,26 @@ website:
     left:
       - href: index.qmd
         text: "Home"
-    right:
       - href: about.qmd
         text: "About"
-      - href: art.qmd
-        text: "Art & Poetry"
-      - href: adventures.qmd
-        text: "Adventures"
-      - href: blog.qmd
-        text: "Blog"
       - href: research.qmd
         text: "Research"
-      - href: services.qmd
-        text: "Services"
       - href: cv.qmd
         text: "Resume"
+      - text: "Creative"
+        menu:
+          - href: art.qmd
+            text: "Art & Poetry"
+          - href: adventures.qmd
+            text: "Adventures"
+    right:
+      - icon: github
+        href: https://github.com/rellimylime
+        aria-label: "GitHub"
 
 format:
   html:
-    theme:
-      - cosmo
-      - brand
-    css: styles.css
+    theme: styles.scss
     toc: true
     page-layout: full
 

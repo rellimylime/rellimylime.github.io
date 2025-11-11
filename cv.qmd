@@ -6,11 +6,11 @@ toc: false
 
 ## Contact Information
 
-**Phone:** (978) 265-9348  
-**Email:** [ermiller@ucsb.edu](mailto:ermiller@ucsb.edu)  
-**Website:** [rellimylime.github.io](https://rellimylime.github.io)  
-**LinkedIn:** [linkedin.com/in/rellimylime](https://www.linkedin.com/in/rellimylime/)  
-**GitHub:** [github.com/rellimylime](https://github.com/rellimylime)  
+**Phone:** (978) 265-9348\
+**Email:** [ermiller\@ucsb.edu](mailto:ermiller@ucsb.edu)\
+**Website:** [rellimylime.github.io](https://rellimylime.github.io)\
+**LinkedIn:** [linkedin.com/in/rellimylime](https://www.linkedin.com/in/rellimylime/)\
+**GitHub:** [github.com/rellimylime](https://github.com/rellimylime)\
 **Location:** Santa Barbara, CA
 
 ------------------------------------------------------------------------
@@ -18,21 +18,24 @@ toc: false
 ## Education
 
 ### Master of Environmental Data Science
-**University of California, Santa Barbara – Bren School of Environmental Science & Management** | *Expected June 2026*
 
-**GPA: 4.0** | **Leadership:** MEDS Student Faculty Representative
+**University of California, Santa Barbara – Bren School of Environmental Science & Management** \| *Expected June 2026*
+
+**GPA: 4.0** \| **Leadership:** MEDS Student Faculty Representative
 
 *Highlighted Coursework:* Machine Learning in Environmental Science, Geospatial Analysis and Remote Sensing, Environmental Systems Modeling, Environmental Datasets and Data Engineering, Databases and Data Management, Statistics for Environmental Data Science
 
 ### Bachelor of Science in Mathematics
-**University of California, Santa Barbara** | *June 2025*
 
-**GPA: 3.67** | **Leadership:** Undergraduate Outreach Officer for Women in Science and Engineering (WiSE)
+**University of California, Santa Barbara** \| *June 2025*
+
+**GPA: 3.67** \| **Leadership:** Undergraduate Outreach Officer for Women in Science and Engineering (WiSE)
 
 *Highlighted Coursework:* Real Analysis, Linear Algebra, Numerical Analysis, Computer Science and Problem Solving, Probability and Statistics
 
 ### Associate of Science in Mathematics
-**Sacramento City College** | *June 2022*
+
+**Sacramento City College** \| *June 2022*
 
 **GPA: 4.0**
 
@@ -41,7 +44,8 @@ toc: false
 ## Research & Data Analysis Experience
 
 ### Research Assistant – Water Vegetation and Society (WaVeS) Lab
-**University of California Santa Barbara, Goleta, CA** | *June 2024 - Present*
+
+**University of California Santa Barbara, Goleta, CA** \| *June 2024 - Present*
 
 -   Applied statistical and numerical methods to analyze and validate agricultural water and land use datasets across multiple spatial scales
 -   Developed Python codebase for processing and analyzing satellite imagery and remotely sensed data to identify irrigation patterns in Sub-Saharan Africa
@@ -49,7 +53,8 @@ toc: false
 -   Collaborated with faculty mentor (Prof. Kelly Caylor) on water resource sustainability research
 
 ### BEL Fellow – Bren Environmental Leadership Program
-**University of California Santa Barbara, Goleta, CA** | *June 2024 - December 2024*
+
+**University of California Santa Barbara, Goleta, CA** \| *June 2024 - December 2024*
 
 -   Conducted research on irrigation patterns in Sub-Saharan Africa using satellite data analysis and remote sensing techniques
 -   Presented research findings "Satellite Data Reveal Emerging Decentralized Irrigation Systems in Sub-Saharan Africa" at three academic venues including AGU Fall Meeting
@@ -60,14 +65,16 @@ toc: false
 ## Leadership & Community Engagement Experience
 
 ### Founder & Lead Organizer – IV Recovery Community Initiative
-**Goleta, CA** | *2023 - Present*
+
+**Goleta, CA** \| *2023 - Present*
 
 -   Founded and lead initiative organizing bi-weekly coastal cleanups engaging university students and community members
 -   Develop community engagement strategies to increase environmental stewardship and normalize university participation in local conservation
 -   Quantify environmental impact through data collection and analysis
 
 ### Undergraduate Outreach Officer – Women in Science and Engineering (WiSE)
-**University of California Santa Barbara, Goleta, CA** | *September 2024 - June 2025*
+
+**University of California Santa Barbara, Goleta, CA** \| *September 2024 - June 2025*
 
 -   Coordinated mentorship program supporting 130+ undergraduate students pursuing STEM degrees
 -   Focused outreach efforts on increasing diversity and representation in quantitative sciences through targeted programming
@@ -78,7 +85,8 @@ toc: false
 ## Teaching & Mentoring Experience
 
 ### Mathematics Tutor
-**Davis, CA** | *2020 - 2023*
+
+**Davis, CA** \| *2020 - 2023*
 
 -   Taught mathematics to students ranging from elementary through college level, adapting instruction to diverse learning needs
 -   Provided comprehensive GED preparation support across all subject areas, resulting in student success on examinations
@@ -88,7 +96,7 @@ toc: false
 
 ## Presentations & Talks
 
-Miller E, Boser A, Caylor K. "Satellite Data Reveal Emerging Decentralized Irrigation Systems in Sub-Saharan Africa." *Summer@Bren 2024 Flash Talks*, UCSB, CA. August 29, 2024.
+Miller E, Boser A, Caylor K. "Satellite Data Reveal Emerging Decentralized Irrigation Systems in Sub-Saharan Africa." *Summer\@Bren 2024 Flash Talks*, UCSB, CA. August 29, 2024.
 
 Miller E, Boser A, Caylor K. "Water Source Attribution for Center Pivot Irrigation in Sub-Saharan Africa." *Mantell Symposium in Environmental Justice and Conservation Innovation*, UCSB, CA. October 24, 2024.
 
@@ -99,9 +107,11 @@ Boser A, Miller E, Perez J, Caylor K. "Analyzing the sustainability and climate 
 ## Technical Skills
 
 ### Programming & Data Analysis
+
 Python, R, C++
 
 ### Technical Expertise
+
 -   Satellite imagery analysis and remote sensing
 -   Statistical analysis and numerical methods
 -   Machine learning and data visualization
@@ -109,6 +119,7 @@ Python, R, C++
 -   Spatial data processing
 
 ### Mathematical Foundation
+
 -   Real analysis and linear algebra
 -   Probability and statistics
 -   Numerical analysis
@@ -116,6 +127,7 @@ Python, R, C++
 -   Data structures and algorithms
 
 ### Tools & Software
+
 -   Google Earth Engine, QGIS, ArcGIS
 -   Python libraries: pandas, numpy, scikit-learn, matplotlib, seaborn
 -   R and tidyverse packages
@@ -128,10 +140,4 @@ Python, R, C++
 
 **Current Focus:** Remote sensing and machine learning applications for understanding agricultural water systems, environmental sustainability, and climate resilience in Sub-Saharan Africa
 
-**Broader Interests:**
--   Using satellite imagery to support environmental justice and marginalized communities
--   Wildlife corridor connectivity and infrastructure impact analysis
--   Indigenous land management practices and conservation outcomes
--   Live, accessible data systems for environmental decision-making
--   Nature-inspired solutions and biomimicry
--   Community-centered approaches to environmental research and monitoring
+**Broader Interests:** - Using satellite imagery to support environmental justice and marginalized communities - Wildlife corridor connectivity and infrastructure impact analysis - Indigenous land management practices and conservation outcomes - Live, accessible data systems for environmental decision-making - Nature-inspired solutions and biomimicry - Community-centered approaches to environmental research and monitoring

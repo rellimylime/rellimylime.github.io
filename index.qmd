@@ -1,84 +1,51 @@
 ---
 title: "Emily Miller"
 subtitle: "Environmental Data Scientist • Artist • Researcher"
-image: "images/headshot.jpg"
 toc: false
-about:
-  template: jolla
-  image-width: 17em
-  links: 
-    - icon: linkedin
-      text: LinkedIn
-      href: "https://www.linkedin.com/in/emily-miller-a0237233b/"
-    - icon: github
-      text: GitHub
-      href: "https://github.com/rellimylime"
-    - icon: envelope
-      text: Email
-      href: "mailto:ermiller@ucsb.edu" 
 ---
 
-## Research
+![](images/PXL_20240914_192718413.jpg){fig-alt="Hero image"}
 
-Currently pursuing a PhD in Environmental Data Science at UCSB, where I develop machine learning models to analyze satellite imagery and track environmental changes across Sub-Saharan Africa. My research focuses on applying computer vision and deep learning techniques to biodiversity conservation, wildlife corridor mapping, and indigenous land rights monitoring.
+## Research & Work
 
-Beyond the laboratory, I am actively involved in community environmental initiatives and beach cleanup organizations in Isla Vista, exploring how data-driven insights can translate into meaningful environmental action.
+I'm a Master of Environmental Data Science student at UCSB (graduating June 2026) developing machine learning and remote sensing approaches to understand environmental systems. Currently working on irrigation pattern mapping in Sub-Saharan Africa with the Water Vegetation and Society (WaVeS) Lab, and designing scalable metadata quality assessment tools for environmental data repositories as my capstone project.
+
+My work combines technical rigor with creative problem-solving to tackle real-world environmental challenges—from satellite imagery analysis to building tools that make environmental data more accessible and usable.
+
+Beyond the laboratory, I organize community environmental initiatives through IV Recovery and actively engage in mentorship through Women in Science and Engineering (WiSE).
 
 *Equal parts quantitative rigor and unreasonable hope.*
 
--   **Remote Sensing:** Machine learning for satellite imagery analysis and habitat mapping
--   **Biodiversity:** Wildlife corridors and species tracking
--   **Community Science:** Collaborations for local environmental impact
--   **Publications and Talks:** Sharing results at conferences and in journals
+**Current Focus:** - **Remote Sensing & Machine Learning:** Satellite imagery analysis for understanding agricultural water systems and environmental monitoring - **Environmental Data Infrastructure:** Building reproducible, scalable tools to improve data quality and accessibility - **Community Engagement:** Organizing local environmental stewardship and mentoring students in STEM fields - **Research Communication:** Presenting findings at conferences and through peer collaboration
 
 ## Creative Practice
 
-Beyond the laboratory, I maintain an active creative practice that encompasses visual art, photography, and poetry. I believe that creativity and scientific inquiry are complementary forces — both require careful observation, pattern recognition, and the courage to explore the unknown.
+Beyond the laboratory, I maintain an active creative practice encompassing visual art, photography, and poetry. I believe that creativity and scientific inquiry are complementary forces—both require careful observation, pattern recognition, and the courage to explore the unknown.
 
-My artistic work often draws inspiration from the data patterns I encounter in my research, creating visual bridges between quantitative analysis and aesthetic expression.
+My artistic work often draws inspiration from data patterns and environmental observation, creating visual bridges between quantitative analysis and aesthetic expression.
 
-## Portfolio
-
-A curated intersection of research, art, and discovery:
-
-::: block-section
-### Art & Poetry
-
-Works bridging scientific patterns and visual storytelling. From paintings to data-driven art to poetry and text art.
-:::
-
-::: block-section
-### Adventures
-
-Fieldwork and rich experiences that fuel creative and scientific inquiry.
-:::
-
-::: block-section
-### Blog
-
-Essays and reflections on environmental data, art, and the creative process.
-:::
+## Explore My Work
 
 ::: block-section
 ### Research
 
-Select publications and science projects in environmental change, remote sensing, and machine learning for conservation.
+Current projects on irrigation systems, metadata quality, and environmental data science.
+
+[Read More →](research.qmd)
 :::
 
 ::: block-section
-### Services
+### Art & Poetry
 
-Collaboration, consulting, and creative workshops at the intersection of science and art.
+Visual art, photography, and poetry exploring the intersection of science, nature, and creativity.
+
+[Explore →](art.qmd)
 :::
 
-## Background
+::: block-section
+### About & Resume
 
-A former mathematics major who discovered that data science offers the perfect intersection of analytical rigor and practical application. I am passionate about using technology to address environmental challenges while maintaining a commitment to community engagement and creative expression.
+My background, values, and detailed CV.
 
-My work spans the intersection of remote sensing, machine learning, and environmental justice, with a particular focus on making complex data accessible and actionable for communities around the world.
-
-## Contact
-
-I welcome inquiries about research collaboration, creative projects, or consulting opportunities. Please feel free to reach out to discuss how we might work together.
-
-[Get In Touch](mailto:ermiller@ucsb.edu)
+[Learn More →](about.qmd) \| [Resume →](cv.qmd)
+:::

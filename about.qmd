@@ -1,7 +1,21 @@
 ---
 title: "About Me"
 subtitle: "Environmental Data Scientist • Artist • Researcher"
+image: "images/headshot.jpg"
 toc: false
+about:
+  template: jolla
+  image-width: 17em
+  links: 
+    - icon: linkedin
+      text: LinkedIn
+      href: "https://www.linkedin.com/in/rellimylime/"
+    - icon: github
+      text: GitHub
+      href: "https://github.com/rellimylime"
+    - icon: envelope
+      text: Email
+      href: "mailto:ermiller@ucsb.edu" 
 ---
 
 ## Background

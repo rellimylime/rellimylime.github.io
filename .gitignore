@@ -22,9 +22,6 @@ Thumbs.db
 _files/
 _freeze/
 
-# Generated output (rebuild from source)
-/docs/
-
 # Source map files
 *.css.map
 *.js.map
@@ -42,9 +39,3 @@ yarn-error.log
 *~
 
 # Environment files
-.env
-.env.local
-
-# Dependencies (keep your source, ignore generated)
-/styles.scss
-/images

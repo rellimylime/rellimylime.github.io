@@ -2,9 +2,10 @@
 title: "Emily Miller"
 subtitle: "Environmental Data Scientist • Artist • Researcher"
 toc: false
+title-block-banner: images/PXL_20240914_192718413.jpg
 ---
 
-![](images/PXL_20240914_192718413.jpg){fig-alt="Hero image"}
+![](images/PXL_20240914_192718413.jpg)
 
 ## Research & Work
 

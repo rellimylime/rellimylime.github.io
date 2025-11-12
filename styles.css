@@ -1,9 +1,9 @@
 /* --- FONT IMPORTS and Sophisticated Font Assignments --- */
-@import url('https://fonts.googleapis.com/css2?family=Mea+Culpa&family=Alice&family=Nunito:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mea+Culpa&family=Alice&family=Nunito:wght@300;400;500;600;700&family=Lora:wght@400;500;600&display=swap');
 
 :root {
   --brand-font: 'Mea Culpa', cursive;
-  --header-font: 'Alice', serif;
+  --header-font: 'Lora', serif;
   --content-font: 'Nunito', Arial, sans-serif;
   --primary-color: #464843;
   --secondary-color: #5387C2;
@@ -25,238 +25,262 @@ html {
   scroll-behavior: smooth;
 }
 
-body, main, section, .block-section {
+body, main, section {
   background: var(--bg-cream) !important;
   font-family: var(--content-font);
-  font-size: 1.08rem;
+  font-size: 1.1rem;
   font-weight: 300;
   color: var(--text-dark);
-  line-height: 1.7;
+  line-height: 1.8;
 }
 
-/* === Navigation Bar === */
+main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* === Navigation Bar - Minimal & Elegant === */
 .navbar {
-  background: var(--bg-cream) !important;
-  border-bottom: 2px solid var(--secondary-color);
-  box-shadow: 0 4px 12px rgba(70, 72, 67, 0.06);
-  padding: 0.75rem 0;
+  background: transparent !important;
+  border-bottom: none;
+  box-shadow: none;
+  padding: 1.5rem 0;
+  margin-bottom: 2rem;
 }
 
 .navbar-brand {
   font-family: var(--brand-font), cursive !important;
   color: var(--primary-color) !important;
   font-weight: 400;
-  letter-spacing: 1.2px;
-  font-size: 2.1rem;
-  max-width: 260px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  letter-spacing: 1.5px;
+  font-size: 1.8rem;
+  max-width: 100%;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
   transition: var(--transition-smooth);
 }
 
 .navbar-brand:hover {
   color: var(--secondary-color) !important;
-  letter-spacing: 1.4px;
+  letter-spacing: 2px;
 }
 
 .navbar-nav {
-  gap: 0.5rem;
+  gap: 1.5rem;
 }
 
 .navbar-nav .nav-link {
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-family: var(--content-font);
-  font-weight: 500;
+  font-weight: 400;
   color: var(--primary-color) !important;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   background: none !important;
-  border-radius: 0.4em;
-  padding: 0.65em 1.1em !important;
+  border-radius: 0;
+  padding: 0.5em 0 !important;
   position: relative;
-  overflow: hidden;
-}
-
-.navbar-nav .nav-link::before {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: var(--secondary-color);
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 0.3s ease;
-}
-
-.navbar-nav .nav-link:hover::before,
-.navbar-nav .nav-item.active .nav-link::before {
-  transform: scaleX(1);
-  transform-origin: left;
+  overflow: visible;
+  border-bottom: 2px solid transparent;
 }
 
 .navbar-nav .nav-link:hover,
 .navbar-nav .nav-item.active .nav-link {
   color: var(--secondary-color) !important;
+  border-bottom: 2px solid var(--secondary-color);
 }
 
-/* === Dropdown Menu === */
+.navbar-nav .nav-link::before {
+  display: none;
+}
+
+.navbar-nav .nav-link::after {
+  display: none;
+}
+
+/* === Dropdown Menu - Refined === */
 .dropdown-menu {
   background: var(--bg-cream) !important;
-  border: 1.5px solid var(--accent-color);
-  border-radius: 0.6em;
-  min-width: 155px;
-  box-shadow: 0 8px 24px rgba(83, 135, 194, 0.12);
+  border: 1px solid #e0e0e0;
+  border-radius: 0.4em;
+  min-width: 140px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   padding: 0.5rem 0;
 }
 
 .dropdown-item {
   color: var(--primary-color) !important;
-  border-radius: 0.4em;
-  margin: 0.3em 0.4em;
-  font-weight: 500;
+  border-radius: 0;
+  margin: 0;
+  padding: 0.6em 1.2em !important;
+  font-weight: 400;
   transition: var(--transition-smooth);
 }
 
 .dropdown-item:hover {
-  background: var(--sky-color) !important;
-  color: var(--primary-color) !important;
-  transform: translateX(4px);
+  background: rgba(148, 192, 212, 0.1) !important;
+  color: var(--secondary-color) !important;
+  transform: none;
 }
 
 /* === GitHub Icon === */
 .navbar-nav .nav-link[href*="github"] {
-  font-size: 1.3rem;
-  padding: 0.5em 0.8em !important;
+  font-size: 1.2rem;
+  padding: 0.5em 0 !important;
 }
 
-/* === Title Block === */
+/* === Title Block - Elegant Hero === */
 .quarto-title-block {
-  background: linear-gradient(135deg, var(--bg-cream) 0%, rgba(148, 192, 212, 0.08) 100%) !important;
+  background: transparent !important;
   color: var(--primary-color) !important;
-  padding: 3rem 0 2rem 0;
-  border-radius: 0px 0px 1.5rem 1.5rem;
-  border-bottom: 2px solid var(--secondary-color);
+  padding: 4rem 0 3rem 0;
+  border-radius: 0;
+  border-bottom: none;
+  margin-bottom: 3rem;
 }
 
 h1.title {
   font-family: var(--brand-font), cursive !important;
-  font-size: 2.6rem;
-  font-weight: 400;
+  font-size: 3.5rem;
+  font-weight: 300;
   color: var(--primary-color) !important;
-  letter-spacing: 1.2px;
-  margin-bottom: 0.25em;
+  letter-spacing: 1.5px;
+  margin-bottom: 0.5em;
   border: none;
   padding-left: 0;
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  background: none;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: unset;
+  background-clip: unset;
+  line-height: 1.2;
 }
 
 .subtitle {
   font-family: var(--content-font) !important;
   color: var(--text-mid) !important;
-  font-size: 1.1rem;
-  font-weight: 400;
-  letter-spacing: 0.5px;
+  font-size: 1.25rem;
+  font-weight: 300;
+  letter-spacing: 0.3px;
+  line-height: 1.6;
 }
 
-/* === Headings === */
+/* === Headings - Elegant & Readable === */
 h2, h3, h4 {
   font-family: var(--header-font), serif !important;
-  font-weight: 700;
-  color: var(--secondary-color) !important;
-  letter-spacing: 0.7px;
+  font-weight: 500;
+  color: var(--primary-color) !important;
+  letter-spacing: 0.3px;
   background: none !important;
   text-transform: none;
-  border-left: 5px solid var(--accent-color);
-  padding-left: 0.55em;
-  margin-top: 1.5rem;
-  margin-bottom: 1rem;
+  border-left: none;
+  padding-left: 0;
+  margin-top: 3rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.3;
 }
 
 h2 {
-  font-size: 1.8rem;
-  border-left-width: 6px;
+  font-size: 2.2rem;
+  color: var(--primary-color) !important;
+  border-bottom: 2px solid var(--secondary-color);
+  padding-bottom: 0.8rem;
 }
 
 h3 {
-  font-size: 1.4rem;
-  border-left-width: 5px;
+  font-size: 1.6rem;
 }
 
 h4 {
-  font-size: 1.15rem;
-  border-left-width: 4px;
+  font-size: 1.2rem;
+  color: var(--secondary-color) !important;
 }
 
 p, li, .block-section, .column {
   font-family: var(--content-font) !important;
   font-weight: 300;
-  line-height: 1.75;
+  line-height: 1.8;
 }
 
-/* === Block Sections & Cards === */
+/* === Block Sections & Cards - Transformed to Flow === */
 .block-section, .card, .art-item, .blog-post, .service-card, .research-item {
-  background: #fbfaf7 !important;
-  border: 1.5px solid #d2b49166;
-  border-radius: 0.8em !important;
-  box-shadow: 0 4px 16px rgba(83, 135, 194, 0.05);
-  padding: 1.5rem 1.2em;
-  margin-bottom: 2.2em;
+  background: transparent !important;
+  border: none;
+  border-radius: 0 !important;
+  box-shadow: none;
+  padding: 2.5rem 0;
+  margin-bottom: 2rem;
   transition: var(--transition-smooth);
+  border-bottom: 1px solid rgba(83, 135, 194, 0.15);
+}
+
+.block-section:last-child, .card:last-child, .art-item:last-child, .research-item:last-child {
+  border-bottom: none;
 }
 
 .block-section:hover, .card:hover, .art-item:hover, .research-item:hover {
-  border-color: var(--secondary-color);
-  box-shadow: 0 8px 24px rgba(83, 135, 194, 0.12);
-  transform: translateY(-2px);
+  border-color: transparent;
+  box-shadow: none;
+  transform: none;
 }
 
 .block-section {
-  border-left: 6px solid var(--secondary-color);
-  background: linear-gradient(135deg, #fbfaf7 0%, rgba(148, 192, 212, 0.04) 100%) !important;
+  border-left: none;
+  background: transparent !important;
+}
+
+/* === Flowing Image-Text Layouts === */
+.image-text-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  margin: 3rem 0;
+}
+
+.image-text-section.image-right {
+  grid-template-columns: 1fr 1fr;
+}
+
+.image-text-section.image-left {
+  grid-template-columns: 1fr 1fr;
+}
+
+.image-text-section img {
+  width: 100%;
+  height: auto;
+  border-radius: 0.8rem;
 }
 
 /* === Links & Buttons === */
 a {
   color: var(--secondary-color);
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 400;
   position: relative;
   transition: var(--transition-smooth);
+  border-bottom: 1px solid var(--secondary-color);
+  padding-bottom: 2px;
 }
 
 a:hover {
   color: var(--primary-color);
+  border-bottom-color: var(--primary-color);
 }
 
 a::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: var(--secondary-color);
-  transition: width 0.3s ease;
-}
-
-a:hover::after {
-  width: 100%;
+  display: none;
 }
 
 .btn-custom {
   background: var(--secondary-color);
-  border-radius: 2.5em;
+  border-radius: 0.4em;
   border: 2px solid var(--secondary-color);
   color: #fff !important;
-  padding: 0.65em 1.8em;
-  box-shadow: 0 4px 12px rgba(83, 135, 194, 0.25);
-  font-weight: 600;
-  letter-spacing: 0.4px;
+  padding: 0.8em 2em;
+  box-shadow: 0 4px 12px rgba(83, 135, 194, 0.2);
+  font-weight: 500;
+  letter-spacing: 0.3px;
   transition: var(--transition-smooth);
   text-decoration: none !important;
 }
@@ -264,8 +288,8 @@ a:hover::after {
 .btn-custom:hover {
   background: var(--accent-color);
   border-color: var(--accent-color);
-  box-shadow: 0 6px 20px rgba(83, 135, 194, 0.35);
-  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(83, 135, 194, 0.25);
+  transform: translateY(-1px);
 }
 
 .btn-custom::after {
@@ -276,46 +300,49 @@ a:hover::after {
 .artsy-highlight {
   color: var(--secondary-color);
   background: none;
-  font-weight: 600;
+  font-weight: 500;
   border-bottom: 2px solid var(--sky-color);
   border-radius: 0;
   padding-bottom: 2px;
 }
 
-/* === Dividers === */
+/* === Dividers - Subtle === */
 hr, .elegant-divider {
   border: none;
-  height: 2px;
-  background: linear-gradient(90deg, var(--secondary-color) 0%, var(--sage-color) 50%, transparent 100%);
-  opacity: 0.2;
-  margin: 2.4rem 0 1.7rem 0;
-  border-radius: 16px;
+  height: 1px;
+  background: rgba(83, 135, 194, 0.2);
+  opacity: 1;
+  margin: 3rem 0;
+  border-radius: 0;
 }
 
 /* === Code Blocks === */
 code {
   background: rgba(83, 135, 194, 0.08);
   color: var(--secondary-color);
-  padding: 0.2em 0.5em;
+  padding: 0.3em 0.6em;
   border-radius: 0.3em;
   font-family: 'Courier New', monospace;
   font-size: 0.95em;
 }
 
 pre {
-  background: #f0ebe5 !important;
-  border-left: 4px solid var(--secondary-color);
-  padding: 1em 1.2em;
-  border-radius: 0.6em;
+  background: #f5f1e8 !important;
+  border-left: 3px solid var(--secondary-color);
+  padding: 1.2em 1.5em;
+  border-radius: 0.4em;
   overflow-x: auto;
+  margin: 1.5rem 0;
+  font-size: 0.95em;
 }
 
 /* === Callouts === */
 .callout-note, .callout-tip, .callout-warning {
-  border-left: 5px solid var(--secondary-color);
+  border-left: 4px solid var(--secondary-color);
   background: rgba(148, 192, 212, 0.06) !important;
-  border-radius: 0.6em;
-  padding: 1.2em;
+  border-radius: 0.4em;
+  padding: 1.2em 1.5em;
+  margin: 1.5rem 0;
 }
 
 .callout-note {
@@ -326,36 +353,87 @@ pre {
   border-left-color: var(--accent-color);
 }
 
+/* === Lists === */
+ul, ol {
+  margin: 1.5rem 0;
+  padding-left: 2rem;
+}
+
+li {
+  margin: 0.8rem 0;
+  line-height: 1.8;
+}
+
+/* === Images === */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 2rem 0;
+  border-radius: 0.6rem;
+}
+
 /* === Utility Classes === */
 .shape-bg, .fun-gradient, .section-gradient, .asymmetric-layout, .artsy-border, .artsy-highlight::before, .creative-quote::before {
   display: none !important;
 }
 
 /* === Responsive Design === */
-@media (max-width: 768px) {
-  .navbar {
-    padding: 0.6rem 0;
-  }
-
-  .navbar-brand {
-    font-size: 1.6rem;
-  }
-
-  .navbar-nav .nav-link {
-    font-size: 0.9rem;
-    padding: 0.5em 0.8em !important;
+@media (max-width: 900px) {
+  main {
+    padding: 0 1.5rem;
   }
 
   h1.title {
-    font-size: 2rem;
-  }
-
-  .subtitle {
-    font-size: 0.95rem;
+    font-size: 2.8rem;
   }
 
   h2 {
+    font-size: 1.9rem;
+  }
+
+  h3 {
+    font-size: 1.4rem;
+  }
+
+  .image-text-section {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .subtitle {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 1rem 0;
+  }
+
+  .navbar-brand {
     font-size: 1.5rem;
+  }
+
+  .navbar-nav {
+    gap: 1rem;
+  }
+
+  .navbar-nav .nav-link {
+    font-size: 0.95rem;
+    padding: 0.4em 0 !important;
+  }
+
+  h1.title {
+    font-size: 2.2rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  h2 {
+    font-size: 1.6rem;
   }
 
   h3 {
@@ -363,39 +441,43 @@ pre {
   }
 
   .block-section, .card, .art-item, .blog-post, .service-card, .research-item {
-    padding: 1.2rem 1em;
-    margin-bottom: 1.8em;
+    padding: 1.8rem 0;
   }
 
-  body, main, section, .block-section {
+  body, main, section {
     font-size: 1rem;
+  }
+
+  main {
+    padding: 0 1rem;
   }
 }
 
 @media (max-width: 576px) {
   .navbar-brand {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
+    letter-spacing: 0.8px;
   }
 
   .navbar-nav .nav-link {
-    font-size: 0.85rem;
-    padding: 0.45em 0.65em !important;
+    font-size: 0.9rem;
+    padding: 0.3em 0 !important;
   }
 
-  .navbar-nav .nav-link[href*="github"] {
-    padding: 0.4em 0.6em !important;
+  .navbar-nav {
+    gap: 0.8rem;
   }
 
   h1.title {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
   }
 
   .subtitle {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
   }
 
   h2 {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
   }
 
   h3 {
@@ -403,15 +485,23 @@ pre {
   }
 
   .block-section, .card, .art-item, .blog-post, .service-card, .research-item {
-    padding: 0.9rem 0.8em;
-    margin-bottom: 1.4em;
+    padding: 1.5rem 0;
   }
 
-  body, main, section, .block-section {
+  body, main, section {
     font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  main {
+    padding: 0 1rem;
   }
 
   p, li {
-    line-height: 1.6;
+    line-height: 1.7;
+  }
+
+  .image-text-section {
+    gap: 1.5rem;
   }
 }

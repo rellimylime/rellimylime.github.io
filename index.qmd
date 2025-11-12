@@ -1,34 +1,179 @@
 ---
 title: "Hi, I'm Emily"
 toc: false
+include-after-body: carousel.js
 ---
+
+::: {.home-hero}
 
 ![](images/PXL_20240914_192718413.jpg)
 
-Welcome to my little corner of the internet. This is where I share what I'm thinking about, making, and learning—at the intersection of science, art, and trying to make things a bit better.
+## Hi. I'm Emily Miller.
+
+Data scientist, environmental systems thinker, and compulsive fixer of things. My heart belongs to the wild.
+
+:::
 
 ---
 
-> *Equal parts quantitative rigor and unreasonable hope.*
+::: {.quote-section}
 
----
+:::: {.slider-container}
 
-## A Few Things About Me
+::: {.click-slider}
 
-I'm a MEDS student at UCSB working on remote sensing, machine learning, and data infrastructure for environmental systems. I organize community initiatives, mentor in STEM, and believe creativity and science are just different languages for the same truth.
+::: {.slick-slide}
 
-Off the computer: I paint, photograph, write poetry, and spend way too much time thinking about satellite imagery of agricultural systems in Sub-Saharan Africa.
+**"Let yourself be silently drawn by the strange pull of what you really love."**
 
-### Want the Full Picture?
+— Rumi
 
-For my CV, background, and professional info, head over to my **[Bona Fides](about.qmd)** page.
+:::
+
+::: {.slick-slide}
+
+**"Tell me, what is it you plan to do with your one wild and precious life?"**
+
+— Mary Oliver, Wild Geese
+
+:::
+
+::: {.slick-slide}
+
+**"The climate has always changed. The difference now is that we are the cause."**
+
+— Kate Marvel, Climate Scientist
+
+:::
+
+::: {.slick-slide}
+
+**"What you do makes a difference. You have to decide what kind of difference you want to make."**
+
+— Jane Goodall
+
+:::
+
+::: {.slick-slide}
+
+**"An expert is a person who has made all the mistakes that can be made in a very narrow field."**
+
+— Niels Bohr
+
+:::
+
+::: {.slick-slide}
+
+**"All models are wrong, but some are useful."**
+
+— George E. P. Box
+
+:::
+
+::: {.slick-slide}
+
+**"Nothing in life is to be feared, it is only to be understood."**
+
+— Marie Curie
+
+:::
+
+::: {.slick-slide}
+
+**"Without data, you're just another person with an opinion."**
+
+— W. Edwards Deming
+
+:::
+
+::: {.slick-slide}
+
+**"I would give my right arm for the simplicity on the far side of complexity."**
+
+— Oliver Wendell Holmes
+
+:::
+
+::: {.slick-slide}
+
+**"A ship in port is safe, but that's not what ships are built for."**
+
+— Grace Hopper
+
+:::
+
+::: {.slick-slide}
+
+**"The cure for boredom is curiosity. There is no cure for curiosity."**
+
+— Dorothy Parker
+
+:::
+
+::: {.slick-slide}
+
+**"Change happens by listening and then starting a dialogue with the people who are doing something you don't believe is right."**
+
+— Jane Goodall
+
+:::
+
+::: {.slick-slide}
+
+**"I have no fear of losing my life—if I have to save a koala or a crocodile or a kangaroo or a snake, mate, I will save it."**
+
+— Steve Irwin
+
+:::
+
+::: {.slick-slide}
+
+**"Study as if you were going to live forever; live as if you were going to die tomorrow."**
+
+— Maria Mitchell
+
+:::
+
+::: {.slick-slide}
+
+**"We are drowning in information, while starving for wisdom. The world henceforth will be run by synthesizers, people able to put together the right information at the right time, think critically about it, and make important choices wisely."**
+
+— E. O. Wilson
+
+:::
+
+::: {.slick-slide}
+
+**"It's not what you look at that matters, it's what you see."**
+
+— Henry David Thoreau
+
+:::
+
+::: {.slick-slide}
+
+**"If you don't know where you are going, any road will get you there."**
+
+— Lewis Carroll
+
+:::
+
+::: {.slick-slide}
+
+**"Knowledge is identifying eggplant is a fruit. Wisdom is not using it in fruit salad."**
+
+— Angela Manzo (and the internet)
+
+:::
+
+::::
+
+::::
+
+:::
 
 ---
 
 ## What I'm Working On
 
-**[Research →](research.qmd)** — Irrigation patterns, data infrastructure, environmental justice
-
-**[Art & Poetry →](art.qmd)** — Where observation becomes expression
-
-**[Essays & Thoughts →](adventures.qmd)** — Field notes from life and work
+**[Research →](research.qmd)** | **[Art & Poetry →](art.qmd)** | **[Essays →](adventures.qmd)** | **[More About Me →](about.qmd)**

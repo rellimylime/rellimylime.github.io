@@ -67,21 +67,21 @@
     "href": "index.html",
     "title": "Hi, I’m Emily",
     "section": "",
-    "text": "Welcome to my little corner of the internet. This is where I share what I’m thinking about, making, and learning—at the intersection of science, art, and trying to make things a bit better."
+    "text": "Data scientist, environmental systems thinker, and compulsive fixer of things. My heart belongs to the wild."
   },
   {
-    "objectID": "index.html#a-few-things-about-me",
-    "href": "index.html#a-few-things-about-me",
+    "objectID": "index.html#hi.-im-emily-miller.",
+    "href": "index.html#hi.-im-emily-miller.",
     "title": "Hi, I’m Emily",
-    "section": "A Few Things About Me",
-    "text": "A Few Things About Me\nI’m a MEDS student at UCSB working on remote sensing, machine learning, and data infrastructure for environmental systems. I organize community initiatives, mentor in STEM, and believe creativity and science are just different languages for the same truth.\nOff the computer: I paint, photograph, write poetry, and spend way too much time thinking about satellite imagery of agricultural systems in Sub-Saharan Africa.\n\nWant the Full Picture?\nFor my CV, background, and professional info, head over to my Bona Fides page."
+    "section": "",
+    "text": "Data scientist, environmental systems thinker, and compulsive fixer of things. My heart belongs to the wild."
   },
   {
     "objectID": "index.html#what-im-working-on",
     "href": "index.html#what-im-working-on",
     "title": "Hi, I’m Emily",
     "section": "What I’m Working On",
-    "text": "What I’m Working On\nResearch → — Irrigation patterns, data infrastructure, environmental justice\nArt & Poetry → — Where observation becomes expression\nEssays & Thoughts → — Field notes from life and work"
+    "text": "What I’m Working On\nResearch → | Art & Poetry → | Essays → | More About Me →"
   },
   {
     "objectID": "blog.html",
@@ -137,42 +137,42 @@
     "href": "adventures.html",
     "title": "Adventures",
     "section": "",
-    "text": "Life happens between the data points\n\n\n\nWelcome to the moments that live between the data points and outside the lab—the beautiful chaos, unexpected discoveries, and genuinely ridiculous moments that make up a life worth living. This is where I share the adventures, the daily wonder, and the goofy things that happen when you’re paying attention to the world around you.\n\n“Tell me, what is it you plan to do with your one wild and precious life?” — Mary Oliver\n\n\n\n\n\nMeet the star of most of my unplanned adventures: my ground-squirrel-chasing, seaweed-rolling, beach-loving pup who thinks she’s part mermaid. She has perfected the art of finding the most spectacularly stinky kelp and rolling in it with the dedication of a connoisseur.\n\n\n\n\nSeaweed dog\n\n\n\nThe Fragrance Connoisseur\nBeach day • 2024\nShe will find the most spectacularly stinky kelp and roll in it with the dedication of a perfume critic. Ten out of ten, would stink again.\n\n\n\n\nIV Recovery Mascot (and insatiable composter)\n\n\n\nEnvironmental Activist\nBeach cleanup • 2024\nShe may not understand why we’re cleaning, but she’s definitely helping—and enjoying every second of being at the beach with her people.\n\n\n\nResearch Companion\nUCSB Research Lab • 2024\nWhen your lab assistant has four legs, unlimited enthusiasm, and absolutely no interest in the data you’re analyzing.\n\n\n\n\n\n\nLiving near the ocean saves my life on the daily. The salt water is where ideas come alive, where I remember what matters, and where the best conversations happen.\n\n\n\n\nBeach cleanup volunteers\n\n\n\nCommunity Care\nBeach cleanup • 2024\nWhen strangers become stewards, and an afternoon at the beach becomes an afternoon caring for home.\n\n\n\n\nMoments with mother\n\n\n\nGolden Hour Wisdom\nEvening beach walk • 2024\nThe best conversations happen with your feet in the sand and the sky turning colors you can’t quite name.\n\n\n\n\nBeach art\n\n\n\nAccidental Creation\nLow tide creativity • 2024\nArt happens when we’re not trying. The ocean has its way of reminding us that creation is everywhere—we just have to show up and play.\n\n\n\n\n\n\nThe completely unexpected, wonderfully weird moments that make life interesting and definitely worth documenting.\n\nComing Soon…\nBuilding a collection of the ridiculous, the beautiful, and the completely unexpected moments worth remembering.\n\n\n\n\n\n\nComing Soon…"
+    "text": "Life happens between the data points"
   },
   {
     "objectID": "adventures.html#what-this-is-all-about",
     "href": "adventures.html#what-this-is-all-about",
     "title": "Adventures",
-    "section": "",
-    "text": "Welcome to the moments that live between the data points and outside the lab—the beautiful chaos, unexpected discoveries, and genuinely ridiculous moments that make up a life worth living. This is where I share the adventures, the daily wonder, and the goofy things that happen when you’re paying attention to the world around you.\n\n“Tell me, what is it you plan to do with your one wild and precious life?” — Mary Oliver"
+    "section": "What This Is All About",
+    "text": "What This Is All About\nWelcome to the moments that live between the data points and outside the lab—the beautiful chaos, unexpected discoveries, and genuinely ridiculous moments that make up a life worth living. This is where I share the adventures, the daily wonder, and the goofy things that happen when you’re paying attention to the world around you.\n\n“Tell me, what is it you plan to do with your one wild and precious life?” — Mary Oliver"
   },
   {
-    "objectID": "adventures.html#dog-adventures",
-    "href": "adventures.html#dog-adventures",
+    "objectID": "adventures.html#dog",
+    "href": "adventures.html#dog",
     "title": "Adventures",
-    "section": "",
-    "text": "Meet the star of most of my unplanned adventures: my ground-squirrel-chasing, seaweed-rolling, beach-loving pup who thinks she’s part mermaid. She has perfected the art of finding the most spectacularly stinky kelp and rolling in it with the dedication of a connoisseur.\n\n\n\n\nSeaweed dog\n\n\n\nThe Fragrance Connoisseur\nBeach day • 2024\nShe will find the most spectacularly stinky kelp and roll in it with the dedication of a perfume critic. Ten out of ten, would stink again.\n\n\n\n\nIV Recovery Mascot (and insatiable composter)\n\n\n\nEnvironmental Activist\nBeach cleanup • 2024\nShe may not understand why we’re cleaning, but she’s definitely helping—and enjoying every second of being at the beach with her people.\n\n\n\nResearch Companion\nUCSB Research Lab • 2024\nWhen your lab assistant has four legs, unlimited enthusiasm, and absolutely no interest in the data you’re analyzing."
+    "section": "Dog",
+    "text": "Dog\nMeet the love of my life\n\n\n\n\nSeaweed dog\n\n\n\nThe Fragrance Connoisseur\nBeach day • 2024\nShe will find the most spectacularly stinky kelp and roll in it with the dedication of a perfume critic. Ten out of ten, would stink again.\n\n\n\n\nIV Recovery Mascot (and insatiable composter)\n\n\n\nEnvironmental Activist\nBeach cleanup • 2024\nShe may not understand why we’re cleaning, but she’s definitely helping—and enjoying every second of being at the beach with her people.\n\n\n\nResearch Companion\nUCSB Research Lab • 2024\nWhen your lab assistant has four legs, unlimited enthusiasm, and absolutely no interest in the data you’re analyzing."
   },
   {
     "objectID": "adventures.html#beach-life",
     "href": "adventures.html#beach-life",
     "title": "Adventures",
-    "section": "",
-    "text": "Living near the ocean saves my life on the daily. The salt water is where ideas come alive, where I remember what matters, and where the best conversations happen.\n\n\n\n\nBeach cleanup volunteers\n\n\n\nCommunity Care\nBeach cleanup • 2024\nWhen strangers become stewards, and an afternoon at the beach becomes an afternoon caring for home.\n\n\n\n\nMoments with mother\n\n\n\nGolden Hour Wisdom\nEvening beach walk • 2024\nThe best conversations happen with your feet in the sand and the sky turning colors you can’t quite name.\n\n\n\n\nBeach art\n\n\n\nAccidental Creation\nLow tide creativity • 2024\nArt happens when we’re not trying. The ocean has its way of reminding us that creation is everywhere—we just have to show up and play."
+    "section": "🌊 Beach Life",
+    "text": "🌊 Beach Life\nLiving near the ocean saves my life on the daily. The salt water is where ideas come alive, where I remember what matters, and where the best conversations happen.\n\n\n\n\nBeach cleanup volunteers\n\n\n\nCommunity Care\nBeach cleanup • 2024\nWhen strangers become stewards, and an afternoon at the beach becomes an afternoon caring for home.\n\n\n\n\nMoments with mother\n\n\n\nGolden Hour Wisdom\nEvening beach walk • 2024\nThe best conversations happen with your feet in the sand and the sky turning colors you can’t quite name.\n\n\n\n\nBeach art\n\n\n\nAccidental Creation\nLow tide creativity • 2024\nArt happens when we’re not trying. The ocean has its way of reminding us that creation is everywhere—we just have to show up and play."
   },
   {
     "objectID": "adventures.html#random-moments",
     "href": "adventures.html#random-moments",
     "title": "Adventures",
-    "section": "",
-    "text": "The completely unexpected, wonderfully weird moments that make life interesting and definitely worth documenting.\n\nComing Soon…\nBuilding a collection of the ridiculous, the beautiful, and the completely unexpected moments worth remembering."
+    "section": "🤪 Random Moments",
+    "text": "🤪 Random Moments\nThe completely unexpected, wonderfully weird moments that make life interesting and definitely worth documenting.\n\nComing Soon…\nBuilding a collection of the ridiculous, the beautiful, and the completely unexpected moments worth remembering."
   },
   {
     "objectID": "adventures.html#travel",
     "href": "adventures.html#travel",
     "title": "Adventures",
-    "section": "",
-    "text": "Coming Soon…"
+    "section": "🌍 Travel",
+    "text": "🌍 Travel\n\nComing Soon…"
   },
   {
     "objectID": "about.html#background",

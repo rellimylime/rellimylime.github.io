@@ -279,3 +279,191 @@ hr, .elegant-divider {
     font-size: 1.1rem;
   }
 }
+
+// Home Page Specific Styles
+.home-hero {
+  text-align: center;
+  max-width: 850px;
+  margin: 2rem auto 3rem auto;
+  padding: 0 1rem;
+  
+  img {
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1.5rem;
+    border: 3px solid rgba($secondary-color, 0.2);
+  }
+  
+  h2 {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 1.5rem;
+  }
+  
+  p {
+    text-align: center;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    margin-bottom: 1.2rem;
+  }
+}
+
+// Quote Section & Slideshow
+.quote-section {
+  text-align: center;
+  max-width: 900px;
+  margin: 3rem auto;
+  padding: 2rem 1rem;
+}
+
+.slider-container {
+  position: relative;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  background: rgba($secondary-color, 0.04);
+  border-radius: 0.4em;
+}
+
+.click-slider {
+  position: relative;
+  overflow: hidden;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slick-slide {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.6s ease-in-out;
+  animation: fadeIn 0.6s ease-in-out;
+  
+  &.slick-active {
+    display: block;
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.slick-slide strong {
+  font-size: 1.2rem;
+  font-style: italic;
+  color: $primary-color;
+  display: block;
+  margin-bottom: 1rem;
+  line-height: 1.8;
+}
+
+.slick-slide em {
+  font-size: 0.95rem;
+  color: $text-mid;
+  font-style: normal;
+  font-weight: 500;
+}
+
+// Slider controls
+.slick-prev, .slick-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: $secondary-color;
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  z-index: 10;
+  font-size: 1.2rem;
+  font-weight: bold;
+  
+  &:hover {
+    background: $primary-color;
+  }
+}
+
+.slick-prev {
+  left: -60px;
+  
+  @media (max-width: 768px) {
+    left: 10px;
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
+  }
+}
+
+.slick-next {
+  right: -60px;
+  
+  @media (max-width: 768px) {
+    right: 10px;
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
+  }
+}
+
+// Dots for slider pagination
+.slick-dots {
+  text-align: center;
+  padding: 1.5rem 0 0 0;
+  list-style: none;
+  
+  li {
+    display: inline-block;
+    margin: 0 0.4rem;
+    
+    button {
+      background: rgba($primary-color, 0.3);
+      border: none;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      cursor: pointer;
+      padding: 0;
+      transition: background 0.2s;
+      
+      &:hover {
+        background: rgba($primary-color, 0.6);
+      }
+    }
+    
+    &.slick-active button {
+      background: $secondary-color;
+    }
+  }
+}
+
+// Centered content for home page sections
+.home-content {
+  text-align: center;
+  max-width: 850px;
+  margin: 0 auto;
+  
+  h3 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  a {
+    display: inline-block;
+    margin: 0.5rem;
+  }
+}

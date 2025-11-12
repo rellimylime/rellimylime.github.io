@@ -3,8 +3,6 @@ title: "Adventures"
 toc: false
 ---
 
-# Random Adventures
-
 *Life happens between the data points*
 
 ------------------------------------------------------------------------
@@ -17,9 +15,9 @@ Welcome to the moments that live between the data points and outside the lab—t
 
 ------------------------------------------------------------------------
 
-## Dog Adventures
+## Dog
 
-Meet the star of most of my unplanned adventures: my ground-squirrel-chasing, seaweed-rolling, beach-loving pup who thinks she's part mermaid. She has perfected the art of finding the most spectacularly stinky kelp and rolling in it with the dedication of a connoisseur.
+Meet the love of my life
 
 -   
 
@@ -79,21 +77,19 @@ Living near the ocean saves my life on the daily. The salt water is where ideas 
 
 The completely unexpected, wonderfully weird moments that make life interesting and definitely worth documenting.
 
-:::: {style="background: var(--bg-light); padding: 2rem; border-radius: 10px; text-align: center; margin: 2rem 0;"}
+::: {style="background: var(--bg-light); padding: 2rem; border-radius: 10px; text-align: center; margin: 2rem 0;"}
 **Coming Soon...**
 
 *Building a collection of the ridiculous, the beautiful, and the completely unexpected moments worth remembering.*
-::::
+:::
 
 ------------------------------------------------------------------------
 
 ## 🌍 Travel
 
-:::: {style="background: var(--bg-light); padding: 2rem; border-radius: 10px; text-align: center; margin: 2rem 0;"}
+::: {style="background: var(--bg-light); padding: 2rem; border-radius: 10px; text-align: center; margin: 2rem 0;"}
 **Coming Soon...**
-
-
-::::
+:::
 
 ------------------------------------------------------------------------
 

@@ -30,6 +30,8 @@ format:
     theme: styles.scss
     toc: true
     page-layout: full
+    resources:
+      - carousel.js
 
 editor: visual
 

@@ -285,46 +285,75 @@ hr, .elegant-divider {
   width: 100vw;
   margin-left: calc(-50vw + 50%);
   margin-top: 0;
+  margin-bottom: 0;
   padding: 0;
   position: relative;
+  background-size: cover;
+  background-position: center;
+  height: 500px;
   
-  img {
-    width: 100vw;
-    height: 500px;
-    object-fit: cover;
-    display: block;
+  // Hide the p wrapper around img, show img full size
+  p {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     margin: 0;
-    border-radius: 0;
+    padding: 0;
+    z-index: 1;
+    
+    img {
+      width: 100vw;
+      height: 500px;
+      object-fit: cover;
+      display: block;
+      margin: 0;
+      border-radius: 0;
+      width: 100%;
+      height: 100%;
+    }
   }
   
-  h2, p {
+  section {
     position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    color: white;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    margin: 0;
-    padding: 0 2rem;
-    max-width: 600px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     z-index: 2;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
   
   h2 {
     border-bottom: none;
     padding-bottom: 0;
-    top: 45%;
-    transform: translate(-50%, -50%);
+    color: white;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    margin: 0 0 1rem 0;
+    padding: 0 2rem;
+    max-width: 600px;
     font-size: 2.5rem;
     font-weight: 700;
-    margin-bottom: 0;
   }
   
-  p {
-    bottom: 80px;
-    top: auto;
-    transform: translateX(-50%);
+  section > p {
+    position: static;
+    color: white;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    margin: 0;
+    padding: 0 2rem;
+    max-width: 600px;
     font-size: 1.1rem;
     line-height: 1.5;
+    z-index: auto;
+    width: auto;
+    height: auto;
   }
 }
 

@@ -1,22 +1,10 @@
 ---
 title: "About Me"
 subtitle: "Environmental Data Scientist • Artist • Researcher"
-image: "images/headshot.jpg"
 toc: false
-about:
-  template: jolla
-  image-width: 17em
-  links: 
-    - icon: linkedin
-      text: LinkedIn
-      href: "https://www.linkedin.com/in/rellimylime/"
-    - icon: github
-      text: GitHub
-      href: "https://github.com/rellimylime"
-    - icon: envelope
-      text: Email
-      href: "mailto:ermiller@ucsb.edu" 
 ---
+
+![](images/headshot.jpg)
 
 ## Background
 
@@ -28,9 +16,9 @@ Being near the ocean isn't just preference—it's foundational to my well-being 
 
 ## Academic Journey
 
-My academic journey began with a focus on pure mathematics, drawn to the elegance and precision of numerical analysis. My goal from the start was to use my degree to bring new levels of quantitative and analytical rigor to the science of understanding our world and place on this earth as a species. More broadly, my aim is to harness the constructive interference that arises from the combination of seemingly desperate modes of thinking.
+My academic journey began with a focus on pure mathematics, drawn to the elegance and precision of numerical analysis. My goal from the start was to use my degree to bring new levels of quantitative and analytical rigor to the science of understanding our world and place on this earth as a species.
 
-### Master of Environmental Data Science (MEDS)
+### Master of Environmental Data Science
 
 **University of California, Santa Barbara – Bren School** \| *Expected June 2026*
 

@@ -2,7 +2,6 @@
 title: "Emily Miller"
 subtitle: "Environmental Data Scientist • Artist • Researcher"
 toc: false
-title-block-banner: images/PXL_20240914_192718413.jpg
 ---
 
 ![](images/PXL_20240914_192718413.jpg)
@@ -17,7 +16,12 @@ Beyond the laboratory, I organize community environmental initiatives through IV
 
 *Equal parts quantitative rigor and unreasonable hope.*
 
-**Current Focus:** - **Remote Sensing & Machine Learning:** Satellite imagery analysis for understanding agricultural water systems and environmental monitoring - **Environmental Data Infrastructure:** Building reproducible, scalable tools to improve data quality and accessibility - **Community Engagement:** Organizing local environmental stewardship and mentoring students in STEM fields - **Research Communication:** Presenting findings at conferences and through peer collaboration
+### Current Focus
+
+-   **Remote Sensing & Machine Learning** — Satellite imagery analysis for understanding agricultural water systems and environmental monitoring
+-   **Environmental Data Infrastructure** — Building reproducible, scalable tools to improve data quality and accessibility
+-   **Community Engagement** — Organizing local environmental stewardship and mentoring students in STEM fields
+-   **Research Communication** — Presenting findings at conferences and through peer collaboration
 
 ## Creative Practice
 
@@ -25,28 +29,24 @@ Beyond the laboratory, I maintain an active creative practice encompassing visua
 
 My artistic work often draws inspiration from data patterns and environmental observation, creating visual bridges between quantitative analysis and aesthetic expression.
 
+------------------------------------------------------------------------
+
 ## Explore My Work
 
-::: block-section
 ### Research
 
 Current projects on irrigation systems, metadata quality, and environmental data science.
 
 [Read More →](research.qmd)
-:::
 
-::: block-section
 ### Art & Poetry
 
 Visual art, photography, and poetry exploring the intersection of science, nature, and creativity.
 
 [Explore →](art.qmd)
-:::
 
-::: block-section
 ### About & Resume
 
 My background, values, and detailed CV.
 
 [Learn More →](about.qmd) \| [Resume →](cv.qmd)
-:::

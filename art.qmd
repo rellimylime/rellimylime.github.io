@@ -3,11 +3,7 @@ title: "Art & Poetry"
 toc: false
 ---
 
-# 🎨 Art & Poetry
-
 *Where data meets creativity, and the messy, beautiful human experience becomes art*
-
-------------------------------------------------------------------------
 
 ## On Making Art
 
@@ -15,164 +11,92 @@ I believe that art and science aren't opposites—they're different languages fo
 
 When creativity strikes, it doesn't wait for the perfect time. So I paint, I write, I take photos. Sometimes the work is polished. Often it's raw, unfinished, bleeding into the margins of notebooks. All of it is real.
 
-------------------------------------------------------------------------
+## Visual Art
 
-## 🎨 Visual Art
+Paintings, drawings, and experiments at the intersection of observation and intuition. Coming soon...
 
-Paintings, drawings, and experiments at the intersection of observation and intuition.
+## Photography
 
-:::: {style="overflow-x: auto; padding: 2rem 0; margin: 2rem 0;"}
+Capturing light, moments, and the strange beauty hiding in plain sight. Coming soon...
 
-::: {style="display: flex; gap: 2rem; min-width: max-content; scroll-behavior: smooth;"}
-
-<!-- Add your artwork here - replace with actual images as you create -->
-
-::: {style="flex: 0 0 300px; text-align: center;"}
-![Coming Soon](placeholder-art.jpg)
-
-**Coming Soon...**
-
-*Building a collection of visual work*
-:::
-
-<!-- Duplicate and edit this block for each new piece -->
-
-<!-- 
-::: {style="flex: 0 0 300px; text-align: center;"}
-![Your artwork title](path/to/image.jpg)
-
-**Artwork Title**
-
-*Medium • Date*
-
-Brief description of the piece
-:::
--->
-
-:::
-
-::::
-
-*Scroll to see more →*
-
-------------------------------------------------------------------------
-
-## 📸 Photography
-
-Capturing light, moments, and the strange beauty hiding in plain sight.
-
-:::: {style="overflow-x: auto; padding: 2rem 0; margin: 2rem 0;"}
-
-::: {style="display: flex; gap: 2rem; min-width: max-content; scroll-behavior: smooth;"}
-
-::: {style="flex: 0 0 300px; text-align: center;"}
-![Coming Soon](placeholder-photo.jpg)
-
-**Coming Soon...**
-
-*Building a collection of photographs*
-:::
-
-<!-- Duplicate and edit this block for each new photo -->
-
-<!-- 
-::: {style="flex: 0 0 300px; text-align: center;"}
-![Photo title](path/to/image.jpg)
-
-**Photo Title**
-
-*Location or date*
-
-Brief context
-:::
--->
-
-:::
-
-::::
-
-*Scroll to see more →*
-
-------------------------------------------------------------------------
-
-## ✍️ Poetry
+## Poetry
 
 Words that hold what data can't measure. The messy, true stuff.
 
 ### A Bad Design
 
-My heels leak,  
-With each step, grating, chafing,  
-Could this be by design?  
-We've only been together a few days,  
-Perhaps it is my fault,  
-Not taking the time to offer support,  
+My heels leak,\
+With each step, grating, chafing,\
+Could this be by design?\
+We've only been together a few days,\
+Perhaps it is my fault,\
+Not taking the time to offer support,\
 Before slamming, stomping into you.
 
-Who would design such a thing?  
-No one else would want you in this state,  
-To suggest so feels like a setup, a hoax.  
-Perhaps a hairdryer and a rigid form,  
-Maybe some duct tape,  
-A pair of pliers, some wire cutters,  
+Who would design such a thing?\
+No one else would want you in this state,\
+To suggest so feels like a setup, a hoax.\
+Perhaps a hairdryer and a rigid form,\
+Maybe some duct tape,\
+A pair of pliers, some wire cutters,\
 To surgically remove the parts of you that rub me the wrong way.
 
-To no avail, and now my foolish faith in you has brought me far from home.  
-Far, and I think I might be bleeding—  
+To no avail, and now my foolish faith in you has brought me far from home.\
+Far, and I think I might be bleeding—\
 I will carry you the rest of the way.
 
-Soon the limp of uneven stilts,  
-Will send a pang through my hips, a warning.  
-Socks on searing sidewalks,  
-Catching on stale gum,  
-Collecting stories laid by treads,  
-Left by soles not soaked in scarlet,  
+Soon the limp of uneven stilts,\
+Will send a pang through my hips, a warning.\
+Socks on searing sidewalks,\
+Catching on stale gum,\
+Collecting stories laid by treads,\
+Left by soles not soaked in scarlet,\
 The better of your ilk.
 
-For you, I've sacrificed my heels,  
-My toes harbor liquid cushions,  
-Feet gone flat,  
+For you, I've sacrificed my heels,\
+My toes harbor liquid cushions,\
+Feet gone flat,\
 My balls slowly scorched.
 
-But I still feel for you;  
+But I still feel for you;\
 Betrayer.
 
-I know, if it were up to you, you wouldn't have picked this.  
-You remind me of me.  
-Brandishing your name as bait,  
-Luring investments in naïve idolatry.  
-Aspiring beyond clearance rack compromises  
-Seduced by a gilded construction  
+I know, if it were up to you, you wouldn't have picked this.\
+You remind me of me.\
+Brandishing your name as bait,\
+Luring investments in naïve idolatry.\
+Aspiring beyond clearance rack compromises\
+Seduced by a gilded construction\
 I championed your promise.
 
-To discard you now  
-Would be to admit defeat  
-To waste not only money,  
+To discard you now\
+Would be to admit defeat\
+To waste not only money,\
 But value of conviction.
 
-So you'll live in my closet,  
-Next to the others,  
-Until I come up with a way to fix you—  
-Trading band aids for false hope once again—  
+So you'll live in my closet,\
+Next to the others,\
+Until I come up with a way to fix you—\
+Trading band aids for false hope once again—\
 Or I find the heart to throw you out.
 
----
+------------------------------------------------------------------------
 
 ### The Ocean Listened
 
-I cried to the ocean today  
-She listened deeper than I spoke,  
+I cried to the ocean today\
+She listened deeper than I spoke,\
 and she told me she didn't care.
 
-So I asked the birds,  
-but they were too busy  
+So I asked the birds,\
+but they were too busy\
 idling against the ocean breeze
 
-I asked the grasses,  
-they stopped to listen  
+I asked the grasses,\
+they stopped to listen\
 and went back to sharing quiet whispers with the trees.
 
-Then I asked the wind,  
+Then I asked the wind,\
 and she swept up my tears faster than they could fall.
 
 I have never felt more loved.

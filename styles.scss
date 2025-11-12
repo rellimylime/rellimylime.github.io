@@ -1,12 +1,11 @@
 /*-- scss:defaults --*/
 
-// Import Google Fonts
-@import url('https://fonts.googleapis.com/css2?family=Mea+Culpa&family=Alice&family=Nunito:wght@300;400;600&display=swap');
+// Import Google Fonts - Clean & Elegant
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Crimson+Text:wght@400;600&display=swap');
 
 // SCSS Variables - Sophisticated Color Palette
-$brand-font: 'Mea Culpa', cursive;
-$header-font: 'Alice', serif;
-$content-font: 'Nunito', Arial, sans-serif;
+$header-font: 'Crimson Text', serif;
+$body-font: 'Inter', sans-serif;
 
 $primary-color: #464843;     // Ink black-green
 $secondary-color: #5387C2;   // Accent blue
@@ -20,182 +19,263 @@ $text-mid: #686661;
 /*-- scss:rules --*/
 
 // Base Styles
-body, main, section, .block-section {
-  background: $bg-cream !important;
-  font-family: $content-font;
-  font-size: 1.08rem;
-  font-weight: 300;
+body {
+  background: $bg-cream;
+  font-family: $body-font;
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: $text-dark;
+  line-height: 1.6;
+}
+
+main, section, .block-section {
+  background: transparent;
+  font-family: $body-font;
   color: $text-dark;
 }
 
-// Navigation Styles
+// Max width for content - creates nice centered layout
+.page-layout main {
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// Navigation Styles - Clean & Simple
 .navbar {
   background: $bg-cream !important;
-  border-bottom: 2.5px solid $secondary-color;
-  box-shadow: 0 2px 10px rgba(70,72,67,0.04);
+  border-bottom: 1px solid rgba($primary-color, 0.1);
+  box-shadow: none;
+  padding: 0.75rem 0;
 }
 
 .navbar-brand {
-  font-family: $brand-font, cursive !important;
+  font-family: $header-font !important;
   color: $primary-color !important;
-  font-weight: 400;
-  letter-spacing: 1.2px;
-  font-size: 2.1rem;
-  max-width: 260px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  font-weight: 600;
+  font-size: 1.5rem;
+  letter-spacing: 0.5px;
 }
 
 .navbar-nav {
   .nav-link {
-    font-size: 0.97rem;
-    font-family: $content-font;
-    font-weight: 600;
+    font-size: 0.95rem;
+    font-family: $body-font;
+    font-weight: 400;
     color: $primary-color !important;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.3px;
     background: none !important;
-    border-radius: 0.55em;
-    padding: 0.6em 1.10em !important;
-    transition: color 0.13s, background 0.13s;
-    min-width: 0;
-
-    &:hover, .nav-item.active & {
+    border-radius: 0;
+    padding: 0.5em 1em !important;
+    transition: color 0.2s;
+    
+    &:hover, &.active {
       color: $secondary-color !important;
-      background: rgba($accent-color, 0.14) !important;
+      background: none !important;
     }
   }
 }
 
 .dropdown-menu {
   background: $bg-cream !important;
-  border: 1px solid $accent-color;
-  border-radius: 0.7em;
-  min-width: 155px;
+  border: 1px solid rgba($primary-color, 0.15);
+  border-radius: 0.4em;
 }
 
 .dropdown-item {
   color: $primary-color !important;
-  border-radius: 0.5em;
-
+  font-family: $body-font;
+  
   &:hover {
-    background: rgba($sky-color, 0.2) !important;
+    background: rgba($secondary-color, 0.08) !important;
     color: $secondary-color !important;
   }
 }
 
 // Hero/Title Section
 .quarto-title-block {
-  background: $bg-cream !important;
-  color: $primary-color !important;
-  padding: 3rem 0 2rem 0;
-  border-radius: 0px 0px 1.5rem 1.5rem;
-  border-bottom: 2px solid $secondary-color;
+  background: transparent;
+  color: $primary-color;
+  padding: 2rem 0 1.5rem 0;
+  border-radius: 0;
+  border-bottom: none;
 }
 
 h1.title {
-  font-family: $brand-font, cursive !important;
-  font-size: 2.6rem;
-  font-weight: 400;
+  font-family: $header-font !important;
+  font-size: 2.2rem;
+  font-weight: 600;
   color: $primary-color !important;
-  letter-spacing: 1.2px;
-  margin-bottom: 0.25em;
+  letter-spacing: 0px;
+  margin-bottom: 0.5em;
   border: none;
   padding-left: 0;
 }
 
+.subtitle {
+  font-family: $body-font;
+  font-size: 1rem;
+  font-weight: 400;
+  color: $text-mid;
+  margin-bottom: 0;
+}
+
 // Typography
-h2, h3, h4 {
-  font-family: $header-font, serif !important;
-  font-weight: 700;
-  color: $secondary-color !important;
-  letter-spacing: 0.7px;
+h2, h3, h4, h5, h6 {
+  font-family: $header-font !important;
+  font-weight: 600;
+  color: $primary-color !important;
+  letter-spacing: 0.2px;
   background: none !important;
   text-transform: none;
-  border-left: 5px solid $accent-color;
-  padding-left: 0.55em;
+  border-left: none;
+  padding-left: 0;
+  margin-top: 1.5em;
+  margin-bottom: 0.8em;
 }
 
-p, li, .block-section, .column, .subtitle {
-  font-family: $content-font !important;
-  font-weight: 300;
+h2 {
+  font-size: 1.6rem;
+  border-bottom: 1px solid rgba($secondary-color, 0.3);
+  padding-bottom: 0.5em;
 }
 
-// Cards and Sections
+h3 {
+  font-size: 1.3rem;
+}
+
+p, li, .block-section, .column {
+  font-family: $body-font !important;
+  font-weight: 400;
+  line-height: 1.65;
+}
+
+p {
+  margin-bottom: 1.2em;
+}
+
+a {
+  color: $secondary-color;
+  text-decoration: underline;
+  font-weight: 500;
+  transition: color 0.2s;
+  
+  &:hover {
+    color: $primary-color;
+  }
+}
+
+// Cards and Sections - Clean & Minimal
 .block-section, .card, .art-item, .blog-post, .service-card, .research-item {
-  background: lighten($bg-cream, 2%) !important;
-  border: 1.3px solid $accent-color;
-  border-radius: 0.7em !important;
-  box-shadow: 0 2px 11px rgba($secondary-color, 0.03);
-  padding: 1.3rem 1em;
-  margin-bottom: 2.1em;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+  margin-bottom: 1.5em;
 }
 
-.block-section {
-  border-left: 6px solid $secondary-color;
+.card {
+  border: 1px solid rgba($primary-color, 0.1);
+  padding: 1.2rem;
+  border-radius: 0.3em;
+  background: rgba($bg-cream, 0.5);
 }
 
 .artsy-highlight {
   color: $secondary-color;
   background: none;
-  font-weight: 540;
-  border-bottom: 2px solid $sky-color;
+  font-weight: 600;
+  border-bottom: none;
   border-radius: 0;
 }
 
-// Links and Buttons
-a, .btn-custom {
-  color: $secondary-color;
-  text-decoration: underline;
-  font-weight: 500;
+// Images - Proper spacing
+img {
+  max-width: 100%;
+  height: auto;
+  margin: 1.5rem 0;
+  border-radius: 0.3em;
 }
 
-.btn-custom {
-  background: $accent-color;
-  border-radius: 2em;
-  border: none;
-  color: #fff !important;
-  padding: 0.5em 1.5em;
-  box-shadow: none;
-  font-weight: 600;
-
-  &:hover {
-    background: $secondary-color;
-    color: #fff !important;
+// Lists
+ul, ol {
+  margin-left: 1.5em;
+  margin-bottom: 1.2em;
+  
+  li {
+    margin-bottom: 0.6em;
   }
 }
 
-// Dividers
-hr, .elegant-divider {
+// Buttons
+.btn-custom {
+  background: $secondary-color;
+  border-radius: 0.3em;
   border: none;
-  height: 2.5px;
-  background: linear-gradient(90deg, $secondary-color 0%, $sage-color 100%);
-  opacity: 0.14;
-  margin: 2.4rem 0 1.7rem 0;
-  border-radius: 16px;
+  color: white !important;
+  padding: 0.6em 1.3em;
+  font-family: $body-font;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+  text-decoration: none !important;
+
+  &:hover {
+    background: $primary-color;
+    color: white !important;
+  }
 }
 
-// Remove playful elements
+// Dividers - Minimal and subtle
+hr, .elegant-divider {
+  border: none;
+  height: 1px;
+  background: rgba($primary-color, 0.15);
+  margin: 2rem 0;
+  border-radius: 0;
+}
+
+// Remove old playful elements
 .shape-bg, .fun-gradient, .section-gradient, .asymmetric-layout, .artsy-border, .artsy-highlight::before, .creative-quote::before {
   display: none !important;
 }
 
 // Responsive Design
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .navbar-brand { 
-    font-size: 1.25rem; 
+    font-size: 1.2rem; 
   }
   
   .navbar-nav .nav-link { 
-    font-size: 0.93rem; 
-    padding: 0.57em 0.57em !important; 
-  }
-  
-  .block-section, .card, .art-item, .blog-post, .service-card, .research-item { 
-    padding: 0.7em 0.2em; 
+    font-size: 0.9rem; 
+    padding: 0.4em 0.8em !important; 
   }
   
   h1.title { 
-    font-size: 1.16rem; 
+    font-size: 1.5rem; 
+  }
+  
+  h2 {
+    font-size: 1.2rem;
+  }
+  
+  .page-layout main {
+    max-width: 100%;
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 1rem;
+  }
+  
+  h1.title { 
+    font-size: 1.3rem; 
+  }
+  
+  h2 {
+    font-size: 1.1rem;
   }
 }

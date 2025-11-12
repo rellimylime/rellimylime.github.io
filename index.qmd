@@ -1,52 +1,34 @@
 ---
-title: "Emily Miller"
-subtitle: "Environmental Data Scientist • Artist • Researcher"
+title: "Hi, I'm Emily"
 toc: false
 ---
 
 ![](images/PXL_20240914_192718413.jpg)
 
-## Research & Work
+Welcome to my little corner of the internet. This is where I share what I'm thinking about, making, and learning—at the intersection of science, art, and trying to make things a bit better.
 
-I'm a Master of Environmental Data Science student at UCSB (graduating June 2026) developing machine learning and remote sensing approaches to understand environmental systems. Currently working on irrigation pattern mapping in Sub-Saharan Africa with the Water Vegetation and Society (WaVeS) Lab, and designing scalable metadata quality assessment tools for environmental data repositories as my capstone project.
+---
 
-My work combines technical rigor with creative problem-solving to tackle real-world environmental challenges—from satellite imagery analysis to building tools that make environmental data more accessible and usable.
+> *Equal parts quantitative rigor and unreasonable hope.*
 
-Beyond the laboratory, I organize community environmental initiatives through IV Recovery and actively engage in mentorship through Women in Science and Engineering (WiSE).
+---
 
-*Equal parts quantitative rigor and unreasonable hope.*
+## A Few Things About Me
 
-### Current Focus
+I'm a MEDS student at UCSB working on remote sensing, machine learning, and data infrastructure for environmental systems. I organize community initiatives, mentor in STEM, and believe creativity and science are just different languages for the same truth.
 
--   **Remote Sensing & Machine Learning** — Satellite imagery analysis for understanding agricultural water systems and environmental monitoring
--   **Environmental Data Infrastructure** — Building reproducible, scalable tools to improve data quality and accessibility
--   **Community Engagement** — Organizing local environmental stewardship and mentoring students in STEM fields
--   **Research Communication** — Presenting findings at conferences and through peer collaboration
+Off the computer: I paint, photograph, write poetry, and spend way too much time thinking about satellite imagery of agricultural systems in Sub-Saharan Africa.
 
-## Creative Practice
+### Want the Full Picture?
 
-Beyond the laboratory, I maintain an active creative practice encompassing visual art, photography, and poetry. I believe that creativity and scientific inquiry are complementary forces—both require careful observation, pattern recognition, and the courage to explore the unknown.
+For my CV, background, and professional info, head over to my **[Bona Fides](about.qmd)** page.
 
-My artistic work often draws inspiration from data patterns and environmental observation, creating visual bridges between quantitative analysis and aesthetic expression.
+---
 
-------------------------------------------------------------------------
+## What I'm Working On
 
-## Explore My Work
+**[Research →](research.qmd)** — Irrigation patterns, data infrastructure, environmental justice
 
-### Research
+**[Art & Poetry →](art.qmd)** — Where observation becomes expression
 
-Current projects on irrigation systems, metadata quality, and environmental data science.
-
-[Read More →](research.qmd)
-
-### Art & Poetry
-
-Visual art, photography, and poetry exploring the intersection of science, nature, and creativity.
-
-[Explore →](art.qmd)
-
-### About & Resume
-
-My background, values, and detailed CV.
-
-[Learn More →](about.qmd) \| [Resume →](cv.qmd)
+**[Essays & Thoughts →](adventures.qmd)** — Field notes from life and work

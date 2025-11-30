@@ -7,7 +7,11 @@ image: eds220-final-cover.png
 citation:
   url: https://rellimylime.github.io/posts/eds220-final/
 bibliography: references.bib
-jupyter: eds220-env
+execute:
+  eval: false
+  echo: true
+  warning: false
+  message: false
 ---
 
 ## About
@@ -16,7 +20,7 @@ In January 2025, the Eaton and Palisades fires swept through Los Angeles County,
 
 Understanding wildfire impacts requires more than just mapping burned areas—it requires examining both the physical changes to the landscape and the social dimensions of who is affected. This analysis combines **remote sensing techniques** with **environmental justice data** to provide a comprehensive view of these devastating fires.
 
-**Repository:** <https://github.com/rellimylime/eds220-hwk4>
+**Repository:** [https://github.com/rellimylime/eds220-hwk4](https://github.com/rellimylime/eds220-hwk4)
 
 ![Satellite view of the fire-affected areas](eds220-final-cover.png)
 
@@ -24,10 +28,10 @@ Understanding wildfire impacts requires more than just mapping burned areas—it
 
 This analysis demonstrates several key geospatial analysis techniques:
 
--   **False color visualization** using Landsat 8 SWIR/NIR/Red bands to identify burn scars and assess vegetation health
--   **Multi-dataset integration** combining satellite raster imagery with vector fire perimeter and census tract data
--   **CRS management and reprojection** to ensure spatial alignment across different data sources
--   **Environmental justice analysis** examining the socioeconomic characteristics of communities affected by the fires
+- **False color visualization** using Landsat 8 SWIR/NIR/Red bands to identify burn scars and assess vegetation health
+- **Multi-dataset integration** combining satellite raster imagery with vector fire perimeter and census tract data
+- **CRS management and reprojection** to ensure spatial alignment across different data sources
+- **Environmental justice analysis** examining the socioeconomic characteristics of communities affected by the fires
 
 ## Data
 
@@ -35,30 +39,27 @@ This analysis demonstrates several key geospatial analysis techniques:
 
 This dataset contains atmospherically corrected surface reflectance data from the Landsat 8 satellite, captured on February 23, 2025. The imagery includes five spectral bands (red, green, blue, near-infrared, and shortwave infrared) clipped to the area surrounding the Eaton and Palisades fire perimeters. The data was retrieved from the Microsoft Planetary Computer STAC catalog in NetCDF format.
 
-**Citation:** Microsoft Planetary Computer. (2025). *Landsat Collection 2 Level-2* \[Data file\]. Retrieved from https://planetarycomputer.microsoft.com/dataset/landsat-c2-l2
+**Citation:** Microsoft Planetary Computer. (2025). *Landsat Collection 2 Level-2* [Data file]. Retrieved from https://planetarycomputer.microsoft.com/dataset/landsat-c2-l2
 
 ### Fire Perimeter Shapefiles
 
 Official fire perimeter polygons for the Eaton and Palisades fires as of January 21, 2025, provided in EPSG:3857 (Web Mercator) projection. These shapefiles include boundary geometries and attribute information for each fire.
 
-**Citation:** Palisades and Eaton Dissolved Fire Perimeters. (2025). *Fire perimeter shapefiles* \[Geospatial dataset\]. ArcGIS Hub. Retrieved from https://hub.arcgis.com/maps/ad51845ea5fb4eb483bc2a7c38b2370c
+**Citation:** Palisades and Eaton Dissolved Fire Perimeters. (2025). *Fire perimeter shapefiles* [Geospatial dataset]. ArcGIS Hub. Retrieved from https://hub.arcgis.com/maps/ad51845ea5fb4eb483bc2a7c38b2370c
 
 ### Environmental Justice Index (EJI) Data
 
 The Environmental Justice Index provides census tract-level data on environmental and socioeconomic factors. This analysis uses the 2024 California EJI dataset, which includes demographic information, poverty statistics, and environmental burden indicators for communities across the state.
 
-**Citation:** Centers for Disease Control and Prevention/Agency for Toxic Substances and Disease Registry. (2024). *Environmental Justice Index, California* \[Geodatabase\]. Retrieved from https://www.atsdr.cdc.gov/placeandhealth/eji/index.html
+**Citation:** Centers for Disease Control and Prevention/Agency for Toxic Substances and Disease Registry. (2024). *Environmental Justice Index, California* [Geodatabase]. Retrieved from https://www.atsdr.cdc.gov/placeandhealth/eji/index.html
 
-------------------------------------------------------------------------
+---
 
 ## Analysis 1: False Color Visualization
 
 ### Setup and Data Import
 
 ```{python}
-#| warning: false
-#| message: false
-
 # Import required libraries
 import xarray as xr
 import rioxarray as rio
@@ -78,10 +79,69 @@ Fire perimeters provide the spatial boundaries for our analysis, allowing us to 
 eaton = gpd.read_file('data/Eaton_Perimeter_20250121.shp')
 palisades = gpd.read_file('data/Palisades_Perimeter_20250121.shp')
 
-# Both datasets use EPSG:3857 (Web Mercator)
+# Explore the data structure
+print("Eaton Fire Perimeter:")
+print(eaton.info())
+print("\nPalisades Fire Perimeter:")
+print(palisades.info())
+```
+
+::: {.callout-note collapse="true"}
+## Data Structure Output
+
+```
+Eaton Fire Perimeter:
+<class 'geopandas.geodataframe.GeoDataFrame'>
+RangeIndex: 20 entries, 0 to 19
+Data columns (total 5 columns):
+ #   Column      Non-Null Count  Dtype
+---  ------      --------------  -----
+ 0   OBJECTID    20 non-null     int64
+ 1   type        20 non-null     object
+ 2   Shape__Are  20 non-null     float64
+ 3   Shape__Len  20 non-null     float64
+ 4   geometry    20 non-null     geometry
+
+Palisades Fire Perimeter:
+<class 'geopandas.geodataframe.GeoDataFrame'>
+RangeIndex: 21 entries, 0 to 20
+Data columns (total 5 columns):
+ #   Column      Non-Null Count  Dtype
+---  ------      --------------  -----
+ 0   OBJECTID    21 non-null     int64
+ 1   type        21 non-null     object
+ 2   Shape__Are  21 non-null     float64
+ 3   Shape__Len  21 non-null     float64
+ 4   geometry    21 non-null     geometry
+```
+:::
+
+Both datasets contain polygon geometries representing the fire boundaries, along with area and perimeter measurements.
+
+#### Coordinate Reference System Check
+
+```{python}
+#| eval: false
+
+# Check CRS
 print(f"Eaton CRS: {eaton.crs}")
 print(f"Palisades CRS: {palisades.crs}")
+
+# Verify projection type
+print(f"\nIs Eaton CRS geographic? {eaton.crs.is_geographic}")
+print(f"Is Palisades CRS geographic? {palisades.crs.is_geographic}")
 ```
+
+**Output:**
+```
+Eaton CRS: EPSG:3857
+Palisades CRS: EPSG:3857
+
+Is Eaton CRS geographic? False
+Is Palisades CRS geographic? False
+```
+
+Both datasets use EPSG:3857 (Web Mercator), a projected coordinate system suitable for web mapping applications.
 
 ### Loading and Processing Landsat Imagery
 
@@ -93,29 +153,128 @@ The Landsat 8 scene contains multiple spectral bands that capture different wave
 # Import Landsat data
 landsat = xr.open_dataset('data/landsat8-2025-02-23-palisades-eaton.nc')
 
-# Restore CRS information from spatial_ref variable
+# Display dataset information
+landsat
+```
+
+::: {.callout-note collapse="true"}
+## Dataset Structure
+
+```
+<xarray.Dataset> Size: 78MB
+Dimensions:      (y: 1418, x: 2742)
+Coordinates:
+  * y            (y) float64 11kB 3.799e+06 3.799e+06 ... 3.757e+06
+  * x            (x) float64 22kB 3.344e+05 3.344e+05 ... 4.166e+05
+    time         datetime64[ns] 8B ...
+Data variables:
+    red          (y, x) float32 16MB ...
+    green        (y, x) float32 16MB ...
+    blue         (y, x) float32 16MB ...
+    nir08        (y, x) float32 16MB ...
+    swir22       (y, x) float32 16MB ...
+    spatial_ref  int64 8B ...
+```
+:::
+
+```{python}
+#| eval: false
+
+# Explore dimensions and coordinates
+print("Dimensions:", landsat.dims)
+print("\nCoordinates:", list(landsat.coords))
+print("\nData variables:", list(landsat.data_vars))
+```
+
+**Summary:**
+
+- The dimensions (height and width) of the data are represented by **y: 1418** and **x: 2742**
+- The data is three-dimensional, with **y, x, and time** as coordinates
+- The variables in the data are **'red', 'green', 'blue', 'nir08', 'swir22', 'spatial_ref'**
+
+#### Restoring Geospatial Information
+
+Before we can perform spatial operations, we need to verify and restore the coordinate reference system (CRS) information.
+
+```{python}
+#| eval: false
+
+# Check if CRS is properly set
+print(landsat.rio.crs)
+```
+
+**Output:** `None`
+
+The dataset is not currently geospatially referenced. We need to recover this information from the `spatial_ref` variable.
+
+```{python}
+#| eval: false
+
+# Print the CRS from spatial_ref metadata
+print(landsat.spatial_ref.crs_wkt)
+
+# Recover the geospatial information
 landsat = landsat.rio.write_crs(landsat.spatial_ref.crs_wkt)
 
-# Handle missing values and outliers
+# Verify the CRS is now properly set
+print(landsat.rio.crs)
+```
+
+**Output:** `EPSG:32611` (WGS 84 / UTM zone 11N)
+
+The Landsat data uses UTM Zone 11N, which is appropriate for the Los Angeles area.
+
+#### Handling Missing Values
+
+```{python}
+#| eval: false
+
+# Identify which bands have NaN values
+nan_bands = []
+for band in ['red', 'green', 'blue', 'nir08', 'swir22']:
+    if np.isnan(landsat[band]).any():
+        nan_bands.append(band)
+
+print("Bands with NaN values:", nan_bands)
+
+# Fill NaN values with 0
 landsat = landsat.fillna(0)
 ```
 
-The dataset contains five spectral bands spanning visible light through infrared wavelengths, with dimensions of 1418 × 2742 pixels covering the fire-affected region.
+NaN values can occur at the edges of satellite scenes or in areas with clouds. Filling them with zero prevents visualization errors.
 
 ### True Color Visualization
 
 Before creating specialized visualizations, we can verify our data by creating a true color image using the red, green, and blue bands—similar to how a standard camera would capture the scene.
 
+**First attempt (without outlier handling):**
+
 ```{python}
 #| eval: false
 
-# Create true color composite (RGB)
+# Plot the true color image without robust parameter
+landsat[['red', 'green', 'blue']].to_array().plot.imshow()
+plt.show()
+```
+
+This initial attempt produces a blank-looking image with warnings about clipping RGB data and invalid values. The issue is extreme outliers (often from cloud reflectance) that make other pixel values appear near-zero when matplotlib scales the image.
+
+**Improved visualization:**
+
+```{python}
+#| eval: false
+
+# Create true color composite with robust scaling
 landsat[['red', 'green', 'blue']].to_array().plot.imshow(robust=True)
 plt.title('True Color Image - Landsat 8')
 plt.show()
 ```
 
-The `robust=True` parameter clips extreme outlier values (often from clouds or water) to improve visualization by preventing a few bright pixels from washing out the entire image.
+::: {.callout-tip}
+## Why `robust=True` Works
+
+The `robust=True` parameter clips extreme outlier values (2nd and 98th percentiles) to improve visualization. This prevents a few bright pixels from washing out the entire image, resulting in a clear, detailed true color image with proper contrast and no warnings.
+:::
 
 ### False Color Analysis
 
@@ -132,9 +291,9 @@ plt.show()
 
 **Why this band combination?**
 
--   **Healthy vegetation** has high NIR reflectance and low SWIR reflectance → appears bright green
--   **Burned areas** have low NIR reflectance and moderate SWIR reflectance → appears reddish-brown
--   **Urban areas** show moderate reflectance across bands → appears in neutral tones
+- **Healthy vegetation** has high NIR reflectance and low SWIR reflectance → appears bright green
+- **Burned areas** have low NIR reflectance and moderate SWIR reflectance → appears reddish-brown
+- **Urban areas** show moderate reflectance across bands → appears in neutral tones
 
 ### Creating the Final Map
 
@@ -185,9 +344,21 @@ plt.tight_layout()
 plt.show()
 ```
 
-This false color composite clearly reveals the extent and severity of fire impacts. The distinct reddish-brown burn scars contrast sharply with the bright green healthy vegetation in surrounding areas. The combination of spectral analysis and geographic boundaries provides a powerful tool for assessing wildfire damage and monitoring landscape recovery.
+::: {.callout-important}
+## Figure Interpretation
 
-------------------------------------------------------------------------
+This false color composite displays the Eaton and Palisades fire areas captured by Landsat 8 on February 23, 2025. The image uses **shortwave infrared (SWIR)**, **near-infrared (NIR)**, and **red** bands to highlight burn scars and vegetation health.
+
+**Key features:**
+
+- **Bright green areas** = Healthy vegetation (high NIR reflectance)
+- **Reddish-brown areas** = Burned areas and bare soil (low NIR, moderate SWIR)
+- **Urban/developed areas** = Neutral tones (moderate reflectance across bands)
+
+The fire perimeters are overlaid in **yellow (Eaton Fire)** and **red (Palisades Fire)** to delineate the official burn boundaries. This false color combination is particularly effective for assessing fire severity and monitoring landscape recovery, as the spectral signatures of healthy vs. burned vegetation are distinctly different in the infrared wavelengths.
+:::
+
+---
 
 ## Analysis 2: Environmental Justice Dimensions
 
@@ -207,10 +378,48 @@ palisades_perimeters = gpd.read_file('data/Palisades_Perimeter_20250121.shp')
 
 # Load California Environmental Justice Index data
 eji_data = gpd.read_file('data/EJI_2024_California.gdb')
-
-# Ensure CRS alignment
-eji_data = eji_data.to_crs(palisades_perimeters.crs)
 ```
+
+The EJI dataset contains census tract-level data for all of California. Let's explore its structure:
+
+::: {.callout-note collapse="true"}
+## EJI Data Structure
+
+```{python}
+#| eval: false
+
+print(eji_data.head())
+print(f"\nTotal census tracts: {len(eji_data)}")
+print(f"Number of variables: {len(eji_data.columns)}")
+```
+
+The dataset contains 174 columns including demographic, environmental, and health vulnerability indicators for each census tract.
+:::
+
+#### CRS Alignment
+
+```{python}
+#| eval: false
+
+# Check CRS compatibility
+print(f"Fire perimeters CRS: {palisades_perimeters.crs}")
+print(f"EJI data CRS: {eji_data.crs}")
+
+# Reproject EJI data to match fire perimeter CRS
+eji_data = eji_data.to_crs(palisades_perimeters.crs)
+
+print(f"\nEJI data reprojected to: {eji_data.crs}")
+```
+
+**Output:**
+```
+Fire perimeters CRS: EPSG:3857
+EJI data CRS: EPSG:3857
+
+EJI data reprojected to: EPSG:3857
+```
+
+Both datasets now use the same coordinate reference system, enabling accurate spatial operations.
 
 ### Identifying Affected Communities
 
@@ -295,11 +504,11 @@ This analysis reveals important differences in socioeconomic vulnerability betwe
 
 Understanding these patterns is crucial for:
 
--   **Emergency response planning** - ensuring resources reach vulnerable populations
--   **Recovery assistance** - targeting aid to communities with fewer economic resources
--   **Long-term resilience planning** - addressing pre-existing vulnerabilities that compound disaster impacts
+- **Emergency response planning** - ensuring resources reach vulnerable populations
+- **Recovery assistance** - targeting aid to communities with fewer economic resources
+- **Long-term resilience planning** - addressing pre-existing vulnerabilities that compound disaster impacts
 
-------------------------------------------------------------------------
+---
 
 ## Conclusion
 

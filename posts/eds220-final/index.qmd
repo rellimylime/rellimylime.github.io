@@ -114,7 +114,9 @@ crs_df = pd.DataFrame(crs_data)
 crs_df
 ```
 
-Both datasets use EPSG:3857 (Web Mercator), a projected coordinate system suitable for web mapping applications.
+Summary of fire perimeter exploration:
+
+Both the Eaton and Palisades fire perimeter datasets use EPSG:3857. The Eaton perimeter contains 20 polygon features while the Palisades perimeter has 21. Both Datasets share the same 5-column structure: OBJECTID, type, Shape_Are, Shape_Len, and geometry. Both of these will need to be reprojected to the crs of the raster before analysis.
 
 ### Loading and Processing Landsat Imagery
 
@@ -138,7 +140,9 @@ print("\nCoordinates:", list(landsat.coords))
 print("\nData variables:", list(landsat.data_vars))
 ```
 
-The dataset has dimensions of **1418 × 2742 pixels** with coordinates **y, x, and time**. It contains five spectral bands: **red, green, blue, nir08, swir22**, plus spatial reference information.
+Summary of Landsat Exploration:
+
+The landsat 8 dataset is stored in NetCDF format which contains 5 spectral bands (red, green, blue, nir08, swir22) as well as a spatial_ref variables that stores crs information. The raster has dimensions of 2742 pixels (width) by 1418 pixels (height) and covers the area around both fires. The dataset includes three coordinates; x and y for position, and time as the third indicating observation date.
 
 #### Restoring Geospatial Information
 

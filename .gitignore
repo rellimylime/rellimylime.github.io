@@ -38,4 +38,5 @@ yarn-error.log
 *.swo
 *~
 
-# Environment files
+# Data
+posts/eds220-final/data/*

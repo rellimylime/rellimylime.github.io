@@ -8,8 +8,7 @@ citation:
   url: https://rellimylime.github.io/posts/eds220-final/
 bibliography: references.bib
 execute:
-  eval: false
-  echo: true
+  python: eds220-env
   warning: false
   message: false
 ---
@@ -61,7 +60,18 @@ The Environmental Justice Index provides census tract-level data on environmenta
 
 ```{python}
 # Import required libraries
-import xarray as xr
+
+for pkg in ["xarray", "rioxarray"]:
+    try:
+        __import__(pkg)
+        print(f"{pkg} is already installed.")
+    except ImportError:
+        print(f"{pkg} not found. Installing...")
+        import subprocess, sys
+        subprocess.check_call([sys.executable, "-m", "pip", "install", pkg])
+        print(f"{pkg} installed successfully.")
+
+
 import rioxarray as rio
 import geopandas as gpd
 import numpy as np
@@ -73,7 +83,7 @@ import matplotlib.pyplot as plt
 Fire perimeters provide the spatial boundaries for our analysis, allowing us to focus on the areas most affected by the fires.
 
 ```{python}
-#| eval: false
+#| results: false
 
 # Load fire perimeter shapefiles
 eaton = gpd.read_file('data/Eaton_Perimeter_20250121.shp')
@@ -85,9 +95,6 @@ print(eaton.info())
 print("\nPalisades Fire Perimeter:")
 print(palisades.info())
 ```
-
-::: {.callout-note collapse="true"}
-## Data Structure Output
 
 ```
 Eaton Fire Perimeter:
@@ -114,14 +121,13 @@ Data columns (total 5 columns):
  3   Shape__Len  21 non-null     float64
  4   geometry    21 non-null     geometry
 ```
-:::
 
 Both datasets contain polygon geometries representing the fire boundaries, along with area and perimeter measurements.
 
 #### Coordinate Reference System Check
 
 ```{python}
-#| eval: false
+#| code-fold: true
 
 # Check CRS
 print(f"Eaton CRS: {eaton.crs}")
@@ -148,7 +154,7 @@ Both datasets use EPSG:3857 (Web Mercator), a projected coordinate system suitab
 The Landsat 8 scene contains multiple spectral bands that capture different wavelengths of reflected light. Each band provides unique information about surface features.
 
 ```{python}
-#| eval: false
+#| results: false
 
 # Import Landsat data
 landsat = xr.open_dataset('data/landsat8-2025-02-23-palisades-eaton.nc')
@@ -157,25 +163,19 @@ landsat = xr.open_dataset('data/landsat8-2025-02-23-palisades-eaton.nc')
 landsat
 ```
 
-::: {.callout-note collapse="true"}
-## Dataset Structure
-
-```
-<xarray.Dataset> Size: 78MB
-Dimensions:      (y: 1418, x: 2742)
-Coordinates:
-  * y            (y) float64 11kB 3.799e+06 3.799e+06 ... 3.757e+06
-  * x            (x) float64 22kB 3.344e+05 3.344e+05 ... 4.166e+05
-    time         datetime64[ns] 8B ...
-Data variables:
-    red          (y, x) float32 16MB ...
-    green        (y, x) float32 16MB ...
-    blue         (y, x) float32 16MB ...
-    nir08        (y, x) float32 16MB ...
-    swir22       (y, x) float32 16MB ...
-    spatial_ref  int64 8B ...
-```
-:::
+<details>
+  <summary>Click to hide/show output</summary>
+  ```{python}
+  #| echo: false
+  #| eval: true
+  
+  # Import Landsat data
+  landsat = xr.open_dataset('data/landsat8-2025-02-23-palisades-eaton.nc')
+  
+  # Display dataset information
+  landsat
+  ```
+</details>
 
 ```{python}
 #| eval: false
@@ -186,11 +186,15 @@ print("\nCoordinates:", list(landsat.coords))
 print("\nData variables:", list(landsat.data_vars))
 ```
 
-**Summary:**
+```
+Dimensions: FrozenMappingWarningOnValuesAccess({'y': 1418, 'x': 2742})
 
-- The dimensions (height and width) of the data are represented by **y: 1418** and **x: 2742**
-- The data is three-dimensional, with **y, x, and time** as coordinates
-- The variables in the data are **'red', 'green', 'blue', 'nir08', 'swir22', 'spatial_ref'**
+Coordinates: ['y', 'x', 'time']
+
+Data variables: ['red', 'green', 'blue', 'nir08', 'swir22', 'spatial_ref']
+```
+
+**Summary:** The dimensions (height and width) of the data are represented by **y: 1418** and **x: 2742**. The data is three-dimensional, with **y, x, and time** as coordinates. The variables in the data are **'red', 'green', 'blue', 'nir08', 'swir22', 'spatial_ref'**.
 
 #### Restoring Geospatial Information
 
@@ -241,7 +245,11 @@ print("Bands with NaN values:", nan_bands)
 landsat = landsat.fillna(0)
 ```
 
-NaN values can occur at the edges of satellite scenes or in areas with clouds. Filling them with zero prevents visualization errors.
+```
+Bands with NaN values: ['red', 'green', 'blue', 'nir08', 'swir22']
+```
+
+All five spectral bands contain some NaN values. These can occur at the edges of satellite scenes or in areas with clouds. Filling them with zero prevents visualization errors.
 
 ### True Color Visualization
 
@@ -250,19 +258,25 @@ Before creating specialized visualizations, we can verify our data by creating a
 **First attempt (without outlier handling):**
 
 ```{python}
-#| eval: false
+#| eval: true
 
 # Plot the true color image without robust parameter
 landsat[['red', 'green', 'blue']].to_array().plot.imshow()
 plt.show()
 ```
 
-This initial attempt produces a blank-looking image with warnings about clipping RGB data and invalid values. The issue is extreme outliers (often from cloud reflectance) that make other pixel values appear near-zero when matplotlib scales the image.
+This initial attempt produces a blank-looking image with warnings about clipping RGB data and invalid values:
+
+```
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+```
+
+The issue is extreme outliers (often from cloud reflectance) that make other pixel values appear near-zero when matplotlib scales the image.
 
 **Improved visualization:**
 
 ```{python}
-#| eval: false
+#| eval: true
 
 # Create true color composite with robust scaling
 landsat[['red', 'green', 'blue']].to_array().plot.imshow(robust=True)
@@ -270,18 +284,16 @@ plt.title('True Color Image - Landsat 8')
 plt.show()
 ```
 
-::: {.callout-tip}
-## Why `robust=True` Works
+**Why `robust=True` Works:**
 
 The `robust=True` parameter clips extreme outlier values (2nd and 98th percentiles) to improve visualization. This prevents a few bright pixels from washing out the entire image, resulting in a clear, detailed true color image with proper contrast and no warnings.
-:::
 
 ### False Color Analysis
 
 False color composites use non-visible wavelengths to reveal features invisible to the human eye. By assigning shortwave infrared (SWIR) to red, near-infrared (NIR) to green, and red to blue, we create an image where healthy vegetation appears bright green and burned areas show distinct reddish-brown tones.
 
 ```{python}
-#| eval: false
+#| eval: true
 
 # Create false color composite (SWIR/NIR/Red)
 landsat[['swir22', 'nir08', 'red']].to_array().plot.imshow(robust=True)
@@ -300,7 +312,7 @@ plt.show()
 To provide geographic context, we overlay the fire perimeters onto our false color image. This requires reprojecting the vector data to match the raster's coordinate system (EPSG:32611 - UTM Zone 11N).
 
 ```{python}
-#| eval: false
+#| eval: true
 
 # Reproject fire perimeters to match Landsat CRS
 eaton = eaton.to_crs(landsat.rio.crs)
@@ -344,8 +356,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-::: {.callout-important}
-## Figure Interpretation
+### Figure Interpretation
 
 This false color composite displays the Eaton and Palisades fire areas captured by Landsat 8 on February 23, 2025. The image uses **shortwave infrared (SWIR)**, **near-infrared (NIR)**, and **red** bands to highlight burn scars and vegetation health.
 
@@ -356,7 +367,6 @@ This false color composite displays the Eaton and Palisades fire areas captured 
 - **Urban/developed areas** = Neutral tones (moderate reflectance across bands)
 
 The fire perimeters are overlaid in **yellow (Eaton Fire)** and **red (Palisades Fire)** to delineate the official burn boundaries. This false color combination is particularly effective for assessing fire severity and monitoring landscape recovery, as the spectral signatures of healthy vs. burned vegetation are distinctly different in the infrared wavelengths.
-:::
 
 ---
 
@@ -380,21 +390,7 @@ palisades_perimeters = gpd.read_file('data/Palisades_Perimeter_20250121.shp')
 eji_data = gpd.read_file('data/EJI_2024_California.gdb')
 ```
 
-The EJI dataset contains census tract-level data for all of California. Let's explore its structure:
-
-::: {.callout-note collapse="true"}
-## EJI Data Structure
-
-```{python}
-#| eval: false
-
-print(eji_data.head())
-print(f"\nTotal census tracts: {len(eji_data)}")
-print(f"Number of variables: {len(eji_data.columns)}")
-```
-
-The dataset contains 174 columns including demographic, environmental, and health vulnerability indicators for each census tract.
-:::
+The EJI dataset contains census tract-level data for all of California with 174 columns including demographic, environmental, and health vulnerability indicators for each census tract.
 
 #### CRS Alignment
 

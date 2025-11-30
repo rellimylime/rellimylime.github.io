@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Research – Emily Miller</title>
+<title>Blog – Emily Miller</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,6 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-listing/list.min.js"></script>
+<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -68,7 +70,65 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script>
 
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-listing .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -100,7 +160,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./blog.html"> 
+    <a class="nav-link active" href="./blog.html" aria-current="page"> 
 <span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -151,18 +211,19 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(2)</span></div><div class="category" data-category="RW52aXJvbm1lbnRhbCUyMEp1c3RpY2U=">Environmental Justice <span class="quarto-category-count">(1)</span></div><div class="category" data-category="R2Vvc3BhdGlhbCUyMEFuYWx5c2lz">Geospatial Analysis <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TUVEUw==">MEDS <span class="quarto-category-count">(2)</span></div><div class="category" data-category="UHl0aG9u">Python <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Ug==">R <span class="quarto-category-count">(1)</span></div></div></div>
 <!-- main -->
-<main class="content column-page" id="quarto-document-content">
+<main class="content column-page-left" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Research</h1>
+<h1 class="title">Blog</h1>
 </div>
 
 
 
-<div class="quarto-title-meta column-page">
+<div class="quarto-title-meta column-page-left">
 
     
   
@@ -174,216 +235,83 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="research-philosophy" class="level2">
-<h2 class="anchored" data-anchor-id="research-philosophy">Research Philosophy</h2>
-<p>My research sits at the intersection of remote sensing, machine learning, and environmental justice. I believe that the most powerful environmental science happens when we combine technical rigor with human empathy, using cutting-edge technology to address real-world challenges faced by communities around the globe.</p>
-<blockquote class="blockquote">
-<p>“Every pixel in a satellite image tells a story about human interaction with the environment. My job is to teach computers to read those stories with both precision and compassion.”</p>
-</blockquote>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Core Research Principles
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><strong>Community-Centered:</strong> All research should ultimately benefit the communities whose environments we’re studying</li>
-<li><strong>Interdisciplinary:</strong> The best solutions come from combining insights across multiple fields</li>
-<li><strong>Reproducible:</strong> Open science and reproducible research practices are essential for building trust</li>
-<li><strong>Actionable:</strong> Research should lead to tangible policy recommendations and environmental action</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="current-research-projects" class="level2">
-<h2 class="anchored" data-anchor-id="current-research-projects">Current Research Projects</h2>
-<section id="satellite-based-irrigation-mapping-in-sub-saharan-africa" class="level3">
-<h3 class="anchored" data-anchor-id="satellite-based-irrigation-mapping-in-sub-saharan-africa">Satellite-Based Irrigation Mapping in Sub-Saharan Africa</h3>
-<p><strong>Collaborators:</strong> UCSB Water Vegetation and Society (WaVeS) Lab, Prof.&nbsp;Kelly Caylor<br>
-<strong>Timeline:</strong> June 2024 - Present<br>
-<strong>Status:</strong> In Progress</p>
-<p>This project uses high-resolution satellite imagery and machine learning to identify and map irrigation patterns across Sub-Saharan Africa. Traditional remote sensing methods often miss small-scale agricultural practices, leading to significant underestimates of water use and agricultural productivity.</p>
-<p><strong>Key Innovation:</strong> Developing statistical frameworks and Python workflows to process multi-temporal Sentinel-2 imagery and identify center pivot and decentralized irrigation systems. The analysis integrates satellite data with hydrological and agricultural systems modeling.</p>
-<p><strong>Impact:</strong> Research findings are informing water resource management decisions and climate adaptation planning for local governments and agricultural extension services.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Technical Details
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Processing Sentinel-2 (10m resolution) multi-temporal data to detect irrigation signatures across seasons. Developing Python workflows for large-scale satellite imagery analysis and spatial statistical modeling of agricultural water systems.</p>
-</div>
-</div>
-</section>
-</section>
-<section id="proposed-in-progress-projects" class="level2">
-<h2 class="anchored" data-anchor-id="proposed-in-progress-projects">Proposed &amp; In-Progress Projects</h2>
-<section id="scaling-metadata-quality-assessment-for-environmental-data-repositories" class="level3">
-<h3 class="anchored" data-anchor-id="scaling-metadata-quality-assessment-for-environmental-data-repositories">Scaling Metadata Quality Assessment for Environmental Data Repositories</h3>
-<p><strong>Client:</strong> Arctic Data Center / National Center for Ecological Analysis and Synthesis (NCEAS)<br>
-<strong>Timeline:</strong> Fall 2024 - Spring 2025<br>
-<strong>Status:</strong> MEDS Capstone Project</p>
-<p>This capstone project builds reproducible, scalable workflows to aggregate and visualize FAIR (Findable, Accessible, Interoperable, Reusable) metadata quality assessments across environmental data repositories.</p>
-<p><strong>Project Goal:</strong> Currently, the Arctic Data Center runs automated metadata checks generating per-dataset results, but aggregated results are not readily available. With thousands of datasets, it’s difficult to identify systemic curation issues such as missing ORCIDs or inconsistent units. This project transforms individual metadata quality assessments into standardized, scalable, and actionable insights.</p>
-<p><strong>Key Deliverables:</strong></p>
-<ol type="1">
-<li><strong>Repeatable ingest pipeline</strong> - Clean, timestamped snapshots of quality assessment data enriched with dataset metadata, with validation to catch data format changes early</li>
-<li><strong>Automated visualizations and analysis</strong> - Generate FAIR pillar summaries, temporal trends, and first vs.&nbsp;latest comparisons that auto-update when new data arrives</li>
-<li><strong>Focused deep-dives</strong> - Analyze specific dataset types or disciplines, regroup individual checks into themes, and track percent-pass and patterns across time</li>
-<li><strong>Lightweight access interface</strong> - Simple filterable web interface to view and download tables, figures, and summaries by time, metadata standard, pillar, or dataset type</li>
-<li><strong>Stretch goal</strong> - Configure one additional repository with the same framework to demonstrate portability</li>
-</ol>
-<p><strong>Technical Approach:</strong> Building reproducible workflows in Python with open data formats (CSV, Parquet). Using Quarto/Jupyter for reports. Emphasis on lightweight, maintainable design that repository staff can sustain post-project.</p>
-<p><strong>Impact:</strong> This project enhances Arctic research data accessibility and usability by turning existing checks into clear, repeatable quality signals. Plain-language, FAIR-aligned metrics reduce barriers for research teams, particularly those with limited institutional data support, promoting equitable participation in environmental science. The scalable framework offers a model for other repositories, improving the connected environmental data ecosystem.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Broader Impacts
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Plain-language metrics and transparent interface aids environmental education and literacy. Cross-repository comparisons can identify patterns for new checks or standard improvements. The reproducible design fosters collaboration among repository teams and advances community standards for FAIR data.</p>
-</div>
-</div>
-</section>
-</section>
-<section id="presentations" class="level2">
-<h2 class="anchored" data-anchor-id="presentations">Presentations</h2>
-<section id="conference-presentations-talks" class="level3">
-<h3 class="anchored" data-anchor-id="conference-presentations-talks">Conference Presentations &amp; Talks</h3>
-<ul>
-<li><p><strong>American Geophysical Union (AGU) Fall Meeting 2024</strong> - “Analyzing the sustainability and climate resilience of rapidly expanding center pivot Irrigation in Sub-Saharan Africa using remote sensing” with Boser A, Perez J, and Prof.&nbsp;Caylor K (Washington D.C., December 9-13, 2024)</p></li>
-<li><p><strong>Mantell Symposium in Environmental Justice and Conservation Innovation 2024</strong> - “Water Source Attribution for Center Pivot Irrigation in Sub-Saharan Africa” (UCSB, October 24, 2024)</p></li>
-<li><p><strong>Summer@Bren 2024 Flash Talks</strong> - “Satellite Data Reveal Emerging Decentralized Irrigation Systems in Sub-Saharan Africa” (UCSB, August 29, 2024)</p></li>
-</ul>
-</section>
-</section>
-<section id="technical-skills-tools" class="level2">
-<h2 class="anchored" data-anchor-id="technical-skills-tools">Technical Skills &amp; Tools</h2>
-<section id="remote-sensing" class="level3">
-<h3 class="anchored" data-anchor-id="remote-sensing">Remote Sensing</h3>
-<ul>
-<li>Sentinel-1/2, Landsat, Planet imagery</li>
-<li>Google Earth Engine</li>
-<li>QGIS, ArcGIS Pro</li>
-<li>Rasterio, GDAL</li>
-</ul>
-</section>
-<section id="machine-learning" class="level3">
-<h3 class="anchored" data-anchor-id="machine-learning">Machine Learning</h3>
-<ul>
-<li>PyTorch, TensorFlow</li>
-<li>Custom CNN architectures</li>
-<li>Time series analysis</li>
-<li>Transfer learning</li>
-</ul>
-</section>
-<section id="programming" class="level3">
-<h3 class="anchored" data-anchor-id="programming">Programming</h3>
-<ul>
-<li>Python (pandas, numpy, scikit-learn)</li>
-<li>R (tidyverse, spatial packages)</li>
-<li>JavaScript (Google Earth Engine)</li>
-<li>Git version control</li>
-</ul>
-</section>
-<section id="data-visualization" class="level3">
-<h3 class="anchored" data-anchor-id="data-visualization">Data Visualization</h3>
-<ul>
-<li>Matplotlib, Seaborn</li>
-<li>Plotly, D3.js</li>
-<li>Tableau, PowerBI</li>
-<li>Custom web visualizations</li>
-</ul>
-</section>
-</section>
-<section id="academic-background" class="level2">
-<h2 class="anchored" data-anchor-id="academic-background">Academic Background</h2>
-<section id="master-of-environmental-data-science-meds" class="level3">
-<h3 class="anchored" data-anchor-id="master-of-environmental-data-science-meds">Master of Environmental Data Science (MEDS)</h3>
-<p><strong>University of California, Santa Barbara – Bren School</strong><br>
-<em>Expected June 2026</em> | GPA: 4.0</p>
-<p>Focus: Remote sensing, machine learning, and environmental data engineering</p>
-</section>
-<section id="bachelor-of-science-in-mathematics" class="level3">
-<h3 class="anchored" data-anchor-id="bachelor-of-science-in-mathematics">Bachelor of Science in Mathematics</h3>
-<p><strong>University of California, Santa Barbara</strong><br>
-<em>June 2025</em> | GPA: 3.67</p>
-<p>Focus: Applied mathematics and environmental science</p>
-</section>
-<section id="associate-of-science-in-mathematics" class="level3">
-<h3 class="anchored" data-anchor-id="associate-of-science-in-mathematics">Associate of Science in Mathematics</h3>
-<p><strong>Sacramento City College</strong><br>
-<em>June 2022</em> | GPA: 4.0</p>
-</section>
-</section>
-<section id="recognition" class="level2">
-<h2 class="anchored" data-anchor-id="recognition">Recognition</h2>
-<ul>
-<li><strong>MEDS Student Faculty Representative</strong> - Selected by MEDS cohort to represent student voice in faculty meetings and curriculum development</li>
-<li><strong>Bren Environmental Leadership Fellow</strong> - Competitive fellowship supporting research on irrigation systems and water resource sustainability in Sub-Saharan Africa (June-December 2024)</li>
-</ul>
-</section>
-<section id="research-collaborations" class="level2">
-<h2 class="anchored" data-anchor-id="research-collaborations">Research Collaborations</h2>
-<p>I believe that the best research happens through collaboration. I work with researchers across multiple disciplines, academic institutions, and community partners.</p>
-<section id="academic-partners" class="level3">
-<h3 class="anchored" data-anchor-id="academic-partners">Academic Partners</h3>
-<ul>
-<li>UCSB Water Vegetation and Society (WaVeS) Lab</li>
-<li>UCSB Bren School of Environmental Science &amp; Management</li>
-<li>Arctic Data Center / National Center for Ecological Analysis and Synthesis (NCEAS)</li>
-</ul>
-</section>
-<section id="community-professional-partners" class="level3">
-<h3 class="anchored" data-anchor-id="community-professional-partners">Community &amp; Professional Partners</h3>
-<ul>
-<li>IV Recovery Community Initiative (Founder)</li>
-<li>Women in Science and Engineering (WiSE) Mentorship Program</li>
-</ul>
-</section>
-</section>
-<section id="research-impact" class="level2">
-<h2 class="anchored" data-anchor-id="research-impact">Research Impact</h2>
-<p>My work focuses on generating actionable insights from environmental data that can inform policy and conservation decisions.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Current Focus
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><strong>Water Resource Sustainability</strong> - Analyzing irrigation systems in Sub-Saharan Africa to inform climate adaptation and water management strategies</li>
-<li><strong>Environmental Data Infrastructure</strong> - Building tools to improve metadata quality and accessibility across environmental research repositories</li>
-<li><strong>Community Engagement</strong> - Organizing local environmental stewardship through the IV Recovery Community Initiative</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="lets-collaborate" class="level2">
-<h2 class="anchored" data-anchor-id="lets-collaborate">Let’s Collaborate!</h2>
-<p>I’m always excited to collaborate with researchers, practitioners, and communities who share my passion for using technology to address environmental challenges. Whether you’re interested in remote sensing, machine learning, environmental justice, or the intersection of all three, let’s connect!</p>
-<p><a href="mailto:ermiller@ucsb.edu" class="btn-custom">Start a Collaboration</a></p>
 
 
-</section>
 
-</main> <!-- /main -->
+
+<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="list quarto-listing-default">
+<div class="quarto-post image-right" data-index="0" data-categories="TUVEUyUyQ1B5dGhvbiUyQ0dlb3NwYXRpYWwlMjBBbmFseXNpcyUyQ0Vudmlyb25tZW50YWwlMjBKdXN0aWNl" data-listing-date-sort="1764403200000" data-listing-file-modified-sort="1764532478747" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2240">
+<div class="thumbnail"><a href="./posts/eds220-final/index.html" class="no-external">
+
+<img loading="lazy" src="./posts/eds220-final/eds220-final-cover.png" class="thumbnail-image">
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/eds220-final/index.html" class="no-external">Analyzing the 2025 Los Angeles Wildfires: Remote Sensing and Environmental Justice</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('TUVEUw=='); return false;">MEDS</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('R2Vvc3BhdGlhbCUyMEFuYWx5c2lz'); return false;">Geospatial Analysis</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('RW52aXJvbm1lbnRhbCUyMEp1c3RpY2U='); return false;">Environmental Justice</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/eds220-final/index.html" class="no-external">
+<p>Combining satellite imagery and socioeconomic data to understand wildfire impacts</p>
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/eds220-final/index.html" class="no-external">
+<div class="listing-date">
+Nov 29, 2025
+</div>
+<div class="listing-author">
+Emily Miller
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-categories="TUVEUyUyQ1I=" data-listing-date-sort="1762934400000" data-listing-file-modified-sort="1762978276091" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="34">
+<div class="thumbnail"><a href="./posts/initial-blog/index.html" class="no-external">
+
+<img loading="lazy" src="./posts/initial-blog/PXL_20230921_205848129.jpg" class="thumbnail-image">
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/initial-blog/index.html" class="no-external">My First Blog Post</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('TUVEUw=='); return false;">MEDS</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Ug=='); return false;">R</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/initial-blog/index.html" class="no-external">
+<p>If I had something else to say I’d say it here</p>
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/initial-blog/index.html" class="no-external">
+<div class="listing-date">
+Nov 12, 2025
+</div>
+<div class="listing-author">
+Emily Miller
+</div>
+</a>
+</div>
+</div>
+</div>
+<div class="listing-no-matching d-none">No matching items</div>
+</div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

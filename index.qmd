@@ -1,181 +1,137 @@
 ---
-title: "Hi, I'm Emily"
+title: ""
 toc: false
 ---
 
-::: {.home-hero}
-
+::: home-hero
 ![](images/PXL_20240914_192718413.jpg)
 
-## Hi. I'm Emily Miller.
+## 
 
-Data scientist, environmental systems thinker, and compulsive fixer of things. My heart belongs to the wild.
-
+Data scientist, environmental systems thinker, and compulsive fixer of things.
 :::
 
----
+------------------------------------------------------------------------
 
-::: {.quote-section}
-
-:::: {.slider-container}
-
-::: {.click-slider}
-
-::: {.slick-slide}
-
+::::::::::::::::::::::: quote-section
+:::::::::::::::::::::: slider-container
+::::::::::::::::::::: click-slider
+::: slick-slide
 **"Let yourself be silently drawn by the strange pull of what you really love."**
 
 — Rumi
-
 :::
 
-::: {.slick-slide}
-
+::: slick-slide
 **"Tell me, what is it you plan to do with your one wild and precious life?"**
 
 — Mary Oliver, Wild Geese
-
 :::
 
-::: {.slick-slide}
-
+::: slick-slide
 **"The climate has always changed. The difference now is that we are the cause."**
 
 — Kate Marvel, Climate Scientist
-
 :::
 
-::: {.slick-slide}
-
+::: slick-slide
 **"What you do makes a difference. You have to decide what kind of difference you want to make."**
 
 — Jane Goodall
-
 :::
 
-::: {.slick-slide}
-
+::: slick-slide
 **"An expert is a person who has made all the mistakes that can be made in a very narrow field."**
 
 — Niels Bohr
-
 :::
 
-::: {.slick-slide}
-
+::: slick-slide
 **"All models are wrong, but some are useful."**
 
 — George E. P. Box
-
 :::
 
-::: {.slick-slide}
-
+::: slick-slide
 **"Nothing in life is to be feared, it is only to be understood."**
 
 — Marie Curie
-
 :::
 
-::: {.slick-slide}
-
+::: slick-slide
 **"Without data, you're just another person with an opinion."**
 
 — W. Edwards Deming
-
 :::
 
-::: {.slick-slide}
-
+::: slick-slide
 **"I would give my right arm for the simplicity on the far side of complexity."**
 
 — Oliver Wendell Holmes
-
 :::
 
-::: {.slick-slide}
-
+::: slick-slide
 **"A ship in port is safe, but that's not what ships are built for."**
 
 — Grace Hopper
-
 :::
 
-::: {.slick-slide}
-
+::: slick-slide
 **"The cure for boredom is curiosity. There is no cure for curiosity."**
 
 — Dorothy Parker
-
 :::
 
-::: {.slick-slide}
-
+::: slick-slide
 **"Change happens by listening and then starting a dialogue with the people who are doing something you don't believe is right."**
 
 — Jane Goodall
-
 :::
 
-::: {.slick-slide}
-
+::: slick-slide
 **"I have no fear of losing my life—if I have to save a koala or a crocodile or a kangaroo or a snake, mate, I will save it."**
 
 — Steve Irwin
-
 :::
 
-::: {.slick-slide}
-
+::: slick-slide
 **"Study as if you were going to live forever; live as if you were going to die tomorrow."**
 
 — Maria Mitchell
-
 :::
 
-::: {.slick-slide}
-
+::: slick-slide
 **"We are drowning in information, while starving for wisdom. The world henceforth will be run by synthesizers, people able to put together the right information at the right time, think critically about it, and make important choices wisely."**
 
 — E. O. Wilson
-
 :::
 
-::: {.slick-slide}
-
+::: slick-slide
 **"It's not what you look at that matters, it's what you see."**
 
 — Henry David Thoreau
-
 :::
 
-::: {.slick-slide}
-
+::: slick-slide
 **"If you don't know where you are going, any road will get you there."**
 
 — Lewis Carroll
-
 :::
 
-::: {.slick-slide}
-
+::: slick-slide
 **"Knowledge is identifying eggplant is a fruit. Wisdom is not using it in fruit salad."**
 
 — Angela Manzo (and the internet)
-
 :::
+:::::::::::::::::::::
+::::::::::::::::::::::
+:::::::::::::::::::::::
 
-::::
-
-::::
-
-:::
-
----
+------------------------------------------------------------------------
 
 ## What I'm Working On
 
-**[Research →](research.qmd)** | **[Art & Poetry →](art.qmd)** | **[Essays →](adventures.qmd)** | **[More About Me →](about.qmd)**
+[**Research →**](research.qmd) \| [**Art & Poetry →**](art.qmd) \| [**Essays →**](adventures.qmd) \| [**More About Me →**](about.qmd)
 
 ```{=html}
 <script>
@@ -206,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function() {
     slider.parentElement.appendChild(prevBtn);
     slider.parentElement.appendChild(nextBtn);
     
-    // Create dots for pagination
+    // Create dots for pagination - append to slider-container (parent of click-slider)
     const dotsContainer = document.createElement('ul');
     dotsContainer.classList.add('slick-dots');
     
@@ -226,6 +182,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
     
+    // Append dots to the slider-container (which uses flexbox with order)
     slider.parentElement.appendChild(dotsContainer);
     
     function showSlide(n) {

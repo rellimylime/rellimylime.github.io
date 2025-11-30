@@ -1,0 +1,12 @@
+# Any options specified here will apply to all posts in the posts/ folder
+
+author: 
+  - name: Emily Miller
+    url: https://rellimylime.github.io/
+    affiliation: The Bren School of Environmental Science and Management, UCSB
+    affiliation-url: https://bren.ucsb.edu/
+    orcid: 0009-0003-8651-5397
+    
+title-block-banner: true
+
+freeze: true

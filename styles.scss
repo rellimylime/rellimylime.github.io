@@ -5,7 +5,7 @@
 
 // SCSS Variables - Sophisticated Color Palette
 $header-font: 'Crimson Text', serif;
-$body-font: 'Inter', sans-serif;
+$body-font: 'Crimson Pro', serif;
 
 $primary-color: #464843;     // Ink black-green
 $secondary-color: #5387C2;   // Accent blue
@@ -372,13 +372,13 @@ hr, .elegant-divider {
   width: 100%;
   max-width: 100%;
   margin: 0 auto;
-  padding: 3rem 1rem;
-  background: rgba($secondary-color, 0.08);
+  padding: 0;
+  background: transparent;
   border-radius: 0;
-  min-height: 350px;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .click-slider {
@@ -390,6 +390,18 @@ hr, .elegant-divider {
   display: flex;
   align-items: center;
   justify-content: center;
+  background: rgba($secondary-color, 0.08);
+  padding: 3rem 1rem;
+  
+  @media (max-width: 768px) {
+    padding: 2rem 1rem;
+    min-height: 240px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 1.5rem 1rem;
+    min-height: 200px;
+  }
 }
 
 .slick-slide {
@@ -397,10 +409,38 @@ hr, .elegant-divider {
   opacity: 0;
   transition: opacity 0.6s ease-in-out;
   animation: fadeIn 0.6s ease-in-out;
+  padding: 2rem 1rem;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  position: relative;
+  min-height: 200px;
   
   &.slick-active {
-    display: block;
+    display: flex;
     opacity: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  // If slide has a background image, darken it for text readability
+  &[style*="background-image"] {
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 1;
+    }
+    
+    > * {
+      position: relative;
+      z-index: 2;
+    }
   }
 }
 
@@ -420,6 +460,13 @@ hr, .elegant-divider {
   display: block;
   margin-bottom: 1rem;
   line-height: 1.8;
+  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.1);
+  
+  // If slide has background image, use white text
+  .slick-slide[style*="background-image"] & {
+    color: white;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+  }
 }
 
 .slick-slide em {
@@ -427,6 +474,13 @@ hr, .elegant-divider {
   color: $text-mid;
   font-style: normal;
   font-weight: 500;
+  display: block;
+  
+  // If slide has background image, use white text
+  .slick-slide[style*="background-image"] & {
+    color: rgba(255, 255, 255, 0.95);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  }
 }
 
 // Slider controls
@@ -476,11 +530,14 @@ hr, .elegant-divider {
   }
 }
 
-// Dots for slider pagination
+// Dots for slider pagination - positioned below slider
 .slick-dots {
   text-align: center;
   padding: 1.5rem 0 0 0;
   list-style: none;
+  width: 100%;
+  margin: 0;
+  order: 2;
   
   li {
     display: inline-block;
@@ -503,6 +560,19 @@ hr, .elegant-divider {
     
     &.slick-active button {
       background: $secondary-color;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    padding: 1rem 0 0 0;
+    
+    li {
+      margin: 0 0.3rem;
+      
+      button {
+        width: 8px;
+        height: 8px;
+      }
     }
   }
 }

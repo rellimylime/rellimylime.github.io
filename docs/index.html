@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Hi, I’m Emily – Emily Miller</title>
+<title>Emily Miller</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -40,7 +40,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-9d083d7e0cd169f11641d5107be0a344.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-d7bfacf74177483bb31aff7f17716540.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -100,13 +100,24 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./research.html"> 
-<span class="menu-text">Research</span></a>
+    <a class="nav-link" href="./blog.html"> 
+<span class="menu-text">Blog</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./cv.html"> 
-<span class="menu-text">Resume</span></a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-bona-fides" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Bona Fides</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-bona-fides">    
+        <li>
+    <a class="dropdown-item" href="./research.html">
+ <span class="dropdown-text">Research</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="./cv.html">
+ <span class="dropdown-text">Resume</span></a>
+  </li>  
+    </ul>
+  </li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-creative" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Creative</span>
@@ -142,32 +153,16 @@ ul.task-list li input[type="checkbox"] {
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content column-page" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Hi, I’m Emily</h1>
-</div>
+<main class="content column-page" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
-
-<div class="quarto-title-meta column-page">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
 
 
 <div class="home-hero">
 <p><img src="images/PXL_20240914_192718413.jpg" class="img-fluid"></p>
-<section id="hi.-im-emily-miller." class="level2">
-<h2 class="anchored" data-anchor-id="hi.-im-emily-miller.">Hi. I’m Emily Miller.</h2>
-<p>Data scientist, environmental systems thinker, and compulsive fixer of things. My heart belongs to the wild.</p>
+<section id="section" class="level2">
+<h2 class="anchored" data-anchor-id="section"></h2>
+<p>Data scientist, environmental systems thinker, and compulsive fixer of things.</p>
 </section>
 </div>
 <hr>
@@ -252,7 +247,7 @@ ul.task-list li input[type="checkbox"] {
 <hr>
 <section id="what-im-working-on" class="level2">
 <h2 class="anchored" data-anchor-id="what-im-working-on">What I’m Working On</h2>
-<p><strong><a href="./research.html">Research →</a></strong> | <strong><a href="./art.html">Art &amp; Poetry →</a></strong> | <strong><a href="./adventures.html">Essays →</a></strong> | <strong><a href="./about.html">More About Me →</a></strong></p>
+<p><a href="./research.html"><strong>Research →</strong></a> | <a href="./art.html"><strong>Art &amp; Poetry →</strong></a> | <a href="./adventures.html"><strong>Essays →</strong></a> | <a href="./about.html"><strong>More About Me →</strong></a></p>
 <script>
 // Simple Carousel/Slider Implementation
 document.addEventListener('DOMContentLoaded', function() {
@@ -281,7 +276,7 @@ document.addEventListener('DOMContentLoaded', function() {
     slider.parentElement.appendChild(prevBtn);
     slider.parentElement.appendChild(nextBtn);
     
-    // Create dots for pagination
+    // Create dots for pagination - append to slider-container (parent of click-slider)
     const dotsContainer = document.createElement('ul');
     dotsContainer.classList.add('slick-dots');
     
@@ -301,6 +296,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
     
+    // Append dots to the slider-container (which uses flexbox with order)
     slider.parentElement.appendChild(dotsContainer);
     
     function showSlide(n) {

@@ -10,10 +10,14 @@ website:
         text: "Home"
       - href: about.qmd
         text: "About"
-      - href: research.qmd
-        text: "Research"
-      - href: cv.qmd
-        text: "Resume"
+      - href: blog.qmd
+        text: "Blog"
+      - text: "Bona Fides"
+        menu:
+        - href: research.qmd
+          text: "Research"
+        - href: cv.qmd
+          text: "Resume"
       - text: "Creative"
         menu:
           - href: art.qmd

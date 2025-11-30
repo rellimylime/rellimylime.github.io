@@ -1,0 +1,24 @@
+---
+title: "My First Blog Post"
+description: "If I had something else to say I'd say it here"
+date: 2025-11-12
+categories: [MEDS, R]
+image: PXL_20230921_205848129.jpg
+citation:
+  url: https://rellimylime.github.io/posts/initial-blog/
+bibliography: references.bib
+#draft: true
+#draft-mode: linked # Doesn't appear but can be found with the link directly
+---
+
+This is where my blog post begins! This is a footnote[^1]
+
+[^1]: Here is my footnote content
+
+This is an inline footnote[^2]
+
+[^2]: note will appear here
+
+This is the workshop citation[@shanny-csik2022]
+
+Lets cite a paper using its DOI[@gaynor2022]

@@ -1,0 +1,312 @@
+---
+title: "Analyzing the 2025 Los Angeles Wildfires: Remote Sensing and Environmental Justice"
+description: "Combining satellite imagery and socioeconomic data to understand wildfire impacts"
+date: 2025-11-29
+categories: [MEDS, Python, Geospatial Analysis, Environmental Justice]
+image: eds220-final-cover.png
+citation:
+  url: https://rellimylime.github.io/posts/eds220-final/
+bibliography: references.bib
+---
+
+## About
+
+In January 2025, the Eaton and Palisades fires swept through Los Angeles County, leaving lasting impacts on both the landscape and the communities within their paths. The Palisades Fire, which started on January 7, became one of the most destructive wildfires in California history, burning through the scenic Pacific Palisades neighborhood and nearby communities. Meanwhile, the Eaton Fire ignited in the foothills near Altadena and Pasadena, threatening densely populated areas and critical infrastructure.
+
+Understanding wildfire impacts requires more than just mapping burned areas—it requires examining both the physical changes to the landscape and the social dimensions of who is affected. This analysis combines **remote sensing techniques** with **environmental justice data** to provide a comprehensive view of these devastating fires.
+
+**Repository:** [https://github.com/rellimylime/eds220-hwk4](https://github.com/rellimylime/eds220-hwk4)
+
+![Satellite view of the fire-affected areas](eds220-final-cover.png)
+
+## Highlights
+
+This analysis demonstrates several key geospatial analysis techniques:
+
+- **False color visualization** using Landsat 8 SWIR/NIR/Red bands to identify burn scars and assess vegetation health
+- **Multi-dataset integration** combining satellite raster imagery with vector fire perimeter and census tract data
+- **CRS management and reprojection** to ensure spatial alignment across different data sources
+- **Environmental justice analysis** examining the socioeconomic characteristics of communities affected by the fires
+
+## Data
+
+### Landsat 8 Surface Reflectance Data
+
+This dataset contains atmospherically corrected surface reflectance data from the Landsat 8 satellite, captured on February 23, 2025. The imagery includes five spectral bands (red, green, blue, near-infrared, and shortwave infrared) clipped to the area surrounding the Eaton and Palisades fire perimeters. The data was retrieved from the Microsoft Planetary Computer STAC catalog in NetCDF format.
+
+**Citation:** Microsoft Planetary Computer. (2025). *Landsat Collection 2 Level-2* [Data file]. Retrieved from https://planetarycomputer.microsoft.com/dataset/landsat-c2-l2
+
+### Fire Perimeter Shapefiles
+
+Official fire perimeter polygons for the Eaton and Palisades fires as of January 21, 2025, provided in EPSG:3857 (Web Mercator) projection. These shapefiles include boundary geometries and attribute information for each fire.
+
+**Citation:** Palisades and Eaton Dissolved Fire Perimeters. (2025). *Fire perimeter shapefiles* [Geospatial dataset]. ArcGIS Hub. Retrieved from https://hub.arcgis.com/maps/ad51845ea5fb4eb483bc2a7c38b2370c
+
+### Environmental Justice Index (EJI) Data
+
+The Environmental Justice Index provides census tract-level data on environmental and socioeconomic factors. This analysis uses the 2024 California EJI dataset, which includes demographic information, poverty statistics, and environmental burden indicators for communities across the state.
+
+**Citation:** Centers for Disease Control and Prevention/Agency for Toxic Substances and Disease Registry. (2024). *Environmental Justice Index, California* [Geodatabase]. Retrieved from https://www.atsdr.cdc.gov/placeandhealth/eji/index.html
+
+---
+
+## Analysis 1: False Color Visualization
+
+### Setup and Data Import
+
+```{python}
+#| warning: false
+#| message: false
+
+# Import required libraries
+import xarray as xr
+import rioxarray as rio
+import geopandas as gpd
+import numpy as np
+import matplotlib.pyplot as plt
+```
+
+### Loading Fire Perimeter Data
+
+Fire perimeters provide the spatial boundaries for our analysis, allowing us to focus on the areas most affected by the fires.
+
+```{python}
+#| eval: false
+
+# Load fire perimeter shapefiles
+eaton = gpd.read_file('data/Eaton_Perimeter_20250121.shp')
+palisades = gpd.read_file('data/Palisades_Perimeter_20250121.shp')
+
+# Both datasets use EPSG:3857 (Web Mercator)
+print(f"Eaton CRS: {eaton.crs}")
+print(f"Palisades CRS: {palisades.crs}")
+```
+
+### Loading and Processing Landsat Imagery
+
+The Landsat 8 scene contains multiple spectral bands that capture different wavelengths of reflected light. Each band provides unique information about surface features.
+
+```{python}
+#| eval: false
+
+# Import Landsat data
+landsat = xr.open_dataset('data/landsat8-2025-02-23-palisades-eaton.nc')
+
+# Restore CRS information from spatial_ref variable
+landsat = landsat.rio.write_crs(landsat.spatial_ref.crs_wkt)
+
+# Handle missing values and outliers
+landsat = landsat.fillna(0)
+```
+
+The dataset contains five spectral bands spanning visible light through infrared wavelengths, with dimensions of 1418 × 2742 pixels covering the fire-affected region.
+
+### True Color Visualization
+
+Before creating specialized visualizations, we can verify our data by creating a true color image using the red, green, and blue bands—similar to how a standard camera would capture the scene.
+
+```{python}
+#| eval: false
+
+# Create true color composite (RGB)
+landsat[['red', 'green', 'blue']].to_array().plot.imshow(robust=True)
+plt.title('True Color Image - Landsat 8')
+plt.show()
+```
+
+The `robust=True` parameter clips extreme outlier values (often from clouds or water) to improve visualization by preventing a few bright pixels from washing out the entire image.
+
+### False Color Analysis
+
+False color composites use non-visible wavelengths to reveal features invisible to the human eye. By assigning shortwave infrared (SWIR) to red, near-infrared (NIR) to green, and red to blue, we create an image where healthy vegetation appears bright green and burned areas show distinct reddish-brown tones.
+
+```{python}
+#| eval: false
+
+# Create false color composite (SWIR/NIR/Red)
+landsat[['swir22', 'nir08', 'red']].to_array().plot.imshow(robust=True)
+plt.title('False Color Composite (SWIR/NIR/Red)')
+plt.show()
+```
+
+**Why this band combination?**
+
+- **Healthy vegetation** has high NIR reflectance and low SWIR reflectance → appears bright green
+- **Burned areas** have low NIR reflectance and moderate SWIR reflectance → appears reddish-brown
+- **Urban areas** show moderate reflectance across bands → appears in neutral tones
+
+### Creating the Final Map
+
+To provide geographic context, we overlay the fire perimeters onto our false color image. This requires reprojecting the vector data to match the raster's coordinate system (EPSG:32611 - UTM Zone 11N).
+
+```{python}
+#| eval: false
+
+# Reproject fire perimeters to match Landsat CRS
+eaton = eaton.to_crs(landsat.rio.crs)
+palisades = palisades.to_crs(landsat.rio.crs)
+
+# Create comprehensive map
+fig, ax = plt.subplots(figsize=(12, 12))
+
+# Plot false color composite
+landsat[['swir22', 'nir08', 'red']].to_array().plot.imshow(
+    ax=ax,
+    robust=True,
+    add_colorbar=False
+)
+
+# Overlay fire perimeters
+eaton.boundary.plot(ax=ax, edgecolor='yellow', linewidth=2, label='Eaton Fire')
+palisades.boundary.plot(ax=ax, edgecolor='red', linewidth=2, label='Palisades Fire')
+
+# Add labels and formatting
+plt.title('Eaton and Palisades Fires - False Color Analysis',
+          fontsize=16, fontweight='bold', pad=20)
+plt.legend(loc='upper right', fontsize=12)
+ax.set_xlabel('Easting (meters)', fontsize=12)
+ax.set_ylabel('Northing (meters)', fontsize=12)
+
+# Add fire name annotations
+ax.text(eaton.geometry.centroid.x.values[0],
+        eaton.geometry.centroid.y.values[0] - 2700,
+        'Eaton Fire',
+        color='black', fontsize=14, fontweight='bold',
+        bbox=dict(boxstyle='round', facecolor='white', alpha=0.7))
+
+ax.text(palisades.geometry.centroid.x.values[0] - 22000,
+        palisades.geometry.centroid.y.values[0] + 8000,
+        'Palisades Fire',
+        color='black', fontsize=14, fontweight='bold',
+        bbox=dict(boxstyle='round', facecolor='white', alpha=0.7))
+
+plt.tight_layout()
+plt.show()
+```
+
+This false color composite clearly reveals the extent and severity of fire impacts. The distinct reddish-brown burn scars contrast sharply with the bright green healthy vegetation in surrounding areas. The combination of spectral analysis and geographic boundaries provides a powerful tool for assessing wildfire damage and monitoring landscape recovery.
+
+---
+
+## Analysis 2: Environmental Justice Dimensions
+
+Wildfires don't impact all communities equally. This analysis examines the socioeconomic characteristics of census tracts affected by the fires to understand the environmental justice implications.
+
+### Data Preparation
+
+```{python}
+#| eval: false
+
+import geopandas as gpd
+import matplotlib.pyplot as plt
+
+# Load fire perimeters
+eaton_perimeters = gpd.read_file('data/Eaton_Perimeter_20250121.shp')
+palisades_perimeters = gpd.read_file('data/Palisades_Perimeter_20250121.shp')
+
+# Load California Environmental Justice Index data
+eji_data = gpd.read_file('data/EJI_2024_California.gdb')
+
+# Ensure CRS alignment
+eji_data = eji_data.to_crs(palisades_perimeters.crs)
+```
+
+### Identifying Affected Communities
+
+Using spatial intersection, we identify which census tracts overlap with the fire perimeters, then clip them to analyze only the areas actually within the burn zones.
+
+```{python}
+#| eval: false
+
+# Find census tracts intersecting fire perimeters
+eji_palisades = gpd.sjoin(eji_data, palisades_perimeters, predicate="intersects")
+eji_eaton = gpd.sjoin(eji_data, eaton_perimeters, predicate="intersects")
+
+# Clip to exact fire boundaries
+eji_clip_palisades = gpd.clip(eji_palisades, palisades_perimeters)
+eji_clip_eaton = gpd.clip(eji_eaton, eaton_perimeters)
+```
+
+### Analyzing Socioeconomic Vulnerability
+
+The Environmental Justice Index includes percentile rankings for various vulnerability indicators. Here we examine `EPL_POV200`, which represents the percentile rank of persons living below 200% of the federal poverty level—a measure of economic vulnerability.
+
+```{python}
+#| eval: false
+
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 8))
+
+# Define common scale for comparison
+eji_variable = 'EPL_POV200'
+vmin = min(eji_clip_palisades[eji_variable].min(),
+           eji_clip_eaton[eji_variable].min())
+vmax = max(eji_clip_palisades[eji_variable].max(),
+           eji_clip_eaton[eji_variable].max())
+
+# Palisades Fire area
+eji_clip_palisades.plot(
+    column=eji_variable,
+    vmin=vmin, vmax=vmax,
+    cmap='YlOrRd',
+    legend=False,
+    ax=ax1,
+    edgecolor='black',
+    linewidth=0.5
+)
+ax1.set_title('Low-Income Population\nPalisades Fire Area',
+              fontsize=14, fontweight='bold')
+ax1.axis('off')
+
+# Eaton Fire area
+eji_clip_eaton.plot(
+    column=eji_variable,
+    vmin=vmin, vmax=vmax,
+    cmap='YlOrRd',
+    legend=False,
+    ax=ax2,
+    edgecolor='black',
+    linewidth=0.5
+)
+ax2.set_title('Low-Income Population\nEaton Fire Area',
+              fontsize=14, fontweight='bold')
+ax2.axis('off')
+
+# Overall title
+fig.suptitle('Percentile Rank of Low-Income Population in Fire-Affected Areas\n(Income <200% Federal Poverty Level)',
+             fontsize=16, fontweight='bold', y=0.98)
+
+# Shared colorbar
+sm = plt.cm.ScalarMappable(
+    cmap='YlOrRd',
+    norm=plt.Normalize(vmin=vmin, vmax=vmax)
+)
+cbar_ax = fig.add_axes([0.25, 0.15, 0.5, 0.03])
+cbar = fig.colorbar(sm, cax=cbar_ax, orientation='horizontal')
+cbar.set_label('Percentile Rank (0-100)', fontsize=12)
+
+plt.tight_layout()
+plt.show()
+```
+
+**Key Findings:**
+
+This analysis reveals important differences in socioeconomic vulnerability between the two fire areas. Higher percentile values (darker colors) indicate census tracts where a larger proportion of the population faces economic vulnerability compared to other areas in California.
+
+Understanding these patterns is crucial for:
+
+- **Emergency response planning** - ensuring resources reach vulnerable populations
+- **Recovery assistance** - targeting aid to communities with fewer economic resources
+- **Long-term resilience planning** - addressing pre-existing vulnerabilities that compound disaster impacts
+
+---
+
+## Conclusion
+
+This analysis demonstrates the power of combining remote sensing data with socioeconomic datasets to understand wildfire impacts holistically. The false color analysis reveals the spatial extent and severity of landscape damage, while the environmental justice analysis highlights which communities face the greatest challenges in recovery.
+
+As climate change increases wildfire frequency and intensity, these integrated approaches become essential for effective disaster response and equitable recovery planning. By making both the physical and social dimensions visible, we can better support communities in building resilience against future fires.
+
+## References
+
+::: {#refs}
+:::

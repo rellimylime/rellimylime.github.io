@@ -95,13 +95,23 @@ Both datasets contain polygon geometries representing the fire boundaries, along
 #### Coordinate Reference System Check
 
 ```{python}
+#| code-fold: true
 # Check CRS
 print(f"Eaton CRS: {eaton.crs}")
 print(f"Palisades CRS: {palisades.crs}")
 
-# Verify projection type
-print(f"\nIs Eaton CRS geographic? {eaton.crs.is_geographic}")
-print(f"Is Palisades CRS geographic? {palisades.crs.is_geographic}")
+# Create CRS information table
+crs_data = {
+    'Dataset': ['Eaton Fire', 'Palisades Fire'],
+    'CRS Code': [eaton.crs.to_authority()[1] if eaton.crs.to_authority() else 'N/A',
+                 palisades.crs.to_authority()[1] if palisades.crs.to_authority() else 'N/A'],
+    'CRS Name': [eaton.crs.name, palisades.crs.name],
+    'Projection Type': ['Geographic' if eaton.crs.is_geographic else 'Projected',
+                       'Geographic' if palisades.crs.is_geographic else 'Projected']
+}
+
+crs_df = pd.DataFrame(crs_data)
+crs_df
 ```
 
 Both datasets use EPSG:3857 (Web Mercator), a projected coordinate system suitable for web mapping applications.
@@ -121,6 +131,7 @@ landsat
 ```
 
 ```{python}
+#| code-fold: true
 # Explore dimensions and coordinates
 print("Dimensions:", landsat.dims)
 print("\nCoordinates:", list(landsat.coords))

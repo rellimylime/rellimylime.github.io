@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Blog – Emily Miller</title>
+<title>Emily Miller</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -70,65 +68,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -160,7 +100,7 @@ window.Quarto = {
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./blog.html" aria-current="page"> 
+    <a class="nav-link" href="./blog.html"> 
 <span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -211,19 +151,19 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(2)</span></div><div class="category" data-category="RW52aXJvbm1lbnRhbCUyMEp1c3RpY2U=">Environmental Justice <span class="quarto-category-count">(1)</span></div><div class="category" data-category="R2Vvc3BhdGlhbCUyMEFuYWx5c2lz">Geospatial Analysis <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TUVEUw==">MEDS <span class="quarto-category-count">(2)</span></div><div class="category" data-category="UHl0aG9u">Python <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Ug==">R <span class="quarto-category-count">(1)</span></div></div></div>
+    
 <!-- main -->
-<main class="content column-page-left" id="quarto-document-content">
+<main class="content column-page" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Blog</h1>
+<h1 class="title">Emily Miller</h1>
+<p class="subtitle lead">Environmental Data Scientist • Remote Sensing &amp; Machine Learning</p>
 </div>
 
 
 
-<div class="quarto-title-meta column-page-left">
+<div class="quarto-title-meta column-page">
 
     
   
@@ -235,83 +175,149 @@ window.Quarto = {
 </header>
 
 
+<section id="contact-information" class="level2">
+<h2 class="anchored" data-anchor-id="contact-information">Contact Information</h2>
+<p><strong>Phone:</strong> (978) 265-9348<br>
+<strong>Email:</strong> <a href="mailto:ermiller@ucsb.edu">ermiller@ucsb.edu</a><br>
+<strong>Website:</strong> <a href="https://rellimylime.github.io">rellimylime.github.io</a><br>
+<strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/rellimylime/">linkedin.com/in/rellimylime</a><br>
+<strong>GitHub:</strong> <a href="https://github.com/rellimylime">github.com/rellimylime</a><br>
+<strong>Location:</strong> Santa Barbara, CA</p>
+<hr>
+</section>
+<section id="education" class="level2">
+<h2 class="anchored" data-anchor-id="education">Education</h2>
+<section id="master-of-environmental-data-science" class="level3">
+<h3 class="anchored" data-anchor-id="master-of-environmental-data-science">Master of Environmental Data Science</h3>
+<p><strong>University of California, Santa Barbara – Bren School of Environmental Science &amp; Management</strong> | <em>Expected June 2026</em></p>
+<p><strong>GPA: 4.0</strong> | <strong>Leadership:</strong> MEDS Student Faculty Representative</p>
+<p><em>Highlighted Coursework:</em> Machine Learning in Environmental Science, Geospatial Analysis and Remote Sensing, Environmental Systems Modeling, Environmental Datasets and Data Engineering, Databases and Data Management, Statistics for Environmental Data Science</p>
+</section>
+<section id="bachelor-of-science-in-mathematics" class="level3">
+<h3 class="anchored" data-anchor-id="bachelor-of-science-in-mathematics">Bachelor of Science in Mathematics</h3>
+<p><strong>University of California, Santa Barbara</strong> | <em>June 2025</em></p>
+<p><strong>GPA: 3.67</strong> | <strong>Leadership:</strong> Undergraduate Outreach Officer for Women in Science and Engineering (WiSE)</p>
+<p><em>Highlighted Coursework:</em> Real Analysis, Linear Algebra, Numerical Analysis, Computer Science and Problem Solving, Probability and Statistics</p>
+</section>
+<section id="associate-of-science-in-mathematics" class="level3">
+<h3 class="anchored" data-anchor-id="associate-of-science-in-mathematics">Associate of Science in Mathematics</h3>
+<p><strong>Sacramento City College</strong> | <em>June 2022</em></p>
+<p><strong>GPA: 4.0</strong></p>
+<hr>
+</section>
+</section>
+<section id="research-data-analysis-experience" class="level2">
+<h2 class="anchored" data-anchor-id="research-data-analysis-experience">Research &amp; Data Analysis Experience</h2>
+<section id="research-assistant-water-vegetation-and-society-waves-lab" class="level3">
+<h3 class="anchored" data-anchor-id="research-assistant-water-vegetation-and-society-waves-lab">Research Assistant – Water Vegetation and Society (WaVeS) Lab</h3>
+<p><strong>University of California Santa Barbara, Goleta, CA</strong> | <em>June 2024 - Present</em></p>
+<ul>
+<li>Applied statistical and numerical methods to analyze and validate agricultural water and land use datasets across multiple spatial scales</li>
+<li>Developed Python codebase for processing and analyzing satellite imagery and remotely sensed data to identify irrigation patterns in Sub-Saharan Africa</li>
+<li>Created statistical frameworks and visualization methods for examining complex spatial relationships in agricultural systems</li>
+<li>Collaborated with faculty mentor (Prof.&nbsp;Kelly Caylor) on water resource sustainability research</li>
+</ul>
+</section>
+<section id="bel-fellow-bren-environmental-leadership-program" class="level3">
+<h3 class="anchored" data-anchor-id="bel-fellow-bren-environmental-leadership-program">BEL Fellow – Bren Environmental Leadership Program</h3>
+<p><strong>University of California Santa Barbara, Goleta, CA</strong> | <em>June 2024 - December 2024</em></p>
+<ul>
+<li>Conducted research on irrigation patterns in Sub-Saharan Africa using satellite data analysis and remote sensing techniques</li>
+<li>Presented research findings “Satellite Data Reveal Emerging Decentralized Irrigation Systems in Sub-Saharan Africa” at three academic venues including AGU Fall Meeting</li>
+<li>Managed project timeline and deliverables while collaborating with faculty mentor on water resource sustainability research</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="leadership-community-engagement-experience" class="level2">
+<h2 class="anchored" data-anchor-id="leadership-community-engagement-experience">Leadership &amp; Community Engagement Experience</h2>
+<section id="founder-lead-organizer-iv-recovery-community-initiative" class="level3">
+<h3 class="anchored" data-anchor-id="founder-lead-organizer-iv-recovery-community-initiative">Founder &amp; Lead Organizer – IV Recovery Community Initiative</h3>
+<p><strong>Goleta, CA</strong> | <em>2023 - Present</em></p>
+<ul>
+<li>Founded and lead initiative organizing bi-weekly coastal cleanups engaging university students and community members</li>
+<li>Develop community engagement strategies to increase environmental stewardship and normalize university participation in local conservation</li>
+<li>Quantify environmental impact through data collection and analysis</li>
+</ul>
+</section>
+<section id="undergraduate-outreach-officer-women-in-science-and-engineering-wise" class="level3">
+<h3 class="anchored" data-anchor-id="undergraduate-outreach-officer-women-in-science-and-engineering-wise">Undergraduate Outreach Officer – Women in Science and Engineering (WiSE)</h3>
+<p><strong>University of California Santa Barbara, Goleta, CA</strong> | <em>September 2024 - June 2025</em></p>
+<ul>
+<li>Coordinated mentorship program supporting 130+ undergraduate students pursuing STEM degrees</li>
+<li>Focused outreach efforts on increasing diversity and representation in quantitative sciences through targeted programming</li>
+<li>Developed and implemented engagement strategies to support retention of underrepresented students in STEM fields</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="teaching-mentoring-experience" class="level2">
+<h2 class="anchored" data-anchor-id="teaching-mentoring-experience">Teaching &amp; Mentoring Experience</h2>
+<section id="mathematics-tutor" class="level3">
+<h3 class="anchored" data-anchor-id="mathematics-tutor">Mathematics Tutor</h3>
+<p><strong>Davis, CA</strong> | <em>2020 - 2023</em></p>
+<ul>
+<li>Taught mathematics to students ranging from elementary through college level, adapting instruction to diverse learning needs</li>
+<li>Provided comprehensive GED preparation support across all subject areas, resulting in student success on examinations</li>
+<li>Developed individualized learning plans to accommodate different learning styles and optimize student comprehension</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="presentations-talks" class="level2">
+<h2 class="anchored" data-anchor-id="presentations-talks">Presentations &amp; Talks</h2>
+<p>Miller E, Boser A, Caylor K. “Satellite Data Reveal Emerging Decentralized Irrigation Systems in Sub-Saharan Africa.” <em>Summer@Bren 2024 Flash Talks</em>, UCSB, CA. August 29, 2024.</p>
+<p>Miller E, Boser A, Caylor K. “Water Source Attribution for Center Pivot Irrigation in Sub-Saharan Africa.” <em>Mantell Symposium in Environmental Justice and Conservation Innovation</em>, UCSB, CA. October 24, 2024.</p>
+<p>Boser A, Miller E, Perez J, Caylor K. “Analyzing the sustainability and climate resilience of rapidly expanding center pivot Irrigation in Sub-Saharan Africa using remote sensing.” <em>American Geophysical Union Fall Meeting</em>, Washington D.C. December 9-13, 2024.</p>
+<hr>
+</section>
+<section id="technical-skills" class="level2">
+<h2 class="anchored" data-anchor-id="technical-skills">Technical Skills</h2>
+<section id="programming-data-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="programming-data-analysis">Programming &amp; Data Analysis</h3>
+<p>Python, R, C++</p>
+</section>
+<section id="technical-expertise" class="level3">
+<h3 class="anchored" data-anchor-id="technical-expertise">Technical Expertise</h3>
+<ul>
+<li>Satellite imagery analysis and remote sensing</li>
+<li>Statistical analysis and numerical methods</li>
+<li>Machine learning and data visualization</li>
+<li>Error analysis and computational methods</li>
+<li>Spatial data processing</li>
+</ul>
+</section>
+<section id="mathematical-foundation" class="level3">
+<h3 class="anchored" data-anchor-id="mathematical-foundation">Mathematical Foundation</h3>
+<ul>
+<li>Real analysis and linear algebra</li>
+<li>Probability and statistics</li>
+<li>Numerical analysis</li>
+<li>Matrix operations and eigenvalue calculations</li>
+<li>Data structures and algorithms</li>
+</ul>
+</section>
+<section id="tools-software" class="level3">
+<h3 class="anchored" data-anchor-id="tools-software">Tools &amp; Software</h3>
+<ul>
+<li>Google Earth Engine, QGIS, ArcGIS</li>
+<li>Python libraries: pandas, numpy, scikit-learn, matplotlib, seaborn</li>
+<li>R and tidyverse packages</li>
+<li>Database management and SQL</li>
+<li>Version control with Git</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="research-interests-career-focus" class="level2">
+<h2 class="anchored" data-anchor-id="research-interests-career-focus">Research Interests &amp; Career Focus</h2>
+<p><strong>Current Focus:</strong> Remote sensing and machine learning applications for understanding agricultural water systems, environmental sustainability, and climate resilience in Sub-Saharan Africa</p>
+<p><strong>Broader Interests:</strong> - Using satellite imagery to support environmental justice and marginalized communities - Wildlife corridor connectivity and infrastructure impact analysis - Indigenous land management practices and conservation outcomes - Live, accessible data systems for environmental decision-making - Nature-inspired solutions and biomimicry - Community-centered approaches to environmental research and monitoring</p>
 
 
+</section>
 
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="TUVEUyUyQ1B5dGhvbiUyQ0dlb3NwYXRpYWwlMjBBbmFseXNpcyUyQ0Vudmlyb25tZW50YWwlMjBKdXN0aWNl" data-listing-date-sort="1764403200000" data-listing-file-modified-sort="1764533197099" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1755">
-<div class="thumbnail"><a href="./posts/eds220-final/index.html" class="no-external">
-
-<img loading="lazy" src="./posts/eds220-final/eds220-final-cover.png" class="thumbnail-image">
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/eds220-final/index.html" class="no-external">Analyzing the 2025 Los Angeles Wildfires: Remote Sensing and Environmental Justice</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('TUVEUw=='); return false;">MEDS</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('R2Vvc3BhdGlhbCUyMEFuYWx5c2lz'); return false;">Geospatial Analysis</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('RW52aXJvbm1lbnRhbCUyMEp1c3RpY2U='); return false;">Environmental Justice</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/eds220-final/index.html" class="no-external">
-<p>Combining satellite imagery and socioeconomic data to understand wildfire impacts</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/eds220-final/index.html" class="no-external">
-<div class="listing-date">
-Nov 29, 2025
-</div>
-<div class="listing-author">
-Emily Miller
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="TUVEUyUyQ1I=" data-listing-date-sort="1762934400000" data-listing-file-modified-sort="1762978276091" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="34">
-<div class="thumbnail"><a href="./posts/initial-blog/index.html" class="no-external">
-
-<img loading="lazy" src="./posts/initial-blog/PXL_20230921_205848129.jpg" class="thumbnail-image">
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/initial-blog/index.html" class="no-external">My First Blog Post</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('TUVEUw=='); return false;">MEDS</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Ug=='); return false;">R</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/initial-blog/index.html" class="no-external">
-<p>If I had something else to say I’d say it here</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/initial-blog/index.html" class="no-external">
-<div class="listing-date">
-Nov 12, 2025
-</div>
-<div class="listing-author">
-Emily Miller
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

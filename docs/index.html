@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Blog – Emily Miller</title>
+<title>Emily Miller</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -70,65 +68,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -152,7 +92,7 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
@@ -160,7 +100,7 @@ window.Quarto = {
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./blog.html" aria-current="page"> 
+    <a class="nav-link" href="./blog.html"> 
 <span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -211,107 +151,190 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(2)</span></div><div class="category" data-category="RW52aXJvbm1lbnRhbCUyMEp1c3RpY2U=">Environmental Justice <span class="quarto-category-count">(1)</span></div><div class="category" data-category="R2Vvc3BhdGlhbCUyMEFuYWx5c2lz">Geospatial Analysis <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TUVEUw==">MEDS <span class="quarto-category-count">(2)</span></div><div class="category" data-category="UHl0aG9u">Python <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Ug==">R <span class="quarto-category-count">(1)</span></div></div></div>
+    
 <!-- main -->
-<main class="content column-page-left" id="quarto-document-content">
+<main class="content column-page" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Blog</h1>
+
+
+
+<div class="home-hero">
+<p><img src="images/PXL_20240914_192718413.jpg" class="img-fluid"></p>
+<section id="section" class="level2">
+<h2 class="anchored" data-anchor-id="section"></h2>
+<p>Data scientist, environmental systems thinker, and compulsive fixer of things.</p>
+</section>
 </div>
-
-
-
-<div class="quarto-title-meta column-page-left">
-
-    
+<hr>
+<div class="quote-section">
+<div class="slider-container">
+<div class="click-slider">
+<div class="slick-slide">
+<p><strong>“Let yourself be silently drawn by the strange pull of what you really love.”</strong></p>
+<p>— Rumi</p>
+</div>
+<div class="slick-slide">
+<p><strong>“Tell me, what is it you plan to do with your one wild and precious life?”</strong></p>
+<p>— Mary Oliver, Wild Geese</p>
+</div>
+<div class="slick-slide">
+<p><strong>“The climate has always changed. The difference now is that we are the cause.”</strong></p>
+<p>— Kate Marvel, Climate Scientist</p>
+</div>
+<div class="slick-slide">
+<p><strong>“What you do makes a difference. You have to decide what kind of difference you want to make.”</strong></p>
+<p>— Jane Goodall</p>
+</div>
+<div class="slick-slide">
+<p><strong>“An expert is a person who has made all the mistakes that can be made in a very narrow field.”</strong></p>
+<p>— Niels Bohr</p>
+</div>
+<div class="slick-slide">
+<p><strong>“All models are wrong, but some are useful.”</strong></p>
+<p>— George E. P. Box</p>
+</div>
+<div class="slick-slide">
+<p><strong>“Nothing in life is to be feared, it is only to be understood.”</strong></p>
+<p>— Marie Curie</p>
+</div>
+<div class="slick-slide">
+<p><strong>“Without data, you’re just another person with an opinion.”</strong></p>
+<p>— W. Edwards Deming</p>
+</div>
+<div class="slick-slide">
+<p><strong>“I would give my right arm for the simplicity on the far side of complexity.”</strong></p>
+<p>— Oliver Wendell Holmes</p>
+</div>
+<div class="slick-slide">
+<p><strong>“A ship in port is safe, but that’s not what ships are built for.”</strong></p>
+<p>— Grace Hopper</p>
+</div>
+<div class="slick-slide">
+<p><strong>“The cure for boredom is curiosity. There is no cure for curiosity.”</strong></p>
+<p>— Dorothy Parker</p>
+</div>
+<div class="slick-slide">
+<p><strong>“Change happens by listening and then starting a dialogue with the people who are doing something you don’t believe is right.”</strong></p>
+<p>— Jane Goodall</p>
+</div>
+<div class="slick-slide">
+<p><strong>“I have no fear of losing my life—if I have to save a koala or a crocodile or a kangaroo or a snake, mate, I will save it.”</strong></p>
+<p>— Steve Irwin</p>
+</div>
+<div class="slick-slide">
+<p><strong>“Study as if you were going to live forever; live as if you were going to die tomorrow.”</strong></p>
+<p>— Maria Mitchell</p>
+</div>
+<div class="slick-slide">
+<p><strong>“We are drowning in information, while starving for wisdom. The world henceforth will be run by synthesizers, people able to put together the right information at the right time, think critically about it, and make important choices wisely.”</strong></p>
+<p>— E. O. Wilson</p>
+</div>
+<div class="slick-slide">
+<p><strong>“It’s not what you look at that matters, it’s what you see.”</strong></p>
+<p>— Henry David Thoreau</p>
+</div>
+<div class="slick-slide">
+<p><strong>“If you don’t know where you are going, any road will get you there.”</strong></p>
+<p>— Lewis Carroll</p>
+</div>
+<div class="slick-slide">
+<p><strong>“Knowledge is identifying eggplant is a fruit. Wisdom is not using it in fruit salad.”</strong></p>
+<p>— Angela Manzo (and the internet)</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+<section id="what-im-working-on" class="level2">
+<h2 class="anchored" data-anchor-id="what-im-working-on">What I’m Working On</h2>
+<p><a href="./research.html"><strong>Research →</strong></a> | <a href="./art.html"><strong>Art &amp; Poetry →</strong></a> | <a href="./adventures.html"><strong>Essays →</strong></a> | <a href="./about.html"><strong>More About Me →</strong></a></p>
+<script>
+// Simple Carousel/Slider Implementation
+document.addEventListener('DOMContentLoaded', function() {
+  const sliders = document.querySelectorAll('.click-slider');
   
+  sliders.forEach((slider, sliderIndex) => {
+    const slides = slider.querySelectorAll('.slick-slide');
+    let currentSlide = 0;
     
-  </div>
-  
+    if (slides.length === 0) return;
+    
+    // Initialize - show first slide
+    slides[0].classList.add('slick-active');
+    
+    // Create navigation buttons
+    const prevBtn = document.createElement('button');
+    prevBtn.classList.add('slick-prev');
+    prevBtn.innerHTML = '❮';
+    prevBtn.setAttribute('aria-label', 'Previous quote');
+    
+    const nextBtn = document.createElement('button');
+    nextBtn.classList.add('slick-next');
+    nextBtn.innerHTML = '❯';
+    nextBtn.setAttribute('aria-label', 'Next quote');
+    
+    slider.parentElement.appendChild(prevBtn);
+    slider.parentElement.appendChild(nextBtn);
+    
+    // Create dots for pagination - append to slider-container (parent of click-slider)
+    const dotsContainer = document.createElement('ul');
+    dotsContainer.classList.add('slick-dots');
+    
+    slides.forEach((slide, index) => {
+      const dot = document.createElement('li');
+      const btn = document.createElement('button');
+      btn.setAttribute('aria-label', `Go to quote ${index + 1}`);
+      btn.onclick = (e) => {
+        e.preventDefault();
+        goToSlide(index);
+      };
+      dot.appendChild(btn);
+      dotsContainer.appendChild(dot);
+      
+      if (index === 0) {
+        dot.classList.add('slick-active');
+      }
+    });
+    
+    // Append dots to the slider-container (which uses flexbox with order)
+    slider.parentElement.appendChild(dotsContainer);
+    
+    function showSlide(n) {
+      slides[currentSlide].classList.remove('slick-active');
+      document.querySelectorAll('.slick-dots li')[currentSlide].classList.remove('slick-active');
+      
+      currentSlide = (n + slides.length) % slides.length;
+      
+      slides[currentSlide].classList.add('slick-active');
+      document.querySelectorAll('.slick-dots li')[currentSlide].classList.add('slick-active');
+    }
+    
+    function goToSlide(n) {
+      showSlide(n);
+    }
+    
+    function nextSlide() {
+      showSlide(currentSlide + 1);
+    }
+    
+    function prevSlide() {
+      showSlide(currentSlide - 1);
+    }
+    
+    // Event listeners
+    nextBtn.addEventListener('click', nextSlide);
+    prevBtn.addEventListener('click', prevSlide);
+    
+    // Optional: Auto-rotate every 10 seconds
+    setInterval(nextSlide, 10000);
+  });
+});
+</script>
 
 
-</header>
+</section>
 
-
-
-
-
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="TUVEUyUyQ1B5dGhvbiUyQ0dlb3NwYXRpYWwlMjBBbmFseXNpcyUyQ0Vudmlyb25tZW50YWwlMjBKdXN0aWNl" data-listing-date-sort="1764403200000" data-listing-file-modified-sort="1764533197099" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1755">
-<div class="thumbnail"><a href="./posts/eds220-final/index.html" class="no-external">
-
-<img loading="lazy" src="./posts/eds220-final/eds220-final-cover.png" class="thumbnail-image">
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/eds220-final/index.html" class="no-external">Analyzing the 2025 Los Angeles Wildfires: Remote Sensing and Environmental Justice</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('TUVEUw=='); return false;">MEDS</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('R2Vvc3BhdGlhbCUyMEFuYWx5c2lz'); return false;">Geospatial Analysis</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('RW52aXJvbm1lbnRhbCUyMEp1c3RpY2U='); return false;">Environmental Justice</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/eds220-final/index.html" class="no-external">
-<p>Combining satellite imagery and socioeconomic data to understand wildfire impacts</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/eds220-final/index.html" class="no-external">
-<div class="listing-date">
-Nov 29, 2025
-</div>
-<div class="listing-author">
-Emily Miller
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="TUVEUyUyQ1I=" data-listing-date-sort="1762934400000" data-listing-file-modified-sort="1762978276091" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="34">
-<div class="thumbnail"><a href="./posts/initial-blog/index.html" class="no-external">
-
-<img loading="lazy" src="./posts/initial-blog/PXL_20230921_205848129.jpg" class="thumbnail-image">
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/initial-blog/index.html" class="no-external">My First Blog Post</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('TUVEUw=='); return false;">MEDS</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Ug=='); return false;">R</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/initial-blog/index.html" class="no-external">
-<p>If I had something else to say I’d say it here</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/initial-blog/index.html" class="no-external">
-<div class="listing-date">
-Nov 12, 2025
-</div>
-<div class="listing-author">
-Emily Miller
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

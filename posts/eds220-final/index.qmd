@@ -71,7 +71,7 @@ import matplotlib.pyplot as plt
 
 ### Loading Fire Perimeter Data
 
-Fire perimeters provide the spatial boundaries for our analysis, allowing us to focus on the areas most affected by the fires.
+Fire perimeters provide the spatial boundaries for our analysis, allowing us to focus on the areas most affected by the fires. We begin by loading the data and doing a simple exploration of its contents.
 
 ```{python}
 #| output: false
@@ -90,7 +90,6 @@ print("\nPalisades Fire Perimeter:")
 print(palisades.info())
 ```
 
-Both datasets contain polygon geometries representing the fire boundaries, along with area and perimeter measurements.
 
 #### Coordinate Reference System Check
 
@@ -99,19 +98,6 @@ Both datasets contain polygon geometries representing the fire boundaries, along
 # Check CRS
 print(f"Eaton CRS: {eaton.crs}")
 print(f"Palisades CRS: {palisades.crs}")
-
-# Create CRS information table
-crs_data = {
-    'Dataset': ['Eaton Fire', 'Palisades Fire'],
-    'CRS Code': [eaton.crs.to_authority()[1] if eaton.crs.to_authority() else 'N/A',
-                 palisades.crs.to_authority()[1] if palisades.crs.to_authority() else 'N/A'],
-    'CRS Name': [eaton.crs.name, palisades.crs.name],
-    'Projection Type': ['Geographic' if eaton.crs.is_geographic else 'Projected',
-                       'Geographic' if palisades.crs.is_geographic else 'Projected']
-}
-
-crs_df = pd.DataFrame(crs_data)
-crs_df
 ```
 
 Summary of fire perimeter exploration:
@@ -120,7 +106,7 @@ Both the Eaton and Palisades fire perimeter datasets use EPSG:3857. The Eaton pe
 
 ### Loading and Processing Landsat Imagery
 
-The Landsat 8 scene contains multiple spectral bands that capture different wavelengths of reflected light. Each band provides unique information about surface features.
+The Landsat 8 scene contains multiple spectral bands that capture different wavelengths of reflected light. Each band provides unique information about surface features. Once again we load the data and do a simple exploration.
 
 ```{python}
 #| output: false
@@ -149,7 +135,14 @@ The landsat 8 dataset is stored in NetCDF format which contains 5 spectral bands
 Before we can perform spatial operations, we need to verify and restore the coordinate reference system (CRS) information.
 
 ```{python}
-#| echo: false
+if (landsat.rio.crs == None):
+  print("This object is not currently geospatially referenced")
+else:
+  print("This object is geospatially referenced")
+
+```
+
+```{python}
 #| output: false
 
 # Recover the geospatial information from spatial_ref
@@ -167,17 +160,27 @@ for band in ['red', 'green', 'blue', 'nir08', 'swir22']:
     if np.isnan(landsat[band]).any():
         nan_bands.append(band)
 
-print("Bands with NaN values:", nan_bands)
-
 # Fill NaN values with 0
 landsat = landsat.fillna(0)
+```
+
+```{python}
+#| echo: false
+print("Bands with NaN values:", nan_bands)
 ```
 
 All five spectral bands contain some NaN values. These can occur at the edges of satellite scenes or in areas with clouds. Filling them with zero prevents visualization errors.
 
 ### True Color Visualization
 
-Before creating specialized visualizations, we can verify our data by creating a true color image using the red, green, and blue bands—similar to how a standard camera would capture the scene.
+A true color image displays the red, green, and blue bands as they would appear to the human eye. Often raw satellite contains extreme values that can make the rest of the image look washed out when plotting. This can be corrected by handling outliers and missing values properly as demonstrated below
+
+```{python}
+#| collapse: true
+# Plot the true color image
+landsat[['red', 'green', 'blue']].to_array().plot.imshow()
+plt.show()
+```
 
 ```{python}
 #| fig-cap: "True color composite (RGB) of the fire-affected area"

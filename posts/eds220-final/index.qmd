@@ -173,14 +173,34 @@ All five spectral bands contain some NaN values. These can occur at the edges of
 
 ### True Color Visualization
 
-A true color image displays the red, green, and blue bands as they would appear to the human eye. Often raw satellite contains extreme values that can make the rest of the image look washed out when plotting. This can be corrected by handling outliers and missing values properly as demonstrated below
+A true color image displays the red, green, and blue bands as they would appear to the human eye. Often raw satellite contains extreme values that can make the rest of the image look washed out when plotting. 
 
 ```{python}
-#| collapse: true
+#| fig-cap: "True color composite (RGB) of the fire-affected area before handling nan and 0s"
+
 # Plot the true color image
 landsat[['red', 'green', 'blue']].to_array().plot.imshow()
 plt.show()
 ```
+
+This can be corrected by handling outliers and missing values properly
+
+```{python}
+#| code-fold: true
+#| results: "hide"
+
+# Identify which bands have nan values using numpy.isnan() and utilize the robust parameter in the plot function
+nan_bands = []
+for band in ['red', 'green', 'blue', 'nir08', 'swir22']:
+    if np.isnan(landsat[band]).any():
+        nan_bands.append(band)
+
+print("Bands with NaN values:", nan_bands)
+
+# use .fillna() to substitute any nan values for 0
+landsat = landsat.fillna(0)
+```
+
 
 ```{python}
 #| fig-cap: "True color composite (RGB) of the fire-affected area"
@@ -191,7 +211,9 @@ plt.title('True Color Image - Landsat 8')
 plt.show()
 ```
 
-The `robust=True` parameter clips extreme outlier values to improve visualization, preventing a few bright pixels from washing out the entire image.
+**Comparison of outputs:**
+
+Part (a) produced a blank-looking image along with two warnings: one about clipping RGB data to valid ranges and another about invalid values during type conversion. This is the result of extreme outliers produced by cloud reflectance that compress all other pixel values near zero when matplotlib scales the image. Part (e) produces a clear, detailed true color image with no warnings. The improvement is the result of two changes: (1) using `robust=True` clips extreme outlier values for better visualization, and (2) filling NaN values with zero using `.fillna(0)` eliminates the invalid value warning. 
 
 ### False Color Analysis
 

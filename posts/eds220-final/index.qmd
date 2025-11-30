@@ -79,7 +79,10 @@ Fire perimeters provide the spatial boundaries for our analysis, allowing us to 
 # Load fire perimeter shapefiles
 eaton = gpd.read_file('data/Eaton_Perimeter_20250121.shp')
 palisades = gpd.read_file('data/Palisades_Perimeter_20250121.shp')
+```
 
+```{python}
+#| code-fold: true
 # Explore the data structure
 print("Eaton Fire Perimeter:")
 print(eaton.info())

@@ -16,7 +16,7 @@ In January 2025, the Eaton and Palisades fires swept through Los Angeles County,
 
 Understanding wildfire impacts requires more than just mapping burned areas—it requires examining both the physical changes to the landscape and the social dimensions of who is affected. This analysis combines **remote sensing techniques** with **environmental justice data** to provide a comprehensive view of these devastating fires.
 
-**Repository:** [https://github.com/rellimylime/eds220-hwk4](https://github.com/rellimylime/eds220-hwk4)
+**Repository:** <https://github.com/rellimylime/eds220-hwk4>
 
 ![Satellite view of the fire-affected areas](eds220-final-cover.png)
 
@@ -24,10 +24,10 @@ Understanding wildfire impacts requires more than just mapping burned areas—it
 
 This analysis demonstrates several key geospatial analysis techniques:
 
-- **False color visualization** using Landsat 8 SWIR/NIR/Red bands to identify burn scars and assess vegetation health
-- **Multi-dataset integration** combining satellite raster imagery with vector fire perimeter and census tract data
-- **CRS management and reprojection** to ensure spatial alignment across different data sources
-- **Environmental justice analysis** examining the socioeconomic characteristics of communities affected by the fires
+-   **False color visualization** using Landsat 8 SWIR/NIR/Red bands to identify burn scars and assess vegetation health
+-   **Multi-dataset integration** combining satellite raster imagery with vector fire perimeter and census tract data
+-   **CRS management and reprojection** to ensure spatial alignment across different data sources
+-   **Environmental justice analysis** examining the socioeconomic characteristics of communities affected by the fires
 
 ## Data
 
@@ -35,21 +35,21 @@ This analysis demonstrates several key geospatial analysis techniques:
 
 This dataset contains atmospherically corrected surface reflectance data from the Landsat 8 satellite, captured on February 23, 2025. The imagery includes five spectral bands (red, green, blue, near-infrared, and shortwave infrared) clipped to the area surrounding the Eaton and Palisades fire perimeters. The data was retrieved from the Microsoft Planetary Computer STAC catalog in NetCDF format.
 
-**Citation:** Microsoft Planetary Computer. (2025). *Landsat Collection 2 Level-2* [Data file]. Retrieved from https://planetarycomputer.microsoft.com/dataset/landsat-c2-l2
+**Citation:** Microsoft Planetary Computer. (2025). *Landsat Collection 2 Level-2* \[Data file\]. Retrieved from https://planetarycomputer.microsoft.com/dataset/landsat-c2-l2
 
 ### Fire Perimeter Shapefiles
 
 Official fire perimeter polygons for the Eaton and Palisades fires as of January 21, 2025, provided in EPSG:3857 (Web Mercator) projection. These shapefiles include boundary geometries and attribute information for each fire.
 
-**Citation:** Palisades and Eaton Dissolved Fire Perimeters. (2025). *Fire perimeter shapefiles* [Geospatial dataset]. ArcGIS Hub. Retrieved from https://hub.arcgis.com/maps/ad51845ea5fb4eb483bc2a7c38b2370c
+**Citation:** Palisades and Eaton Dissolved Fire Perimeters. (2025). *Fire perimeter shapefiles* \[Geospatial dataset\]. ArcGIS Hub. Retrieved from https://hub.arcgis.com/maps/ad51845ea5fb4eb483bc2a7c38b2370c
 
 ### Environmental Justice Index (EJI) Data
 
 The Environmental Justice Index provides census tract-level data on environmental and socioeconomic factors. This analysis uses the 2024 California EJI dataset, which includes demographic information, poverty statistics, and environmental burden indicators for communities across the state.
 
-**Citation:** Centers for Disease Control and Prevention/Agency for Toxic Substances and Disease Registry. (2024). *Environmental Justice Index, California* [Geodatabase]. Retrieved from https://www.atsdr.cdc.gov/placeandhealth/eji/index.html
+**Citation:** Centers for Disease Control and Prevention/Agency for Toxic Substances and Disease Registry. (2024). *Environmental Justice Index, California* \[Geodatabase\]. Retrieved from https://www.atsdr.cdc.gov/placeandhealth/eji/index.html
 
----
+------------------------------------------------------------------------
 
 ## Analysis 1: False Color Visualization
 
@@ -132,9 +132,9 @@ plt.show()
 
 **Why this band combination?**
 
-- **Healthy vegetation** has high NIR reflectance and low SWIR reflectance → appears bright green
-- **Burned areas** have low NIR reflectance and moderate SWIR reflectance → appears reddish-brown
-- **Urban areas** show moderate reflectance across bands → appears in neutral tones
+-   **Healthy vegetation** has high NIR reflectance and low SWIR reflectance → appears bright green
+-   **Burned areas** have low NIR reflectance and moderate SWIR reflectance → appears reddish-brown
+-   **Urban areas** show moderate reflectance across bands → appears in neutral tones
 
 ### Creating the Final Map
 
@@ -187,7 +187,7 @@ plt.show()
 
 This false color composite clearly reveals the extent and severity of fire impacts. The distinct reddish-brown burn scars contrast sharply with the bright green healthy vegetation in surrounding areas. The combination of spectral analysis and geographic boundaries provides a powerful tool for assessing wildfire damage and monitoring landscape recovery.
 
----
+------------------------------------------------------------------------
 
 ## Analysis 2: Environmental Justice Dimensions
 
@@ -295,11 +295,11 @@ This analysis reveals important differences in socioeconomic vulnerability betwe
 
 Understanding these patterns is crucial for:
 
-- **Emergency response planning** - ensuring resources reach vulnerable populations
-- **Recovery assistance** - targeting aid to communities with fewer economic resources
-- **Long-term resilience planning** - addressing pre-existing vulnerabilities that compound disaster impacts
+-   **Emergency response planning** - ensuring resources reach vulnerable populations
+-   **Recovery assistance** - targeting aid to communities with fewer economic resources
+-   **Long-term resilience planning** - addressing pre-existing vulnerabilities that compound disaster impacts
 
----
+------------------------------------------------------------------------
 
 ## Conclusion
 

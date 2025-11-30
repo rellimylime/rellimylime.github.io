@@ -80,9 +80,9 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-title','listing-author','listing-date','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
-      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description"],
+      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -211,21 +211,19 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(2)</span></div><div class="category" data-category="RW52aXJvbm1lbnRhbCUyMEp1c3RpY2U=">Environmental Justice <span class="quarto-category-count">(1)</span></div><div class="category" data-category="R2Vvc3BhdGlhbCUyMEFuYWx5c2lz">Geospatial Analysis <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TUVEUw==">MEDS <span class="quarto-category-count">(2)</span></div><div class="category" data-category="UHl0aG9u">Python <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Ug==">R <span class="quarto-category-count">(1)</span></div></div></div>
 <!-- main -->
-<main class="content column-page" id="quarto-document-content">
+<main class="content column-page-left" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Blog</h1>
-  <div class="quarto-categories">
-    <div class="quarto-category">true</div>
-  </div>
-  </div>
+</div>
 
 
 
-<div class="quarto-title-meta column-page">
+<div class="quarto-title-meta column-page-left">
 
     
   
@@ -241,74 +239,75 @@ window.Quarto = {
 
 
 
-<div class="quarto-listing quarto-listing-container-grid" id="listing-listing">
-<div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-listing-file-modified-sort="1764485209485" data-listing-reading-time-sort="3" data-listing-word-count-sort="421">
-<a href="./posts/eds220-final/hwk4-task2-false-color-MILLER.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top"><img src="posts\eds220-final\hwk4-task2-false-color-MILLER_files\figure-html\cell-9-output-2.png" style="height: 150px;"  class="thumbnail-image card-img"/></p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-False Color Visualization of the 2025 Los Angeles Wildfires
-</h5>
-<div class="card-text listing-description delink">
-<strong>Author:</strong> Emily Miller
+<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="list quarto-listing-default">
+<div class="quarto-post image-right" data-index="0" data-categories="TUVEUyUyQ1B5dGhvbiUyQ0dlb3NwYXRpYWwlMjBBbmFseXNpcyUyQ0Vudmlyb25tZW50YWwlMjBKdXN0aWNl" data-listing-date-sort="1764403200000" data-listing-file-modified-sort="1764528453655" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8" data-listing-word-count-sort="1463">
+<div class="thumbnail"><a href="./posts/eds220-final/index.html" class="no-external">
+
+<img loading="lazy" src="./posts/eds220-final/eds220-final-cover.png" class="thumbnail-image">
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/eds220-final/index.html" class="no-external">Analyzing the 2025 Los Angeles Wildfires: Remote Sensing and Environmental Justice</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('TUVEUw=='); return false;">MEDS</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('R2Vvc3BhdGlhbCUyMEFuYWx5c2lz'); return false;">Geospatial Analysis</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('RW52aXJvbm1lbnRhbCUyMEp1c3RpY2U='); return false;">Environmental Justice</div>
+
 </div>
-<div class="card-attribution card-text-small start">
-<div class="listing-author">
-Emily Miller
-</div>
-</div>
-</div>
-</div></a>
-</div>
-<div class="g-col-1" data-index="1" data-categories="TUVEUyUyQ1B5dGhvbiUyQ0dlb3NwYXRpYWwlMjBBbmFseXNpcyUyQ0Vudmlyb25tZW50YWwlMjBKdXN0aWNl" data-listing-date-sort="1764403200000" data-listing-file-modified-sort="1764485952283" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8" data-listing-word-count-sort="1443">
-<a href="./posts/eds220-final/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img loading="lazy" src="./posts/eds220-final/eds220-final-cover.png" class="thumbnail-image card-img" style="height: 150px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Analyzing the 2025 Los Angeles Wildfires: Remote Sensing and Environmental Justice
-</h5>
-<div class="card-text listing-description delink">
+<div class="delink listing-description"><a href="./posts/eds220-final/index.html" class="no-external">
 <p>Combining satellite imagery and socioeconomic data to understand wildfire impacts</p>
+</a></div>
 </div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-Emily Miller
-</div>
+<div class="metadata">
+<a href="./posts/eds220-final/index.html" class="no-external">
 <div class="listing-date">
 Nov 29, 2025
 </div>
-</div>
-</div>
-</div></a>
-</div>
-<div class="g-col-1" data-index="2" data-categories="TUVEUyUyQ1I=" data-listing-date-sort="1762934400000" data-listing-file-modified-sort="1762978276091" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="34">
-<a href="./posts/initial-blog/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img loading="lazy" src="./posts/initial-blog/PXL_20230921_205848129.jpg" class="thumbnail-image card-img" style="height: 150px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-My First Blog Post
-</h5>
-<div class="card-text listing-description delink">
-<p>If I had something else to say I’d say it here</p>
-</div>
-<div class="card-attribution card-text-small justify">
 <div class="listing-author">
 Emily Miller
 </div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-categories="TUVEUyUyQ1I=" data-listing-date-sort="1762934400000" data-listing-file-modified-sort="1762978276091" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="34">
+<div class="thumbnail"><a href="./posts/initial-blog/index.html" class="no-external">
+
+<img loading="lazy" src="./posts/initial-blog/PXL_20230921_205848129.jpg" class="thumbnail-image">
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/initial-blog/index.html" class="no-external">My First Blog Post</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('TUVEUw=='); return false;">MEDS</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Ug=='); return false;">R</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/initial-blog/index.html" class="no-external">
+<p>If I had something else to say I’d say it here</p>
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/initial-blog/index.html" class="no-external">
 <div class="listing-date">
 Nov 12, 2025
 </div>
+<div class="listing-author">
+Emily Miller
 </div>
+</a>
 </div>
-</div></a>
 </div>
 </div>
 <div class="listing-no-matching d-none">No matching items</div>

@@ -2,8 +2,8 @@
 title: "Blog"
 listing:
   contents: posts
-  type: grid
+  type: default
   sort: "date desc"
-categories: true
+  categories: true
 toc: false
 ---

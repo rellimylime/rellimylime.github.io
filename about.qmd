@@ -28,19 +28,18 @@ I also believe that creativity and precision aren't opposites—they're dance pa
 
 ## Random Facts
 
-- I spent considerable time in mental hospitals as a teenager. Best decision anyone made for me, honestly.
-- I can weld, solder, sew, play piano, and speak a little bit of Spanish.
-- I'm genuinely dyslexic, which means I have to read everything three times. Yes, I read *everything* three times.
-- I've done a lot of jazz singing. A *lot*.
-- I love being challenged. I love debugging. I love learning impossible things.
-- I'm probably listening to an audiobook right now.
-- My service dog is the best decision I've ever made for my life.
+-   I can do anything (and if I can't I will humiliate myself trying until I can).
+-   I'm genuinely dyslexic, which means I have to read everything three times. Yes, I read *everything* three times.
+-   I've done a lot of jazz singing. A *lot*.
+-   I love being challenged. I love debugging. I love learning impossible things.
+-   I'm probably listening to an audiobook right now.
+-   My service dog is the best decision I've ever made.
 
 ## Let's Connect
 
 I love talking about weird intersections of things—how data can tell stories, why nature is smarter than us, whether debugging is actually meditation, etc. If you want to chat about any of that (or just say hi), reach out.
 
-[Email Me](mailto:ermiller@ucsb.edu) | [LinkedIn](https://www.linkedin.com/in/rellimylime/) | [GitHub](https://github.com/rellimylime)
+[Email Me](mailto:ermiller@ucsb.edu) \| [LinkedIn](https://www.linkedin.com/in/rellimylime/) \| [GitHub](https://github.com/rellimylime)
 
 My academic journey began with a focus on pure mathematics, drawn to the elegance and precision of numerical analysis. My goal from the start was to use my degree to bring new levels of quantitative and analytical rigor to the science of understanding our world and place on this earth as a species.
 

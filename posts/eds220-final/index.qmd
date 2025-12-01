@@ -21,8 +21,7 @@ In January 2025, the Eaton and Palisades fires swept through Los Angeles County,
 
 Understanding wildfire impacts requires more than just mapping burned areas—it requires examining both the physical changes to the landscape and the social dimensions of who is affected. This analysis combines **remote sensing techniques** with **environmental justice data** to provide a comprehensive view of these devastating fires.
 
-**Repository:** [https://github.com/rellimylime/eds220-hwk4](https://github.com/rellimylime/eds220-hwk4)
-*For complete analysis notebooks with additional data exploration and detailed outputs, visit the GitHub repository.*
+**Repository:** <https://github.com/rellimylime/eds220-hwk4> *For complete analysis notebooks with additional data exploration and detailed outputs, visit the GitHub repository.*
 
 ![Satellite view of the fire-affected areas](eds220-final-cover.png)
 
@@ -30,10 +29,10 @@ Understanding wildfire impacts requires more than just mapping burned areas—it
 
 This analysis demonstrates several key Python-based geospatial analysis techniques:
 
-- **False color visualization** using `xarray` and `rioxarray` to process Landsat 8 SWIR/NIR/Red bands for burn scar identification
-- **Multi-dataset integration** with `geopandas` combining satellite raster imagery with vector fire perimeter and census tract data
-- **CRS management and reprojection** using `rio.write_crs()` and `to_crs()` to ensure spatial alignment across different data sources
-- **Environmental justice analysis** with spatial joins (`gpd.sjoin()`) and clipping to examine socioeconomic vulnerability in fire-affected areas
+-   **False color visualization** using `xarray` and `rioxarray` to process Landsat 8 SWIR/NIR/Red bands for burn scar identification
+-   **Multi-dataset integration** with `geopandas` combining satellite raster imagery with vector fire perimeter and census tract data
+-   **CRS management and reprojection** using `rio.write_crs()` and `to_crs()` to ensure spatial alignment across different data sources
+-   **Environmental justice analysis** with spatial joins (`gpd.sjoin()`) and clipping to examine socioeconomic vulnerability in fire-affected areas
 
 ## Data
 
@@ -41,21 +40,21 @@ This analysis demonstrates several key Python-based geospatial analysis techniqu
 
 This dataset contains atmospherically corrected surface reflectance data from the Landsat 8 satellite, captured on February 23, 2025. The imagery includes five spectral bands (red, green, blue, near-infrared, and shortwave infrared) clipped to the area surrounding the Eaton and Palisades fire perimeters. The data was retrieved from the Microsoft Planetary Computer STAC catalog in NetCDF format.
 
-**Citation:** Microsoft Planetary Computer. (2025). *Landsat Collection 2 Level-2* [Data file]. Retrieved from https://planetarycomputer.microsoft.com/dataset/landsat-c2-l2
+**Citation:** Microsoft Planetary Computer. (2025). *Landsat Collection 2 Level-2* \[Data file\]. Retrieved from https://planetarycomputer.microsoft.com/dataset/landsat-c2-l2
 
 ### Fire Perimeter Shapefiles
 
 Official fire perimeter polygons for the Eaton and Palisades fires as of January 21, 2025, provided in EPSG:3857 (Web Mercator) projection. These shapefiles include boundary geometries and attribute information for each fire.
 
-**Citation:** Palisades and Eaton Dissolved Fire Perimeters. (2025). *Fire perimeter shapefiles* [Geospatial dataset]. ArcGIS Hub. Retrieved from https://hub.arcgis.com/maps/ad51845ea5fb4eb483bc2a7c38b2370c
+**Citation:** Palisades and Eaton Dissolved Fire Perimeters. (2025). *Fire perimeter shapefiles* \[Geospatial dataset\]. ArcGIS Hub. Retrieved from https://hub.arcgis.com/maps/ad51845ea5fb4eb483bc2a7c38b2370c
 
 ### Environmental Justice Index (EJI) Data
 
 The Environmental Justice Index provides census tract-level data on environmental and socioeconomic factors. This analysis uses the 2024 California EJI dataset, which includes demographic information, poverty statistics, and environmental burden indicators for communities across the state.
 
-**Citation:** Centers for Disease Control and Prevention/Agency for Toxic Substances and Disease Registry. (2024). *Environmental Justice Index, California* [Geodatabase]. Retrieved from https://www.atsdr.cdc.gov/placeandhealth/eji/index.html
+**Citation:** Centers for Disease Control and Prevention/Agency for Toxic Substances and Disease Registry. (2024). *Environmental Justice Index, California* \[Geodatabase\]. Retrieved from https://www.atsdr.cdc.gov/placeandhealth/eji/index.html
 
----
+------------------------------------------------------------------------
 
 ## Analysis 1: False Color Visualization
 
@@ -85,7 +84,6 @@ summary_data = {
     'Dataset': ['Eaton Fire', 'Palisades Fire'],
     'Features': [len(eaton), len(palisades)],
     'Columns': [len(eaton.columns), len(palisades.columns)],
-    'CRS': [str(eaton.crs), str(palisades.crs)],
     'Geometry Type': [eaton.geometry.type.unique()[0], palisades.geometry.type.unique()[0]]
 }
 
@@ -215,9 +213,9 @@ plt.show()
 
 **Why this band combination?**
 
-- **Healthy vegetation** has high NIR reflectance and low SWIR reflectance → appears bright green
-- **Burned areas** have low NIR reflectance and moderate SWIR reflectance → appears reddish-brown
-- **Urban areas** show moderate reflectance across bands → appears in neutral tones
+-   **Healthy vegetation** has high NIR reflectance and low SWIR reflectance → appears bright green
+-   **Burned areas** have low NIR reflectance and moderate SWIR reflectance → appears reddish-brown
+-   **Urban areas** show moderate reflectance across bands → appears in neutral tones
 
 ### Creating the Final Map
 
@@ -276,13 +274,13 @@ This false color composite displays the Eaton and Palisades fire areas captured 
 
 **Key features:**
 
-- **Bright green areas** = Healthy vegetation (high NIR reflectance)
-- **Reddish-brown areas** = Burned areas and bare soil (low NIR, moderate SWIR)
-- **Urban/developed areas** = Neutral tones (moderate reflectance across bands)
+-   **Bright green areas** = Healthy vegetation (high NIR reflectance)
+-   **Reddish-brown areas** = Burned areas and bare soil (low NIR, moderate SWIR)
+-   **Urban/developed areas** = Neutral tones (moderate reflectance across bands)
 
 The fire perimeters are overlaid in **yellow (Eaton Fire)** and **red (Palisades Fire)** to delineate the official burn boundaries. This false color combination is particularly effective for assessing fire severity and monitoring landscape recovery, as the spectral signatures of healthy vs. burned vegetation are distinctly different in the infrared wavelengths.
 
----
+------------------------------------------------------------------------
 
 ## Analysis 2: Environmental Justice Dimensions
 
@@ -393,11 +391,11 @@ This analysis reveals important differences in socioeconomic vulnerability betwe
 
 Understanding these patterns is crucial for:
 
-- **Emergency response planning** - ensuring resources reach vulnerable populations
-- **Recovery assistance** - targeting aid to communities with fewer economic resources
-- **Long-term resilience planning** - addressing pre-existing vulnerabilities that compound disaster impacts
+-   **Emergency response planning** - ensuring resources reach vulnerable populations
+-   **Recovery assistance** - targeting aid to communities with fewer economic resources
+-   **Long-term resilience planning** - addressing pre-existing vulnerabilities that compound disaster impacts
 
----
+------------------------------------------------------------------------
 
 ## Conclusion
 

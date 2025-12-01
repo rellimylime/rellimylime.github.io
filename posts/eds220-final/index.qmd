@@ -390,9 +390,9 @@ This analysis reveals stark differences in socioeconomic vulnerability between t
 
 **Environmental Justice Implications:** The contrasting patterns reveal that while both fires caused extensive physical damage, the Eaton fire imposed greater socioeconomic burden on vulnerable populations who typically have fewer resources for evacuation, temporary housing, and long-term recovery. This disparity is crucial for:
 
-* **Emergency response planning** - ensuring resources reach vulnerable populations during active disasters
-* **Recovery assistance** - targeting aid to communities with fewer economic resources for rebuilding
-* **Long-term resilience planning** - addressing pre-existing vulnerabilities that compound disaster impacts and hinder recovery
+-   **Emergency response planning** - ensuring resources reach vulnerable populations during active disasters
+-   **Recovery assistance** - targeting aid to communities with fewer economic resources for rebuilding
+-   **Long-term resilience planning** - addressing pre-existing vulnerabilities that compound disaster impacts and hinder recovery
 
 ## Conclusion
 

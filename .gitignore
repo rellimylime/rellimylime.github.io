@@ -38,5 +38,6 @@ yarn-error.log
 *.swo
 *~
 
-# Data
+# Blog Data
 posts/eds220-final/data/*
+posts/eds222-final/data/*

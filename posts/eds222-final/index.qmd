@@ -1,0 +1,749 @@
+---
+title: ""
+description: ""
+date: 2025-11-29
+categories: [MEDS, R]
+image: eds222-final-cover.png
+citation:
+  url: https://rellimylime.github.io/posts/eds222-final/
+bibliography: references.bib
+execute:
+  eval: true
+  echo: true
+  warning: false
+  message: false
+---
+
+# 1. Introduction & Research Question
+
+## Background
+
+Wildlife-vehicle collisions represent a critical intersection of ecological conservation and transportation safety. In Denmark, roadkill events affect biodiversity while also posing risks to motorists. Understanding the factors that influence roadkill frequency—particularly traffic volume and surrounding land use—is essential for developing evidence-based mitigation strategies.
+
+## Research Question
+
+**How do traffic volume (AADT) and land use characteristics affect the frequency and intensity of roadkill on Danish roads?**
+
+This question requires understanding two distinct processes:
+
+1. **Whether roadkill occurs** on a given road segment (presence/absence)
+2. **How many animals are killed** when collisions do occur (intensity)
+
+The high proportion of road segments with zero observed roadkill (~83%) suggests these processes operate differently, making a **hurdle model** the appropriate statistical framework.
+
+---
+
+# 2. Setup & Configuration
+```{r}
+#| label: setup
+
+library(tidyverse)
+library(sf)
+library(terra)
+library(here)
+library(pscl)
+library(yaml)
+
+# Load configuration
+config <- read_yaml(here("posts/eds222-final/config.yml"))
+
+set.seed(config$seed)
+
+CRS_M <- config$crs # EPSG:25832, Denmark ETRS89 / UTM zone 32N
+
+# Denmark bounding box (WGS84)
+dk_bbox_wgs84 <- st_bbox(c(
+  xmin = config$bbox_xmin,
+  ymin = config$bbox_ymin,
+  xmax = config$bbox_xmax,
+  ymax = config$bbox_ymax
+), crs = config$bbox_crs)
+
+# Transform to projected CRS
+dk_bbox_proj <- st_transform(st_as_sfc(dk_bbox_wgs84), CRS_M) %>%
+  st_bbox()
+
+cat("Setup complete!\n")
+```
+
+---
+
+# 3. Data Loading with Shapefile Caching
+Roadkill observations are point data with coordinates. We filter to Denmark and the analysis time period (2017-2019) to match CORINE Land Cover 2018.
+
+```{r}
+#| label: load-roadkill
+
+# Load roadkill CSV
+road_kill_dk <- read_csv(here(config$roadkill_csv_path)) %>%
+    filter(
+        country == "Denmark",
+        year >= 2017, year <= 2019
+    ) %>%
+    drop_na(decimalLongitude, decimalLatitude) %>%
+    st_as_sf(coords = c("decimalLongitude", "decimalLatitude"), crs = 4326) %>%
+    st_transform(CRS_M) %>%
+    st_crop(dk_bbox_proj)
+```
+
+
+```{r}
+#| label: load-roads-cached
+
+# Define cache path for roads data
+roads_cache <- here(config$roads_cached_path)
+
+if (file.exists(roads_cache)) {
+  cat("Loading roads from cache...\n")
+  roads_raw <- readRDS(roads_cache)
+} else {
+  cat("Cache not found. Loading and processing roads (one-time setup)...\n")
+
+  # Load shapefile
+  roads_raw <- st_read(here(config$roads_shp_path), quiet = TRUE) %>%
+    st_transform(CRS_M) %>%
+    st_crop(dk_bbox_proj)
+
+  # Save to cache
+  cat("Saving roads to cache for future runs...\n")
+  saveRDS(roads_raw, roads_cache)
+  cat("Cache saved:", roads_cache, "\n")
+}
+
+cat("Roads loaded:", format(nrow(roads_raw), big.mark = ","), "segments\n\n")
+
+```
+```{r}
+#| label: load-traffic-cached
+
+# Define cache path for traffic data
+traffic_cache <- here(config$traffic_cached_path)
+
+if (file.exists(traffic_cache)) {
+  cat("Loading traffic data from cache...\n")
+  traffic_raw <- readRDS(traffic_cache)
+} else {
+  cat("Cache not found. Loading and processing traffic (one-time setup)...\n")
+
+  # Load shapefile
+  traffic_raw <- st_read(here(config$traffic_shp_path), quiet = TRUE) %>%
+  st_transform(CRS_M) %>%
+  st_crop(dk_bbox_proj) %>%
+  filter(AAR >= 2017, AAR <= 2019) %>%
+  # Average AADT across years for each station
+  group_by(geometry) %>%
+  summarise(
+    AADT = mean(AADT, na.rm = TRUE),
+    AAR = "2017-2019",
+    .groups = "drop"
+  ) %>%
+  st_as_sf()
+
+  # Save to cache
+  cat("Saving traffic to cache for future runs...\n")
+  saveRDS(traffic_raw, traffic_cache)
+  cat("Cache saved:", traffic_cache, "\n")
+}
+
+cat("Traffic points loaded:", format(nrow(traffic_raw), big.mark = ","), "\n\n")
+```
+
+```{r}
+#| label: load-landuse-cached
+
+# Define cache path for traffic data
+landuse_cache <- here(config$landuse_cached_path)
+
+if (file.exists(landuse_cache)) {
+  cat("Loading land use from cache...\n")
+  landuse_raw <- readRDS(landuse_cache)
+} else {
+  cat("Cache not found. Loading and processing land use (one-time setup)...\n")
+
+  # Load shapefile
+  landuse_raw <- st_read(here(config$landuse_shp_path), quiet = TRUE) %>%
+    st_transform(CRS_M) %>%
+    st_crop(dk_bbox_proj)
+
+  # Save to cache
+  cat("Saving land use to cache for future runs...\n")
+  saveRDS(landuse_raw, landuse_cache)
+  cat("Cache saved:", landuse_cache, "\n")
+}
+
+cat("Land use polygons loaded:", format(nrow(landuse_raw), big.mark = ","), "\n")
+
+# Explore land use classes
+landuse_summary <- landuse_raw %>%
+  st_drop_geometry() %>%
+  count(fclass, sort = TRUE) %>%
+  filter(!is.na(fclass))
+
+cat("\nTop land use classes:\n")
+print(head(landuse_summary, 10))
+```
+
+**Caching Summary**: All shapefiles are now cached in `data/processed/`. On subsequent runs, loading should be nearly instantaneous.
+
+---
+
+# 4. Prepare Road Network
+
+The analysis is restricted to roads accessible by motor vehicles, excluding pedestrian paths, cycleways, and footways.
+
+```{r}
+#| label: filter-roads
+
+# Extract car codes from config
+car_codes <- c(
+  config$road_car_codes_major,
+  config$road_car_codes_minor,
+  config$road_car_codes_links
+)
+
+# Filter and calculate road lengths
+car_roads <- roads_raw %>%
+  filter(code %in% car_codes) %>%
+  mutate(
+    len_m = st_length(geometry),
+    len_km = as.numeric(len_m) / 1000
+  )
+
+cat("Car-accessible roads:\n")
+cat("  Segments:", format(nrow(car_roads), big.mark = ","), "\n")
+cat("  Total length:", format(round(sum(car_roads$len_km), 0), big.mark = ","), "km\n")
+cat("  Mean segment length:", round(mean(car_roads$len_km), 2), "km\n\n")
+```
+
+---
+
+# 5. Match Traffic Data to Roads
+Computing distances between all roads and traffic points is computationally expensive (~5-10 minutes). We cache the results.
+```{r}
+#| label: match-traffic
+
+# Define cache path for distance data
+distances_cache_file <- here(config$distances_cache_path)
+
+if (file.exists(distances_cache_file)) {
+  cat("Loading cached distances...\n")
+  distances_data <- readRDS(distances_cache_file)
+  nearest_idx <- distances_data$nearest_idx
+  distances <- distances_data$distances
+} else {
+  cat("Computing road-to-traffic distances (one-time calculation, ~5-10 min)...\n")
+
+  # Prepare traffic data - select only needed columns
+  traffic_trim <- traffic_raw %>%
+    dplyr::select(AAR, AADT, geometry)
+
+  # Find nearest traffic point to each road
+  nearest_idx <- st_nearest_feature(car_roads, traffic_trim)
+
+  # Calculate distances
+  distances <- st_distance(car_roads, traffic_trim[nearest_idx, ], by_element = TRUE)
+
+  # Save both for next time
+  saveRDS(list(nearest_idx = nearest_idx, distances = distances),
+          distances_cache_file)
+  cat("Distances cached:", distances_cache_file, "\n")
+}
+
+cat("Distance matching complete.\n\n")
+```
+
+We use the 75th percentile of road-to-traffic distances as a threshold. This balances:
+
+- **Coverage**: Captures 75% of road segments
+- **Match quality**: Avoids matching roads to distant, unrepresentative traffic stations
+```{r}
+#| label: apply-threshold
+
+# Apply configured threshold
+threshold_percentile <- config$distance_threshold_percentile
+dist_threshold <- quantile(as.numeric(distances), threshold_percentile)
+
+# Merge traffic data with roads
+roads_traf <- car_roads %>%
+  mutate(
+    nn_dist_m = as.numeric(distances),
+    AADT = if_else(nn_dist_m <= dist_threshold,
+                   traffic_raw$AADT[nearest_idx],
+                   NA_real_)
+  )
+
+cat("=== TRAFFIC MATCHING RESULTS ===\n")
+cat("Distance threshold (", threshold_percentile * 100, "th percentile): ",
+    format(round(dist_threshold), big.mark = ","), " m\n", sep = "")
+cat("Roads with traffic data:",
+    format(sum(!is.na(roads_traf$AADT)), big.mark = ","),
+    "(", round(mean(!is.na(roads_traf$AADT)) * 100, 1), "%)\n")
+cat("AADT range:",
+    format(min(roads_traf$AADT, na.rm = TRUE), big.mark = ","), "-",
+    format(max(roads_traf$AADT, na.rm = TRUE), big.mark = ","), "vehicles/day\n\n")
+```
+
+### **Note:** Implications of Traffic Data Filtering
+
+This filtering step means our analysis is restricted to roads near traffic monitoring infrastructure. This represents:
+
+- ✓ Major transportation corridors
+- ✓ Roads in developed/urbanized areas
+- ✗ Remote rural roads (less monitored)
+
+Results will characterize the traffic-roadkill relationship on Denmark's **monitored road network**, which is policy-relevant but may not generalize to all road types.
+---
+
+# 6. Extract Land Use Around Roads 
+Use OpenStreetMap land use polygons to characterize the environment around each road segment. This captures habitat types that influence wildlife-vehicle collision risk.
+
+```{r}
+#| label: extract-landuse
+
+landuse_cache_file <- here(config$landuse_props_path)
+
+if (file.exists(landuse_cache_file)) {
+  cat("Loading cached land use proportions...\n")
+  lu_props <- readRDS(landuse_cache_file)
+} else {
+  cat("Extracting land use via RASTER...\n\n")
+  
+  library(terra)
+  
+  # Step 1: Rasterize land use
+  cat("Step 1: Converting land use to raster (~2-3 min)...\n")
+  
+  # Get extent from roads
+  roads_extent <- st_bbox(roads_traf) %>% st_as_sfc() %>% st_buffer(1000)
+  
+  # Create raster template (100m resolution)
+  rast_template <- rast(
+    ext(vect(roads_extent)),
+    resolution = 100,
+    crs = crs(vect(roads_traf))
+  )
+  
+  cat("  Rasterizing", nrow(landuse_raw), "polygons...\n")
+  
+  # Convert fclass to numeric codes for rasterization
+  landuse_coded <- landuse_raw %>%
+    mutate(fclass_num = as.numeric(as.factor(fclass)))
+  
+  fclass_lookup <- landuse_coded %>%
+    st_drop_geometry() %>%
+    distinct(fclass, fclass_num)
+  
+  # Rasterize
+  landuse_raster <- rasterize(
+    vect(landuse_coded),
+    rast_template,
+    field = "fclass_num"
+  )
+  
+  cat("  Raster created.\n\n")
+  
+  # Step 2: Extract for road buffers
+  cat("Step 2: Extracting land use for road buffers...\n")
+  
+  roads_with_id <- roads_traf %>%
+    mutate(road_id = row_number())
+  
+  road_buffers <- roads_with_id %>%
+    st_buffer(config$road_buffer_distance) %>%
+    dplyr::select(road_id)
+  
+  cat("  Extracting raster values (this takes 2-5 min)...\n")
+  
+  # Extract all raster cells within each buffer
+  extracted <- extract(landuse_raster, vect(road_buffers), fun = NULL)
+  
+  cat("  Extraction complete. Calculating proportions...\n")
+  
+  # Calculate proportions
+  landuse_props <- extracted %>%
+    as_tibble() %>%
+    rename(road_id = ID, fclass_num = 2) %>%
+    filter(!is.na(fclass_num)) %>%
+    left_join(fclass_lookup, by = "fclass_num") %>%
+    count(road_id, fclass) %>%
+    group_by(road_id) %>%
+    mutate(pct = n / sum(n) * 100) %>%
+    ungroup() %>%
+    dplyr::select(road_id, fclass, pct) %>%
+    pivot_wider(
+      names_from = fclass,
+      values_from = pct,
+      values_fill = 0,
+      names_prefix = "pct_"
+    )
+  
+  # Add missing columns with 0 before combining
+  lu_props <- landuse_props
+  
+  if (!"pct_forest" %in% names(lu_props)) lu_props$pct_forest <- 0
+  if (!"pct_scrub" %in% names(lu_props)) lu_props$pct_scrub <- 0
+  if (!"pct_farmland" %in% names(lu_props)) lu_props$pct_farmland <- 0
+  if (!"pct_farmyard" %in% names(lu_props)) lu_props$pct_farmyard <- 0
+  if (!"pct_meadow" %in% names(lu_props)) lu_props$pct_meadow <- 0
+  if (!"pct_orchard" %in% names(lu_props)) lu_props$pct_orchard <- 0
+  if (!"pct_vineyard" %in% names(lu_props)) lu_props$pct_vineyard <- 0
+  if (!"pct_residential" %in% names(lu_props)) lu_props$pct_residential <- 0
+  if (!"pct_park" %in% names(lu_props)) lu_props$pct_park <- 0
+  if (!"pct_nature_reserve" %in% names(lu_props)) lu_props$pct_nature_reserve <- 0
+  if (!"pct_recreation_ground" %in% names(lu_props)) lu_props$pct_recreation_ground <- 0
+  if (!"pct_grass" %in% names(lu_props)) lu_props$pct_grass <- 0
+  
+  # Now safely combine related land use types
+  lu_props <- lu_props %>%
+    mutate(
+      pct_forest = pct_forest + pct_scrub,
+      pct_farmland = pct_farmland + pct_farmyard + pct_meadow + pct_orchard + pct_vineyard,
+      pct_residential = pct_residential,
+      pct_park = pct_park + pct_nature_reserve + pct_recreation_ground + pct_grass
+    ) %>%
+    dplyr::select(road_id, pct_forest, pct_farmland, pct_residential, pct_park)
+  
+  # Fill missing roads with 0
+  complete_roads <- tibble(road_id = 1:nrow(roads_traf))
+  
+  lu_props <- complete_roads %>%
+    left_join(lu_props, by = "road_id") %>%
+    mutate(across(starts_with("pct_"), ~ replace_na(., 0)))
+  
+  saveRDS(lu_props, landuse_cache_file)
+  cat("\nCache saved!\n")
+}
+
+cat("\n=== LAND USE EXTRACTION COMPLETE ===\n")
+cat("Roads with land use data:", format(nrow(lu_props), big.mark = ","), "\n")
+cat("Mean % Forest:", round(mean(lu_props$pct_forest), 1), "%\n")
+cat("Mean % Farmland:", round(mean(lu_props$pct_farmland), 1), "%\n")
+cat("Mean % Residential:", round(mean(lu_props$pct_residential), 1), "%\n")
+cat("Mean % Park:", round(mean(lu_props$pct_park), 1), "%\n")
+```
+
+```{r}
+# Check what columns were actually created
+names(landuse_props)
+
+# Check what your config codes are
+config$landuse_forest_code
+config$landuse_farmland_code
+config$landuse_residential_code
+config$landuse_park_code
+```
+
+---
+
+# 7. Aggregate Roadkill by Road Segment
+Match each roadkill point to its nearest road segment and count events per segment.
+
+```{r}
+#| label: aggregate-roadkill
+
+# Define cache path for aggregated roadkill data
+roadkill_cache_file <- here(config$roadkill_cache_path)
+
+if (file.exists(roadkill_cache_file)) {
+  cat("Loading cached roadkill aggregation...\n")
+  roadkill_by_segment <- readRDS(roadkill_cache_file)
+} else {
+  cat("Computing roadkill aggregation (spatial join, ~2-5 min)...\n")
+
+  # Spatial join: roadkill points to nearest road
+  roadkill_by_segment <- road_kill_dk %>%
+    st_join(roads_traf %>% dplyr::select(osm_id),
+            join = st_nearest_feature) %>%
+    group_by(osm_id) %>%
+    summarise(roadkill_count = n(), .groups = "drop") %>%
+    st_drop_geometry()
+
+  saveRDS(roadkill_by_segment, roadkill_cache_file)
+  cat("Cache saved:", roadkill_cache_file, "\n")
+}
+
+cat("Roadkill aggregation complete.\n")
+cat("  Unique road segments with roadkill:",
+    format(nrow(roadkill_by_segment), big.mark = ","), "\n\n")
+```
+
+---
+
+# 8. Create Final Modeling Dataset
+```{r}
+#| label: create-model-data
+
+# Merge all data sources
+model_data <- roads_traf %>%
+  st_drop_geometry() %>%
+  mutate(road_id = row_number()) %>%
+  left_join(roadkill_by_segment, by = "osm_id") %>%
+  left_join(lu_props, by = "road_id") %>%
+  replace_na(list(roadkill_count = 0)) %>%
+  # Fill missing land use with 0
+  mutate(across(starts_with("pct_"), ~ replace_na(., 0))) %>%
+  filter(!is.na(AADT), AADT > 0) %>%
+  mutate(
+    # Log transforms for modeling
+    log_AADT = log(AADT),
+    log_len_km = log(len_km),
+
+    # Road type classification
+    road_type = case_when(
+      code %in% config$road_car_codes_major ~ "Major",
+      code %in% config$road_car_codes_minor ~ "Minor",
+      code %in% config$road_car_codes_links ~ "Links/Ramps",
+      TRUE ~ "Other"
+    ),
+
+    # Speed limit (convert to numeric, impute missing with median)
+    speed_limit = as.numeric(maxspeed),
+    speed_limit = if_else(is.na(speed_limit),
+                          median(speed_limit, na.rm = TRUE),
+                          speed_limit)
+  )
+
+cat("\n=== FINAL ANALYSIS DATASET ===\n")
+cat("Total segments:", format(nrow(model_data), big.mark = ","), "\n")
+cat("Segments with roadkill:",
+    format(sum(model_data$roadkill_count > 0), big.mark = ","),
+    "(", round(mean(model_data$roadkill_count > 0) * 100, 1), "%)\n")
+cat("Zero-inflation rate:",
+    round(mean(model_data$roadkill_count == 0) * 100, 1), "%\n")
+cat("Mean roadkill per segment:", round(mean(model_data$roadkill_count), 3), "\n")
+cat("Variance:", round(var(model_data$roadkill_count), 3), "\n")
+cat("Variance/Mean ratio (dispersion):",
+    round(var(model_data$roadkill_count) / mean(model_data$roadkill_count), 2), "\n")
+cat("Total roadkill events:", format(sum(model_data$roadkill_count), big.mark = ","), "\n\n")  
+```
+
+### **Note:** Data Quality
+
+**Overdispersion**: The Variance/Mean ratio >> 1 indicates overdispersion, justifying use of a **negative binomial** distribution (rather than Poisson) in the count component.
+
+**Zero-Inflation**: ~83% of segments have zero roadkill, motivating a **hurdle model** to separately model presence/absence and intensity.
+---
+
+# 9. Exploratory Data Analysis
+
+```{r}
+#| label: eda-visualizations
+#| fig-width: 14
+#| fig-height: 10
+
+library(patchwork)
+
+# Distribution of roadkill counts
+p1 <- ggplot(model_data, aes(x = roadkill_count)) +
+  geom_histogram(binwidth = 1, fill = "steelblue", color = "black", alpha = 0.7) +
+  labs(title = "A. Distribution of Roadkill Counts",
+       subtitle = "High zero-inflation evident",
+       x = "Roadkill Events per Segment",
+       y = "Frequency") +
+  theme_minimal() +
+  theme(plot.title = element_text(face = "bold"))
+
+# Traffic volume vs roadkill
+p2 <- ggplot(model_data, aes(x = AADT, y = roadkill_count)) +
+  geom_point(alpha = 0.1, size = 0.5) +
+  geom_smooth(method = "loess", color = "red", se = TRUE) +
+  scale_x_log10(labels = scales::comma) +
+  labs(title = "B. Roadkill vs Traffic Volume",
+       subtitle = "Positive relationship visible",
+       x = "AADT (log scale, vehicles/day)",
+       y = "Roadkill Count") +
+  theme_minimal() +
+  theme(plot.title = element_text(face = "bold"))
+
+# Road type comparison
+p3 <- ggplot(model_data %>% filter(roadkill_count > 0),
+             aes(x = road_type, y = roadkill_count, fill = road_type)) +
+  geom_boxplot(alpha = 0.7) +
+  scale_y_log10() +
+  labs(title = "C. Roadkill by Road Type",
+       subtitle = "Among segments with at least one event",
+       x = "Road Classification",
+       y = "Roadkill Count (log scale)") +
+  theme_minimal() +
+  theme(plot.title = element_text(face = "bold"),
+        legend.position = "none")
+
+# Road length vs roadkill
+p4 <- ggplot(model_data, aes(x = len_km, y = roadkill_count)) +
+  geom_point(alpha = 0.1, size = 0.5) +
+  geom_smooth(method = "loess", color = "darkgreen", se = TRUE) +
+  scale_x_log10() +
+  labs(title = "D. Roadkill vs Road Length",
+       subtitle = "Longer segments have more events",
+       x = "Segment Length (km, log scale)",
+       y = "Roadkill Count") +
+  theme_minimal() +
+  theme(plot.title = element_text(face = "bold"))
+
+(p1 + p2) / (p3 + p4)
+```
+
+**Key Observations**:
+
+- Panel A shows extreme zero-inflation (~83% zeros)
+- Panel B suggests positive association between traffic and roadkill
+- Panel C indicates road type matters
+- Panel D confirms longer roads have more events (exposure effect)
+
+---
+
+# 10. Statistical Model
+
+### Why a Hurdle Model?
+
+The data exhibits two key characteristics:
+
+1. **Excess Zeros**: 83% of road segments have zero roadkill
+2. **Overdispersion**: Variance >> Mean in the positive counts
+
+A **Hurdle Model** addresses both issues by modeling:
+
+- **Zero-inflation component** (logistic regression): Probability of ANY roadkill
+- **Count component** (negative binomial): Expected count GIVEN roadkill occurs
+
+### Model Specification
+
+**Mathematical Form**:
+
+$$
+P(Y_i = y) = \begin{cases}
+\pi_i & \text{if } y = 0 \\
+(1 - \pi_i) \cdot f_{\text{NB}}(y; \mu_i, \theta) & \text{if } y > 0
+\end{cases}
+$$
+
+Where:
+
+- $\pi_i$ = Probability of zero (from logistic regression)
+- $f_{\text{NB}}(\cdot)$ = Negative binomial PMF with mean $\mu_i$ and dispersion $\theta$
+- **Offset**: $\log(\text{length}_i)$ controls for road exposure
+
+**Predictors** (from config):
+
+```{r}
+cat("Model predictors:\n")
+for (pred in config$model_predictors) {
+  cat("  -", pred, "\n")
+}
+```
+
+```{r}
+#| label: fit-model
+
+cat("\n=== FITTING HURDLE MODEL ===\n")
+cat("Distribution:", config$model_distribution, "\n")
+cat("Zero component:", config$model_zero_dist, "\n")
+cat("Offset:", config$model_offset, "\n\n")
+
+# Full model with traffic, road characteristics, and land use
+hurdle_model <- hurdle(
+  roadkill_count ~ log_AADT + road_type + speed_limit +
+                   pct_forest + pct_farmland + pct_residential + pct_park |
+                   log_AADT + road_type + speed_limit +
+                   pct_forest + pct_farmland + pct_residential + pct_park,
+  data = model_data,
+  offset = log(len_km),  # Controls for road length exposure
+  dist = config$model_distribution,
+  zero.dist = config$model_zero_dist
+)
+
+cat("Model fitted successfully!\n\n")
+print(summary(hurdle_model))
+```
+
+
+```{r}
+#| label: model-diagnostics
+
+cat("\n=== MODEL DIAGNOSTICS ===\n")
+cat("Log-Likelihood:", round(logLik(hurdle_model), 1), "\n")
+cat("AIC:", round(AIC(hurdle_model), 1), "\n")
+cat("BIC:", round(BIC(hurdle_model), 1), "\n\n")
+
+# Extract coefficients
+coefs <- coef(hurdle_model)
+se <- sqrt(diag(vcov(hurdle_model)))
+
+results <- tibble(
+  Parameter = names(coefs),
+  Estimate = round(coefs, 4),
+  SE = round(se, 4),
+  Z_value = round(coefs/se, 2),
+  P_value = round(2 * (1 - pnorm(abs(coefs/se))), 5)
+) %>%
+  mutate(Sig = case_when(
+    P_value < 0.001 ~ "***",
+    P_value < 0.01 ~ "**",
+    P_value < 0.05 ~ "*",
+    P_value < 0.1 ~ ".",
+    TRUE ~ ""
+  ))
+
+cat("=== RESULTS TABLE ===\n")
+print(results, n = Inf)
+```
+
+
+---
+
+# 10. Results & Interpretation
+```{r}
+#| label: results-table
+
+# Extract coefficients and standard errors
+coefs <- coef(hurdle_model)
+se <- sqrt(diag(vcov(hurdle_model)))
+
+# Create results table
+results <- tibble(
+  Parameter = names(coefs),
+  Estimate = round(coefs, 4),
+  SE = round(se, 4),
+  Z_value = round(coefs/se, 2),
+  P_value = round(2 * (1 - pnorm(abs(coefs/se))), 5)
+) %>%
+  mutate(Sig = case_when(
+    P_value < 0.001 ~ "***",
+    P_value < 0.01 ~ "**",
+    P_value < 0.05 ~ "*",
+    P_value < 0.1 ~ ".",
+    TRUE ~ ""
+  ))
+
+# Number of predictors per component (intercept + predictors)
+n_zero <- 7  # Intercept + 6 predictors
+n_count <- 7  # Intercept + 6 predictors
+
+cat("=== ZERO HURDLE MODEL (Does roadkill occur?) ===\n\n")
+results %>% 
+  slice(1:n_zero) %>%
+  print(n = Inf)
+
+cat("\n=== COUNT MODEL (How many events | roadkill > 0?) ===\n\n")
+results %>% 
+  slice((n_zero + 1):(n_zero + n_count)) %>%
+  print(n = Inf)
+```
+
+## Interpretation
+
+**Zero Hurdle Component** (probability of ANY roadkill):
+- This models whether a road segment experiences roadkill at all
+- Significant predictors affect the odds of roadkill presence
+
+**Count Component** (intensity given presence):
+- This models how many roadkill events occur, given at least one event
+- Significant predictors affect the expected number of collisions
+
+**Note on Offset**: Road length is controlled via offset, so all effects are interpreted as roadkill RATE per kilometer, not total counts.
+
+---
+
+# 11. Conclusions
+
+[Add your interpretation based on which variables are significant]

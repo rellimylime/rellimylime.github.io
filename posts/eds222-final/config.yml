@@ -1,0 +1,116 @@
+# EDS 222 Final Project Configuration
+# Traffic, Land Use, and Roadkill in Denmark
+# Author: Miller
+# Last Updated: 2025-11-29
+
+#base_path: '/' (Modify this to your local project path)
+base_path: '/home/user/ermil/Documents/MEDS/rellimylime.github.io/posts/eds222-final'
+
+# Project specs
+crs: 25832  # Denmark ETRS89 / UTM zone 32N
+time_period: '2017-2019'
+seed: 42
+
+# Denmark Bounding Box (WGS84)
+bbox_xmin: 8.07
+bbox_ymin: 54.56
+bbox_xmax: 15.25
+bbox_ymax: 57.75
+bbox_crs: 4326
+
+# ============================================================================
+# RAW DATA
+# ============================================================================
+
+# Roadkill Data
+roadkill_csv_path: 'data/raw/Global Roadkill data.csv' # from Global Roadkill Database; filter to Denmark 2017-2019
+
+# Road Network
+roads_shp_path: 'data/raw/OSM_dk_roads_shp/gis_osm_roads_free_1.shp' # from OpenStreetMap via Geofabrik
+road_car_codes_major: [5111, 5112, 5113, 5114, 5115] # motorway, trunk, primary, secondary, tertiary
+road_car_codes_minor: [5121, 5122, 5123] # unclassified, residential, service
+road_car_codes_links: [5131, 5132, 5133, 5134, 5135] # ramps/connectors
+
+# Traffic Data
+traffic_shp_path: 'data/raw/ODN_dk_traffic_shp/OPEN_DATA_NOEGLETAL_VIEWPoint.shp' # from Vejdirektoratet (Danish Road Directorate)
+ 
+# Land Use (OSM)
+landuse_shp_path: 'data/raw/OSM_dk_landuse_shp/gis_osm_landuse_a_free_1.shp' # from OpenStreetMap via Geofabrik
+
+# OSM Land Use Classification Codes (fclass field)
+landuse_forest_code: 7201  # Forest - wildlife habitat
+landuse_farmland_code: 7228  # Farmland - agricultural areas
+landuse_residential_code: 7203  # Residential - urban development
+landuse_park_code: 7202  # Park - protected areas
+landuse_nature_reserve_code: 7210  # Nature reserve - protected areas
+
+# ============================================================================
+# PROCESSED DATA (CACHED)
+# ============================================================================
+
+# Cached Shapefiles (reprojected to EPSG:25832)
+roads_cached_path: 'data/processed/roads_dk_epsg25832.rds' # Cached roads (cropped & reprojected)
+traffic_cached_path: 'data/processed/traffic_dk_epsg25832.rds' # Cached traffic points (cropped & reprojected)
+landuse_cached_path: 'data/processed/landuse_dk_epsg25832.rds' # Cached land use polygons (cropped & reprojected)
+
+# Distance Calculations
+distances_cache_path: 'data/processed/distances_cache_2017_2019.rds' # Road-to-traffic distances and nearest neighbor indices
+distance_threshold_percentile: 0.75 # Use 75th percentile for traffic matching
+
+# Spatial Joins & Aggregations
+roadkill_cache_path: 'data/processed/roadkill_by_segment_2017_2019.rds' # Roadkill counts aggregated by road segment
+
+# Land Use Extraction (OSM)
+landuse_props_path: 'data/processed/landuse_props_2017_2019.rds' # Land use proportions within 500m road buffers
+road_buffer_distance: 500 # meters for land use buffer around roads
+
+# ============================================================================
+# MODEL PARAMETERS
+# ============================================================================
+
+# Model Configuration
+model_type: 'hurdle'
+model_distribution: 'negbin' # Negative binomial for count component
+model_zero_dist: 'binomial' # Logistic for zero-inflation component
+model_offset: 'log(len_km)' # Control for road length exposure
+
+# Model Predictors
+model_predictors:
+  - 'log_AADT'
+  - 'road_type'
+  - 'speed_limit'
+  - 'pct_forest'
+  - 'pct_farmland'
+  - 'pct_residential'
+  - 'pct_park'
+
+# ============================================================================
+# OUTPUT
+# ============================================================================
+
+# Figures (not yet implemented - add paths as needed)
+# figure_1_path: 'output/figure_1_eda.png'
+# figure_2_path: 'output/figure_2_model_results.png'
+ 
+# ============================================================================
+# NOTES
+# ============================================================================
+
+# Data Management:
+# - Raw data in data/raw/ (gitignored, too large for version control)
+# - Processed/cached data in data/processed/ (gitignored, auto-generated)
+# - All cached files regenerated automatically if missing
+# - Store raw data on Google Drive or institutional storage
+
+# Reproducibility:
+# - R version 4.x
+# - Key packages: tidyverse, sf, terra, here, pscl, yaml, patchwork
+# - Run eds222-analysis-scaled.qmd to regenerate all caches
+
+# Citations:
+# - Roadkill: Global Roadkill Database
+# - Roads/Landuse: OpenStreetMap via Geofabrik
+# - Traffic: Vejdirektoratet (Danish Road Directorate)
+# - Model: Zeileis et al. (2008) pscl package
+
+ 

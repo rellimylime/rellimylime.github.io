@@ -103,7 +103,6 @@ crs_data = {
     'Dataset': ['Eaton Fire', 'Palisades Fire'],
     'CRS Code': [eaton.crs.to_authority()[1] if eaton.crs.to_authority() else 'N/A',
                  palisades.crs.to_authority()[1] if palisades.crs.to_authority() else 'N/A'],
-    'CRS Name': [eaton.crs.name, palisades.crs.name],
     'Projection Type': ['Geographic' if eaton.crs.is_geographic else 'Projected',
                        'Geographic' if palisades.crs.is_geographic else 'Projected']
 }

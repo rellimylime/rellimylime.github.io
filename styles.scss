@@ -1,31 +1,57 @@
+
 /*-- scss:defaults --*/
 
-// Import Google Fonts - Clean & Elegant
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Crimson+Text:wght@400;600&display=swap');
+// Import Google Fonts - Mix of modern, elegant, and playful
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
 
-// SCSS Variables - Sophisticated Color Palette
-$header-font: 'Crimson Text', serif;
-$body-font: 'Crimson Pro', serif;
+// SCSS Variables - Vibrant, Nature-Inspired, Tech-Artistic Palette
+$header-font: 'Libre Baskerville', serif;      // Elegant, readable serif
+$body-font: 'Space Grotesk', sans-serif;       // Modern, geometric sans
+$mono-font: 'JetBrains Mono', monospace;       // Code-inspired
 
-$primary-color: #464843;     // Ink black-green
-$secondary-color: #5387C2;   // Accent blue
-$accent-color: #D2B491;      // Soft sand/tan
-$sage-color: #85908D;        // Sage green
-$sky-color: #9CC0D4;         // Blue sky
-$bg-cream: #F7F7F2;          // Very soft white-cream
-$text-dark: #2a2a2a;
-$text-mid: #686661;
+// Color Palette - Environmentalist + Designer + Coder vibes
+$forest-teal: #2A9D8F;        // Nature + tech cyan
+$warm-coral: #E76F51;         // Artistic sunset coral
+$golden-sun: #F4A261;         // Optimistic golden yellow
+$deep-purple: #6A4C93;        // Creative + code purple
+$sage-green: #8AB17D;         // Calming nature green
+$sky-blue: #4ECDC4;           // Bright creative blue
+$earth-brown: #8B6F47;        // Grounding earth tone
+
+$bg-warm: #FFFEF9;            // Warm off-white
+$bg-light: #FFF9F0;           // Slightly peachy white
+$text-dark: #2B2D42;          // Deep navy-charcoal
+$text-mid: #5A5A5A;
 
 /*-- scss:rules --*/
 
-// Base Styles
+// ========================================
+// BASE STYLES - Clean foundation with personality
+// ========================================
 body {
-  background: $bg-cream;
+  background: $bg-warm;
   font-family: $body-font;
   font-size: 1.05rem;
   font-weight: 400;
   color: $text-dark;
-  line-height: 1.6;
+  line-height: 1.7;
+  position: relative;
+}
+
+// Subtle background pattern for texture
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.03;
+  background-image:
+    repeating-linear-gradient(45deg, transparent, transparent 35px, $forest-teal 35px, $forest-teal 37px),
+    repeating-linear-gradient(-45deg, transparent, transparent 35px, $warm-coral 35px, $warm-coral 37px);
+  z-index: -1;
+  pointer-events: none;
 }
 
 main, section, .block-section {
@@ -34,252 +60,380 @@ main, section, .block-section {
   color: $text-dark;
 }
 
-// Max width for content - creates nice centered layout
+// Scattered layout - not rigid grid
 .page-layout main {
   max-width: 100%;
   padding: 0;
 }
 
-// Navigation Styles - Clean & Simple
+// ========================================
+// NAVIGATION - Playful but clean
+// ========================================
 .navbar {
-  background: $bg-cream !important;
-  border-bottom: 1px solid rgba($primary-color, 0.1);
-  box-shadow: none;
-  padding: 0.75rem 0;
+  background: rgba($bg-warm, 0.95) !important;
+  border-bottom: 3px solid transparent;
+  border-image: linear-gradient(90deg, $forest-teal, $warm-coral, $golden-sun, $deep-purple) 1;
+  box-shadow: 0 2px 12px rgba($forest-teal, 0.08);
+  padding: 0.85rem 0;
+  backdrop-filter: blur(10px);
 }
 
 .navbar-brand {
   font-family: $header-font !important;
-  color: $primary-color !important;
-  font-weight: 600;
-  font-size: 1.5rem;
-  letter-spacing: 0.5px;
+  color: $text-dark !important;
+  font-weight: 700;
+  font-size: 1.6rem;
+  letter-spacing: -0.5px;
+  position: relative;
+  transition: all 0.3s ease;
+
+  // Playful underline accent
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(90deg, $forest-teal, $warm-coral);
+    transition: width 0.3s ease;
+  }
+
+  &:hover::after {
+    width: 100%;
+  }
 }
 
 .navbar-nav {
+  gap: 0.3rem;
+
   .nav-link {
     font-size: 0.95rem;
     font-family: $body-font;
-    font-weight: 400;
-    color: $primary-color !important;
+    font-weight: 500;
+    color: $text-dark !important;
     letter-spacing: 0.3px;
     background: none !important;
-    border-radius: 0;
-    padding: 0.5em 1em !important;
-    transition: color 0.2s;
-    
-    &:hover, &.active {
-      color: $secondary-color !important;
-      background: none !important;
+    border-radius: 0.4em;
+    padding: 0.6em 1em !important;
+    transition: all 0.3s ease;
+    position: relative;
+
+    // Scattered color accents on hover
+    &:hover {
+      color: $warm-coral !important;
+      background: rgba($warm-coral, 0.08) !important;
+      transform: translateY(-2px);
+    }
+
+    &.active {
+      color: $forest-teal !important;
+      background: rgba($forest-teal, 0.1) !important;
+      font-weight: 600;
     }
   }
 }
 
 .dropdown-menu {
-  background: $bg-cream !important;
-  border: 1px solid rgba($primary-color, 0.15);
-  border-radius: 0.4em;
+  background: $bg-light !important;
+  border: 2px solid $golden-sun;
+  border-radius: 0.6em;
+  box-shadow: 0 4px 20px rgba($deep-purple, 0.15);
 }
 
 .dropdown-item {
-  color: $primary-color !important;
+  color: $text-dark !important;
   font-family: $body-font;
-  
+  transition: all 0.2s ease;
+  border-left: 3px solid transparent;
+
   &:hover {
-    background: rgba($secondary-color, 0.08) !important;
-    color: $secondary-color !important;
+    background: linear-gradient(90deg, rgba($forest-teal, 0.1), transparent) !important;
+    color: $forest-teal !important;
+    border-left-color: $forest-teal;
+    padding-left: 1.5rem;
   }
 }
 
-// Hero/Title Section
+// ========================================
+// TYPOGRAPHY - Artistic hierarchy
+// ========================================
 .quarto-title-block {
   background: transparent;
-  color: $primary-color;
-  padding: 2rem 0 1.5rem 0;
+  color: $text-dark;
+  padding: 2.5rem 0 1.5rem 0;
   border-radius: 0;
   border-bottom: none;
 }
 
 h1.title {
   font-family: $header-font !important;
-  font-size: 2.2rem;
-  font-weight: 600;
-  color: $primary-color !important;
-  letter-spacing: 0px;
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: $text-dark !important;
+  letter-spacing: -1px;
   margin-bottom: 0.5em;
   border: none;
   padding-left: 0;
+  position: relative;
+
+  // Artistic accent mark
+  &::before {
+    content: '//';
+    position: absolute;
+    left: -2.5rem;
+    top: 0;
+    font-family: $mono-font;
+    font-size: 1.2rem;
+    color: $warm-coral;
+    opacity: 0.6;
+  }
 }
 
 .subtitle {
   font-family: $body-font;
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 400;
   color: $text-mid;
   margin-bottom: 0;
+  font-style: italic;
 }
 
-// Typography
+// Headers - Mix of styles
 h2, h3, h4, h5, h6 {
   font-family: $header-font !important;
-  font-weight: 600;
-  color: $primary-color !important;
-  letter-spacing: 0.2px;
+  font-weight: 700;
+  color: $text-dark !important;
+  letter-spacing: -0.3px;
   background: none !important;
   text-transform: none;
   border-left: none;
   padding-left: 0;
-  margin-top: 1.5em;
+  margin-top: 2em;
   margin-bottom: 0.8em;
+  position: relative;
 }
 
 h2 {
-  font-size: 1.6rem;
-  border-bottom: 1px solid rgba($secondary-color, 0.3);
-  padding-bottom: 0.5em;
+  font-size: 2rem;
+  border-left: 5px solid $forest-teal;
+  padding-left: 1rem;
+  background: linear-gradient(90deg, rgba($forest-teal, 0.08), transparent) !important;
+  padding-top: 0.3em;
+  padding-bottom: 0.3em;
+  margin-left: -1rem;
 }
 
 h3 {
-  font-size: 1.3rem;
+  font-size: 1.5rem;
+  color: $deep-purple !important;
+
+  // Fun code-style comment marker
+  &::before {
+    content: '/* ';
+    font-family: $mono-font;
+    font-size: 0.8em;
+    color: $warm-coral;
+    opacity: 0.5;
+  }
+
+  &::after {
+    content: ' */';
+    font-family: $mono-font;
+    font-size: 0.8em;
+    color: $warm-coral;
+    opacity: 0.5;
+  }
+}
+
+h4 {
+  font-size: 1.2rem;
+  color: $warm-coral !important;
+  font-family: $body-font !important;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.95rem;
 }
 
 p, li, .block-section, .column {
   font-family: $body-font !important;
   font-weight: 400;
-  line-height: 1.65;
+  line-height: 1.8;
 }
 
 p {
-  margin-bottom: 1.2em;
+  margin-bottom: 1.3em;
 }
 
+// Links - Playful and colorful
 a {
-  color: $secondary-color;
-  text-decoration: underline;
+  color: $forest-teal;
+  text-decoration: none;
   font-weight: 500;
-  transition: color 0.2s;
-  
+  position: relative;
+  transition: all 0.2s ease;
+  border-bottom: 2px solid rgba($forest-teal, 0.3);
+
   &:hover {
-    color: $primary-color;
+    color: $warm-coral;
+    border-bottom-color: $warm-coral;
   }
 }
 
-// Cards and Sections - Clean & Minimal
+// ========================================
+// ARTISTIC ELEMENTS - Scattered & Organic
+// ========================================
 .block-section, .card, .art-item, .blog-post, .service-card, .research-item {
   background: transparent;
   border: none;
   border-radius: 0;
   box-shadow: none;
   padding: 0;
-  margin-bottom: 1.5em;
+  margin-bottom: 2em;
 }
 
+// Artistic card styling
 .card {
-  border: 1px solid rgba($primary-color, 0.1);
-  padding: 1.2rem;
-  border-radius: 0.3em;
-  background: rgba($bg-cream, 0.5);
-}
-
-.artsy-highlight {
-  color: $secondary-color;
-  background: none;
-  font-weight: 600;
-  border-bottom: none;
+  border: 2px solid transparent;
+  border-image: linear-gradient(135deg, $golden-sun, $sky-blue, $sage-green) 1;
+  padding: 1.5rem;
   border-radius: 0;
+  background: linear-gradient(135deg, rgba($golden-sun, 0.03), rgba($sky-blue, 0.03));
+  position: relative;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: rotate(-0.5deg) translateY(-4px);
+    box-shadow: 8px 8px 0 rgba($warm-coral, 0.15);
+  }
+
+  // Corner accent
+  &::before {
+    content: '●';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    font-size: 1.5rem;
+    color: $warm-coral;
+  }
 }
 
-// Images - Proper spacing
+// Highlighted text with artistic flair
+.artsy-highlight {
+  color: $warm-coral;
+  background: linear-gradient(120deg, rgba($golden-sun, 0.2), rgba($warm-coral, 0.2));
+  font-weight: 600;
+  padding: 0.2em 0.5em;
+  border-radius: 0.2em;
+  border-bottom: 2px solid $warm-coral;
+}
+
+// Images - Artistic treatment
 img {
   max-width: 100%;
   height: auto;
-  margin: 1.5rem 0;
-  border-radius: 0.3em;
-}
-
-// Lists
-ul, ol {
-  margin-left: 1.5em;
-  margin-bottom: 1.2em;
-  
-  li {
-    margin-bottom: 0.6em;
-  }
-}
-
-// Buttons
-.btn-custom {
-  background: $secondary-color;
-  border-radius: 0.3em;
-  border: none;
-  color: white !important;
-  padding: 0.6em 1.3em;
-  font-family: $body-font;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background 0.2s;
-  text-decoration: none !important;
+  margin: 2rem 0;
+  border-radius: 0.5em;
+  box-shadow:
+    5px 5px 0 rgba($forest-teal, 0.2),
+    10px 10px 0 rgba($warm-coral, 0.1);
+  transition: all 0.3s ease;
 
   &:hover {
-    background: $primary-color;
-    color: white !important;
+    transform: rotate(0.5deg) scale(1.02);
+    box-shadow:
+      8px 8px 0 rgba($forest-teal, 0.3),
+      16px 16px 0 rgba($warm-coral, 0.15);
   }
 }
 
-// Dividers - Minimal and subtle
+// Lists - Colorful bullets
+ul, ol {
+  margin-left: 1.5em;
+  margin-bottom: 1.5em;
+
+  li {
+    margin-bottom: 0.7em;
+    position: relative;
+  }
+}
+
+ul li::marker {
+  color: $warm-coral;
+  font-size: 1.2em;
+}
+
+ol li::marker {
+  color: $forest-teal;
+  font-weight: 700;
+}
+
+// ========================================
+// BUTTONS - Fun and interactive
+// ========================================
+.btn-custom, .btn {
+  background: linear-gradient(135deg, $forest-teal, $sky-blue);
+  border-radius: 0.5em;
+  border: none;
+  color: white !important;
+  padding: 0.8em 1.5em;
+  font-family: $body-font;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none !important;
+  box-shadow: 4px 4px 0 rgba($deep-purple, 0.2);
+  position: relative;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.9rem;
+
+  &:hover {
+    background: linear-gradient(135deg, $warm-coral, $golden-sun);
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 rgba($deep-purple, 0.3);
+  }
+
+  &:active {
+    transform: translate(0, 0);
+    box-shadow: 2px 2px 0 rgba($deep-purple, 0.2);
+  }
+}
+
+// ========================================
+// DIVIDERS - Organic and playful
+// ========================================
 hr, .elegant-divider {
   border: none;
-  height: 1px;
-  background: rgba($primary-color, 0.15);
-  margin: 2rem 0;
-  border-radius: 0;
-}
+  height: 3px;
+  background: linear-gradient(90deg,
+    transparent,
+    $forest-teal 20%,
+    $warm-coral 40%,
+    $golden-sun 60%,
+    $deep-purple 80%,
+    transparent
+  );
+  margin: 3rem 0;
+  position: relative;
 
-// Remove old playful elements
-.shape-bg, .fun-gradient, .section-gradient, .asymmetric-layout, .artsy-border, .artsy-highlight::before, .creative-quote::before {
-  display: none !important;
-}
-
-// Responsive Design
-@media (max-width: 768px) {
-  .navbar-brand { 
-    font-size: 1.2rem; 
-  }
-  
-  .navbar-nav .nav-link { 
-    font-size: 0.9rem; 
-    padding: 0.4em 0.8em !important; 
-  }
-  
-  h1.title { 
-    font-size: 1.5rem; 
-  }
-  
-  h2 {
+  &::after {
+    content: '✦';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: $bg-warm;
+    padding: 0 1rem;
+    color: $warm-coral;
     font-size: 1.2rem;
   }
-  
-  .page-layout main {
-    max-width: 100%;
-    padding: 0 1rem;
-  }
 }
 
-@media (max-width: 480px) {
-  body {
-    font-size: 1rem;
-  }
-  
-  h1.title { 
-    font-size: 1.3rem; 
-  }
-  
-  h2 {
-    font-size: 1.1rem;
-  }
-}
-
-// Home Page Specific Styles
+// ========================================
+// HOME PAGE - Hero section with personality
+// ========================================
 .home-hero {
   text-align: center;
   width: 100vw;
@@ -290,9 +444,25 @@ hr, .elegant-divider {
   position: relative;
   background-size: cover;
   background-position: center;
-  height: 500px;
-  
-  // Hide the p wrapper around img, show img full size
+  height: 550px;
+  overflow: hidden;
+
+  // Colorful overlay gradient
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg,
+      rgba($forest-teal, 0.3) 0%,
+      rgba($deep-purple, 0.3) 50%,
+      rgba($warm-coral, 0.3) 100%
+    );
+    z-index: 1;
+  }
+
   p {
     position: absolute;
     top: 0;
@@ -301,20 +471,26 @@ hr, .elegant-divider {
     height: 100%;
     margin: 0;
     padding: 0;
-    z-index: 1;
-    
+    z-index: 0;
+
     img {
       width: 100vw;
-      height: 500px;
+      height: 550px;
       object-fit: cover;
       display: block;
       margin: 0;
       border-radius: 0;
+      box-shadow: none;
       width: 100%;
       height: 100%;
+
+      &:hover {
+        transform: none;
+        box-shadow: none;
+      }
     }
   }
-  
+
   section {
     position: absolute;
     top: 0;
@@ -329,42 +505,69 @@ hr, .elegant-divider {
     align-items: center;
     justify-content: center;
   }
-  
+
   h2 {
-    border-bottom: none;
-    padding-bottom: 0;
+    border: none;
+    padding: 1.5rem 2.5rem;
     color: white;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
     margin: 0 0 1rem 0;
-    padding: 0 2rem;
-    max-width: 600px;
-    font-size: 2.5rem;
+    max-width: 700px;
+    font-size: 3rem;
     font-weight: 700;
+    background: rgba($deep-purple, 0.4) !important;
+    border-radius: 0.3em;
+    backdrop-filter: blur(10px);
+    border-left: 5px solid $golden-sun;
   }
-  
+
   section > p {
     position: static;
     color: white;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.6);
     margin: 0;
-    padding: 0 2rem;
-    max-width: 600px;
-    font-size: 1.1rem;
-    line-height: 1.5;
+    padding: 1rem 2rem;
+    max-width: 650px;
+    font-size: 1.3rem;
+    line-height: 1.6;
     z-index: auto;
     width: auto;
     height: auto;
+    background: rgba($forest-teal, 0.5);
+    border-radius: 0.3em;
+    backdrop-filter: blur(10px);
+    font-weight: 500;
   }
 }
 
-// Quote Section & Slideshow
+// ========================================
+// QUOTE SLIDER - Artistic & Engaging
+// ========================================
 .quote-section {
   text-align: center;
   width: 100vw;
   margin-left: calc(-50vw + 50%);
   margin-top: 3rem;
-  padding: 3rem 1rem;
-  background: rgba($secondary-color, 0.04);
+  padding: 4rem 1rem;
+  background: linear-gradient(135deg,
+    rgba($sage-green, 0.08),
+    rgba($sky-blue, 0.08),
+    rgba($golden-sun, 0.08)
+  );
+  position: relative;
+
+  // Decorative elements
+  &::before {
+    content: '{ }';
+    position: absolute;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: $mono-font;
+    font-size: 2rem;
+    color: $warm-coral;
+    opacity: 0.2;
+  }
 }
 
 .slider-container {
@@ -384,23 +587,29 @@ hr, .elegant-divider {
 .click-slider {
   position: relative;
   overflow: hidden;
-  min-height: 280px;
+  min-height: 320px;
   width: 100%;
-  max-width: 800px;
+  max-width: 900px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba($secondary-color, 0.08);
-  padding: 3rem 1rem;
-  
+  background: white;
+  padding: 4rem 2rem;
+  border-radius: 1rem;
+  box-shadow:
+    6px 6px 0 rgba($forest-teal, 0.15),
+    12px 12px 0 rgba($warm-coral, 0.1);
+  border: 3px solid transparent;
+  border-image: linear-gradient(135deg, $golden-sun, $deep-purple, $forest-teal) 1;
+
   @media (max-width: 768px) {
+    padding: 3rem 1.5rem;
+    min-height: 280px;
+  }
+
+  @media (max-width: 480px) {
     padding: 2rem 1rem;
     min-height: 240px;
-  }
-  
-  @media (max-width: 480px) {
-    padding: 1.5rem 1rem;
-    min-height: 200px;
   }
 }
 
@@ -408,14 +617,11 @@ hr, .elegant-divider {
   display: none;
   opacity: 0;
   transition: opacity 0.6s ease-in-out;
-  animation: fadeIn 0.6s ease-in-out;
+  animation: fadeInScale 0.6s ease-in-out;
   padding: 2rem 1rem;
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
   position: relative;
-  min-height: 200px;
-  
+  min-height: 220px;
+
   &.slick-active {
     display: flex;
     opacity: 1;
@@ -423,173 +629,389 @@ hr, .elegant-divider {
     align-items: center;
     justify-content: center;
   }
-  
-  // If slide has a background image, darken it for text readability
-  &[style*="background-image"] {
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.4);
-      z-index: 1;
-    }
-    
-    > * {
-      position: relative;
-      z-index: 2;
-    }
-  }
 }
 
-@keyframes fadeIn {
+@keyframes fadeInScale {
   from {
     opacity: 0;
+    transform: scale(0.95);
   }
   to {
     opacity: 1;
+    transform: scale(1);
   }
 }
 
 .slick-slide strong {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   font-style: italic;
-  color: $primary-color;
+  font-family: $header-font;
+  color: $text-dark;
   display: block;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   line-height: 1.8;
-  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.1);
-  
-  // If slide has background image, use white text
-  .slick-slide[style*="background-image"] & {
-    color: white;
-    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+  position: relative;
+
+  // Decorative quotation marks
+  &::before {
+    content: '"';
+    position: absolute;
+    left: -1.5rem;
+    top: -0.5rem;
+    font-size: 3rem;
+    color: $warm-coral;
+    opacity: 0.3;
+    font-family: $header-font;
+  }
+
+  &::after {
+    content: '"';
+    position: absolute;
+    right: -1.5rem;
+    bottom: -1rem;
+    font-size: 3rem;
+    color: $forest-teal;
+    opacity: 0.3;
+    font-family: $header-font;
   }
 }
 
 .slick-slide em {
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   color: $text-mid;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 600;
   display: block;
-  
-  // If slide has background image, use white text
-  .slick-slide[style*="background-image"] & {
-    color: rgba(255, 255, 255, 0.95);
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  font-family: $body-font;
+
+  &::before {
+    content: '— ';
+    color: $warm-coral;
   }
 }
 
-// Slider controls
+// Slider navigation buttons - Colorful & fun
 .slick-prev, .slick-next {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: $secondary-color;
+  background: linear-gradient(135deg, $forest-teal, $sky-blue);
   color: white;
   border: none;
-  width: 50px;
-  height: 50px;
+  width: 55px;
+  height: 55px;
   border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s;
+  transition: all 0.3s ease;
   z-index: 100;
   font-size: 1.5rem;
   font-weight: bold;
-  
+  box-shadow: 3px 3px 0 rgba($deep-purple, 0.2);
+
   &:hover {
-    background: $primary-color;
+    background: linear-gradient(135deg, $warm-coral, $golden-sun);
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 5px 5px 0 rgba($deep-purple, 0.3);
+  }
+
+  &:active {
+    transform: translateY(-50%) scale(0.95);
   }
 }
 
 .slick-prev {
   left: 20px;
-  
+
   @media (max-width: 768px) {
     left: 10px;
-    width: 45px;
-    height: 45px;
-    font-size: 1.2rem;
+    width: 48px;
+    height: 48px;
+    font-size: 1.3rem;
   }
 }
 
 .slick-next {
   right: 20px;
-  
+
   @media (max-width: 768px) {
     right: 10px;
-    width: 45px;
-    height: 45px;
-    font-size: 1.2rem;
+    width: 48px;
+    height: 48px;
+    font-size: 1.3rem;
   }
 }
 
-// Dots for slider pagination - positioned below slider
+// Dots - Colorful pagination
 .slick-dots {
   text-align: center;
-  padding: 1.5rem 0 0 0;
+  padding: 2rem 0 0 0;
   list-style: none;
   width: 100%;
   margin: 0;
   order: 2;
-  
+
   li {
     display: inline-block;
-    margin: 0 0.4rem;
-    
+    margin: 0 0.5rem;
+
     button {
-      background: rgba($primary-color, 0.3);
-      border: none;
-      width: 10px;
-      height: 10px;
+      background: rgba($text-mid, 0.3);
+      border: 2px solid transparent;
+      width: 12px;
+      height: 12px;
       border-radius: 50%;
       cursor: pointer;
       padding: 0;
-      transition: background 0.2s;
-      
+      transition: all 0.3s ease;
+
       &:hover {
-        background: rgba($primary-color, 0.6);
+        background: rgba($warm-coral, 0.6);
+        transform: scale(1.2);
       }
     }
-    
+
     &.slick-active button {
-      background: $secondary-color;
+      background: $warm-coral;
+      border-color: $warm-coral;
+      width: 14px;
+      height: 14px;
     }
   }
-  
+
   @media (max-width: 480px) {
-    padding: 1rem 0 0 0;
-    
+    padding: 1.5rem 0 0 0;
+
     li {
-      margin: 0 0.3rem;
-      
+      margin: 0 0.35rem;
+
       button {
-        width: 8px;
-        height: 8px;
+        width: 10px;
+        height: 10px;
+      }
+
+      &.slick-active button {
+        width: 12px;
+        height: 12px;
       }
     }
   }
 }
 
-// Centered content for home page sections
+// ========================================
+// HOME PAGE CONTENT - Centered with style
+// ========================================
 .home-content {
   text-align: center;
-  max-width: 850px;
+  max-width: 900px;
   margin: 0 auto;
-  
+  padding: 2rem 1rem;
+
   h3 {
-    margin-top: 2rem;
-    margin-bottom: 1rem;
+    margin-top: 2.5rem;
+    margin-bottom: 1.5rem;
   }
-  
+
   a {
     display: inline-block;
     margin: 0.5rem;
+  }
+}
+
+// ========================================
+// CODE BLOCKS - Developer aesthetic
+// ========================================
+code {
+  font-family: $mono-font;
+  background: rgba($deep-purple, 0.08);
+  color: $deep-purple;
+  padding: 0.2em 0.5em;
+  border-radius: 0.3em;
+  font-size: 0.9em;
+  border: 1px solid rgba($deep-purple, 0.2);
+}
+
+pre {
+  background: $text-dark;
+  color: $forest-teal;
+  padding: 1.5rem;
+  border-radius: 0.5em;
+  overflow-x: auto;
+  margin: 2rem 0;
+  border-left: 4px solid $warm-coral;
+  box-shadow: 4px 4px 0 rgba($warm-coral, 0.2);
+
+  code {
+    background: none;
+    color: $sage-green;
+    border: none;
+    padding: 0;
+  }
+}
+
+// ========================================
+// BLOCKQUOTES - Artistic styling
+// ========================================
+blockquote {
+  border-left: 5px solid $golden-sun;
+  background: linear-gradient(90deg, rgba($golden-sun, 0.1), transparent);
+  padding: 1.5rem 2rem;
+  margin: 2rem 0;
+  font-family: $header-font;
+  font-style: italic;
+  color: $text-dark;
+  position: relative;
+
+  &::before {
+    content: '"';
+    position: absolute;
+    top: -0.5rem;
+    left: 1rem;
+    font-size: 4rem;
+    color: $golden-sun;
+    opacity: 0.3;
+    line-height: 1;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+// ========================================
+// RESPONSIVE DESIGN
+// ========================================
+@media (max-width: 768px) {
+  body {
+    font-size: 1rem;
+  }
+
+  .navbar-brand {
+    font-size: 1.3rem;
+
+    &::after {
+      display: none;
+    }
+  }
+
+  h1.title {
+    font-size: 2rem !important;
+
+    &::before {
+      display: none;
+    }
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    margin-left: 0;
+    padding-left: 0.8rem;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+  }
+
+  .home-hero {
+    height: 400px;
+
+    h2 {
+      font-size: 2rem;
+      padding: 1rem 1.5rem;
+    }
+
+    section > p {
+      font-size: 1.1rem;
+      padding: 0.8rem 1.5rem;
+    }
+  }
+
+  .page-layout main {
+    max-width: 100%;
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 0.95rem;
+  }
+
+  h1.title {
+    font-size: 1.6rem !important;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+
+    &::before,
+    &::after {
+      display: none;
+    }
+  }
+
+  .home-hero {
+    height: 350px;
+
+    h2 {
+      font-size: 1.6rem;
+      padding: 0.8rem 1rem;
+    }
+
+    section > p {
+      font-size: 1rem;
+      padding: 0.6rem 1rem;
+    }
+  }
+
+  img {
+    box-shadow:
+      3px 3px 0 rgba($forest-teal, 0.2),
+      6px 6px 0 rgba($warm-coral, 0.1);
+
+    &:hover {
+      box-shadow:
+        3px 3px 0 rgba($forest-teal, 0.2),
+        6px 6px 0 rgba($warm-coral, 0.1);
+      transform: none;
+    }
+  }
+}
+
+// ========================================
+// UTILITY CLASSES
+// ========================================
+.text-center {
+  text-align: center;
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, $forest-teal, $warm-coral, $golden-sun);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.fun-border {
+  border: 3px solid transparent;
+  border-image: linear-gradient(135deg, $forest-teal, $warm-coral, $golden-sun, $deep-purple) 1;
+}
+
+// Environmentalist vibes - nature accents
+.nature-accent {
+  position: relative;
+
+  &::before {
+    content: '🌱';
+    position: absolute;
+    left: -2rem;
+    top: 0;
+    opacity: 0.4;
   }
 }

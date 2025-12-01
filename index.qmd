@@ -7,7 +7,7 @@ toc: false
 ![](images/PXL_20240914_192718413.jpg)
 
 
-Data scientist, environmental systems thinker, and compulsive fixer of things.
+## Data scientist, environmental systems thinker, and compulsive fixer of things.
 :::
 
 ------------------------------------------------------------------------
@@ -129,9 +129,9 @@ Data scientist, environmental systems thinker, and compulsive fixer of things.
 
 ------------------------------------------------------------------------
 
-#### What I'm Working On
+### What I'm Working On
 
-[**Research →**](research.qmd) \| [**Art & Poetry →**](art.qmd) \| [**Essays →**](adventures.qmd) \| [**More About Me →**](about.qmd)
+[**Research →**](research.qmd) \| [**Art & Poetry →**](art.qmd) \| [**Blog →**](blog.qmd) \| [**More About Me →**](about.qmd)
 
 ```{=html}
 <script>
@@ -212,7 +212,7 @@ document.addEventListener('DOMContentLoaded', function() {
     prevBtn.addEventListener('click', prevSlide);
     
     // Optional: Auto-rotate every 10 seconds
-    setInterval(nextSlide, 10000);
+    setInterval(nextSlide, 20000);
   });
 });
 </script>

@@ -38,21 +38,15 @@ This analysis demonstrates several key Python-based geospatial analysis techniqu
 
 ### Landsat 8 Surface Reflectance Data
 
-This dataset contains atmospherically corrected surface reflectance data from the Landsat 8 satellite, captured on February 23, 2025. The imagery includes five spectral bands (red, green, blue, near-infrared, and shortwave infrared) clipped to the area surrounding the Eaton and Palisades fire perimeters. The data was retrieved from the Microsoft Planetary Computer STAC catalog in NetCDF format.
-
-**Citation:** Microsoft Planetary Computer. (2025). *Landsat Collection 2 Level-2* \[Data file\]. Retrieved from https://planetarycomputer.microsoft.com/dataset/landsat-c2-l2
+This dataset contains atmospherically corrected surface reflectance data from the Landsat 8 satellite, captured on February 23, 2025 [@microsoft2025landsat]. The imagery includes five spectral bands (red, green, blue, near-infrared, and shortwave infrared) clipped to the area surrounding the Eaton and Palisades fire perimeters. The data was retrieved from the Microsoft Planetary Computer STAC catalog in NetCDF format.
 
 ### Fire Perimeter Shapefiles
 
-Official fire perimeter polygons for the Eaton and Palisades fires as of January 21, 2025, provided in EPSG:3857 (Web Mercator) projection. These shapefiles include boundary geometries and attribute information for each fire.
-
-**Citation:** Palisades and Eaton Dissolved Fire Perimeters. (2025). *Fire perimeter shapefiles* \[Geospatial dataset\]. ArcGIS Hub. Retrieved from https://hub.arcgis.com/maps/ad51845ea5fb4eb483bc2a7c38b2370c
+These shapefiles delineate the official fire perimeters for the Eaton and Palisades fires as of January 21, 2025 [@arcgis2025fireperimeters]. The vector data includes boundary geometries and attribute information for each fire.
 
 ### Environmental Justice Index (EJI) Data
 
-The Environmental Justice Index provides census tract-level data on environmental and socioeconomic factors. This analysis uses the 2024 California EJI dataset, which includes demographic information, poverty statistics, and environmental burden indicators for communities across the state.
-
-**Citation:** Centers for Disease Control and Prevention/Agency for Toxic Substances and Disease Registry. (2024). *Environmental Justice Index, California* \[Geodatabase\]. Retrieved from https://www.atsdr.cdc.gov/placeandhealth/eji/index.html
+The CDC/ATSDR Environmental Justice Index [@cdc2024eji] provides census tract-level data on environmental and socioeconomic factors. This analysis uses the 2024 California EJI dataset, which includes demographic information, poverty statistics, and environmental burden indicators for communities across the state.
 
 ------------------------------------------------------------------------
 
@@ -335,6 +329,7 @@ fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 8))
 
 # Define common scale for comparison
 eji_variable = 'EPL_POV200'
+#eji_variable = 'E_AGE65'
 vmin = min(eji_clip_palisades[eji_variable].min(),
            eji_clip_eaton[eji_variable].min())
 vmax = max(eji_clip_palisades[eji_variable].max(),
@@ -385,25 +380,29 @@ plt.tight_layout()
 plt.show()
 ```
 
-**Key Findings:**
+## Key Findings
 
-This analysis reveals important differences in socioeconomic vulnerability between the two fire areas. Higher percentile values (darker colors) indicate census tracts where a larger proportion of the population faces economic vulnerability compared to other areas in California.
+This analysis reveals stark differences in socioeconomic vulnerability between the two fire areas. The maps show **percentile rankings** of low-income population (households earning less than 200% of the federal poverty level) within fire-affected census tracts, where higher percentile values indicate greater economic vulnerability relative to other California communities.
 
-Understanding these patterns is crucial for:
+**Palisades Fire Area:** The affected census tracts show predominantly low to moderate percentile rankings (light to medium orange colors, roughly 10th-40th percentiles). This indicates that the Palisades fire primarily impacted areas with relatively **lower proportions of low-income residents** compared to the state average—reflecting the area's generally higher socioeconomic status along the Pacific coast.
 
--   **Emergency response planning** - ensuring resources reach vulnerable populations
--   **Recovery assistance** - targeting aid to communities with fewer economic resources
--   **Long-term resilience planning** - addressing pre-existing vulnerabilities that compound disaster impacts
+**Eaton Fire Area:** The burn area shows significantly higher percentile rankings, with large portions in the 50th-70th percentiles (darker orange) and some tracts reaching the 80th-90th percentiles (approaching dark red). The northern portions of the Eaton fire area, particularly around Altadena, show the highest vulnerability rankings. This demonstrates that the Eaton fire disproportionately affected communities with **higher concentrations of economically vulnerable residents**.
 
-------------------------------------------------------------------------
+**Environmental Justice Implications:** The contrasting patterns reveal that while both fires caused extensive physical damage, the Eaton fire imposed greater socioeconomic burden on vulnerable populations who typically have fewer resources for evacuation, temporary housing, and long-term recovery. This disparity is crucial for:
+
+* **Emergency response planning** - ensuring resources reach vulnerable populations during active disasters
+* **Recovery assistance** - targeting aid to communities with fewer economic resources for rebuilding
+* **Long-term resilience planning** - addressing pre-existing vulnerabilities that compound disaster impacts and hinder recovery
 
 ## Conclusion
 
-This analysis demonstrates the power of integrating remote sensing techniques with environmental justice data to understand wildfire impacts through both physical and social lenses. The false color analysis using Landsat 8 imagery reveals the spatial extent and severity of burn scars across the landscape, providing quantifiable measures of ecological damage. Meanwhile, the environmental justice analysis uncovers the socioeconomic characteristics of affected communities, highlighting potential disparities in vulnerability and recovery capacity.
+This analysis demonstrates the power of integrating remote sensing techniques with environmental justice data to understand wildfire impacts through both physical and social lenses. The false color analysis using Landsat 8 imagery reveals the spatial extent and severity of burn scars across the landscape, while the environmental justice analysis uncovers critical disparities in who bears the burden of these disasters.
 
-The combination of `xarray`, `rioxarray`, and `geopandas` provides a robust Python-based workflow for multi-dataset geospatial analysis. By processing satellite imagery alongside census data, we can identify not just where fires burned, but whose communities bore the burden—information critical for equitable resource allocation and recovery planning.
+The stark contrast between the two fires—with Eaton disproportionately affecting economically vulnerable communities in the Altadena area while Palisades primarily impacted wealthier coastal neighborhoods—underscores the unequal distribution of climate disaster impacts. Communities with higher percentile rankings of low-income residents face compounded challenges: limited financial reserves for evacuation and temporary housing, reduced access to insurance, barriers to navigating recovery bureaucracy, and fewer resources for long-term rebuilding.
 
-As climate change drives increased wildfire frequency and intensity across California and the Western United States, these integrated analytical approaches become essential tools for disaster response, recovery planning, and long-term resilience building. Making both the physical and social dimensions of wildfire impacts visible empowers decision-makers to support vulnerable communities more effectively.
+The combination of `xarray`, `rioxarray`, and `geopandas` provides a robust Python-based workflow for this critical multi-dataset geospatial analysis. By processing satellite imagery alongside census-based vulnerability data, we can identify not just where fires burned, but whose communities bore the burden—information essential for equitable resource allocation and recovery planning.
+
+As climate change drives increased wildfire frequency and intensity across California and the Western United States, these integrated analytical approaches become indispensable tools for disaster response, recovery planning, and climate justice advocacy. Making both the physical and social dimensions of wildfire impacts visible empowers decision-makers to support vulnerable communities more effectively and challenges us to address the structural inequities that make some populations disproportionately vulnerable to environmental disasters.
 
 ## References
 

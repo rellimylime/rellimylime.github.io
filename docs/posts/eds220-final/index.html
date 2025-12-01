@@ -62,6 +62,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -288,6 +289,7 @@ div.csl-indent {
   <li><a href="#identifying-affected-communities" id="toc-identifying-affected-communities" class="nav-link" data-scroll-target="#identifying-affected-communities">Identifying Affected Communities</a></li>
   <li><a href="#analyzing-socioeconomic-vulnerability" id="toc-analyzing-socioeconomic-vulnerability" class="nav-link" data-scroll-target="#analyzing-socioeconomic-vulnerability">Analyzing Socioeconomic Vulnerability</a></li>
   </ul></li>
+  <li><a href="#key-findings" id="toc-key-findings" class="nav-link" data-scroll-target="#key-findings">Key Findings</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
@@ -326,18 +328,15 @@ div.csl-indent {
 <h2 class="anchored" data-anchor-id="data">Data</h2>
 <section id="landsat-8-surface-reflectance-data" class="level3">
 <h3 class="anchored" data-anchor-id="landsat-8-surface-reflectance-data">Landsat 8 Surface Reflectance Data</h3>
-<p>This dataset contains atmospherically corrected surface reflectance data from the Landsat 8 satellite, captured on February 23, 2025. The imagery includes five spectral bands (red, green, blue, near-infrared, and shortwave infrared) clipped to the area surrounding the Eaton and Palisades fire perimeters. The data was retrieved from the Microsoft Planetary Computer STAC catalog in NetCDF format.</p>
-<p><strong>Citation:</strong> Microsoft Planetary Computer. (2025). <em>Landsat Collection 2 Level-2</em> [Data file]. Retrieved from https://planetarycomputer.microsoft.com/dataset/landsat-c2-l2</p>
+<p>This dataset contains atmospherically corrected surface reflectance data from the Landsat 8 satellite, captured on February 23, 2025 <span class="citation" data-cites="microsoft2025landsat">(<a href="#ref-microsoft2025landsat" role="doc-biblioref">Microsoft Planetary Computer 2025</a>)</span>. The imagery includes five spectral bands (red, green, blue, near-infrared, and shortwave infrared) clipped to the area surrounding the Eaton and Palisades fire perimeters. The data was retrieved from the Microsoft Planetary Computer STAC catalog in NetCDF format.</p>
 </section>
 <section id="fire-perimeter-shapefiles" class="level3">
 <h3 class="anchored" data-anchor-id="fire-perimeter-shapefiles">Fire Perimeter Shapefiles</h3>
-<p>Official fire perimeter polygons for the Eaton and Palisades fires as of January 21, 2025, provided in EPSG:3857 (Web Mercator) projection. These shapefiles include boundary geometries and attribute information for each fire.</p>
-<p><strong>Citation:</strong> Palisades and Eaton Dissolved Fire Perimeters. (2025). <em>Fire perimeter shapefiles</em> [Geospatial dataset]. ArcGIS Hub. Retrieved from https://hub.arcgis.com/maps/ad51845ea5fb4eb483bc2a7c38b2370c</p>
+<p>These shapefiles delineate the official fire perimeters for the Eaton and Palisades fires as of January 21, 2025 <span class="citation" data-cites="arcgis2025fireperimeters">(<a href="#ref-arcgis2025fireperimeters" role="doc-biblioref">ArcGIS Hub 2025</a>)</span>. The vector data includes boundary geometries and attribute information for each fire.</p>
 </section>
 <section id="environmental-justice-index-eji-data" class="level3">
 <h3 class="anchored" data-anchor-id="environmental-justice-index-eji-data">Environmental Justice Index (EJI) Data</h3>
-<p>The Environmental Justice Index provides census tract-level data on environmental and socioeconomic factors. This analysis uses the 2024 California EJI dataset, which includes demographic information, poverty statistics, and environmental burden indicators for communities across the state.</p>
-<p><strong>Citation:</strong> Centers for Disease Control and Prevention/Agency for Toxic Substances and Disease Registry. (2024). <em>Environmental Justice Index, California</em> [Geodatabase]. Retrieved from https://www.atsdr.cdc.gov/placeandhealth/eji/index.html</p>
+<p>The CDC/ATSDR Environmental Justice Index <span class="citation" data-cites="cdc2024eji">(<a href="#ref-cdc2024eji" role="doc-biblioref">Centers for Disease Control and Prevention/Agency for Toxic Substances and Disease Registry 2024</a>)</span> provides census tract-level data on environmental and socioeconomic factors. This analysis uses the 2024 California EJI dataset, which includes demographic information, poverty statistics, and environmental burden indicators for communities across the state.</p>
 <hr>
 </section>
 </section>
@@ -345,7 +344,7 @@ div.csl-indent {
 <h2 class="anchored" data-anchor-id="analysis-1-false-color-visualization">Analysis 1: False Color Visualization</h2>
 <section id="setup-and-data-import" class="level3">
 <h3 class="anchored" data-anchor-id="setup-and-data-import">Setup and Data Import</h3>
-<div id="1202a5b5" class="cell" data-execution_count="1">
+<div id="ecc4088e" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import required libraries for geospatial analysis and visualization</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xarray <span class="im">as</span> xr</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> rioxarray <span class="im">as</span> rio</span>
@@ -358,7 +357,7 @@ div.csl-indent {
 <section id="loading-fire-perimeter-data" class="level3">
 <h3 class="anchored" data-anchor-id="loading-fire-perimeter-data">Loading Fire Perimeter Data</h3>
 <p>Fire perimeters provide the spatial boundaries for our analysis, allowing us to focus on the areas most affected by the fires.</p>
-<div id="d50ed5d7" class="cell" data-execution_count="2">
+<div id="cd5756aa" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load fire perimeter shapefiles</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>eaton <span class="op">=</span> gpd.read_file(<span class="st">'data/Eaton_Perimeter_20250121.shp'</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>palisades <span class="op">=</span> gpd.read_file(<span class="st">'data/Palisades_Perimeter_20250121.shp'</span>)</span>
@@ -411,7 +410,7 @@ div.csl-indent {
 <p>Both datasets contain polygon geometries representing the fire boundaries, along with area and perimeter measurements.</p>
 <section id="coordinate-reference-system-check" class="level4">
 <h4 class="anchored" data-anchor-id="coordinate-reference-system-check">Coordinate Reference System Check</h4>
-<div id="bdc4b9ae" class="cell" data-execution_count="3">
+<div id="c7795bd8" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create CRS information table</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>crs_data <span class="op">=</span> {</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Dataset'</span>: [<span class="st">'Eaton Fire'</span>, <span class="st">'Palisades Fire'</span>],</span>
@@ -461,14 +460,14 @@ div.csl-indent {
 <section id="loading-and-processing-landsat-imagery" class="level3">
 <h3 class="anchored" data-anchor-id="loading-and-processing-landsat-imagery">Loading and Processing Landsat Imagery</h3>
 <p>The Landsat 8 scene contains multiple spectral bands that capture different wavelengths of reflected light. Each band provides unique information about surface features.</p>
-<div id="b4474127" class="cell" data-execution_count="4">
+<div id="10017ffd" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import Landsat data</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>landsat <span class="op">=</span> xr.open_dataset(<span class="st">'data/landsat8-2025-02-23-palisades-eaton.nc'</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Display dataset information</span></span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>landsat</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="24ff6543" class="cell" data-execution_count="5">
+<div id="2d7361cc" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Landsat dataset summary table</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>landsat_summary <span class="op">=</span> {</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Property'</span>: [<span class="st">'Dimensions'</span>, <span class="st">'Height (y)'</span>, <span class="st">'Width (x)'</span>, <span class="st">'Coordinates'</span>, <span class="st">'Data Variables'</span>],</span>
@@ -535,7 +534,7 @@ div.csl-indent {
 </section>
 <section id="handling-missing-values" class="level4">
 <h4 class="anchored" data-anchor-id="handling-missing-values">Handling Missing Values</h4>
-<div id="b0d8322f" class="cell" data-execution_count="7">
+<div id="d2b0492b" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check for NaN values in each band</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>bands <span class="op">=</span> [<span class="st">'red'</span>, <span class="st">'green'</span>, <span class="st">'blue'</span>, <span class="st">'nir08'</span>, <span class="st">'swir22'</span>]</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>nan_status <span class="op">=</span> []</span>
@@ -561,7 +560,7 @@ div.csl-indent {
 <section id="true-color-visualization" class="level3">
 <h3 class="anchored" data-anchor-id="true-color-visualization">True Color Visualization</h3>
 <p>Before creating specialized visualizations, we can verify our data by creating a true color image using the red, green, and blue bands—similar to how a standard camera would capture the scene.</p>
-<div id="536e724b" class="cell" data-execution_count="8">
+<div id="8faf58f6" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create true color composite with robust scaling</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>landsat[[<span class="st">'red'</span>, <span class="st">'green'</span>, <span class="st">'blue'</span>]].to_array().plot.imshow(robust<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'True Color Image - Landsat 8'</span>)</span>
@@ -580,7 +579,7 @@ div.csl-indent {
 <section id="false-color-analysis" class="level3">
 <h3 class="anchored" data-anchor-id="false-color-analysis">False Color Analysis</h3>
 <p>False color composites use non-visible wavelengths to reveal features invisible to the human eye. By assigning shortwave infrared (SWIR) to red, near-infrared (NIR) to green, and red to blue, we create an image where healthy vegetation appears bright green and burned areas show distinct reddish-brown tones.</p>
-<div id="572d61af" class="cell" data-execution_count="9">
+<div id="d0faf4a8" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create false color composite (SWIR/NIR/Red)</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>landsat[[<span class="st">'swir22'</span>, <span class="st">'nir08'</span>, <span class="st">'red'</span>]].to_array().plot.imshow(robust<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'False Color Composite (SWIR/NIR/Red)'</span>)</span>
@@ -604,7 +603,7 @@ div.csl-indent {
 <section id="creating-the-final-map" class="level3">
 <h3 class="anchored" data-anchor-id="creating-the-final-map">Creating the Final Map</h3>
 <p>To provide geographic context, we overlay the fire perimeters onto our false color image. This requires reprojecting the vector data to match the raster’s coordinate system (EPSG:32611 - UTM Zone 11N).</p>
-<div id="316b2912" class="cell" data-fig-height="12" data-fig-width="12" data-execution_count="10">
+<div id="05daa229" class="cell" data-fig-height="12" data-fig-width="12" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reproject fire perimeters to match Landsat CRS</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>eaton <span class="op">=</span> eaton.to_crs(landsat.rio.crs)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>palisades <span class="op">=</span> palisades.to_crs(landsat.rio.crs)</span>
@@ -682,59 +681,60 @@ div.csl-indent {
 <section id="analyzing-socioeconomic-vulnerability" class="level3">
 <h3 class="anchored" data-anchor-id="analyzing-socioeconomic-vulnerability">Analyzing Socioeconomic Vulnerability</h3>
 <p>The Environmental Justice Index includes percentile rankings for various vulnerability indicators. Here we examine <code>EPL_POV200</code>, which represents the percentile rank of persons living below 200% of the federal poverty level—a measure of economic vulnerability.</p>
-<div id="b98e1d9c" class="cell" data-fig-height="8" data-fig-width="16" data-execution_count="13">
+<div id="ccc939cc" class="cell" data-fig-height="8" data-fig-width="16" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">8</span>))</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define common scale for comparison</span></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>eji_variable <span class="op">=</span> <span class="st">'EPL_POV200'</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>vmin <span class="op">=</span> <span class="bu">min</span>(eji_clip_palisades[eji_variable].<span class="bu">min</span>(),</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>           eji_clip_eaton[eji_variable].<span class="bu">min</span>())</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>vmax <span class="op">=</span> <span class="bu">max</span>(eji_clip_palisades[eji_variable].<span class="bu">max</span>(),</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>           eji_clip_eaton[eji_variable].<span class="bu">max</span>())</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Palisades Fire area</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>eji_clip_palisades.plot(</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    column<span class="op">=</span>eji_variable,</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    vmin<span class="op">=</span>vmin, vmax<span class="op">=</span>vmax,</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    cmap<span class="op">=</span><span class="st">'YlOrRd'</span>,</span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    legend<span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    ax<span class="op">=</span>ax1,</span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    edgecolor<span class="op">=</span><span class="st">'black'</span>,</span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    linewidth<span class="op">=</span><span class="fl">0.5</span></span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'Low-Income Population</span><span class="ch">\n</span><span class="st">Palisades Fire Area'</span>,</span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>              fontsize<span class="op">=</span><span class="dv">14</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>ax1.axis(<span class="st">'off'</span>)</span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Eaton Fire area</span></span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>eji_clip_eaton.plot(</span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>    column<span class="op">=</span>eji_variable,</span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>    vmin<span class="op">=</span>vmin, vmax<span class="op">=</span>vmax,</span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>    cmap<span class="op">=</span><span class="st">'YlOrRd'</span>,</span>
-<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>    legend<span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>    ax<span class="op">=</span>ax2,</span>
-<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>    edgecolor<span class="op">=</span><span class="st">'black'</span>,</span>
-<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>    linewidth<span class="op">=</span><span class="fl">0.5</span></span>
-<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">'Low-Income Population</span><span class="ch">\n</span><span class="st">Eaton Fire Area'</span>,</span>
-<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>              fontsize<span class="op">=</span><span class="dv">14</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
-<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>ax2.axis(<span class="st">'off'</span>)</span>
-<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Overall title</span></span>
-<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">'Percentile Rank of Low-Income Population in Fire-Affected Areas</span><span class="ch">\n</span><span class="st">(Income &lt;200</span><span class="sc">% F</span><span class="st">ederal Poverty Level)'</span>,</span>
-<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">16</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, y<span class="op">=</span><span class="fl">0.98</span>)</span>
-<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Shared colorbar</span></span>
-<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>sm <span class="op">=</span> plt.cm.ScalarMappable(</span>
-<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>    cmap<span class="op">=</span><span class="st">'YlOrRd'</span>,</span>
-<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>    norm<span class="op">=</span>plt.Normalize(vmin<span class="op">=</span>vmin, vmax<span class="op">=</span>vmax)</span>
-<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a>cbar_ax <span class="op">=</span> fig.add_axes([<span class="fl">0.25</span>, <span class="fl">0.15</span>, <span class="fl">0.5</span>, <span class="fl">0.03</span>])</span>
-<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a>cbar <span class="op">=</span> fig.colorbar(sm, cax<span class="op">=</span>cbar_ax, orientation<span class="op">=</span><span class="st">'horizontal'</span>)</span>
-<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a>cbar.set_label(<span class="st">'Percentile Rank (0-100)'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
-<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#eji_variable = 'E_AGE65'</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>vmin <span class="op">=</span> <span class="bu">min</span>(eji_clip_palisades[eji_variable].<span class="bu">min</span>(),</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>           eji_clip_eaton[eji_variable].<span class="bu">min</span>())</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>vmax <span class="op">=</span> <span class="bu">max</span>(eji_clip_palisades[eji_variable].<span class="bu">max</span>(),</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>           eji_clip_eaton[eji_variable].<span class="bu">max</span>())</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Palisades Fire area</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>eji_clip_palisades.plot(</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    column<span class="op">=</span>eji_variable,</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    vmin<span class="op">=</span>vmin, vmax<span class="op">=</span>vmax,</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    cmap<span class="op">=</span><span class="st">'YlOrRd'</span>,</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    legend<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    ax<span class="op">=</span>ax1,</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    edgecolor<span class="op">=</span><span class="st">'black'</span>,</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    linewidth<span class="op">=</span><span class="fl">0.5</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'Low-Income Population</span><span class="ch">\n</span><span class="st">Palisades Fire Area'</span>,</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>              fontsize<span class="op">=</span><span class="dv">14</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>ax1.axis(<span class="st">'off'</span>)</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Eaton Fire area</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>eji_clip_eaton.plot(</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>    column<span class="op">=</span>eji_variable,</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>    vmin<span class="op">=</span>vmin, vmax<span class="op">=</span>vmax,</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>    cmap<span class="op">=</span><span class="st">'YlOrRd'</span>,</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>    legend<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>    ax<span class="op">=</span>ax2,</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>    edgecolor<span class="op">=</span><span class="st">'black'</span>,</span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>    linewidth<span class="op">=</span><span class="fl">0.5</span></span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">'Low-Income Population</span><span class="ch">\n</span><span class="st">Eaton Fire Area'</span>,</span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>              fontsize<span class="op">=</span><span class="dv">14</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>ax2.axis(<span class="st">'off'</span>)</span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Overall title</span></span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">'Percentile Rank of Low-Income Population in Fire-Affected Areas</span><span class="ch">\n</span><span class="st">(Income &lt;200</span><span class="sc">% F</span><span class="st">ederal Poverty Level)'</span>,</span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">16</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, y<span class="op">=</span><span class="fl">0.98</span>)</span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Shared colorbar</span></span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>sm <span class="op">=</span> plt.cm.ScalarMappable(</span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>    cmap<span class="op">=</span><span class="st">'YlOrRd'</span>,</span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>    norm<span class="op">=</span>plt.Normalize(vmin<span class="op">=</span>vmin, vmax<span class="op">=</span>vmax)</span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a>cbar_ax <span class="op">=</span> fig.add_axes([<span class="fl">0.25</span>, <span class="fl">0.15</span>, <span class="fl">0.5</span>, <span class="fl">0.03</span>])</span>
+<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a>cbar <span class="op">=</span> fig.colorbar(sm, cax<span class="op">=</span>cbar_ax, orientation<span class="op">=</span><span class="st">'horizontal'</span>)</span>
+<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a>cbar.set_label(<span class="st">'Percentile Rank (0-100)'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -744,27 +744,39 @@ div.csl-indent {
 </div>
 </div>
 </div>
-<p><strong>Key Findings:</strong></p>
-<p>This analysis reveals important differences in socioeconomic vulnerability between the two fire areas. Higher percentile values (darker colors) indicate census tracts where a larger proportion of the population faces economic vulnerability compared to other areas in California.</p>
-<p>Understanding these patterns is crucial for:</p>
-<ul>
-<li><strong>Emergency response planning</strong> - ensuring resources reach vulnerable populations</li>
-<li><strong>Recovery assistance</strong> - targeting aid to communities with fewer economic resources</li>
-<li><strong>Long-term resilience planning</strong> - addressing pre-existing vulnerabilities that compound disaster impacts</li>
-</ul>
-<hr>
 </section>
+</section>
+<section id="key-findings" class="level2">
+<h2 class="anchored" data-anchor-id="key-findings">Key Findings</h2>
+<p>This analysis reveals stark differences in socioeconomic vulnerability between the two fire areas. The maps show <strong>percentile rankings</strong> of low-income population (households earning less than 200% of the federal poverty level) within fire-affected census tracts, where higher percentile values indicate greater economic vulnerability relative to other California communities.</p>
+<p><strong>Palisades Fire Area:</strong> The affected census tracts show predominantly low to moderate percentile rankings (light to medium orange colors, roughly 10th-40th percentiles). This indicates that the Palisades fire primarily impacted areas with relatively <strong>lower proportions of low-income residents</strong> compared to the state average—reflecting the area’s generally higher socioeconomic status along the Pacific coast.</p>
+<p><strong>Eaton Fire Area:</strong> The burn area shows significantly higher percentile rankings, with large portions in the 50th-70th percentiles (darker orange) and some tracts reaching the 80th-90th percentiles (approaching dark red). The northern portions of the Eaton fire area, particularly around Altadena, show the highest vulnerability rankings. This demonstrates that the Eaton fire disproportionately affected communities with <strong>higher concentrations of economically vulnerable residents</strong>.</p>
+<p><strong>Environmental Justice Implications:</strong> The contrasting patterns reveal that while both fires caused extensive physical damage, the Eaton fire imposed greater socioeconomic burden on vulnerable populations who typically have fewer resources for evacuation, temporary housing, and long-term recovery. This disparity is crucial for:</p>
+<ul>
+<li><strong>Emergency response planning</strong> - ensuring resources reach vulnerable populations during active disasters</li>
+<li><strong>Recovery assistance</strong> - targeting aid to communities with fewer economic resources for rebuilding</li>
+<li><strong>Long-term resilience planning</strong> - addressing pre-existing vulnerabilities that compound disaster impacts and hinder recovery</li>
+</ul>
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<p>This analysis demonstrates the power of integrating remote sensing techniques with environmental justice data to understand wildfire impacts through both physical and social lenses. The false color analysis using Landsat 8 imagery reveals the spatial extent and severity of burn scars across the landscape, providing quantifiable measures of ecological damage. Meanwhile, the environmental justice analysis uncovers the socioeconomic characteristics of affected communities, highlighting potential disparities in vulnerability and recovery capacity.</p>
-<p>The combination of <code>xarray</code>, <code>rioxarray</code>, and <code>geopandas</code> provides a robust Python-based workflow for multi-dataset geospatial analysis. By processing satellite imagery alongside census data, we can identify not just where fires burned, but whose communities bore the burden—information critical for equitable resource allocation and recovery planning.</p>
-<p>As climate change drives increased wildfire frequency and intensity across California and the Western United States, these integrated analytical approaches become essential tools for disaster response, recovery planning, and long-term resilience building. Making both the physical and social dimensions of wildfire impacts visible empowers decision-makers to support vulnerable communities more effectively.</p>
+<p>This analysis demonstrates the power of integrating remote sensing techniques with environmental justice data to understand wildfire impacts through both physical and social lenses. The false color analysis using Landsat 8 imagery reveals the spatial extent and severity of burn scars across the landscape, while the environmental justice analysis uncovers critical disparities in who bears the burden of these disasters.</p>
+<p>The stark contrast between the two fires—with Eaton disproportionately affecting economically vulnerable communities in the Altadena area while Palisades primarily impacted wealthier coastal neighborhoods—underscores the unequal distribution of climate disaster impacts. Communities with higher percentile rankings of low-income residents face compounded challenges: limited financial reserves for evacuation and temporary housing, reduced access to insurance, barriers to navigating recovery bureaucracy, and fewer resources for long-term rebuilding.</p>
+<p>The combination of <code>xarray</code>, <code>rioxarray</code>, and <code>geopandas</code> provides a robust Python-based workflow for this critical multi-dataset geospatial analysis. By processing satellite imagery alongside census-based vulnerability data, we can identify not just where fires burned, but whose communities bore the burden—information essential for equitable resource allocation and recovery planning.</p>
+<p>As climate change drives increased wildfire frequency and intensity across California and the Western United States, these integrated analytical approaches become indispensable tools for disaster response, recovery planning, and climate justice advocacy. Making both the physical and social dimensions of wildfire impacts visible empowers decision-makers to support vulnerable communities more effectively and challenges us to address the structural inequities that make some populations disproportionately vulnerable to environmental disasters.</p>
 </section>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>
-<div id="refs" role="list">
-
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-arcgis2025fireperimeters" class="csl-entry" role="listitem">
+ArcGIS Hub. 2025. <span>“Palisades and Eaton Dissolved Fire Perimeters.”</span> <a href="https://hub.arcgis.com/maps/ad51845ea5fb4eb483bc2a7c38b2370c" class="uri">https://hub.arcgis.com/maps/ad51845ea5fb4eb483bc2a7c38b2370c</a>.
+</div>
+<div id="ref-cdc2024eji" class="csl-entry" role="listitem">
+Centers for Disease Control and Prevention/Agency for Toxic Substances and Disease Registry. 2024. <span>“Environmental Justice Index, California.”</span> <a href="https://www.atsdr.cdc.gov/placeandhealth/eji/index.html" class="uri">https://www.atsdr.cdc.gov/placeandhealth/eji/index.html</a>.
+</div>
+<div id="ref-microsoft2025landsat" class="csl-entry" role="listitem">
+Microsoft Planetary Computer. 2025. <span>“Landsat Collection 2 Level-2.”</span> <a href="https://planetarycomputer.microsoft.com/dataset/landsat-c2-l2" class="uri">https://planetarycomputer.microsoft.com/dataset/landsat-c2-l2</a>.
+</div>
 </div>
 
 

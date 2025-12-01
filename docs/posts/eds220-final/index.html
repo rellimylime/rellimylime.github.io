@@ -304,7 +304,7 @@ div.csl-indent {
 <h2 class="anchored" data-anchor-id="about">About</h2>
 <p>In January 2025, the Eaton and Palisades fires swept through Los Angeles County, leaving lasting impacts on both the landscape and the communities within their paths. The Palisades Fire, which started on January 7, became one of the most destructive wildfires in California history, burning through the scenic Pacific Palisades neighborhood and nearby communities. Meanwhile, the Eaton Fire ignited in the foothills near Altadena and Pasadena, threatening densely populated areas and critical infrastructure.</p>
 <p>Understanding wildfire impacts requires more than just mapping burned areas—it requires examining both the physical changes to the landscape and the social dimensions of who is affected. This analysis combines <strong>remote sensing techniques</strong> with <strong>environmental justice data</strong> to provide a comprehensive view of these devastating fires.</p>
-<p><strong>Repository:</strong> <a href="https://github.com/rellimylime/eds220-hwk4">https://github.com/rellimylime/eds220-hwk4</a> <em>For complete analysis notebooks with additional data exploration and detailed outputs, visit the GitHub repository.</em></p>
+<p><strong>Repository:</strong> <a href="https://github.com/rellimylime/eds220-hwk4" class="uri">https://github.com/rellimylime/eds220-hwk4</a> <em>For complete analysis notebooks with additional data exploration and detailed outputs, visit the GitHub repository.</em></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="eds220-final-cover.png" class="img-fluid figure-img"></p>
@@ -345,7 +345,7 @@ div.csl-indent {
 <h2 class="anchored" data-anchor-id="analysis-1-false-color-visualization">Analysis 1: False Color Visualization</h2>
 <section id="setup-and-data-import" class="level3">
 <h3 class="anchored" data-anchor-id="setup-and-data-import">Setup and Data Import</h3>
-<div id="fd90c991" class="cell" data-execution_count="1">
+<div id="1202a5b5" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import required libraries for geospatial analysis and visualization</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xarray <span class="im">as</span> xr</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> rioxarray <span class="im">as</span> rio</span>
@@ -358,7 +358,7 @@ div.csl-indent {
 <section id="loading-fire-perimeter-data" class="level3">
 <h3 class="anchored" data-anchor-id="loading-fire-perimeter-data">Loading Fire Perimeter Data</h3>
 <p>Fire perimeters provide the spatial boundaries for our analysis, allowing us to focus on the areas most affected by the fires.</p>
-<div id="0ef99155" class="cell" data-execution_count="2">
+<div id="d50ed5d7" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load fire perimeter shapefiles</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>eaton <span class="op">=</span> gpd.read_file(<span class="st">'data/Eaton_Perimeter_20250121.shp'</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>palisades <span class="op">=</span> gpd.read_file(<span class="st">'data/Palisades_Perimeter_20250121.shp'</span>)</span>
@@ -368,12 +368,11 @@ div.csl-indent {
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Dataset'</span>: [<span class="st">'Eaton Fire'</span>, <span class="st">'Palisades Fire'</span>],</span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Features'</span>: [<span class="bu">len</span>(eaton), <span class="bu">len</span>(palisades)],</span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Columns'</span>: [<span class="bu">len</span>(eaton.columns), <span class="bu">len</span>(palisades.columns)],</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'CRS'</span>: [<span class="bu">str</span>(eaton.crs), <span class="bu">str</span>(palisades.crs)],</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Geometry Type'</span>: [eaton.geometry.<span class="bu">type</span>.unique()[<span class="dv">0</span>], palisades.geometry.<span class="bu">type</span>.unique()[<span class="dv">0</span>]]</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>summary_df <span class="op">=</span> pd.DataFrame(summary_data)</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>summary_df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Geometry Type'</span>: [eaton.geometry.<span class="bu">type</span>.unique()[<span class="dv">0</span>], palisades.geometry.<span class="bu">type</span>.unique()[<span class="dv">0</span>]]</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>summary_df <span class="op">=</span> pd.DataFrame(summary_data)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>summary_df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
 <div>
 
@@ -385,7 +384,6 @@ div.csl-indent {
 <th data-quarto-table-cell-role="th">Dataset</th>
 <th data-quarto-table-cell-role="th">Features</th>
 <th data-quarto-table-cell-role="th">Columns</th>
-<th data-quarto-table-cell-role="th">CRS</th>
 <th data-quarto-table-cell-role="th">Geometry Type</th>
 </tr>
 </thead>
@@ -395,7 +393,6 @@ div.csl-indent {
 <td>Eaton Fire</td>
 <td>20</td>
 <td>5</td>
-<td>EPSG:3857</td>
 <td>Polygon</td>
 </tr>
 <tr class="even">
@@ -403,7 +400,6 @@ div.csl-indent {
 <td>Palisades Fire</td>
 <td>21</td>
 <td>5</td>
-<td>EPSG:3857</td>
 <td>Polygon</td>
 </tr>
 </tbody>
@@ -415,7 +411,7 @@ div.csl-indent {
 <p>Both datasets contain polygon geometries representing the fire boundaries, along with area and perimeter measurements.</p>
 <section id="coordinate-reference-system-check" class="level4">
 <h4 class="anchored" data-anchor-id="coordinate-reference-system-check">Coordinate Reference System Check</h4>
-<div id="4cae63a0" class="cell" data-execution_count="3">
+<div id="bdc4b9ae" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create CRS information table</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>crs_data <span class="op">=</span> {</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Dataset'</span>: [<span class="st">'Eaton Fire'</span>, <span class="st">'Palisades Fire'</span>],</span>
@@ -465,14 +461,14 @@ div.csl-indent {
 <section id="loading-and-processing-landsat-imagery" class="level3">
 <h3 class="anchored" data-anchor-id="loading-and-processing-landsat-imagery">Loading and Processing Landsat Imagery</h3>
 <p>The Landsat 8 scene contains multiple spectral bands that capture different wavelengths of reflected light. Each band provides unique information about surface features.</p>
-<div id="4ddb3ed9" class="cell" data-execution_count="4">
+<div id="b4474127" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import Landsat data</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>landsat <span class="op">=</span> xr.open_dataset(<span class="st">'data/landsat8-2025-02-23-palisades-eaton.nc'</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Display dataset information</span></span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>landsat</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="ed2e5eb6" class="cell" data-execution_count="5">
+<div id="24ff6543" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Landsat dataset summary table</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>landsat_summary <span class="op">=</span> {</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Property'</span>: [<span class="st">'Dimensions'</span>, <span class="st">'Height (y)'</span>, <span class="st">'Width (x)'</span>, <span class="st">'Coordinates'</span>, <span class="st">'Data Variables'</span>],</span>
@@ -539,7 +535,7 @@ div.csl-indent {
 </section>
 <section id="handling-missing-values" class="level4">
 <h4 class="anchored" data-anchor-id="handling-missing-values">Handling Missing Values</h4>
-<div id="955772ef" class="cell" data-execution_count="7">
+<div id="b0d8322f" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check for NaN values in each band</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>bands <span class="op">=</span> [<span class="st">'red'</span>, <span class="st">'green'</span>, <span class="st">'blue'</span>, <span class="st">'nir08'</span>, <span class="st">'swir22'</span>]</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>nan_status <span class="op">=</span> []</span>
@@ -565,7 +561,7 @@ div.csl-indent {
 <section id="true-color-visualization" class="level3">
 <h3 class="anchored" data-anchor-id="true-color-visualization">True Color Visualization</h3>
 <p>Before creating specialized visualizations, we can verify our data by creating a true color image using the red, green, and blue bands—similar to how a standard camera would capture the scene.</p>
-<div id="8b646157" class="cell" data-execution_count="8">
+<div id="536e724b" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create true color composite with robust scaling</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>landsat[[<span class="st">'red'</span>, <span class="st">'green'</span>, <span class="st">'blue'</span>]].to_array().plot.imshow(robust<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'True Color Image - Landsat 8'</span>)</span>
@@ -584,7 +580,7 @@ div.csl-indent {
 <section id="false-color-analysis" class="level3">
 <h3 class="anchored" data-anchor-id="false-color-analysis">False Color Analysis</h3>
 <p>False color composites use non-visible wavelengths to reveal features invisible to the human eye. By assigning shortwave infrared (SWIR) to red, near-infrared (NIR) to green, and red to blue, we create an image where healthy vegetation appears bright green and burned areas show distinct reddish-brown tones.</p>
-<div id="157deeba" class="cell" data-execution_count="9">
+<div id="572d61af" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create false color composite (SWIR/NIR/Red)</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>landsat[[<span class="st">'swir22'</span>, <span class="st">'nir08'</span>, <span class="st">'red'</span>]].to_array().plot.imshow(robust<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'False Color Composite (SWIR/NIR/Red)'</span>)</span>
@@ -608,7 +604,7 @@ div.csl-indent {
 <section id="creating-the-final-map" class="level3">
 <h3 class="anchored" data-anchor-id="creating-the-final-map">Creating the Final Map</h3>
 <p>To provide geographic context, we overlay the fire perimeters onto our false color image. This requires reprojecting the vector data to match the raster’s coordinate system (EPSG:32611 - UTM Zone 11N).</p>
-<div id="22f3349d" class="cell" data-fig-height="12" data-fig-width="12" data-execution_count="10">
+<div id="316b2912" class="cell" data-fig-height="12" data-fig-width="12" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reproject fire perimeters to match Landsat CRS</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>eaton <span class="op">=</span> eaton.to_crs(landsat.rio.crs)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>palisades <span class="op">=</span> palisades.to_crs(landsat.rio.crs)</span>
@@ -686,7 +682,7 @@ div.csl-indent {
 <section id="analyzing-socioeconomic-vulnerability" class="level3">
 <h3 class="anchored" data-anchor-id="analyzing-socioeconomic-vulnerability">Analyzing Socioeconomic Vulnerability</h3>
 <p>The Environmental Justice Index includes percentile rankings for various vulnerability indicators. Here we examine <code>EPL_POV200</code>, which represents the percentile rank of persons living below 200% of the federal poverty level—a measure of economic vulnerability.</p>
-<div id="01c05648" class="cell" data-fig-height="8" data-fig-width="16" data-execution_count="13">
+<div id="b98e1d9c" class="cell" data-fig-height="8" data-fig-width="16" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">8</span>))</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define common scale for comparison</span></span>

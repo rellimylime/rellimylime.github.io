@@ -74,7 +74,7 @@ roadkill_dag <- dagify(
   Roadkill ~ Traffic + LandUse + RoadType + Speed,
   Traffic ~ RoadType,
   Speed ~ RoadType,
-  LandUse ~ RoadType,
+  RoadType ~ LandUse,
   exposure = "Traffic",
   outcome = "Roadkill",
   coords = list(

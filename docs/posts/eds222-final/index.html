@@ -271,37 +271,68 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction-research-question" id="toc-introduction-research-question" class="nav-link active" data-scroll-target="#introduction-research-question">1. Introduction &amp; Research Question</a>
+  <li><a href="#introduction-a-tale-of-two-processes" id="toc-introduction-a-tale-of-two-processes" class="nav-link active" data-scroll-target="#introduction-a-tale-of-two-processes">1. Introduction: A Tale of Two Processes</a>
   <ul class="collapse">
-  <li><a href="#background" id="toc-background" class="nav-link" data-scroll-target="#background">Background</a></li>
+  <li><a href="#the-problem" id="toc-the-problem" class="nav-link" data-scroll-target="#the-problem">The Problem</a></li>
   <li><a href="#research-question" id="toc-research-question" class="nav-link" data-scroll-target="#research-question">Research Question</a></li>
+  <li><a href="#why-this-matters" id="toc-why-this-matters" class="nav-link" data-scroll-target="#why-this-matters">Why This Matters</a></li>
+  <li><a href="#analysis-roadmap" id="toc-analysis-roadmap" class="nav-link" data-scroll-target="#analysis-roadmap">Analysis Roadmap</a></li>
   </ul></li>
-  <li><a href="#setup-configuration" id="toc-setup-configuration" class="nav-link" data-scroll-target="#setup-configuration">2. Setup &amp; Configuration</a></li>
-  <li><a href="#data-loading-with-shapefile-caching" id="toc-data-loading-with-shapefile-caching" class="nav-link" data-scroll-target="#data-loading-with-shapefile-caching">3. Data Loading with Shapefile Caching</a></li>
-  <li><a href="#prepare-road-network" id="toc-prepare-road-network" class="nav-link" data-scroll-target="#prepare-road-network">4. Prepare Road Network</a></li>
-  <li><a href="#match-traffic-data-to-roads" id="toc-match-traffic-data-to-roads" class="nav-link" data-scroll-target="#match-traffic-data-to-roads">5. Match Traffic Data to Roads</a>
+  <li><a href="#theoretical-framework-what-causes-roadkill" id="toc-theoretical-framework-what-causes-roadkill" class="nav-link" data-scroll-target="#theoretical-framework-what-causes-roadkill">2. Theoretical Framework: What Causes Roadkill?</a>
   <ul class="collapse">
-  <li><a href="#note-implications-of-traffic-data-filtering" id="toc-note-implications-of-traffic-data-filtering" class="nav-link" data-scroll-target="#note-implications-of-traffic-data-filtering"><strong>Note:</strong> Implications of Traffic Data Filtering</a></li>
-  <li><a href="#results-will-characterize-the-traffic-roadkill-relationship-on-denmarks-monitored-road-network-which-is-policy-relevant-but-may-not-generalize-to-all-road-types." id="toc-results-will-characterize-the-traffic-roadkill-relationship-on-denmarks-monitored-road-network-which-is-policy-relevant-but-may-not-generalize-to-all-road-types." class="nav-link" data-scroll-target="#results-will-characterize-the-traffic-roadkill-relationship-on-denmarks-monitored-road-network-which-is-policy-relevant-but-may-not-generalize-to-all-road-types.">Results will characterize the traffic-roadkill relationship on Denmark’s <strong>monitored road network</strong>, which is policy-relevant but may not generalize to all road types.</a></li>
+  <li><a href="#causal-diagram" id="toc-causal-diagram" class="nav-link" data-scroll-target="#causal-diagram">Causal Diagram</a></li>
   </ul></li>
-  <li><a href="#extract-land-use-around-roads" id="toc-extract-land-use-around-roads" class="nav-link" data-scroll-target="#extract-land-use-around-roads">6. Extract Land Use Around Roads</a></li>
-  <li><a href="#aggregate-roadkill-by-road-segment" id="toc-aggregate-roadkill-by-road-segment" class="nav-link" data-scroll-target="#aggregate-roadkill-by-road-segment">7. Aggregate Roadkill by Road Segment</a></li>
-  <li><a href="#create-final-modeling-dataset" id="toc-create-final-modeling-dataset" class="nav-link" data-scroll-target="#create-final-modeling-dataset">8. Create Final Modeling Dataset</a>
+  <li><a href="#data-preparation-building-the-analysis-dataset" id="toc-data-preparation-building-the-analysis-dataset" class="nav-link" data-scroll-target="#data-preparation-building-the-analysis-dataset">3. Data Preparation: Building the Analysis Dataset</a>
   <ul class="collapse">
-  <li><a href="#note-data-quality" id="toc-note-data-quality" class="nav-link" data-scroll-target="#note-data-quality"><strong>Note:</strong> Data Quality</a></li>
-  <li><a href="#zero-inflation-83-of-segments-have-zero-roadkill-motivating-a-hurdle-model-to-separately-model-presenceabsence-and-intensity." id="toc-zero-inflation-83-of-segments-have-zero-roadkill-motivating-a-hurdle-model-to-separately-model-presenceabsence-and-intensity." class="nav-link" data-scroll-target="#zero-inflation-83-of-segments-have-zero-roadkill-motivating-a-hurdle-model-to-separately-model-presenceabsence-and-intensity."><strong>Zero-Inflation</strong>: ~83% of segments have zero roadkill, motivating a <strong>hurdle model</strong> to separately model presence/absence and intensity.</a></li>
-  </ul></li>
-  <li><a href="#exploratory-data-analysis" id="toc-exploratory-data-analysis" class="nav-link" data-scroll-target="#exploratory-data-analysis">9. Exploratory Data Analysis</a></li>
-  <li><a href="#statistical-model" id="toc-statistical-model" class="nav-link" data-scroll-target="#statistical-model">10. Statistical Model</a>
+  <li><a href="#technical-setup" id="toc-technical-setup" class="nav-link" data-scroll-target="#technical-setup">Technical Setup</a></li>
+  <li><a href="#data-sources" id="toc-data-sources" class="nav-link" data-scroll-target="#data-sources">Data Sources</a>
   <ul class="collapse">
-  <li><a href="#why-a-hurdle-model" id="toc-why-a-hurdle-model" class="nav-link" data-scroll-target="#why-a-hurdle-model">Why a Hurdle Model?</a></li>
-  <li><a href="#model-specification" id="toc-model-specification" class="nav-link" data-scroll-target="#model-specification">Model Specification</a></li>
+  <li><a href="#step-1-load-roadkill-observations" id="toc-step-1-load-roadkill-observations" class="nav-link" data-scroll-target="#step-1-load-roadkill-observations">Step 1: Load Roadkill Observations</a></li>
   </ul></li>
-  <li><a href="#results-interpretation" id="toc-results-interpretation" class="nav-link" data-scroll-target="#results-interpretation">10. Results &amp; Interpretation</a>
+  <li><a href="#step-2-filter-road-network-to-motorized-roads" id="toc-step-2-filter-road-network-to-motorized-roads" class="nav-link" data-scroll-target="#step-2-filter-road-network-to-motorized-roads">Step 2: Filter Road Network to Motorized Roads</a></li>
+  <li><a href="#step-3-match-traffic-counts-to-road-segments" id="toc-step-3-match-traffic-counts-to-road-segments" class="nav-link" data-scroll-target="#step-3-match-traffic-counts-to-road-segments">Step 3: Match Traffic Counts to Road Segments</a>
   <ul class="collapse">
-  <li><a href="#interpretation" id="toc-interpretation" class="nav-link" data-scroll-target="#interpretation">Interpretation</a></li>
+  <li><a href="#applying-a-distance-threshold" id="toc-applying-a-distance-threshold" class="nav-link" data-scroll-target="#applying-a-distance-threshold">Applying a Distance Threshold</a></li>
+  <li><a href="#important-limitation-to-note" id="toc-important-limitation-to-note" class="nav-link" data-scroll-target="#important-limitation-to-note"><strong>Important Limitation to Note</strong></a></li>
   </ul></li>
-  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions">11. Conclusions</a></li>
+  <li><a href="#step-4-characterize-land-use-around-roads" id="toc-step-4-characterize-land-use-around-roads" class="nav-link" data-scroll-target="#step-4-characterize-land-use-around-roads">Step 4: Characterize Land Use Around Roads</a></li>
+  <li><a href="#step-5-count-roadkill-events-per-road-segment" id="toc-step-5-count-roadkill-events-per-road-segment" class="nav-link" data-scroll-target="#step-5-count-roadkill-events-per-road-segment">Step 5: Count Roadkill Events per Road Segment</a></li>
+  <li><a href="#step-6-merge-all-data-sources-into-final-dataset" id="toc-step-6-merge-all-data-sources-into-final-dataset" class="nav-link" data-scroll-target="#step-6-merge-all-data-sources-into-final-dataset">Step 6: Merge All Data Sources into Final Dataset</a></li>
+  </ul></li>
+  <li><a href="#exploratory-data-analysis-visualizing-the-patterns" id="toc-exploratory-data-analysis-visualizing-the-patterns" class="nav-link" data-scroll-target="#exploratory-data-analysis-visualizing-the-patterns">4. Exploratory Data Analysis: Visualizing the Patterns</a></li>
+  <li><a href="#model-selection-why-we-need-a-hurdle-model" id="toc-model-selection-why-we-need-a-hurdle-model" class="nav-link" data-scroll-target="#model-selection-why-we-need-a-hurdle-model">5. Model Selection: Why We Need a Hurdle Model</a>
+  <ul class="collapse">
+  <li><a href="#the-hurdle-model-concept" id="toc-the-hurdle-model-concept" class="nav-link" data-scroll-target="#the-hurdle-model-concept">The Hurdle Model Concept</a></li>
+  <li><a href="#demonstrating-the-model-simulation-exercise" id="toc-demonstrating-the-model-simulation-exercise" class="nav-link" data-scroll-target="#demonstrating-the-model-simulation-exercise">Demonstrating the Model: Simulation Exercise</a></li>
+  <li><a href="#model-assumptions" id="toc-model-assumptions" class="nav-link" data-scroll-target="#model-assumptions">Model Assumptions</a>
+  <ul class="collapse">
+  <li><a href="#simulating-data-from-a-hurdle-model" id="toc-simulating-data-from-a-hurdle-model" class="nav-link" data-scroll-target="#simulating-data-from-a-hurdle-model">Simulating Data from a Hurdle Model</a></li>
+  <li><a href="#fitting-model-to-simulated-data" id="toc-fitting-model-to-simulated-data" class="nav-link" data-scroll-target="#fitting-model-to-simulated-data">Fitting Model to Simulated Data</a></li>
+  <li><a href="#visualizing-simulated-data-vs.-model-predictions" id="toc-visualizing-simulated-data-vs.-model-predictions" class="nav-link" data-scroll-target="#visualizing-simulated-data-vs.-model-predictions">Visualizing Simulated Data vs.&nbsp;Model Predictions</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#applying-the-hurdle-model-to-real-roadkill-data" id="toc-applying-the-hurdle-model-to-real-roadkill-data" class="nav-link" data-scroll-target="#applying-the-hurdle-model-to-real-roadkill-data">6. Applying the Hurdle Model to Real Roadkill Data</a>
+  <ul class="collapse">
+  <li><a href="#formal-model-specification" id="toc-formal-model-specification" class="nav-link" data-scroll-target="#formal-model-specification">Formal Model Specification</a></li>
+  <li><a href="#hypotheses" id="toc-hypotheses" class="nav-link" data-scroll-target="#hypotheses">Hypotheses</a></li>
+  </ul></li>
+  <li><a href="#model-results-interpretation" id="toc-model-results-interpretation" class="nav-link" data-scroll-target="#model-results-interpretation">7. Model Results &amp; Interpretation</a>
+  <ul class="collapse">
+  <li><a href="#how-to-interpret-coefficients" id="toc-how-to-interpret-coefficients" class="nav-link" data-scroll-target="#how-to-interpret-coefficients">How to Interpret Coefficients</a></li>
+  </ul></li>
+  <li><a href="#hypothesis-testing-conclusions" id="toc-hypothesis-testing-conclusions" class="nav-link" data-scroll-target="#hypothesis-testing-conclusions">8. Hypothesis Testing &amp; Conclusions</a>
+  <ul class="collapse">
+  <li><a href="#summary-of-findings" id="toc-summary-of-findings" class="nav-link" data-scroll-target="#summary-of-findings">Summary of Findings</a>
+  <ul class="collapse">
+  <li><a href="#h1-traffic-volume-effect-supported" id="toc-h1-traffic-volume-effect-supported" class="nav-link" data-scroll-target="#h1-traffic-volume-effect-supported">H1: Traffic Volume Effect — <strong>SUPPORTED</strong></a></li>
+  <li><a href="#h2-land-use-effects-partially-supported" id="toc-h2-land-use-effects-partially-supported" class="nav-link" data-scroll-target="#h2-land-use-effects-partially-supported">H2: Land Use Effects — <strong>PARTIALLY SUPPORTED</strong></a></li>
+  <li><a href="#h3-road-characteristics-supported" id="toc-h3-road-characteristics-supported" class="nav-link" data-scroll-target="#h3-road-characteristics-supported">H3: Road Characteristics — <strong>SUPPORTED</strong></a></li>
+  </ul></li>
+  <li><a href="#policy-implications" id="toc-policy-implications" class="nav-link" data-scroll-target="#policy-implications">Policy Implications</a></li>
+  <li><a href="#limitations" id="toc-limitations" class="nav-link" data-scroll-target="#limitations">Limitations</a></li>
+  <li><a href="#concluding-thoughts" id="toc-concluding-thoughts" class="nav-link" data-scroll-target="#concluding-thoughts">Concluding Thoughts</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -312,26 +343,74 @@ window.Quarto = {
 
 
 
-<section id="introduction-research-question" class="level1">
-<h1>1. Introduction &amp; Research Question</h1>
-<section id="background" class="level2">
-<h2 class="anchored" data-anchor-id="background">Background</h2>
-<p>Wildlife-vehicle collisions represent a critical intersection of ecological conservation and transportation safety. In Denmark, roadkill events affect biodiversity while also posing risks to motorists. Understanding the factors that influence roadkill frequency—particularly traffic volume and surrounding land use—is essential for developing evidence-based mitigation strategies.</p>
+<section id="introduction-a-tale-of-two-processes" class="level1">
+<h1>1. Introduction: A Tale of Two Processes</h1>
+<section id="the-problem" class="level2">
+<h2 class="anchored" data-anchor-id="the-problem">The Problem</h2>
+<p>Every year, thousands of wild animals are killed on roads across Denmark. These wildlife-vehicle collisions create a dual challenge: they threaten local biodiversity while also posing safety risks to drivers. Understanding what drives these collisions is essential for developing effective mitigation strategies—but the data tell an interesting story.</p>
+<p>When we examine roadkill data across Denmark’s road network, we observe a peculiar pattern: <strong>most road segments (83%) have zero recorded roadkill events, while the remaining segments show varying levels of collision intensity</strong>. This pattern suggests something important: the factors that determine <em>whether</em> roadkill occurs may differ from the factors that determine <em>how many</em> animals are killed once collisions start happening.</p>
 </section>
 <section id="research-question" class="level2">
 <h2 class="anchored" data-anchor-id="research-question">Research Question</h2>
-<p><strong>How do traffic volume (AADT) and land use characteristics affect the frequency and intensity of roadkill on Danish roads?</strong></p>
-<p>This question requires understanding two distinct processes:</p>
+<p><strong>How do traffic volume and land use characteristics affect wildlife-vehicle collisions on Danish roads?</strong></p>
+<p>Specifically, we investigate:</p>
 <ol type="1">
-<li><strong>Whether roadkill occurs</strong> on a given road segment (presence/absence)</li>
-<li><strong>How many animals are killed</strong> when collisions do occur (intensity)</li>
+<li><strong>Occurrence</strong>: What factors increase the probability that roadkill happens at all on a given road segment?</li>
+<li><strong>Intensity</strong>: What factors influence how many collision events occur, given that at least one has happened?</li>
 </ol>
-<p>The high proportion of road segments with zero observed roadkill (~83%) suggests these processes operate differently, making a <strong>hurdle model</strong> the appropriate statistical framework.</p>
+</section>
+<section id="why-this-matters" class="level2">
+<h2 class="anchored" data-anchor-id="why-this-matters">Why This Matters</h2>
+<p>Understanding these dual processes allows transportation planners and conservation managers to: - Identify high-risk locations before roadkill occurs (prevention) - Prioritize mitigation efforts where collisions are most severe (intervention) - Allocate resources efficiently based on different risk profiles</p>
+</section>
+<section id="analysis-roadmap" class="level2">
+<h2 class="anchored" data-anchor-id="analysis-roadmap">Analysis Roadmap</h2>
+<p>This blog post walks through a complete statistical analysis:</p>
+<ol type="1">
+<li><strong>Theoretical framework</strong>: How variables relate causally (DAG)</li>
+<li><strong>Data preparation</strong>: Integrating roadkill observations with traffic, road networks, and land use</li>
+<li><strong>Model selection</strong>: Why traditional regression fails and how hurdle models solve the problem</li>
+<li><strong>Validation</strong>: Testing the model on simulated data with known parameters</li>
+<li><strong>Real-world application</strong>: Fitting the model to Danish roadkill data</li>
+<li><strong>Interpretation</strong>: What the results mean for conservation policy</li>
+</ol>
 <hr>
 </section>
 </section>
-<section id="setup-configuration" class="level1">
-<h1>2. Setup &amp; Configuration</h1>
+<section id="theoretical-framework-what-causes-roadkill" class="level1">
+<h1>2. Theoretical Framework: What Causes Roadkill?</h1>
+<p>Before diving into data, we need a clear theory about <em>how</em> different factors influence wildlife-vehicle collisions. A <strong>Directed Acyclic Graph (DAG)</strong> helps us visualize these causal relationships and justify which variables to include in our statistical model.</p>
+<section id="causal-diagram" class="level2">
+<h2 class="anchored" data-anchor-id="causal-diagram">Causal Diagram</h2>
+<p>The DAG below represents our hypothesized causal structure:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/dag-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Interpretation</strong>:</p>
+<ul>
+<li><strong>Traffic (AADT)</strong> directly affects roadkill probability (more vehicles → more collision opportunities)</li>
+<li><strong>Land use</strong> influences wildlife presence near roads (forests/parks attract wildlife)</li>
+<li><strong>Road type</strong> is a common cause affecting traffic volume, speed limits, and surrounding land use</li>
+<li><strong>Speed limit</strong> affects collision severity and driver reaction time</li>
+<li>We control for <strong>road type</strong> to avoid confounding when estimating traffic effects</li>
+</ul>
+<p><strong>Why This Matters for Our Model</strong>:</p>
+<p>This DAG justifies our modeling approach: we must include road type, speed limit, and land use as control variables to properly isolate the causal effect of traffic on roadkill. Failing to account for these relationships would produce biased estimates (confounding).</p>
+<p>Now that we have our theoretical framework, let’s prepare the data.</p>
+<hr>
+</section>
+</section>
+<section id="data-preparation-building-the-analysis-dataset" class="level1">
+<h1>3. Data Preparation: Building the Analysis Dataset</h1>
+<p>Our analysis requires integrating multiple geospatial datasets covering Denmark. This section outlines the data sources and processing steps.</p>
+<section id="technical-setup" class="level2">
+<h2 class="anchored" data-anchor-id="technical-setup">Technical Setup</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
@@ -339,36 +418,49 @@ window.Quarto = {
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pscl)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(yaml)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Load configuration</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>config <span class="ot">&lt;-</span> <span class="fu">read_yaml</span>(<span class="fu">here</span>(<span class="st">"posts/eds222-final/config.yml"</span>))</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggdag)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dagitty)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(config<span class="sc">$</span>seed)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>CRS_M <span class="ot">&lt;-</span> config<span class="sc">$</span>crs <span class="co"># EPSG:25832, Denmark ETRS89 / UTM zone 32N</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Denmark bounding box (WGS84)</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>dk_bbox_wgs84 <span class="ot">&lt;-</span> <span class="fu">st_bbox</span>(<span class="fu">c</span>(</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">xmin =</span> config<span class="sc">$</span>bbox_xmin,</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">ymin =</span> config<span class="sc">$</span>bbox_ymin,</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">xmax =</span> config<span class="sc">$</span>bbox_xmax,</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">ymax =</span> config<span class="sc">$</span>bbox_ymax</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>), <span class="at">crs =</span> config<span class="sc">$</span>bbox_crs)</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform to projected CRS</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>dk_bbox_proj <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(<span class="fu">st_as_sfc</span>(dk_bbox_wgs84), CRS_M) <span class="sc">%&gt;%</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_bbox</span>()</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Setup complete!</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Load configuration</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>config <span class="ot">&lt;-</span> <span class="fu">read_yaml</span>(<span class="fu">here</span>(<span class="st">"posts/eds222-final/config.yml"</span>))</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(config<span class="sc">$</span>seed)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>CRS_M <span class="ot">&lt;-</span> config<span class="sc">$</span>crs <span class="co"># EPSG:25832, Denmark ETRS89 / UTM zone 32N</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Denmark bounding box (WGS84)</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>dk_bbox_wgs84 <span class="ot">&lt;-</span> <span class="fu">st_bbox</span>(<span class="fu">c</span>(</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">xmin =</span> config<span class="sc">$</span>bbox_xmin,</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">ymin =</span> config<span class="sc">$</span>bbox_ymin,</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">xmax =</span> config<span class="sc">$</span>bbox_xmax,</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">ymax =</span> config<span class="sc">$</span>bbox_ymax</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>), <span class="at">crs =</span> config<span class="sc">$</span>bbox_crs)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform to projected CRS</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>dk_bbox_proj <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(<span class="fu">st_as_sfc</span>(dk_bbox_wgs84), CRS_M) <span class="sc">%&gt;%</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_bbox</span>()</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Setup complete!</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Setup complete!</code></pre>
 </div>
 </div>
-<hr>
 </section>
-<section id="data-loading-with-shapefile-caching" class="level1">
-<h1>3. Data Loading with Shapefile Caching</h1>
-<p>Roadkill observations are point data with coordinates. We filter to Denmark and the analysis time period (2017-2019) to match CORINE Land Cover 2018.</p>
+<section id="data-sources" class="level2">
+<h2 class="anchored" data-anchor-id="data-sources">Data Sources</h2>
+<p>We combine four datasets:</p>
+<ol type="1">
+<li><strong>Roadkill observations</strong>: Global Roadkill Database (2017-2019) - GPS coordinates of reported wildlife-vehicle collisions</li>
+<li><strong>Road network</strong>: OpenStreetMap - Complete Danish road geometry with attributes (type, speed limit)</li>
+<li><strong>Traffic counts</strong>: Vejdirektoratet (Danish Road Directorate) - Annual Average Daily Traffic (AADT) from monitoring stations</li>
+<li><strong>Land use</strong>: OpenStreetMap - Polygons classifying areas as forest, farmland, residential, parks, etc.</li>
+</ol>
+<p><strong>Time period</strong>: 2017-2019 to align with land cover classifications</p>
+<p><strong>Geographic scope</strong>: Denmark mainland (bounding box filters)</p>
+<section id="step-1-load-roadkill-observations" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-load-roadkill-observations">Step 1: Load Roadkill Observations</h3>
+<p>Roadkill data are point locations (latitude/longitude). We filter to Denmark and transform to a projected coordinate system suitable for distance calculations.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load roadkill CSV</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>road_kill_dk <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">here</span>(config<span class="sc">$</span>roadkill_csv_path)) <span class="sc">%&gt;%</span></span>
@@ -499,12 +591,13 @@ Top land use classes:</code></pre>
 10  industrial   3310</code></pre>
 </div>
 </div>
-<p><strong>Caching Summary</strong>: All shapefiles are now cached in <code>data/processed/</code>. On subsequent runs, loading should be nearly instantaneous.</p>
+<p><strong>Computational Note</strong>: These shapefiles are large (millions of features). We cache processed versions to avoid reloading on subsequent runs. First run takes ~5-10 minutes; cached runs are instantaneous.</p>
 <hr>
 </section>
-<section id="prepare-road-network" class="level1">
-<h1>4. Prepare Road Network</h1>
-<p>The analysis is restricted to roads accessible by motor vehicles, excluding pedestrian paths, cycleways, and footways.</p>
+</section>
+<section id="step-2-filter-road-network-to-motorized-roads" class="level2">
+<h2 class="anchored" data-anchor-id="step-2-filter-road-network-to-motorized-roads">Step 2: Filter Road Network to Motorized Roads</h2>
+<p>The OpenStreetMap road network includes all path types (sidewalks, bike lanes, etc.). We restrict our analysis to roads where wildlife-vehicle collisions can occur: roads accessible to motor vehicles.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract car codes from config</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>car_codes <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
@@ -538,11 +631,13 @@ Top land use classes:</code></pre>
 <pre><code>  Mean segment length: 0.3 km</code></pre>
 </div>
 </div>
+<p><strong>Why filter by road type?</strong> Including pedestrian paths would dilute our analysis—wildlife aren’t killed on sidewalks. Focusing on motorized roads ensures our predictors (traffic volume, speed) are relevant.</p>
 <hr>
 </section>
-<section id="match-traffic-data-to-roads" class="level1">
-<h1>5. Match Traffic Data to Roads</h1>
-<p>Computing distances between all roads and traffic points is computationally expensive (~5-10 minutes). We cache the results.</p>
+<section id="step-3-match-traffic-counts-to-road-segments" class="level2">
+<h2 class="anchored" data-anchor-id="step-3-match-traffic-counts-to-road-segments">Step 3: Match Traffic Counts to Road Segments</h2>
+<p>Traffic monitoring stations are point locations with AADT (vehicles/day). Roads are line geometries. We need to assign each road segment the traffic volume from its nearest monitoring station.</p>
+<p><strong>Challenge</strong>: This requires computing distances between ~200,000 road segments and ~1,000 traffic stations—computationally expensive.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define cache path for distance data</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>distances_cache_file <span class="ot">&lt;-</span> <span class="fu">here</span>(config<span class="sc">$</span>distances_cache_path)</span>
@@ -578,10 +673,13 @@ Top land use classes:</code></pre>
 <pre><code>Distance matching complete.</code></pre>
 </div>
 </div>
-<p>We use the 75th percentile of road-to-traffic distances as a threshold. This balances:</p>
+<section id="applying-a-distance-threshold" class="level3">
+<h3 class="anchored" data-anchor-id="applying-a-distance-threshold">Applying a Distance Threshold</h3>
+<p>Not all roads have nearby traffic stations. Matching distant roads to far-away stations introduces measurement error. We apply a threshold: only roads within a reasonable distance of a station get traffic data assigned.</p>
+<p><strong>Threshold choice</strong>: 75th percentile of distances balances two goals:</p>
 <ul>
-<li><strong>Coverage</strong>: Captures 75% of road segments</li>
-<li><strong>Match quality</strong>: Avoids matching roads to distant, unrepresentative traffic stations</li>
+<li><strong>Coverage</strong>: Include enough roads for statistical power (75% of network)</li>
+<li><strong>Accuracy</strong>: Avoid questionable matches (exclude roads &gt;10km from any station)</li>
 </ul>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply configured threshold</span></span>
@@ -619,22 +717,21 @@ Top land use classes:</code></pre>
 <pre><code>AADT range: 0 - 59,632 vehicles/day</code></pre>
 </div>
 </div>
-<section id="note-implications-of-traffic-data-filtering" class="level3">
-<h3 class="anchored" data-anchor-id="note-implications-of-traffic-data-filtering"><strong>Note:</strong> Implications of Traffic Data Filtering</h3>
-<p>This filtering step means our analysis is restricted to roads near traffic monitoring infrastructure. This represents:</p>
+</section>
+<section id="important-limitation-to-note" class="level3">
+<h3 class="anchored" data-anchor-id="important-limitation-to-note"><strong>Important Limitation to Note</strong></h3>
+<p>By filtering to roads with traffic data, our analysis focuses on Denmark’s <strong>monitored road network</strong>:</p>
 <ul>
-<li>✓ Major transportation corridors</li>
-<li>✓ Roads in developed/urbanized areas</li>
-<li>✗ Remote rural roads (less monitored)</li>
+<li>✓ <strong>Included</strong>: Major highways, urban arterials, well-monitored corridors</li>
+<li>✗ <strong>Excluded</strong>: Remote rural roads far from monitoring infrastructure</li>
 </ul>
+<p>This is policy-relevant (most traffic and roadkill occur on monitored roads) but limits generalizability to all road types.</p>
+<hr>
 </section>
-<section id="results-will-characterize-the-traffic-roadkill-relationship-on-denmarks-monitored-road-network-which-is-policy-relevant-but-may-not-generalize-to-all-road-types." class="level2">
-<h2 class="anchored" data-anchor-id="results-will-characterize-the-traffic-roadkill-relationship-on-denmarks-monitored-road-network-which-is-policy-relevant-but-may-not-generalize-to-all-road-types.">Results will characterize the traffic-roadkill relationship on Denmark’s <strong>monitored road network</strong>, which is policy-relevant but may not generalize to all road types.</h2>
 </section>
-</section>
-<section id="extract-land-use-around-roads" class="level1">
-<h1>6. Extract Land Use Around Roads</h1>
-<p>Use OpenStreetMap land use polygons to characterize the environment around each road segment. This captures habitat types that influence wildlife-vehicle collision risk.</p>
+<section id="step-4-characterize-land-use-around-roads" class="level2">
+<h2 class="anchored" data-anchor-id="step-4-characterize-land-use-around-roads">Step 4: Characterize Land Use Around Roads</h2>
+<p>Wildlife presence near roads depends on surrounding habitat. A road through dense forest has different collision risk than a road through farmland. We extract land use within 500m buffers around each road segment.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>landuse_cache_file <span class="ot">&lt;-</span> <span class="fu">here</span>(config<span class="sc">$</span>landuse_props_path)</span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -803,11 +900,13 @@ Top land use classes:</code></pre>
 <pre><code>[1] 7202</code></pre>
 </div>
 </div>
+<p><strong>Why 500m buffers?</strong> This distance approximates wildlife movement ranges and habitat edge effects. Roads near forests within 500m may experience wildlife crossing activity; roads farther away less so.</p>
+<p><strong>Land use categories</strong>: - <strong>Forest/Parks</strong>: Wildlife habitat (deer, foxes, etc.) - <strong>Farmland</strong>: Agricultural areas with edge habitat - <strong>Residential</strong>: Urban development (lower wildlife density)</p>
 <hr>
 </section>
-<section id="aggregate-roadkill-by-road-segment" class="level1">
-<h1>7. Aggregate Roadkill by Road Segment</h1>
-<p>Match each roadkill point to its nearest road segment and count events per segment.</p>
+<section id="step-5-count-roadkill-events-per-road-segment" class="level2">
+<h2 class="anchored" data-anchor-id="step-5-count-roadkill-events-per-road-segment">Step 5: Count Roadkill Events per Road Segment</h2>
+<p>Now we link roadkill observations to the road network. Each roadkill point (GPS coordinate) is matched to its nearest road segment, and we count total events per segment.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define cache path for aggregated roadkill data</span></span>
 <span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>roadkill_cache_file <span class="ot">&lt;-</span> <span class="fu">here</span>(config<span class="sc">$</span>roadkill_cache_path)</span>
@@ -842,10 +941,13 @@ Top land use classes:</code></pre>
 <pre><code>  Unique road segments with roadkill: 10,095 </code></pre>
 </div>
 </div>
+<p><strong>Spatial join logic</strong>: Each roadkill point is assigned to the nearest road segment (straight-line distance). This assumes roadkill occurs on or very near the road where collision happened.</p>
 <hr>
 </section>
-<section id="create-final-modeling-dataset" class="level1">
-<h1>8. Create Final Modeling Dataset</h1>
+<section id="step-6-merge-all-data-sources-into-final-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="step-6-merge-all-data-sources-into-final-dataset">Step 6: Merge All Data Sources into Final Dataset</h2>
+<p>We now combine: - Road geometry and characteristics (type, speed, length) - Traffic volume (AADT) - Land use proportions (forest, farmland, residential, parks) - Roadkill counts (our outcome variable)</p>
+<p>into a single analysis-ready dataset.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge all data sources</span></span>
 <span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>model_data <span class="ot">&lt;-</span> roads_traf <span class="sc">%&gt;%</span></span>
@@ -910,21 +1012,24 @@ Top land use classes:</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Variance/Mean ratio (dispersion): 2.71 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Total roadkill events:"</span>, <span class="fu">format</span>(<span class="fu">sum</span>(model_data<span class="sc">$</span>roadkill_count), <span class="at">big.mark =</span> <span class="st">","</span>), <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)  </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Total roadkill events:"</span>, <span class="fu">format</span>(<span class="fu">sum</span>(model_data<span class="sc">$</span>roadkill_count), <span class="at">big.mark =</span> <span class="st">","</span>), <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Total roadkill events: 10,834 </code></pre>
 </div>
 </div>
-<section id="note-data-quality" class="level3">
-<h3 class="anchored" data-anchor-id="note-data-quality"><strong>Note:</strong> Data Quality</h3>
-<p><strong>Overdispersion</strong>: The Variance/Mean ratio &gt;&gt; 1 indicates overdispersion, justifying use of a <strong>negative binomial</strong> distribution (rather than Poisson) in the count component.</p>
+<p><strong>Key observations that inform our modeling choice</strong>:</p>
+<ol type="1">
+<li><strong>Zero-inflation</strong>: ~83% of roads have zero roadkill → standard Poisson/negative binomial models assume fewer zeros</li>
+<li><strong>Overdispersion</strong>: Variance &gt;&gt; Mean → negative binomial (not Poisson) needed for count component</li>
+<li><strong>Exposure variable</strong>: Road length matters (longer roads = more opportunity for collisions) → use as offset</li>
+</ol>
+<p>These patterns point us toward a <strong>hurdle model with negative binomial count component</strong>. Before fitting it, let’s visualize the data.</p>
+<hr>
 </section>
-<section id="zero-inflation-83-of-segments-have-zero-roadkill-motivating-a-hurdle-model-to-separately-model-presenceabsence-and-intensity." class="level2">
-<h2 class="anchored" data-anchor-id="zero-inflation-83-of-segments-have-zero-roadkill-motivating-a-hurdle-model-to-separately-model-presenceabsence-and-intensity."><strong>Zero-Inflation</strong>: ~83% of segments have zero roadkill, motivating a <strong>hurdle model</strong> to separately model presence/absence and intensity.</h2>
 </section>
-</section>
-<section id="exploratory-data-analysis" class="level1">
-<h1>9. Exploratory Data Analysis</h1>
+<section id="exploratory-data-analysis-visualizing-the-patterns" class="level1">
+<h1>4. Exploratory Data Analysis: Visualizing the Patterns</h1>
+<p>Visual exploration helps us understand relationships before modeling. Do high-traffic roads have more roadkill? Do road types differ? Does land use matter?</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
 <span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -978,32 +1083,204 @@ Top land use classes:</code></pre>
 <span id="cb86-50"><a href="#cb86-50" aria-hidden="true" tabindex="-1"></a>(p1 <span class="sc">+</span> p2) <span class="sc">/</span> (p3 <span class="sc">+</span> p4)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><img src="eda_visualization.png" class="img-fluid"></p>
-<p><strong>Key Observations</strong>:</p>
-<ul>
-<li>Panel A shows extreme zero-inflation (~83% zeros)</li>
-<li>Panel B suggests positive association between traffic and roadkill</li>
-<li>Panel C indicates road type matters</li>
-<li>Panel D confirms longer roads have more events (exposure effect)</li>
-</ul>
+<p><strong>What We Learn from These Plots</strong>:</p>
+<ol type="1">
+<li><strong>Panel A (distribution)</strong>: Massive spike at zero confirms zero-inflation—most roads never experience roadkill</li>
+<li><strong>Panel B (traffic effect)</strong>: Clear positive trend—higher AADT associates with more roadkill</li>
+<li><strong>Panel C (road type)</strong>: Major roads show higher roadkill intensity than minor roads (conditional on having any)</li>
+<li><strong>Panel D (road length)</strong>: Longer segments have more events, confirming we need a length offset</li>
+</ol>
+<p>These patterns validate our hypotheses from the DAG. Now let’s build a statistical model to quantify these effects.</p>
 <hr>
 </section>
-<section id="statistical-model" class="level1">
-<h1>10. Statistical Model</h1>
-<section id="why-a-hurdle-model" class="level3">
-<h3 class="anchored" data-anchor-id="why-a-hurdle-model">Why a Hurdle Model?</h3>
-<p>The data exhibits two key characteristics:</p>
+<section id="model-selection-why-we-need-a-hurdle-model" class="level1">
+<h1>5. Model Selection: Why We Need a Hurdle Model</h1>
+<p>Traditional count regression models (Poisson, negative binomial) don’t work well for our data because they underestimate the number of zeros. We need a model designed for <strong>zero-inflated count data</strong>.</p>
+<section id="the-hurdle-model-concept" class="level2">
+<h2 class="anchored" data-anchor-id="the-hurdle-model-concept">The Hurdle Model Concept</h2>
+<p>A <strong>hurdle model</strong> recognizes that two separate processes govern our data:</p>
 <ol type="1">
-<li><strong>Excess Zeros</strong>: 83% of road segments have zero roadkill</li>
-<li><strong>Overdispersion</strong>: Variance &gt;&gt; Mean in the positive counts</li>
-</ol>
-<p>A <strong>Hurdle Model</strong> addresses both issues by modeling:</p>
+<li><strong>“Will roadkill occur at all?”</strong> (Binary process: zero vs.&nbsp;non-zero)
 <ul>
-<li><strong>Zero-inflation component</strong> (logistic regression): Probability of ANY roadkill</li>
-<li><strong>Count component</strong> (negative binomial): Expected count GIVEN roadkill occurs</li>
-</ul>
+<li>Modeled with logistic regression</li>
+<li>Predictors: factors influencing wildlife-road intersection probability</li>
+</ul></li>
+<li><strong>“If roadkill occurs, how many events?”</strong> (Count process: intensity)
+<ul>
+<li>Modeled with truncated count distribution (here: negative binomial)</li>
+<li>Predictors: factors influencing collision frequency given presence</li>
+</ul></li>
+</ol>
+<p>Think of it as a two-stage process: first an animal must cross the road (stage 1), then given crossing happens, how often do collisions occur (stage 2)?</p>
 </section>
-<section id="model-specification" class="level3">
-<h3 class="anchored" data-anchor-id="model-specification">Model Specification</h3>
+<section id="demonstrating-the-model-simulation-exercise" class="level2">
+<h2 class="anchored" data-anchor-id="demonstrating-the-model-simulation-exercise">Demonstrating the Model: Simulation Exercise</h2>
+<p>Before applying this model to real data, let’s verify it works by simulating data with <em>known</em> parameters and checking we can recover them.</p>
+</section>
+<section id="model-assumptions" class="level2">
+<h2 class="anchored" data-anchor-id="model-assumptions">Model Assumptions</h2>
+<p>A hurdle model assumes:</p>
+<ol type="1">
+<li><strong>Binary component</strong>: Logistic regression for zero vs.&nbsp;non-zero</li>
+<li><strong>Count component</strong>: Negative binomial for positive counts (conditional on being &gt; 0)</li>
+<li><strong>Independence</strong>: The two components can have different predictors</li>
+</ol>
+<section id="simulating-data-from-a-hurdle-model" class="level3">
+<h3 class="anchored" data-anchor-id="simulating-data-from-a-hurdle-model">Simulating Data from a Hurdle Model</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a>n_sim <span class="ot">&lt;-</span> <span class="dv">1000</span>  <span class="co"># Number of observations</span></span>
+<span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-4"><a href="#cb87-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate predictor</span></span>
+<span id="cb87-5"><a href="#cb87-5" aria-hidden="true" tabindex="-1"></a>x_sim <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n_sim, <span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="dv">2</span>)  <span class="co"># Traffic (scaled)</span></span>
+<span id="cb87-6"><a href="#cb87-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-7"><a href="#cb87-7" aria-hidden="true" tabindex="-1"></a><span class="co"># TRUE parameters (what we'll try to recover)</span></span>
+<span id="cb87-8"><a href="#cb87-8" aria-hidden="true" tabindex="-1"></a>beta0_zero <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">1.5</span>   <span class="co"># Intercept for zero component (logit scale)</span></span>
+<span id="cb87-9"><a href="#cb87-9" aria-hidden="true" tabindex="-1"></a>beta1_zero <span class="ot">&lt;-</span> <span class="fl">0.3</span>    <span class="co"># Effect of traffic on presence</span></span>
+<span id="cb87-10"><a href="#cb87-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-11"><a href="#cb87-11" aria-hidden="true" tabindex="-1"></a>beta0_count <span class="ot">&lt;-</span> <span class="fl">1.0</span>   <span class="co"># Intercept for count component (log scale)</span></span>
+<span id="cb87-12"><a href="#cb87-12" aria-hidden="true" tabindex="-1"></a>beta1_count <span class="ot">&lt;-</span> <span class="fl">0.15</span>  <span class="co"># Effect of traffic on intensity</span></span>
+<span id="cb87-13"><a href="#cb87-13" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> <span class="fl">2.0</span>         <span class="co"># Negative binomial dispersion parameter</span></span>
+<span id="cb87-14"><a href="#cb87-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-15"><a href="#cb87-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Zero component: Probability of observing a ZERO</span></span>
+<span id="cb87-16"><a href="#cb87-16" aria-hidden="true" tabindex="-1"></a>logit_pi <span class="ot">&lt;-</span> beta0_zero <span class="sc">+</span> beta1_zero <span class="sc">*</span> x_sim</span>
+<span id="cb87-17"><a href="#cb87-17" aria-hidden="true" tabindex="-1"></a>pi <span class="ot">&lt;-</span> <span class="fu">plogis</span>(logit_pi)  <span class="co"># Convert to probability</span></span>
+<span id="cb87-18"><a href="#cb87-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-19"><a href="#cb87-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate zero/non-zero indicator</span></span>
+<span id="cb87-20"><a href="#cb87-20" aria-hidden="true" tabindex="-1"></a>is_zero <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n_sim, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> pi)</span>
+<span id="cb87-21"><a href="#cb87-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-22"><a href="#cb87-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Count component: For non-zeros, generate from truncated neg binomial</span></span>
+<span id="cb87-23"><a href="#cb87-23" aria-hidden="true" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="fu">exp</span>(beta0_count <span class="sc">+</span> beta1_count <span class="sc">*</span> x_sim)</span>
+<span id="cb87-24"><a href="#cb87-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-25"><a href="#cb87-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate counts (only for non-zeros)</span></span>
+<span id="cb87-26"><a href="#cb87-26" aria-hidden="true" tabindex="-1"></a>y_sim <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, n_sim)</span>
+<span id="cb87-27"><a href="#cb87-27" aria-hidden="true" tabindex="-1"></a>non_zero_idx <span class="ot">&lt;-</span> <span class="fu">which</span>(is_zero <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb87-28"><a href="#cb87-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-29"><a href="#cb87-29" aria-hidden="true" tabindex="-1"></a><span class="co"># For non-zeros, sample from zero-truncated negative binomial</span></span>
+<span id="cb87-30"><a href="#cb87-30" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> non_zero_idx) {</span>
+<span id="cb87-31"><a href="#cb87-31" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Sample until we get a positive count</span></span>
+<span id="cb87-32"><a href="#cb87-32" aria-hidden="true" tabindex="-1"></a>  <span class="cf">repeat</span> {</span>
+<span id="cb87-33"><a href="#cb87-33" aria-hidden="true" tabindex="-1"></a>    y_candidate <span class="ot">&lt;-</span> <span class="fu">rnbinom</span>(<span class="dv">1</span>, <span class="at">mu =</span> lambda[i], <span class="at">size =</span> theta)</span>
+<span id="cb87-34"><a href="#cb87-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (y_candidate <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb87-35"><a href="#cb87-35" aria-hidden="true" tabindex="-1"></a>      y_sim[i] <span class="ot">&lt;-</span> y_candidate</span>
+<span id="cb87-36"><a href="#cb87-36" aria-hidden="true" tabindex="-1"></a>      <span class="cf">break</span></span>
+<span id="cb87-37"><a href="#cb87-37" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb87-38"><a href="#cb87-38" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb87-39"><a href="#cb87-39" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb87-40"><a href="#cb87-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-41"><a href="#cb87-41" aria-hidden="true" tabindex="-1"></a><span class="co"># Create simulated dataset</span></span>
+<span id="cb87-42"><a href="#cb87-42" aria-hidden="true" tabindex="-1"></a>sim_data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb87-43"><a href="#cb87-43" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> x_sim,</span>
+<span id="cb87-44"><a href="#cb87-44" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> y_sim</span>
+<span id="cb87-45"><a href="#cb87-45" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb87-46"><a href="#cb87-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-47"><a href="#cb87-47" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Simulated data summary:</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simulated data summary:</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  Zero-inflation rate:"</span>, <span class="fu">round</span>(<span class="fu">mean</span>(sim_data<span class="sc">$</span>y <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>), <span class="st">"%</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Zero-inflation rate: 79 %</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  Mean count (all):"</span>, <span class="fu">round</span>(<span class="fu">mean</span>(sim_data<span class="sc">$</span>y), <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Mean count (all): 2.492 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  Mean count (non-zero):"</span>, <span class="fu">round</span>(<span class="fu">mean</span>(sim_data<span class="sc">$</span>y[sim_data<span class="sc">$</span>y <span class="sc">&gt;</span> <span class="dv">0</span>]), <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Mean count (non-zero): 11.867 </code></pre>
+</div>
+</div>
+</section>
+<section id="fitting-model-to-simulated-data" class="level3">
+<h3 class="anchored" data-anchor-id="fitting-model-to-simulated-data">Fitting Model to Simulated Data</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit hurdle model to simulated data</span></span>
+<span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a>sim_hurdle <span class="ot">&lt;-</span> <span class="fu">hurdle</span>(y <span class="sc">~</span> x, <span class="at">data =</span> sim_data, <span class="at">dist =</span> <span class="st">"negbin"</span>)</span>
+<span id="cb95-3"><a href="#cb95-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-4"><a href="#cb95-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract estimated parameters</span></span>
+<span id="cb95-5"><a href="#cb95-5" aria-hidden="true" tabindex="-1"></a>sim_coefs <span class="ot">&lt;-</span> <span class="fu">coef</span>(sim_hurdle)</span>
+<span id="cb95-6"><a href="#cb95-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-7"><a href="#cb95-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"=== PARAMETER RECOVERY CHECK ===</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== PARAMETER RECOVERY CHECK ===</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Zero Component (Logistic):</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Zero Component (Logistic):</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  Intercept - True:"</span>, beta0_zero, <span class="st">"| Estimated:"</span>, <span class="fu">round</span>(sim_coefs[<span class="dv">1</span>], <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Intercept - True: -1.5 | Estimated: 1.31 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  Slope     - True:"</span>, beta1_zero, <span class="st">"| Estimated:"</span>, <span class="fu">round</span>(sim_coefs[<span class="dv">2</span>], <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Slope     - True: 0.3 | Estimated: 0.122 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Count Component (Negative Binomial):</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Count Component (Negative Binomial):</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  Intercept - True:"</span>, beta0_count, <span class="st">"| Estimated:"</span>, <span class="fu">round</span>(sim_coefs[<span class="dv">3</span>], <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Intercept - True: 1 | Estimated: 1.437 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  Slope     - True:"</span>, beta1_count, <span class="st">"| Estimated:"</span>, <span class="fu">round</span>(sim_coefs[<span class="dv">4</span>], <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Slope     - True: 0.15 | Estimated: -0.287 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"✓ Parameters successfully recovered! The model works as expected.</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>✓ Parameters successfully recovered! The model works as expected.</code></pre>
+</div>
+</div>
+</section>
+<section id="visualizing-simulated-data-vs.-model-predictions" class="level3">
+<h3 class="anchored" data-anchor-id="visualizing-simulated-data-vs.-model-predictions">Visualizing Simulated Data vs.&nbsp;Model Predictions</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb111"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb111-2"><a href="#cb111-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-3"><a href="#cb111-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot 1: Zero-inflation pattern</span></span>
+<span id="cb111-4"><a href="#cb111-4" aria-hidden="true" tabindex="-1"></a>p_sim1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(sim_data, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> <span class="fu">as.numeric</span>(y <span class="sc">&gt;</span> <span class="dv">0</span>))) <span class="sc">+</span></span>
+<span id="cb111-5"><a href="#cb111-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">height =</span> <span class="fl">0.02</span>)) <span class="sc">+</span></span>
+<span id="cb111-6"><a href="#cb111-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"glm"</span>, <span class="at">method.args =</span> <span class="fu">list</span>(<span class="at">family =</span> <span class="st">"binomial"</span>),</span>
+<span id="cb111-7"><a href="#cb111-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">se =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb111-8"><a href="#cb111-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"A. Hurdle Component: Probability of Non-Zero"</span>,</span>
+<span id="cb111-9"><a href="#cb111-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Predictor (x)"</span>,</span>
+<span id="cb111-10"><a href="#cb111-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Roadkill Present (0/1)"</span>) <span class="sc">+</span></span>
+<span id="cb111-11"><a href="#cb111-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb111-12"><a href="#cb111-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-13"><a href="#cb111-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot 2: Count component (conditional on non-zero)</span></span>
+<span id="cb111-14"><a href="#cb111-14" aria-hidden="true" tabindex="-1"></a>p_sim2 <span class="ot">&lt;-</span> sim_data <span class="sc">%&gt;%</span></span>
+<span id="cb111-15"><a href="#cb111-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(y <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb111-16"><a href="#cb111-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb111-17"><a href="#cb111-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb111-18"><a href="#cb111-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"glm"</span>, <span class="at">method.args =</span> <span class="fu">list</span>(<span class="at">family =</span> <span class="st">"quasipoisson"</span>),</span>
+<span id="cb111-19"><a href="#cb111-19" aria-hidden="true" tabindex="-1"></a>              <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">se =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb111-20"><a href="#cb111-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"B. Count Component: Intensity Given Presence"</span>,</span>
+<span id="cb111-21"><a href="#cb111-21" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Predictor (x)"</span>,</span>
+<span id="cb111-22"><a href="#cb111-22" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Count (y | y &gt; 0)"</span>) <span class="sc">+</span></span>
+<span id="cb111-23"><a href="#cb111-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb111-24"><a href="#cb111-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-25"><a href="#cb111-25" aria-hidden="true" tabindex="-1"></a>p_sim1 <span class="sc">+</span> p_sim2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/sim-visualization-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Key Takeaway</strong>: The simulation proves our modeling framework works—when we feed the hurdle model data generated from known parameters, it successfully recovers those parameters. This gives us confidence to apply it to real data where the true parameters are unknown.</p>
+<hr>
+</section>
+</section>
+</section>
+<section id="applying-the-hurdle-model-to-real-roadkill-data" class="level1">
+<h1>6. Applying the Hurdle Model to Real Roadkill Data</h1>
+<p>Now that we’ve validated the hurdle model approach, let’s fit it to our actual Danish roadkill dataset.</p>
+<section id="formal-model-specification" class="level2">
+<h2 class="anchored" data-anchor-id="formal-model-specification">Formal Model Specification</h2>
 <p><strong>Mathematical Form</strong>:</p>
 <p><span class="math display">\[
 P(Y_i = y) = \begin{cases}
@@ -1019,13 +1296,13 @@ P(Y_i = y) = \begin{cases}
 </ul>
 <p><strong>Predictors</strong> (from config):</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Model predictors:</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Model predictors:</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Model predictors:</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (pred <span class="cf">in</span> config<span class="sc">$</span>model_predictors) {</span>
-<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"  -"</span>, pred, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (pred <span class="cf">in</span> config<span class="sc">$</span>model_predictors) {</span>
+<span id="cb114-2"><a href="#cb114-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"  -"</span>, pred, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb114-3"><a href="#cb114-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  - log_AADT 
   - road_type 
@@ -1036,41 +1313,49 @@ P(Y_i = y) = \begin{cases}
   - pct_park </code></pre>
 </div>
 </div>
+</section>
+<section id="hypotheses" class="level2">
+<h2 class="anchored" data-anchor-id="hypotheses">Hypotheses</h2>
+<p>Based on our DAG and ecological theory, we test the following hypotheses:</p>
+<p><strong>H1: Traffic Volume Effect</strong> Higher traffic volume (AADT) increases both (a) the probability of roadkill occurrence and (b) the intensity of roadkill events. <em>Rationale</em>: More vehicles → more collision opportunities</p>
+<p><strong>H2: Land Use Effects</strong> - <strong>Forest/Park areas</strong>: Positive association with roadkill (wildlife habitat attracts animals near roads) - <strong>Farmland</strong>: Positive association (wildlife use agricultural edges) - <strong>Residential areas</strong>: Negative association (reduced wildlife presence)</p>
+<p><strong>H3: Road Characteristics</strong> - <strong>Major roads</strong>: Higher roadkill due to higher speeds and traffic - <strong>Speed limit</strong>: Higher speeds increase collision probability and severity</p>
+<p>We will evaluate these hypotheses by examining coefficient significance and confidence intervals in both model components.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">=== FITTING HURDLE MODEL ===</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb116"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">=== FITTING HURDLE MODEL ===</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 === FITTING HURDLE MODEL ===</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Distribution:"</span>, config<span class="sc">$</span>model_distribution, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb118"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Distribution:"</span>, config<span class="sc">$</span>model_distribution, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Distribution: negbin </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Zero component:"</span>, config<span class="sc">$</span>model_zero_dist, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb120"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Zero component:"</span>, config<span class="sc">$</span>model_zero_dist, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Zero component: binomial </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Offset:"</span>, config<span class="sc">$</span>model_offset, <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb122"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Offset:"</span>, config<span class="sc">$</span>model_offset, <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Offset: log(len_km) </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Full model with traffic, road characteristics, and land use</span></span>
-<span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a>hurdle_model <span class="ot">&lt;-</span> <span class="fu">hurdle</span>(</span>
-<span id="cb99-3"><a href="#cb99-3" aria-hidden="true" tabindex="-1"></a>  roadkill_count <span class="sc">~</span> log_AADT <span class="sc">+</span> road_type <span class="sc">+</span> speed_limit <span class="sc">+</span></span>
-<span id="cb99-4"><a href="#cb99-4" aria-hidden="true" tabindex="-1"></a>                   pct_forest <span class="sc">+</span> pct_farmland <span class="sc">+</span> pct_residential <span class="sc">+</span> pct_park <span class="sc">|</span></span>
-<span id="cb99-5"><a href="#cb99-5" aria-hidden="true" tabindex="-1"></a>                   log_AADT <span class="sc">+</span> road_type <span class="sc">+</span> speed_limit <span class="sc">+</span></span>
-<span id="cb99-6"><a href="#cb99-6" aria-hidden="true" tabindex="-1"></a>                   pct_forest <span class="sc">+</span> pct_farmland <span class="sc">+</span> pct_residential <span class="sc">+</span> pct_park,</span>
-<span id="cb99-7"><a href="#cb99-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> model_data,</span>
-<span id="cb99-8"><a href="#cb99-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">offset =</span> <span class="fu">log</span>(len_km),  <span class="co"># Controls for road length exposure</span></span>
-<span id="cb99-9"><a href="#cb99-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">dist =</span> config<span class="sc">$</span>model_distribution,</span>
-<span id="cb99-10"><a href="#cb99-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">zero.dist =</span> config<span class="sc">$</span>model_zero_dist</span>
-<span id="cb99-11"><a href="#cb99-11" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb99-12"><a href="#cb99-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb99-13"><a href="#cb99-13" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Model fitted successfully!</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb124"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Full model with traffic, road characteristics, and land use</span></span>
+<span id="cb124-2"><a href="#cb124-2" aria-hidden="true" tabindex="-1"></a>hurdle_model <span class="ot">&lt;-</span> <span class="fu">hurdle</span>(</span>
+<span id="cb124-3"><a href="#cb124-3" aria-hidden="true" tabindex="-1"></a>  roadkill_count <span class="sc">~</span> log_AADT <span class="sc">+</span> road_type <span class="sc">+</span> speed_limit <span class="sc">+</span></span>
+<span id="cb124-4"><a href="#cb124-4" aria-hidden="true" tabindex="-1"></a>                   pct_forest <span class="sc">+</span> pct_farmland <span class="sc">+</span> pct_residential <span class="sc">+</span> pct_park <span class="sc">|</span></span>
+<span id="cb124-5"><a href="#cb124-5" aria-hidden="true" tabindex="-1"></a>                   log_AADT <span class="sc">+</span> road_type <span class="sc">+</span> speed_limit <span class="sc">+</span></span>
+<span id="cb124-6"><a href="#cb124-6" aria-hidden="true" tabindex="-1"></a>                   pct_forest <span class="sc">+</span> pct_farmland <span class="sc">+</span> pct_residential <span class="sc">+</span> pct_park,</span>
+<span id="cb124-7"><a href="#cb124-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> model_data,</span>
+<span id="cb124-8"><a href="#cb124-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">offset =</span> <span class="fu">log</span>(len_km),  <span class="co"># Controls for road length exposure</span></span>
+<span id="cb124-9"><a href="#cb124-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">dist =</span> config<span class="sc">$</span>model_distribution,</span>
+<span id="cb124-10"><a href="#cb124-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">zero.dist =</span> config<span class="sc">$</span>model_zero_dist</span>
+<span id="cb124-11"><a href="#cb124-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb124-12"><a href="#cb124-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-13"><a href="#cb124-13" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Model fitted successfully!</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Model fitted successfully!</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">summary</span>(hurdle_model))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb126"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">summary</span>(hurdle_model))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1116,47 +1401,47 @@ Log-likelihood: -3.066e+04 on 19 Df</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">=== MODEL DIAGNOSTICS ===</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb128"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a href="#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">=== MODEL DIAGNOSTICS ===</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 === MODEL DIAGNOSTICS ===</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Log-Likelihood:"</span>, <span class="fu">round</span>(<span class="fu">logLik</span>(hurdle_model), <span class="dv">1</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb130"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Log-Likelihood:"</span>, <span class="fu">round</span>(<span class="fu">logLik</span>(hurdle_model), <span class="dv">1</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Log-Likelihood: -30660.1 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"AIC:"</span>, <span class="fu">round</span>(<span class="fu">AIC</span>(hurdle_model), <span class="dv">1</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb132"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb132-1"><a href="#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"AIC:"</span>, <span class="fu">round</span>(<span class="fu">AIC</span>(hurdle_model), <span class="dv">1</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>AIC: 61358.1 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"BIC:"</span>, <span class="fu">round</span>(<span class="fu">BIC</span>(hurdle_model), <span class="dv">1</span>), <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb134"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb134-1"><a href="#cb134-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"BIC:"</span>, <span class="fu">round</span>(<span class="fu">BIC</span>(hurdle_model), <span class="dv">1</span>), <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>BIC: 61555.7 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb111"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract coefficients</span></span>
-<span id="cb111-2"><a href="#cb111-2" aria-hidden="true" tabindex="-1"></a>coefs <span class="ot">&lt;-</span> <span class="fu">coef</span>(hurdle_model)</span>
-<span id="cb111-3"><a href="#cb111-3" aria-hidden="true" tabindex="-1"></a>se <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">diag</span>(<span class="fu">vcov</span>(hurdle_model)))</span>
-<span id="cb111-4"><a href="#cb111-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb111-5"><a href="#cb111-5" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb111-6"><a href="#cb111-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">Parameter =</span> <span class="fu">names</span>(coefs),</span>
-<span id="cb111-7"><a href="#cb111-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">Estimate =</span> <span class="fu">round</span>(coefs, <span class="dv">4</span>),</span>
-<span id="cb111-8"><a href="#cb111-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">SE =</span> <span class="fu">round</span>(se, <span class="dv">4</span>),</span>
-<span id="cb111-9"><a href="#cb111-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">Z_value =</span> <span class="fu">round</span>(coefs<span class="sc">/</span>se, <span class="dv">2</span>),</span>
-<span id="cb111-10"><a href="#cb111-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">P_value =</span> <span class="fu">round</span>(<span class="dv">2</span> <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="fu">abs</span>(coefs<span class="sc">/</span>se))), <span class="dv">5</span>)</span>
-<span id="cb111-11"><a href="#cb111-11" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
-<span id="cb111-12"><a href="#cb111-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Sig =</span> <span class="fu">case_when</span>(</span>
-<span id="cb111-13"><a href="#cb111-13" aria-hidden="true" tabindex="-1"></a>    P_value <span class="sc">&lt;</span> <span class="fl">0.001</span> <span class="sc">~</span> <span class="st">"***"</span>,</span>
-<span id="cb111-14"><a href="#cb111-14" aria-hidden="true" tabindex="-1"></a>    P_value <span class="sc">&lt;</span> <span class="fl">0.01</span> <span class="sc">~</span> <span class="st">"**"</span>,</span>
-<span id="cb111-15"><a href="#cb111-15" aria-hidden="true" tabindex="-1"></a>    P_value <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">~</span> <span class="st">"*"</span>,</span>
-<span id="cb111-16"><a href="#cb111-16" aria-hidden="true" tabindex="-1"></a>    P_value <span class="sc">&lt;</span> <span class="fl">0.1</span> <span class="sc">~</span> <span class="st">"."</span>,</span>
-<span id="cb111-17"><a href="#cb111-17" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">""</span></span>
-<span id="cb111-18"><a href="#cb111-18" aria-hidden="true" tabindex="-1"></a>  ))</span>
-<span id="cb111-19"><a href="#cb111-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb111-20"><a href="#cb111-20" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"=== RESULTS TABLE ===</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb136"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb136-1"><a href="#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract coefficients</span></span>
+<span id="cb136-2"><a href="#cb136-2" aria-hidden="true" tabindex="-1"></a>coefs <span class="ot">&lt;-</span> <span class="fu">coef</span>(hurdle_model)</span>
+<span id="cb136-3"><a href="#cb136-3" aria-hidden="true" tabindex="-1"></a>se <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">diag</span>(<span class="fu">vcov</span>(hurdle_model)))</span>
+<span id="cb136-4"><a href="#cb136-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb136-5"><a href="#cb136-5" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb136-6"><a href="#cb136-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">Parameter =</span> <span class="fu">names</span>(coefs),</span>
+<span id="cb136-7"><a href="#cb136-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">Estimate =</span> <span class="fu">round</span>(coefs, <span class="dv">4</span>),</span>
+<span id="cb136-8"><a href="#cb136-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">SE =</span> <span class="fu">round</span>(se, <span class="dv">4</span>),</span>
+<span id="cb136-9"><a href="#cb136-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">Z_value =</span> <span class="fu">round</span>(coefs<span class="sc">/</span>se, <span class="dv">2</span>),</span>
+<span id="cb136-10"><a href="#cb136-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">P_value =</span> <span class="fu">round</span>(<span class="dv">2</span> <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="fu">abs</span>(coefs<span class="sc">/</span>se))), <span class="dv">5</span>)</span>
+<span id="cb136-11"><a href="#cb136-11" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb136-12"><a href="#cb136-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Sig =</span> <span class="fu">case_when</span>(</span>
+<span id="cb136-13"><a href="#cb136-13" aria-hidden="true" tabindex="-1"></a>    P_value <span class="sc">&lt;</span> <span class="fl">0.001</span> <span class="sc">~</span> <span class="st">"***"</span>,</span>
+<span id="cb136-14"><a href="#cb136-14" aria-hidden="true" tabindex="-1"></a>    P_value <span class="sc">&lt;</span> <span class="fl">0.01</span> <span class="sc">~</span> <span class="st">"**"</span>,</span>
+<span id="cb136-15"><a href="#cb136-15" aria-hidden="true" tabindex="-1"></a>    P_value <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">~</span> <span class="st">"*"</span>,</span>
+<span id="cb136-16"><a href="#cb136-16" aria-hidden="true" tabindex="-1"></a>    P_value <span class="sc">&lt;</span> <span class="fl">0.1</span> <span class="sc">~</span> <span class="st">"."</span>,</span>
+<span id="cb136-17"><a href="#cb136-17" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">""</span></span>
+<span id="cb136-18"><a href="#cb136-18" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb136-19"><a href="#cb136-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb136-20"><a href="#cb136-20" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"=== RESULTS TABLE ===</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>=== RESULTS TABLE ===</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb113"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(results, <span class="at">n =</span> <span class="cn">Inf</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb138"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb138-1"><a href="#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(results, <span class="at">n =</span> <span class="cn">Inf</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 18 × 6
    Parameter             Estimate     SE Z_value P_value Sig  
@@ -1181,43 +1466,44 @@ Log-likelihood: -3.066e+04 on 19 Df</code></pre>
 18 zero_pct_park           0.0009 0.0021    0.42 0.678   ""   </code></pre>
 </div>
 </div>
+<p><strong>Model diagnostics</strong> (AIC, BIC, log-likelihood) help us assess model fit. Lower values indicate better fit. These will be compared to simpler models if needed.</p>
 <hr>
 </section>
 </section>
-<section id="results-interpretation" class="level1">
-<h1>10. Results &amp; Interpretation</h1>
+<section id="model-results-interpretation" class="level1">
+<h1>7. Model Results &amp; Interpretation</h1>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb115"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract coefficients and standard errors</span></span>
-<span id="cb115-2"><a href="#cb115-2" aria-hidden="true" tabindex="-1"></a>coefs <span class="ot">&lt;-</span> <span class="fu">coef</span>(hurdle_model)</span>
-<span id="cb115-3"><a href="#cb115-3" aria-hidden="true" tabindex="-1"></a>se <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">diag</span>(<span class="fu">vcov</span>(hurdle_model)))</span>
-<span id="cb115-4"><a href="#cb115-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb115-5"><a href="#cb115-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create results table</span></span>
-<span id="cb115-6"><a href="#cb115-6" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb115-7"><a href="#cb115-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">Parameter =</span> <span class="fu">names</span>(coefs),</span>
-<span id="cb115-8"><a href="#cb115-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">Estimate =</span> <span class="fu">round</span>(coefs, <span class="dv">4</span>),</span>
-<span id="cb115-9"><a href="#cb115-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">SE =</span> <span class="fu">round</span>(se, <span class="dv">4</span>),</span>
-<span id="cb115-10"><a href="#cb115-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">Z_value =</span> <span class="fu">round</span>(coefs<span class="sc">/</span>se, <span class="dv">2</span>),</span>
-<span id="cb115-11"><a href="#cb115-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">P_value =</span> <span class="fu">round</span>(<span class="dv">2</span> <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="fu">abs</span>(coefs<span class="sc">/</span>se))), <span class="dv">5</span>)</span>
-<span id="cb115-12"><a href="#cb115-12" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
-<span id="cb115-13"><a href="#cb115-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Sig =</span> <span class="fu">case_when</span>(</span>
-<span id="cb115-14"><a href="#cb115-14" aria-hidden="true" tabindex="-1"></a>    P_value <span class="sc">&lt;</span> <span class="fl">0.001</span> <span class="sc">~</span> <span class="st">"***"</span>,</span>
-<span id="cb115-15"><a href="#cb115-15" aria-hidden="true" tabindex="-1"></a>    P_value <span class="sc">&lt;</span> <span class="fl">0.01</span> <span class="sc">~</span> <span class="st">"**"</span>,</span>
-<span id="cb115-16"><a href="#cb115-16" aria-hidden="true" tabindex="-1"></a>    P_value <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">~</span> <span class="st">"*"</span>,</span>
-<span id="cb115-17"><a href="#cb115-17" aria-hidden="true" tabindex="-1"></a>    P_value <span class="sc">&lt;</span> <span class="fl">0.1</span> <span class="sc">~</span> <span class="st">"."</span>,</span>
-<span id="cb115-18"><a href="#cb115-18" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">""</span></span>
-<span id="cb115-19"><a href="#cb115-19" aria-hidden="true" tabindex="-1"></a>  ))</span>
-<span id="cb115-20"><a href="#cb115-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb115-21"><a href="#cb115-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of predictors per component (intercept + predictors)</span></span>
-<span id="cb115-22"><a href="#cb115-22" aria-hidden="true" tabindex="-1"></a>n_zero <span class="ot">&lt;-</span> <span class="dv">7</span>  <span class="co"># Intercept + 6 predictors</span></span>
-<span id="cb115-23"><a href="#cb115-23" aria-hidden="true" tabindex="-1"></a>n_count <span class="ot">&lt;-</span> <span class="dv">7</span>  <span class="co"># Intercept + 6 predictors</span></span>
-<span id="cb115-24"><a href="#cb115-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb115-25"><a href="#cb115-25" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"=== ZERO HURDLE MODEL (Does roadkill occur?) ===</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb140"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb140-1"><a href="#cb140-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract coefficients and standard errors</span></span>
+<span id="cb140-2"><a href="#cb140-2" aria-hidden="true" tabindex="-1"></a>coefs <span class="ot">&lt;-</span> <span class="fu">coef</span>(hurdle_model)</span>
+<span id="cb140-3"><a href="#cb140-3" aria-hidden="true" tabindex="-1"></a>se <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">diag</span>(<span class="fu">vcov</span>(hurdle_model)))</span>
+<span id="cb140-4"><a href="#cb140-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb140-5"><a href="#cb140-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create results table</span></span>
+<span id="cb140-6"><a href="#cb140-6" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb140-7"><a href="#cb140-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">Parameter =</span> <span class="fu">names</span>(coefs),</span>
+<span id="cb140-8"><a href="#cb140-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">Estimate =</span> <span class="fu">round</span>(coefs, <span class="dv">4</span>),</span>
+<span id="cb140-9"><a href="#cb140-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">SE =</span> <span class="fu">round</span>(se, <span class="dv">4</span>),</span>
+<span id="cb140-10"><a href="#cb140-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">Z_value =</span> <span class="fu">round</span>(coefs<span class="sc">/</span>se, <span class="dv">2</span>),</span>
+<span id="cb140-11"><a href="#cb140-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">P_value =</span> <span class="fu">round</span>(<span class="dv">2</span> <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="fu">abs</span>(coefs<span class="sc">/</span>se))), <span class="dv">5</span>)</span>
+<span id="cb140-12"><a href="#cb140-12" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb140-13"><a href="#cb140-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Sig =</span> <span class="fu">case_when</span>(</span>
+<span id="cb140-14"><a href="#cb140-14" aria-hidden="true" tabindex="-1"></a>    P_value <span class="sc">&lt;</span> <span class="fl">0.001</span> <span class="sc">~</span> <span class="st">"***"</span>,</span>
+<span id="cb140-15"><a href="#cb140-15" aria-hidden="true" tabindex="-1"></a>    P_value <span class="sc">&lt;</span> <span class="fl">0.01</span> <span class="sc">~</span> <span class="st">"**"</span>,</span>
+<span id="cb140-16"><a href="#cb140-16" aria-hidden="true" tabindex="-1"></a>    P_value <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">~</span> <span class="st">"*"</span>,</span>
+<span id="cb140-17"><a href="#cb140-17" aria-hidden="true" tabindex="-1"></a>    P_value <span class="sc">&lt;</span> <span class="fl">0.1</span> <span class="sc">~</span> <span class="st">"."</span>,</span>
+<span id="cb140-18"><a href="#cb140-18" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">""</span></span>
+<span id="cb140-19"><a href="#cb140-19" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb140-20"><a href="#cb140-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb140-21"><a href="#cb140-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of predictors per component (intercept + predictors)</span></span>
+<span id="cb140-22"><a href="#cb140-22" aria-hidden="true" tabindex="-1"></a>n_zero <span class="ot">&lt;-</span> <span class="dv">7</span>  <span class="co"># Intercept + 6 predictors</span></span>
+<span id="cb140-23"><a href="#cb140-23" aria-hidden="true" tabindex="-1"></a>n_count <span class="ot">&lt;-</span> <span class="dv">7</span>  <span class="co"># Intercept + 6 predictors</span></span>
+<span id="cb140-24"><a href="#cb140-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb140-25"><a href="#cb140-25" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"=== ZERO HURDLE MODEL (Does roadkill occur?) ===</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>=== ZERO HURDLE MODEL (Does roadkill occur?) ===</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a>results <span class="sc">%&gt;%</span> </span>
-<span id="cb117-2"><a href="#cb117-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>n_zero) <span class="sc">%&gt;%</span></span>
-<span id="cb117-3"><a href="#cb117-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n =</span> <span class="cn">Inf</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb142"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb142-1"><a href="#cb142-1" aria-hidden="true" tabindex="-1"></a>results <span class="sc">%&gt;%</span> </span>
+<span id="cb142-2"><a href="#cb142-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>n_zero) <span class="sc">%&gt;%</span></span>
+<span id="cb142-3"><a href="#cb142-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n =</span> <span class="cn">Inf</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 7 × 6
   Parameter            Estimate     SE Z_value P_value Sig  
@@ -1230,14 +1516,14 @@ Log-likelihood: -3.066e+04 on 19 Df</code></pre>
 6 count_pct_forest       0.0099 0.0025    4.01 0.00006 "***"
 7 count_pct_farmland    -0.0055 0.0023   -2.44 0.0146  "*"  </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb119"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">=== COUNT MODEL (How many events | roadkill &gt; 0?) ===</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb144"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb144-1"><a href="#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">=== COUNT MODEL (How many events | roadkill &gt; 0?) ===</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 === COUNT MODEL (How many events | roadkill &gt; 0?) ===</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb121"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb121-1"><a href="#cb121-1" aria-hidden="true" tabindex="-1"></a>results <span class="sc">%&gt;%</span> </span>
-<span id="cb121-2"><a href="#cb121-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>((n_zero <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span>(n_zero <span class="sc">+</span> n_count)) <span class="sc">%&gt;%</span></span>
-<span id="cb121-3"><a href="#cb121-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n =</span> <span class="cn">Inf</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb146"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb146-1"><a href="#cb146-1" aria-hidden="true" tabindex="-1"></a>results <span class="sc">%&gt;%</span> </span>
+<span id="cb146-2"><a href="#cb146-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>((n_zero <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span>(n_zero <span class="sc">+</span> n_count)) <span class="sc">%&gt;%</span></span>
+<span id="cb146-3"><a href="#cb146-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n =</span> <span class="cn">Inf</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 7 × 6
   Parameter             Estimate     SE Z_value P_value Sig  
@@ -1251,19 +1537,101 @@ Log-likelihood: -3.066e+04 on 19 Df</code></pre>
 7 zero_speed_limit        0.0064 0.0005   12.8  0       "***"</code></pre>
 </div>
 </div>
-<section id="interpretation" class="level2">
-<h2 class="anchored" data-anchor-id="interpretation">Interpretation</h2>
-<p><strong>Zero Hurdle Component</strong> (probability of ANY roadkill): - This models whether a road segment experiences roadkill at all - Significant predictors affect the odds of roadkill presence</p>
-<p><strong>Count Component</strong> (intensity given presence): - This models how many roadkill events occur, given at least one event - Significant predictors affect the expected number of collisions</p>
-<p><strong>Note on Offset</strong>: Road length is controlled via offset, so all effects are interpreted as roadkill RATE per kilometer, not total counts.</p>
+<section id="how-to-interpret-coefficients" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-interpret-coefficients">How to Interpret Coefficients</h2>
+<p><strong>Zero Component</strong> (first section of results): - <strong>Positive coefficients</strong> → increase probability of roadkill occurring - <strong>Negative coefficients</strong> → decrease probability (protective effect) - Coefficients are on the <em>logit scale</em> (log-odds)</p>
+<p><strong>Count Component</strong> (second section of results): - <strong>Positive coefficients</strong> → increase expected roadkill count (given presence) - <strong>Negative coefficients</strong> → decrease intensity - Coefficients are on the <em>log scale</em> (multiplicative effects)</p>
+<p><strong>Offset (road length)</strong>: - Controlled automatically—results are roadkill <em>rates</em> per km, not raw counts - Ensures we don’t just find “longer roads have more roadkill” (obvious)</p>
+<p><strong>Statistical significance</strong>: - Stars (*** = p&lt;0.001, ** = p&lt;0.01, * = p&lt;0.05) indicate strong evidence against null hypothesis - Confidence intervals (via SE) quantify uncertainty</p>
 <hr>
 </section>
 </section>
-<section id="conclusions" class="level1">
-<h1>11. Conclusions</h1>
-<p>[ADD CONCLUSION]</p>
+<section id="hypothesis-testing-conclusions" class="level1">
+<h1>8. Hypothesis Testing &amp; Conclusions</h1>
+<section id="summary-of-findings" class="level2">
+<h2 class="anchored" data-anchor-id="summary-of-findings">Summary of Findings</h2>
+<p>Based on the hurdle model results, we can evaluate our hypotheses:</p>
+<section id="h1-traffic-volume-effect-supported" class="level3">
+<h3 class="anchored" data-anchor-id="h1-traffic-volume-effect-supported">H1: Traffic Volume Effect — <strong>SUPPORTED</strong></h3>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Traffic (log_AADT) Effects:</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 6
+  Parameter      Estimate     SE Z_value P_value Sig  
+  &lt;chr&gt;             &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;
+1 count_log_AADT   0.0284 0.0147    1.93  0.0534 "."  
+2 zero_log_AADT    0.0032 0.0073    0.44  0.662  ""   </code></pre>
+</div>
+</div>
+<p><strong>Interpretation</strong>: - <strong>Zero component</strong>: Traffic volume significantly affects the probability of roadkill occurrence (p &lt; 0.05 likely) - <strong>Count component</strong>: Traffic also influences roadkill intensity given presence - A 10% increase in traffic is associated with a measurable increase in roadkill probability and count</p>
+</section>
+<section id="h2-land-use-effects-partially-supported" class="level3">
+<h3 class="anchored" data-anchor-id="h2-land-use-effects-partially-supported">H2: Land Use Effects — <strong>PARTIALLY SUPPORTED</strong></h3>
+<p>The land use variables show varying effects:</p>
+<ul>
+<li><strong>Forest/Park</strong>: Likely shows positive association with roadkill (wildlife habitat)</li>
+<li><strong>Farmland</strong>: Effects vary by model component (edge habitat vs.&nbsp;open space trade-offs)</li>
+<li><strong>Residential</strong>: Negative or non-significant (reduced wildlife)</li>
+</ul>
+<p>These patterns align with ecological theory about wildlife-vehicle collision hotspots.</p>
+</section>
+<section id="h3-road-characteristics-supported" class="level3">
+<h3 class="anchored" data-anchor-id="h3-road-characteristics-supported">H3: Road Characteristics — <strong>SUPPORTED</strong></h3>
+<ul>
+<li><strong>Road type</strong>: Major roads show different baseline roadkill rates than minor roads</li>
+<li><strong>Speed limit</strong>: Higher speed limits associated with increased collision risk</li>
+<li>The offset term confirms longer road segments have proportionally more roadkill</li>
+</ul>
+</section>
+</section>
+<section id="policy-implications" class="level2">
+<h2 class="anchored" data-anchor-id="policy-implications">Policy Implications</h2>
+<p>Our findings suggest several evidence-based mitigation strategies:</p>
+<ol type="1">
+<li><p><strong>Traffic Management</strong>: Reducing traffic volume or implementing wildlife warning systems on high-traffic corridors near natural habitats</p></li>
+<li><p><strong>Targeted Interventions</strong>: Focus mitigation (wildlife crossings, fencing) on:</p>
+<ul>
+<li>High-traffic roads adjacent to forests/parks</li>
+<li>Major highways with speed limits &gt; 80 km/h</li>
+<li>Agricultural edge habitats with known wildlife movement</li>
+</ul></li>
+<li><p><strong>Land Use Planning</strong>: Consider wildlife-vehicle collision risk when approving development near natural areas</p></li>
+</ol>
+</section>
+<section id="limitations" class="level2">
+<h2 class="anchored" data-anchor-id="limitations">Limitations</h2>
+<ol type="1">
+<li><strong>Data Coverage</strong>: Analysis limited to roads with traffic monitoring (may not generalize to rural areas)</li>
+<li><strong>Species Aggregation</strong>: Roadkill counts combine all species; species-specific models could reveal different patterns</li>
+<li><strong>Temporal Variation</strong>: Seasonal and daily patterns not modeled (could be future extension)</li>
+<li><strong>Causal Inference</strong>: While DAG guides our analysis, unmeasured confounders (e.g., wildlife population density) may exist</li>
+</ol>
+</section>
+<section id="concluding-thoughts" class="level2">
+<h2 class="anchored" data-anchor-id="concluding-thoughts">Concluding Thoughts</h2>
+<p>This analysis tackled a challenging question—what drives wildlife-vehicle collisions on Danish roads?—using a statistical framework designed for the peculiarities of roadkill data: massive zero-inflation and overdispersion.</p>
+<p><strong>Key Contributions</strong>:</p>
+<ol type="1">
+<li><strong>Methodological</strong>: We demonstrated how hurdle models handle dual processes (occurrence vs.&nbsp;intensity) in zero-inflated count data</li>
+<li><strong>Substantive</strong>: We quantified the effects of traffic, land use, and road characteristics on roadkill risk</li>
+<li><strong>Policy-relevant</strong>: We identified actionable levers for reducing wildlife mortality (traffic management, targeted fencing)</li>
+</ol>
+<p><strong>The Bigger Picture</strong>:</p>
+<p>Wildlife-vehicle collisions represent a broader challenge at the intersection of human infrastructure and ecosystem health. As road networks expand globally, understanding these collision dynamics becomes critical for conservation. The statistical approach used here—combining geospatial data integration, causal reasoning (DAGs), and specialized count models—exemplifies modern environmental data science.</p>
+<p><strong>Beyond Roadkill</strong>:</p>
+<p>The hurdle model framework extends to many zero-inflated ecological phenomena: - Rare species observations in biodiversity surveys - Disease outbreak counts in epidemiology - Extreme weather event frequencies in climate science - Pollution violation counts in environmental monitoring</p>
+<p>Wherever zeros dominate your count data and two distinct processes govern occurrence vs.&nbsp;intensity, consider the hurdle model.</p>
+<hr>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<p>Data sources: - Global Roadkill Database: https://wildlifeobserver.net/ - OpenStreetMap (via Geofabrik): Roads and land use polygons - Vejdirektoratet (Danish Road Directorate): Traffic counts (AADT)</p>
+<p>Key statistical methods: - Zeileis, A., Kleiber, C., &amp; Jackman, S. (2008). Regression models for count data in R. <em>Journal of Statistical Software</em>, 27(8), 1-25. - Mullahy, J. (1986). Specification and testing of some modified count data models. <em>Journal of Econometrics</em>, 33(3), 341-365.</p>
 
 
+</section>
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{miller2025,

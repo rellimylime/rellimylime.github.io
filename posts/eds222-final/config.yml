@@ -4,7 +4,7 @@
 # Last Updated: 2025-11-29
 
 #base_path: '/' (Modify this to your local project path)
-base_path: '/home/user/ermil/Documents/MEDS/rellimylime.github.io/posts/eds222-final'
+base_path: '/home/user/rellimylime.github.io/posts/eds222-final'
 
 # Project specs
 crs: 25832  # Denmark ETRS89 / UTM zone 32N
@@ -23,19 +23,19 @@ bbox_crs: 4326
 # ============================================================================
 
 # Roadkill Data
-roadkill_csv_path: 'data/raw/Global Roadkill data.csv' # from Global Roadkill Database; filter to Denmark 2017-2019
+roadkill_csv_path: 'posts/eds222-final/data/raw/Global Roadkill data.csv' # from Global Roadkill Database; filter to Denmark 2017-2019
 
 # Road Network
-roads_shp_path: 'data/raw/OSM_dk_roads_shp/gis_osm_roads_free_1.shp' # from OpenStreetMap via Geofabrik
+roads_shp_path: 'posts/eds222-final/data/raw/OSM_dk_roads_shp/gis_osm_roads_free_1.shp' # from OpenStreetMap via Geofabrik
 road_car_codes_major: [5111, 5112, 5113, 5114, 5115] # motorway, trunk, primary, secondary, tertiary
 road_car_codes_minor: [5121, 5122, 5123] # unclassified, residential, service
 road_car_codes_links: [5131, 5132, 5133, 5134, 5135] # ramps/connectors
 
 # Traffic Data
-traffic_shp_path: 'data/raw/ODN_dk_traffic_shp/OPEN_DATA_NOEGLETAL_VIEWPoint.shp' # from Vejdirektoratet (Danish Road Directorate)
- 
+traffic_shp_path: 'posts/eds222-final/data/raw/ODN_dk_traffic_shp/OPEN_DATA_NOEGLETAL_VIEWPoint.shp' # from Vejdirektoratet (Danish Road Directorate)
+
 # Land Use (OSM)
-landuse_shp_path: 'data/raw/OSM_dk_landuse_shp/gis_osm_landuse_a_free_1.shp' # from OpenStreetMap via Geofabrik
+landuse_shp_path: 'posts/eds222-final/data/raw/OSM_dk_landuse_shp/gis_osm_landuse_a_free_1.shp' # from OpenStreetMap via Geofabrik
 
 # OSM Land Use Classification Codes (fclass field)
 landuse_forest_code: 7201  # Forest - wildlife habitat
@@ -49,19 +49,19 @@ landuse_nature_reserve_code: 7210  # Nature reserve - protected areas
 # ============================================================================
 
 # Cached Shapefiles (reprojected to EPSG:25832)
-roads_cached_path: 'data/processed/roads_dk_epsg25832.rds' # Cached roads (cropped & reprojected)
-traffic_cached_path: 'data/processed/traffic_dk_epsg25832.rds' # Cached traffic points (cropped & reprojected)
-landuse_cached_path: 'data/processed/landuse_dk_epsg25832.rds' # Cached land use polygons (cropped & reprojected)
+roads_cached_path: 'posts/eds222-final/data/processed/roads_dk_epsg25832.rds' # Cached roads (cropped & reprojected)
+traffic_cached_path: 'posts/eds222-final/data/processed/traffic_dk_epsg25832.rds' # Cached traffic points (cropped & reprojected)
+landuse_cached_path: 'posts/eds222-final/data/processed/landuse_dk_epsg25832.rds' # Cached land use polygons (cropped & reprojected)
 
 # Distance Calculations
-distances_cache_path: 'data/processed/distances_cache_2017_2019.rds' # Road-to-traffic distances and nearest neighbor indices
+distances_cache_path: 'posts/eds222-final/data/processed/distances_cache_2017_2019.rds' # Road-to-traffic distances and nearest neighbor indices
 distance_threshold_percentile: 0.75 # Use 75th percentile for traffic matching
 
 # Spatial Joins & Aggregations
-roadkill_cache_path: 'data/processed/roadkill_by_segment_2017_2019.rds' # Roadkill counts aggregated by road segment
+roadkill_cache_path: 'posts/eds222-final/data/processed/roadkill_by_segment_2017_2019.rds' # Roadkill counts aggregated by road segment
 
 # Land Use Extraction (OSM)
-landuse_props_path: 'data/processed/landuse_props_2017_2019.rds' # Land use proportions within 500m road buffers
+landuse_props_path: 'posts/eds222-final/data/processed/landuse_props_2017_2019.rds' # Land use proportions within 500m road buffers
 road_buffer_distance: 500 # meters for land use buffer around roads
 
 # ============================================================================

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Blog – Emily Miller</title>
+<title>About Me – Emily Miller</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -70,65 +68,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -156,11 +96,11 @@ window.Quarto = {
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link active" href="./about.html" aria-current="page"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./blog.html" aria-current="page"> 
+    <a class="nav-link" href="./blog.html"> 
 <span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -211,19 +151,19 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(3)</span></div><div class="category" data-category="RW52aXJvbm1lbnRhbCUyMEp1c3RpY2U=">Environmental Justice <span class="quarto-category-count">(1)</span></div><div class="category" data-category="R2Vvc3BhdGlhbCUyMEFuYWx5c2lz">Geospatial Analysis <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TUVEUw==">MEDS <span class="quarto-category-count">(3)</span></div><div class="category" data-category="UHl0aG9u">Python <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Ug==">R <span class="quarto-category-count">(2)</span></div></div></div>
+    
 <!-- main -->
-<main class="content column-page-left" id="quarto-document-content">
+<main class="content column-page" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Blog</h1>
+<h1 class="title">About Me</h1>
+<p class="subtitle lead">The stuff that makes me, me</p>
 </div>
 
 
 
-<div class="quarto-title-meta column-page-left">
+<div class="quarto-title-meta column-page">
 
     
   
@@ -235,115 +175,124 @@ window.Quarto = {
 </header>
 
 
+<p><img src="images/headshot.jpg" class="img-fluid"></p>
+<section id="the-real-stuff" class="level2">
+<h2 class="anchored" data-anchor-id="the-real-stuff">The Real Stuff</h2>
+<p>I’m someone who genuinely can’t sit still. If something’s broken and there’s even a <em>slim</em> chance I can fix it, I will learn how. I’ll weld, solder, sew, paint—whatever it takes. Debugging code? That’s a <em>game</em> to me, not a chore. I’ve been incredibly fortunate to have a service dog, which has changed my life in ways I’m still understanding.</p>
+<p>I grew up between Concord, Massachusetts and the Central Valley of California, but my heart belongs to <a href="https://en.wikipedia.org/wiki/Great_Diamond_Island">Great Diamond Island</a> off the coast of Portland, Maine. There’s something about that place. I sang jazz for 11 years and spent significant time in mental hospitals—both things I think more people should be honest about. I’m very dyslexic and ADHD, which means my brain works sideways. I don’t see it as a bug; I see it as the reason I can see patterns other people miss.</p>
+<p>I don’t have a therapist. I have a <a href="https://en.wikipedia.org/wiki/Life_coaching">life coach</a>, and honestly, everyone should make that transition.</p>
+</section>
+<section id="what-i-actually-do-with-my-time" class="level2">
+<h2 class="anchored" data-anchor-id="what-i-actually-do-with-my-time">What I Actually Do With My Time</h2>
+<p>I garden. I bake. I paint. I photograph things. I listen to audiobooks obsessively. I rewatch TV shows. I weld things. I sew things. I play piano badly. I write poetry about satellite imagery, which is a weirdly specific thing but it’s true. I’m genuinely curious about everything, which is both a superpower and absolutely exhausting.</p>
+<p>My issue is I can never settle on just one thing. I’ll go deep on something, get really good at it, then find something new and dive in headfirst. I’ve learned to stop seeing this as a failure and start seeing it as just… how my brain works. Everything I learn somehow feeds back into my actual passions anyway—the work and the wild.</p>
+</section>
+<section id="why-i-do-anything" class="level2">
+<h2 class="anchored" data-anchor-id="why-i-do-anything">Why I Do Anything</h2>
+<p>The wild. That’s the real north star. Everything else orbits that. Conservation, restoration, understanding how humans and ecosystems actually talk to each other—that’s where I’m headed. It’s not about being “green” or performing environmentalism. It’s about the genuine belief that nature is both the most complex system we need to understand <em>and</em> the best teacher we have.</p>
+<p>I also believe that creativity and precision aren’t opposites—they’re dance partners. You need both to do anything worth doing.</p>
+</section>
+<section id="random-facts" class="level2">
+<h2 class="anchored" data-anchor-id="random-facts">Random Facts</h2>
+<ul>
+<li>I can do anything (and if I can’t I will humiliate myself trying until I can).</li>
+<li>I’m genuinely dyslexic, which means I have to read everything three times. Yes, I read <em>everything</em> three times.</li>
+<li>I’ve done a lot of jazz singing. A <em>lot</em>.</li>
+<li>I love being challenged. I love debugging. I love learning impossible things.</li>
+<li>I’m probably listening to an audiobook right now.</li>
+<li>My service dog is the best decision I’ve ever made.</li>
+</ul>
+</section>
+<section id="lets-connect" class="level2">
+<h2 class="anchored" data-anchor-id="lets-connect">Let’s Connect</h2>
+<p>I love talking about weird intersections of things—how data can tell stories, why nature is smarter than us, whether debugging is actually meditation, etc. If you want to chat about any of that (or just say hi), reach out.</p>
+<p><a href="mailto:ermiller@ucsb.edu">Email Me</a> | <a href="https://www.linkedin.com/in/rellimylime/">LinkedIn</a> | <a href="https://github.com/rellimylime">GitHub</a></p>
+<p>My academic journey began with a focus on pure mathematics, drawn to the elegance and precision of numerical analysis. My goal from the start was to use my degree to bring new levels of quantitative and analytical rigor to the science of understanding our world and place on this earth as a species.</p>
+<section id="master-of-environmental-data-science" class="level3">
+<h3 class="anchored" data-anchor-id="master-of-environmental-data-science">Master of Environmental Data Science</h3>
+<p><strong>University of California, Santa Barbara – Bren School</strong> | <em>Expected June 2026</em></p>
+<p>GPA: 4.0 • Leadership: MEDS Student Faculty Representative</p>
+<p>Focus: Remote sensing, machine learning, and environmental data engineering. Currently working on water resource sustainability and irrigation systems in Sub-Saharan Africa through the Water Vegetation and Society (WaVeS) Lab.</p>
+</section>
+<section id="bs-in-mathematics" class="level3">
+<h3 class="anchored" data-anchor-id="bs-in-mathematics">BS in Mathematics</h3>
+<p><strong>University of California, Santa Barbara</strong> | <em>June 2025</em></p>
+<p>GPA: 3.67 • Leadership: Undergraduate Outreach Officer for Women in Science and Engineering (WiSE)</p>
+<p>Focus: Applied mathematics with emphasis on numerical analysis, linear algebra, and probability. Developed passion for using mathematical tools to understand environmental systems and data patterns.</p>
+</section>
+<section id="associate-of-science-in-mathematics" class="level3">
+<h3 class="anchored" data-anchor-id="associate-of-science-in-mathematics">Associate of Science in Mathematics</h3>
+<p><strong>Sacramento City College</strong> | <em>June 2022</em></p>
+<p>GPA: 4.0</p>
+</section>
+</section>
+<section id="research-focus" class="level2">
+<h2 class="anchored" data-anchor-id="research-focus">Research Focus</h2>
+<p>My current research sits at the intersection of remote sensing, machine learning, and water resource sustainability. I’m working with the Water Vegetation and Society (WaVeS) Lab at UCSB on understanding irrigation patterns in Sub-Saharan Africa using satellite data analysis. I’m particularly interested in how cutting-edge technology can illuminate patterns that affect environmental and agricultural systems, and how this data can support better decision-making for communities and ecosystems.</p>
+<section id="biomimicry" class="level3">
+<h3 class="anchored" data-anchor-id="biomimicry">Biomimicry</h3>
+<p>Learning from nature is central to both my scientific outlook and personal worldview. I believe that true solutions come from respecting and integrating with the natural systems all around us. Biomimicry, to me, is about seeking guidance from nature’s intelligence—studying the processes and resilience of living systems, and exploring how these principles can inspire our own designs, behaviors, and mindsets. I strive to align my research and daily life with these lessons, drawing inspiration from the practices and wisdom of indigenous communities who have always lived in harmony with their environments. Biomimicry isn’t just an innovation strategy; it’s a path to personal, mental, and spiritual well-being by reconnecting with the natural world.</p>
+</section>
+</section>
+<section id="creative-practice" class="level2">
+<h2 class="anchored" data-anchor-id="creative-practice">Creative Practice</h2>
+<p>I believe that creativity and science amplify each other; discovery happens when boundaries are blurred and new perspectives collide. Whether I’m analyzing satellite data or experimenting with a blank canvas, I find that both art and science challenge me to notice subtle details, think in systems, and communicate in ways that spark curiosity and connection. When I’m not creating digitally, you’ll find me with paint on my clothes, camera in hand, or scribbling poetry about the weird beauty of real-world data, landscapes, and life at the edge of art and science.</p>
+</section>
+<section id="community-involvement" class="level2">
+<h2 class="anchored" data-anchor-id="community-involvement">Community Involvement</h2>
+<p>Beyond the lab, I’m passionate about using my skills to make a positive impact in my local community and beyond.</p>
+<section id="founder-lead-organizer-iv-recovery-community-initiative" class="level3">
+<h3 class="anchored" data-anchor-id="founder-lead-organizer-iv-recovery-community-initiative">Founder &amp; Lead Organizer – IV Recovery Community Initiative</h3>
+<p><strong>Goleta, CA</strong> | <em>2023 - Present</em></p>
+<p>I founded and lead the IV Recovery Community Initiative, organizing bi-weekly coastal cleanups that engage university students and community members in environmental stewardship. What started as a personal passion has grown into something beautiful: seeing people show up, roll up their sleeves, and realize they can make a tangible difference. By quantifying what we collect—from microplastics to fishing line to abandoned equipment—we make the invisible visible and build community responsibility for the land we occupy.</p>
+</section>
+<section id="undergraduate-outreach-officer-women-in-science-and-engineering-wise" class="level3">
+<h3 class="anchored" data-anchor-id="undergraduate-outreach-officer-women-in-science-and-engineering-wise">Undergraduate Outreach Officer – Women in Science and Engineering (WiSE)</h3>
+<p><strong>University of California, Santa Barbara</strong> | <em>2024 - 2025</em></p>
+<p>Coordinated mentorship programs supporting 130+ undergraduate students pursuing STEM degrees, with focus on increasing diversity and representation in quantitative sciences and supporting retention of underrepresented students.</p>
+</section>
+</section>
+<section id="values-mission" class="level2">
+<h2 class="anchored" data-anchor-id="values-mission">Values &amp; Mission</h2>
+<p>My work is guided by a few core values that I believe are essential for creating meaningful impact through data science:</p>
+<section id="environmental-justice" class="level3">
+<h3 class="anchored" data-anchor-id="environmental-justice">Environmental Justice</h3>
+<p>All communities deserve access to clean environments and the tools to protect them. My research prioritizes supporting communities that are often overlooked by traditional environmental monitoring.</p>
+</section>
+<section id="community-centered" class="level3">
+<h3 class="anchored" data-anchor-id="community-centered">Community-Centered</h3>
+<p>The best research happens in partnership with the communities it’s meant to serve. I prioritize collaborative approaches that respect local knowledge and ensure community benefit.</p>
+</section>
+<section id="creative-innovation" class="level3">
+<h3 class="anchored" data-anchor-id="creative-innovation">Creative Innovation</h3>
+<p>Some of the best solutions come from unexpected connections between seemingly unrelated ideas. Whether I’m analyzing satellite data or painting, I bring the same habit of noticing patterns and asking “what if?” I believe that technical rigor and creative thinking amplify each other—science needs imagination, and art needs precision. The breakthrough ideas happen at the intersection.</p>
+</section>
+<section id="transparent-science" class="level3">
+<h3 class="anchored" data-anchor-id="transparent-science">Transparent Science</h3>
+<p>Science should be open, reproducible, and accessible. I’m committed to transparent research practices and clear communication of complex concepts.</p>
+</section>
+</section>
+<section id="whats-next" class="level2">
+<h2 class="anchored" data-anchor-id="whats-next">What’s Next</h2>
+<p>My post-MEDS journey will be guided by the problems that excite me and the values that drive my work. I’m pursuing opportunities where I can combine cutting-edge technology with real environmental and social impact. Some of the questions that keep me awake at night:</p>
+<ul>
+<li><p><strong>How can satellite imagery document environmental harm and support indigenous land rights?</strong> Using remote sensing as evidence for climate impacts, illegal activities, and the benefits of indigenous management practices.</p></li>
+<li><p><strong>What does wildlife need to thrive?</strong> Analyzing wildlife corridors, the impact of infrastructure, and using animal behavior to inform conservation design.</p></li>
+<li><p><strong>How can we make environmental data work harder for people who need it?</strong> Building live, accessible data systems—not outdated snapshots—that help water managers, farmers, and communities make better decisions.</p></li>
+<li><p><strong>What can nature teach us?</strong> Biomimicry isn’t just buzzword—it’s about genuinely learning from millions of years of evolutionary solutions: sustainable adhesion from mussels, effective ventilation from termites, wind turbines inspired by humpback whale fins.</p></li>
+<li><p><strong>How does our disconnection from nature affect our mental and emotional health?</strong> Exploring the links between environmental deprivation and well-being, and designing solutions that reconnect people to the natural world.</p></li>
+</ul>
+<p>I’m looking for roles that let me <strong>keep learning</strong>, <strong>try new things</strong>, <strong>stay near the ocean</strong>, and <strong>tackle problems that matter</strong>. Whether that’s working with NGOs, research institutions, government agencies, or social enterprises, I’m drawn to teams doing work that feels urgent and true.</p>
+</section>
+<section id="contact" class="level2">
+<h2 class="anchored" data-anchor-id="contact">Contact</h2>
+<p>Whether you’re interested in collaborating on research, want to learn more about environmental data science, or just want to chat, I’d love to hear from you!</p>
+<p><a href="mailto:ermiller@ucsb.edu">Email Me</a> | <a href="https://www.linkedin.com/in/rellimylime/">LinkedIn</a> | <a href="https://github.com/rellimylime">GitHub</a></p>
 
 
+</section>
 
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="TUVEUyUyQ1B5dGhvbiUyQ0dlb3NwYXRpYWwlMjBBbmFseXNpcyUyQ0Vudmlyb25tZW50YWwlMjBKdXN0aWNl" data-listing-date-sort="1764403200000" data-listing-file-modified-sort="1764631346415" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2314">
-<div class="thumbnail"><a href="./posts/eds220-final/index.html" class="no-external">
-
-<img loading="lazy" src="./posts/eds220-final/eds220-final-cover.png" class="thumbnail-image">
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/eds220-final/index.html" class="no-external">Analyzing the 2025 Los Angeles Wildfires: Remote Sensing and Environmental Justice</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('TUVEUw=='); return false;">MEDS</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('R2Vvc3BhdGlhbCUyMEFuYWx5c2lz'); return false;">Geospatial Analysis</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('RW52aXJvbm1lbnRhbCUyMEp1c3RpY2U='); return false;">Environmental Justice</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/eds220-final/index.html" class="no-external">
-<p>Combining satellite imagery and socioeconomic data to understand wildfire impacts</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/eds220-final/index.html" class="no-external">
-<div class="listing-date">
-Nov 29, 2025
-</div>
-<div class="listing-author">
-Emily Miller
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="TUVEUyUyQ1I=" data-listing-date-sort="1764403200000" data-listing-file-modified-sort="1764631922449" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="16" data-listing-word-count-sort="3184">
-<div class="thumbnail"><a href="./posts/eds222-final/index.html" class="no-external">
-
-<img loading="lazy" src="./posts/eds222-final/eds222-final-cover.png" class="thumbnail-image">
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/eds222-final/index.html" class="no-external">1. Introduction &amp; Research Question</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('TUVEUw=='); return false;">MEDS</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Ug=='); return false;">R</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/eds222-final/index.html" class="no-external">
-<!-- desc(5A0113B34292)[max=175]:posts/eds222-final/index.html -->
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/eds222-final/index.html" class="no-external">
-<div class="listing-date">
-Nov 29, 2025
-</div>
-<div class="listing-author">
-Emily Miller
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="TUVEUyUyQ1I=" data-listing-date-sort="1762934400000" data-listing-file-modified-sort="1764630886313" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="34">
-<div class="thumbnail"><a href="./posts/initial-blog/index.html" class="no-external">
-
-<img loading="lazy" src="./posts/initial-blog/PXL_20230921_205848129.jpg" class="thumbnail-image">
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/initial-blog/index.html" class="no-external">My First Blog Post</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('TUVEUw=='); return false;">MEDS</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Ug=='); return false;">R</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/initial-blog/index.html" class="no-external">
-<p>If I had something else to say I’d say it here</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/initial-blog/index.html" class="no-external">
-<div class="listing-date">
-Nov 12, 2025
-</div>
-<div class="listing-author">
-Emily Miller
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

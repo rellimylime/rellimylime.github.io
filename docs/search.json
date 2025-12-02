@@ -1,0 +1,51 @@
+[
+  {
+    "objectID": "blog.html",
+    "href": "blog.html",
+    "title": "Blog",
+    "section": "",
+    "text": "Analyzing the 2025 Los Angeles Wildfires: Remote Sensing and Environmental Justice\n\n\n\nMEDS\n\nPython\n\nGeospatial Analysis\n\nEnvironmental Justice\n\n\n\nCombining satellite imagery and socioeconomic data to understand wildfire impacts\n\n\n\n\n\nNov 29, 2025\n\n\nEmily Miller\n\n\n\n\n\n\n\n\n\n\n\n\nTraffic, Land Use, and Wildlife-Vehicle Collisions in Denmark\n\n\n\nMEDS\n\nR\n\nStatistics\n\nWildlife\n\n\n\nUsing a hurdle model to understand roadkill patterns on Danish roads\n\n\n\n\n\nNov 29, 2025\n\n\nEmily Miller\n\n\n\n\n\n\n\n\n\n\n\n\nMy First Blog Post\n\n\n\nMEDS\n\nR\n\n\n\nIf I had something else to say I’d say it here\n\n\n\n\n\nNov 12, 2025\n\n\nEmily Miller\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/eds222-final/index.html",
+    "href": "posts/eds222-final/index.html",
+    "title": "Traffic, Land Use, and Wildlife-Vehicle Collisions in Denmark",
+    "section": "",
+    "text": "Wildlife-vehicle collisions represent a critical intersection of ecological conservation and transportation safety. In Denmark, roadkill events affect biodiversity while also posing risks to motorists. Understanding the factors that influence roadkill frequency—particularly traffic volume and surrounding land use—is essential for developing evidence-based mitigation strategies.\n\n\n\nHow do traffic volume (AADT) and land use characteristics affect the frequency and intensity of roadkill on Danish roads?\nThis question requires understanding two distinct processes:\n\nWhether roadkill occurs on a given road segment (presence/absence)\nHow many animals are killed when collisions do occur (intensity)\n\nThe high proportion of road segments with zero observed roadkill (~83%) suggests these processes operate differently, making a hurdle model the appropriate statistical framework."
+  },
+  {
+    "objectID": "posts/eds222-final/index.html#background",
+    "href": "posts/eds222-final/index.html#background",
+    "title": "Traffic, Land Use, and Wildlife-Vehicle Collisions in Denmark",
+    "section": "",
+    "text": "Wildlife-vehicle collisions represent a critical intersection of ecological conservation and transportation safety. In Denmark, roadkill events affect biodiversity while also posing risks to motorists. Understanding the factors that influence roadkill frequency—particularly traffic volume and surrounding land use—is essential for developing evidence-based mitigation strategies."
+  },
+  {
+    "objectID": "posts/eds222-final/index.html#research-question",
+    "href": "posts/eds222-final/index.html#research-question",
+    "title": "Traffic, Land Use, and Wildlife-Vehicle Collisions in Denmark",
+    "section": "",
+    "text": "How do traffic volume (AADT) and land use characteristics affect the frequency and intensity of roadkill on Danish roads?\nThis question requires understanding two distinct processes:\n\nWhether roadkill occurs on a given road segment (presence/absence)\nHow many animals are killed when collisions do occur (intensity)\n\nThe high proportion of road segments with zero observed roadkill (~83%) suggests these processes operate differently, making a hurdle model the appropriate statistical framework."
+  },
+  {
+    "objectID": "posts/eds222-final/index.html#results-will-characterize-the-traffic-roadkill-relationship-on-denmarks-monitored-road-network-which-is-policy-relevant-but-may-not-generalize-to-all-road-types.",
+    "href": "posts/eds222-final/index.html#results-will-characterize-the-traffic-roadkill-relationship-on-denmarks-monitored-road-network-which-is-policy-relevant-but-may-not-generalize-to-all-road-types.",
+    "title": "Traffic, Land Use, and Wildlife-Vehicle Collisions in Denmark",
+    "section": "Results will characterize the traffic-roadkill relationship on Denmark’s monitored road network, which is policy-relevant but may not generalize to all road types.",
+    "text": "Results will characterize the traffic-roadkill relationship on Denmark’s monitored road network, which is policy-relevant but may not generalize to all road types."
+  },
+  {
+    "objectID": "posts/eds222-final/index.html#zero-inflation-83-of-segments-have-zero-roadkill-motivating-a-hurdle-model-to-separately-model-presenceabsence-and-intensity.",
+    "href": "posts/eds222-final/index.html#zero-inflation-83-of-segments-have-zero-roadkill-motivating-a-hurdle-model-to-separately-model-presenceabsence-and-intensity.",
+    "title": "Traffic, Land Use, and Wildlife-Vehicle Collisions in Denmark",
+    "section": "Zero-Inflation: ~83% of segments have zero roadkill, motivating a hurdle model to separately model presence/absence and intensity.",
+    "text": "Zero-Inflation: ~83% of segments have zero roadkill, motivating a hurdle model to separately model presence/absence and intensity."
+  },
+  {
+    "objectID": "posts/eds222-final/index.html#interpretation",
+    "href": "posts/eds222-final/index.html#interpretation",
+    "title": "Traffic, Land Use, and Wildlife-Vehicle Collisions in Denmark",
+    "section": "Interpretation",
+    "text": "Interpretation\nZero Hurdle Component (probability of ANY roadkill): - This models whether a road segment experiences roadkill at all - Significant predictors affect the odds of roadkill presence\nCount Component (intensity given presence): - This models how many roadkill events occur, given at least one event - Significant predictors affect the expected number of collisions\nNote on Offset: Road length is controlled via offset, so all effects are interpreted as roadkill RATE per kilometer, not total counts."
+  }
+]

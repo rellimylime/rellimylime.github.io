@@ -1,9 +1,9 @@
 ---
-title: ""
-description: ""
+title: "Traffic, Land Use, and Wildlife-Vehicle Collisions in Denmark"
+description: "Using a hurdle model to understand roadkill patterns on Danish roads"
 date: 2025-11-29
-categories: [MEDS, R]
-image: eds222-final-cover.png
+categories: [MEDS, R, Statistics, Wildlife]
+image: eds222-final-cover.jpg
 citation:
   url: https://rellimylime.github.io/posts/eds222-final/
 bibliography: references.bib
@@ -424,7 +424,7 @@ cat("Mean % Park:", round(mean(lu_props$pct_park), 1), "%\n")
 
 ```{r}
 # Check what columns were actually created
-names(landuse_props)
+names(lu_props)
 
 # Check what your config codes are
 config$landuse_forest_code
@@ -530,6 +530,7 @@ cat("Total roadkill events:", format(sum(model_data$roadkill_count), big.mark = 
 #| label: eda-visualizations
 #| fig-width: 14
 #| fig-height: 10
+#| eval: false
 
 library(patchwork)
 
@@ -582,6 +583,8 @@ p4 <- ggplot(model_data, aes(x = len_km, y = roadkill_count)) +
 
 (p1 + p2) / (p3 + p4)
 ```
+
+![](eda_visualization.png)
 
 **Key Observations**:
 
@@ -746,4 +749,4 @@ results %>%
 
 # 11. Conclusions
 
-[Add your interpretation based on which variables are significant]
+[ADD CONCLUSION]

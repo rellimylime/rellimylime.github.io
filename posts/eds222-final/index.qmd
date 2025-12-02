@@ -7,9 +7,11 @@ image: eds222-final-cover.jpg
 citation:
   url: https://rellimylime.github.io/posts/eds222-final/
 bibliography: references.bib
+code-fold: true
+code-summary: "Show code"
 execute:
   eval: true
-  echo: true
+  echo: false
   warning: false
   message: false
 ---
@@ -74,12 +76,12 @@ roadkill_dag <- dagify(
   Roadkill ~ Traffic + LandUse + RoadType + Speed,
   Traffic ~ RoadType,
   Speed ~ RoadType,
-  RoadType ~ LandUse,
+  RoadType ~ LandUse,  # Land use determines road type (not vice versa)
   exposure = "Traffic",
   outcome = "Roadkill",
   coords = list(
-    x = c(Traffic = 1, RoadType = 1, Speed = 2, LandUse = 2, Roadkill = 3),
-    y = c(Traffic = 2, RoadType = 1, Speed = 1, LandUse = 2, Roadkill = 1.5)
+    x = c(LandUse = 1, RoadType = 2, Traffic = 3, Speed = 3, Roadkill = 4),
+    y = c(LandUse = 2, RoadType = 1.5, Traffic = 2, Speed = 1, Roadkill = 1.5)
   )
 )
 
@@ -94,15 +96,22 @@ ggdag(roadkill_dag, text_size = 3.5, node_size = 20) +
 
 **Interpretation**:
 
-- **Traffic (AADT)** directly affects roadkill probability (more vehicles → more collision opportunities)
-- **Land use** influences wildlife presence near roads (forests/parks attract wildlife)
-- **Road type** is a common cause affecting traffic volume, speed limits, and surrounding land use
-- **Speed limit** affects collision severity and driver reaction time
-- We control for **road type** to avoid confounding when estimating traffic effects
+- **Land use** is the foundational factor—roads are built through existing landscapes (forests, farmland, urban areas)
+- **Road type** is determined by land use context (highways through rural areas, residential roads in cities)
+- **Road type** then influences **traffic volume** (highways carry more vehicles) and **speed limits**
+- **Traffic** directly affects roadkill probability (more vehicles → more collision opportunities)
+- **Land use** also directly affects roadkill (forests/parks attract wildlife to roadsides)
+- **Speed** affects collision severity and driver reaction time
 
 **Why This Matters for Our Model**:
 
-This DAG justifies our modeling approach: we must include road type, speed limit, and land use as control variables to properly isolate the causal effect of traffic on roadkill. Failing to account for these relationships would produce biased estimates (confounding).
+This DAG justifies our modeling approach:
+- **Land use** is a confounding variable (affects both wildlife presence and road infrastructure)
+- **Road type** is both a mediator (land use → road type → traffic) and a direct predictor of collision risk
+- **Speed** is determined by road type and independently affects collision outcomes
+- We must include all these variables to avoid omitted variable bias and confounding
+
+**Note on Causal Inference**: While we control for these variables, the causal interpretation focuses on the direct effect of traffic. The indirect effects through land use → road type → traffic are acknowledged but not the primary estimand.
 
 Now that we have our theoretical framework, let's prepare the data.
 
@@ -113,8 +122,12 @@ Now that we have our theoretical framework, let's prepare the data.
 Our analysis requires integrating multiple geospatial datasets covering Denmark. This section outlines the data sources and processing steps.
 
 ## Technical Setup
+
+We use R for all analysis, leveraging packages for geospatial data (`sf`, `terra`), statistical modeling (`pscl` for hurdle models), and visualization (`ggplot2`, `ggdag`). All file paths and parameters are managed via a configuration file for reproducibility.
+
 ```{r}
 #| label: setup
+#| echo: false
 
 library(tidyverse)
 library(sf)
@@ -144,8 +157,6 @@ dk_bbox_wgs84 <- st_bbox(c(
 # Transform to projected CRS
 dk_bbox_proj <- st_transform(st_as_sfc(dk_bbox_wgs84), CRS_M) %>%
   st_bbox()
-
-cat("Setup complete!\n")
 ```
 
 ## Data Sources
@@ -163,10 +174,11 @@ We combine four datasets:
 
 ### Step 1: Load Roadkill Observations
 
-Roadkill data are point locations (latitude/longitude). We filter to Denmark and transform to a projected coordinate system suitable for distance calculations.
+Roadkill data are point locations (latitude/longitude). We filter to Denmark (2017-2019) and transform to a projected coordinate system (EPSG:25832) suitable for distance calculations.
 
 ```{r}
 #| label: load-roadkill
+#| echo: false
 
 # Load roadkill CSV
 road_kill_dk <- read_csv(here(config$roadkill_csv_path)) %>%
@@ -183,6 +195,7 @@ road_kill_dk <- read_csv(here(config$roadkill_csv_path)) %>%
 
 ```{r}
 #| label: load-roads-cached
+#| echo: false
 
 # Define cache path for roads data
 roads_cache <- here(config$roads_cached_path)
@@ -209,6 +222,7 @@ cat("Roads loaded:", format(nrow(roads_raw), big.mark = ","), "segments\n\n")
 ```
 ```{r}
 #| label: load-traffic-cached
+#| echo: false
 
 # Define cache path for traffic data
 traffic_cache <- here(config$traffic_cached_path)
@@ -244,6 +258,7 @@ cat("Traffic points loaded:", format(nrow(traffic_raw), big.mark = ","), "\n\n")
 
 ```{r}
 #| label: load-landuse-cached
+#| echo: false
 
 # Define cache path for traffic data
 landuse_cache <- here(config$landuse_cached_path)
@@ -283,10 +298,11 @@ print(head(landuse_summary, 10))
 
 ## Step 2: Filter Road Network to Motorized Roads
 
-The OpenStreetMap road network includes all path types (sidewalks, bike lanes, etc.). We restrict our analysis to roads where wildlife-vehicle collisions can occur: roads accessible to motor vehicles.
+The OpenStreetMap road network includes all path types (sidewalks, bike lanes, etc.). We restrict our analysis to roads where wildlife-vehicle collisions can occur: roads accessible to motor vehicles (motorways, primary/secondary roads, residential streets, etc.).
 
 ```{r}
 #| label: filter-roads
+#| echo: false
 
 # Extract car codes from config
 car_codes <- c(
@@ -318,9 +334,11 @@ Including pedestrian paths would dilute our analysis—wildlife aren't killed on
 
 Traffic monitoring stations are point locations with AADT (vehicles/day). Roads are line geometries. We need to assign each road segment the traffic volume from its nearest monitoring station.
 
-**Challenge**: This requires computing distances between ~200,000 road segments and ~1,000 traffic stations—computationally expensive.
+**Challenge**: This requires computing distances between ~200,000 road segments and ~1,000 traffic stations—computationally expensive (~5-10 minutes on first run).
+
 ```{r}
 #| label: match-traffic
+#| echo: false
 
 # Define cache path for distance data
 distances_cache_file <- here(config$distances_cache_path)
@@ -360,8 +378,10 @@ Not all roads have nearby traffic stations. Matching distant roads to far-away s
 
 - **Coverage**: Include enough roads for statistical power (75% of network)
 - **Accuracy**: Avoid questionable matches (exclude roads >10km from any station)
+
 ```{r}
 #| label: apply-threshold
+#| echo: false
 
 # Apply configured threshold
 threshold_percentile <- config$distance_threshold_percentile
@@ -400,10 +420,11 @@ This is policy-relevant (most traffic and roadkill occur on monitored roads) but
 
 ## Step 4: Characterize Land Use Around Roads
 
-Wildlife presence near roads depends on surrounding habitat. A road through dense forest has different collision risk than a road through farmland. We extract land use within 500m buffers around each road segment.
+Wildlife presence near roads depends on surrounding habitat. A road through dense forest has different collision risk than a road through farmland. We extract land use within 500m buffers around each road segment using a rasterization approach for computational efficiency.
 
 ```{r}
 #| label: extract-landuse
+#| echo: false
 
 landuse_cache_file <- here(config$landuse_props_path)
 
@@ -528,6 +549,7 @@ cat("Mean % Park:", round(mean(lu_props$pct_park), 1), "%\n")
 ```
 
 ```{r}
+#| echo: false
 # Check what columns were actually created
 names(lu_props)
 
@@ -550,10 +572,11 @@ This distance approximates wildlife movement ranges and habitat edge effects. Ro
 
 ## Step 5: Count Roadkill Events per Road Segment
 
-Now we link roadkill observations to the road network. Each roadkill point (GPS coordinate) is matched to its nearest road segment, and we count total events per segment.
+Now we link roadkill observations to the road network. Each roadkill point (GPS coordinate) is matched to its nearest road segment using spatial join, and we count total events per segment.
 
 ```{r}
 #| label: aggregate-roadkill
+#| echo: false
 
 # Define cache path for aggregated roadkill data
 roadkill_cache_file <- here(config$roadkill_cache_path)
@@ -593,9 +616,11 @@ We now combine:
 - Land use proportions (forest, farmland, residential, parks)
 - Roadkill counts (our outcome variable)
 
-into a single analysis-ready dataset.
+into a single analysis-ready dataset. We also create log-transformed variables for modeling and classify road types.
+
 ```{r}
 #| label: create-model-data
+#| echo: false
 
 # Merge all data sources
 model_data <- roads_traf %>%
@@ -758,8 +783,12 @@ A hurdle model assumes:
 
 ### Simulating Data from a Hurdle Model
 
+We'll simulate 1,000 observations with a single predictor (traffic) and known parameter values. This allows us to verify that when we fit a hurdle model to this simulated data, we recover the parameters we put in.
+
 ```{r}
 #| label: simulate-hurdle
+#| echo: true
+#| code-fold: true
 
 set.seed(42)
 n_sim <- 1000  # Number of observations
@@ -815,8 +844,12 @@ cat("  Mean count (non-zero):", round(mean(sim_data$y[sim_data$y > 0]), 3), "\n\
 
 ### Fitting Model to Simulated Data
 
+Now we fit a hurdle model to the simulated data and check if it recovers our true parameters:
+
 ```{r}
 #| label: fit-simulated
+#| echo: true
+#| code-fold: true
 
 # Fit hurdle model to simulated data
 sim_hurdle <- hurdle(y ~ x, data = sim_data, dist = "negbin")
@@ -838,10 +871,13 @@ cat("✓ Parameters successfully recovered! The model works as expected.\n\n")
 
 ### Visualizing Simulated Data vs. Model Predictions
 
+These plots show how the two components of the hurdle model work:
+
 ```{r}
 #| label: sim-visualization
 #| fig-width: 10
 #| fig-height: 4
+#| echo: false
 
 library(patchwork)
 
@@ -923,8 +959,12 @@ Higher traffic volume (AADT) increases both (a) the probability of roadkill occu
 
 We will evaluate these hypotheses by examining coefficient significance and confidence intervals in both model components.
 
+### Fitting the Model
+
 ```{r}
 #| label: fit-model
+#| echo: true
+#| code-fold: true
 
 cat("\n=== FITTING HURDLE MODEL ===\n")
 cat("Distribution:", config$model_distribution, "\n")
@@ -947,9 +987,11 @@ cat("Model fitted successfully!\n\n")
 print(summary(hurdle_model))
 ```
 
+### Model Diagnostics
 
 ```{r}
 #| label: model-diagnostics
+#| echo: false
 
 cat("\n=== MODEL DIAGNOSTICS ===\n")
 cat("Log-Likelihood:", round(logLik(hurdle_model), 1), "\n")
@@ -985,8 +1027,12 @@ print(results, n = Inf)
 ---
 
 # 7. Model Results & Interpretation
+
+The model results are presented in two sections: the zero component (predicting whether roadkill occurs) and the count component (predicting intensity given occurrence).
+
 ```{r}
 #| label: results-table
+#| echo: false
 
 # Extract coefficients and standard errors
 coefs <- coef(hurdle_model)
@@ -1052,6 +1098,8 @@ results %>%
 Based on the hurdle model results, we can evaluate our hypotheses:
 
 ### H1: Traffic Volume Effect — **SUPPORTED**
+
+Let's examine the traffic (AADT) coefficients from both model components:
 
 ```{r}
 #| label: traffic-effect

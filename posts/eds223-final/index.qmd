@@ -2,19 +2,18 @@
 title: "Mapping the Texas Blackouts: A Spatial Analysis of the 2021 Winter Storm Impacts"
 description: "Using satellite night lights data and socioeconomic indicators to identify which Houston communities lost power during the historic February 2021 winter storms"
 author: "Emily Miller"
-date: "2025-11-06"
+date: "2025-12-03"
 categories: [geospatial analysis, remote sensing, environmental justice, R]
 image: "eds223-final-cover.jpg"
-format:
-  html:
-    toc: true
-    toc-depth: 3
-    code-fold: true
-    code-summary: "Show code"
-    code-tools: true
-    theme: cosmo
+citation:
+  url: https://rellimylime.github.io/posts/eds223-final/
+execute:
+  freeze: true
+  eval: true
+  echo: true
+  warning: false
+  message: false
 bibliography: references.bib
-editor: source
 ---
 
 ## Introduction
@@ -61,7 +60,8 @@ This analysis integrates four primary datasets:
 
 ### Analytical Approach
 
-```{r setup}
+```{r}
+#| label: setup
 #| message: false
 #| warning: false
 #| code-fold: true
@@ -88,7 +88,8 @@ The analysis follows these steps:
 
 ### Loading and Preparing the Data
 
-```{r load_data}
+```{r}
+#| label: load_data
 #| message: false
 #| warning: false
 #| code-fold: true
@@ -117,7 +118,8 @@ houses <- st_read(here("posts/eds223-final/data/gis_osm_buildings_a_free_1.gpkg/
                   quiet = TRUE)
 ```
 
-```{r prepare_census}
+```{r}
+#| label: prepare_census
 #| message: false
 #| warning: false
 #| code-fold: true
@@ -145,7 +147,8 @@ All datasets use different coordinate reference systems initially, so I standard
 
 The stark difference in nighttime light emissions reveals the massive scale of the power outages across Houston.
 
-```{r before_after_prep}
+```{r}
+#| label: before_after_prep
 #| warning: false
 #| code-fold: true
 #| output: false
@@ -175,7 +178,7 @@ combined_crop <- c(masked_07, masked_16)
 names(combined_crop) <- c("February 7, 2021 (Before)", "February 16, 2021 (After)")
 ```
 
-```{r fig_before_after}
+```{r}
 #| fig-cap: "Night lights imagery showing Houston before (left) and during (right) the February 2021 blackouts. Darker areas in the right panel indicate regions that lost power. The widespread darkening across the metropolitan area illustrates the extensive scale of the grid failure."
 #| fig-width: 12
 #| fig-height: 6
@@ -203,7 +206,8 @@ The comparison reveals significant light reduction across much of the Houston me
 
 To systematically identify blackout zones, I calculated the difference in light intensity and classified areas with drops greater than 200 nW cm⁻²sr⁻¹ as experiencing blackouts.
 
-```{r identify_blackouts}
+```{r}
+#| label: identify_blackouts
 #| warning: false
 #| code-fold: true
 #| output: false
@@ -227,7 +231,8 @@ blackout_houston <- st_crop(blackout_vector, HOUSTON_BBOX) %>%
   st_transform(crs = 3083)
 ```
 
-```{r fig_initial_blackouts}
+```{r}
+#| label: fig_initial_blackouts
 #| fig-cap: "Initial identification of blackout areas based on night lights analysis. Red areas experienced light intensity drops exceeding 200 nW cm⁻²sr⁻¹, indicating likely power outages."
 #| fig-width: 8
 #| fig-height: 7
@@ -253,7 +258,8 @@ tm_basemap("CartoDB.VoyagerNoLabels") +
 
 Major highways may show reduced light intensity due to decreased traffic rather than residential power outages. To improve accuracy, I excluded areas within 200 meters of motorways.
 
-```{r exclude_highways}
+```{r}
+#| label: exclude_highways
 #| warning: false
 #| code-fold: true
 #| output: false
@@ -268,7 +274,7 @@ highway_buffer <- highways %>%
 blackout_final <- st_difference(blackout_houston, highway_buffer)
 ```
 
-```{r fig_highway_refinement}
+```{r}
 #| fig-cap: "Refinement of blackout areas by excluding highway corridors. The yellow lines show major highways with 200m buffers applied. This step removes areas where reduced light may be due to decreased traffic rather than residential power outages."
 #| fig-width: 10
 #| fig-height: 8
@@ -314,7 +320,8 @@ This refinement helps ensure we're identifying genuine residential power outages
 
 By intersecting the blackout areas with residential building footprints, we can estimate how many homes lost power.
 
-```{r count_impacted}
+```{r}
+#| label: count_impacted
 #| warning: false
 #| code-fold: true
 #| output: false
@@ -331,7 +338,8 @@ pct_impacted <- round((n_blackout_homes / n_total_homes) * 100, 1)
 
 **Finding:** Approximately **`r format(n_blackout_homes, big.mark = ",")`** residential buildings (`r pct_impacted`% of structures in the dataset) experienced blackouts during the February 2021 storms.
 
-```{r prep_home_maps}
+```{r}
+#| label: prep_home_maps
 #| warning: false
 #| message: false
 #| code-fold: true
@@ -343,7 +351,7 @@ not_impacted_homes <- all_homes_points[!all_homes_points$osm_id %in% blackout_ho
 impacted_homes_points <- st_centroid(blackout_homes)
 ```
 
-```{r fig_impacted_homes}
+```{r}
 #| fig-cap: "Spatial distribution of impacted and non-impacted residential buildings. Dark red points represent homes that experienced blackouts, while light pink points indicate buildings that maintained power throughout the crisis."
 #| fig-width: 10
 #| fig-height: 9
@@ -384,7 +392,8 @@ The map reveals that blackouts were widespread but not uniform. Some neighborhoo
 
 To investigate potential disparities in blackout impacts, I analyzed the relationship between census tract median household income and blackout exposure.
 
-```{r census_analysis}
+```{r}
+#| label: census_analysis
 #| warning: false
 #| message: false
 #| code-fold: true
@@ -417,7 +426,8 @@ houston_tracts$blackout <- factor(houston_tracts$n_homes > 0,
                                   labels = c("Blackout", "No Blackout"))
 ```
 
-```{r fig_tract_impacts}
+```{r}
+#| label: fig_tract_impacts
 #| fig-cap: "Number of residential buildings that lost power by census tract. Darker colors indicate higher numbers of impacted homes. The spatial pattern shows that some tracts experienced extreme impacts while neighboring areas had minimal disruption."
 #| fig-width: 10
 #| fig-height: 9
@@ -446,7 +456,8 @@ tm_basemap("CartoDB.VoyagerNoLabels") +
 
 The census tract analysis reveals substantial variation in blackout severity. Some tracts lost power for more than 1,500 residential buildings, while others experienced minimal disruption.
 
-```{r fig_income_comparison}
+```{r}
+#| label: fig_income_comparison
 #| fig-cap: "Median household income comparison between census tracts that experienced blackouts versus those that maintained power. The similar distributions suggest that income was not a strong predictor of blackout exposure during this crisis."
 #| fig-width: 9
 #| fig-height: 6
@@ -475,7 +486,8 @@ ggplot(houston_tracts_no_na, aes(x = blackout, y = B19013e1, fill = blackout)) +
         panel.grid.minor = element_blank())
 ```
 
-```{r income_table}
+```{r}
+#| label: income_table
 #| code-fold: true
 
 income_stats <- houston_tracts %>%

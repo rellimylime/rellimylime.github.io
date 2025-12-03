@@ -14,50 +14,39 @@ execute:
   message: false
 ---
 
-# 1. Introduction: A Tale of Two Processes
+# 1. Introduction: Why This Matters
 
-## The Problem
+Wildlife-vehicle collisions threaten biodiversity and pose safety risks. Understanding which road and landscape characteristics predict roadkill hotspots enables evidence-based mitigation. We analyze \~11,000 roadkill events on 241,000 Danish road segments (2017-2019) to test whether traffic volume, forest proximity, and urban development predict collision rates.
 
-Every year, thousands of wild animals are killed on roads across Denmark. These wildlife-vehicle collisions create a dual challenge: they threaten local biodiversity while also posing safety risks to drivers. Understanding what drives these collisions is essential for developing effective mitigation strategies—but the data tell an interesting story.
+**The puzzle**: Some roads experience frequent wildlife collisions while others have zero incidents. Is it just random chance or collection bias? Or are there systematic patterns we can identify and address?
 
-When we examine roadkill data across Denmark's road network, we observe a peculiar pattern: **most road segments (83%) have zero recorded roadkill events, while the remaining segments show varying levels of collision intensity**. This pattern suggests something important: the factors that determine *whether* roadkill occurs may differ from the factors that determine *how many* animals are killed once collisions start happening.
+If we can predict which roads are most likely to become collision hotspots, transportation planners and conservationists?????? can install wildlife crossings, adjust speed limits, or ....?
 
-## Research Question
+## **Research Question**
 
 **How do traffic volume and land use characteristics affect wildlife-vehicle collisions on Danish roads?**
 
-Specifically, we investigate:
+Specifically, we investigate two processes:
 
-1. **Occurrence**: What factors increase the probability that roadkill happens at all on a given road segment?
-2. **Intensity**: What factors influence how many collision events occur, given that at least one has happened?
+1.  **Occurrence**: What makes roadkill more likely to happen at all on a given road segment?
+2.  **Intensity**: Once roadkill does occur, what factors influence how many collision events happen?
 
-## Why This Matters
+The high proportion of road segments with zero observed roadkill (\~83%) suggests these processes operate differently, making a hurdle model the appropriate statistical framework.
 
-Understanding these dual processes allows transportation planners and conservation managers to:
-- Identify high-risk locations before roadkill occurs (prevention)
-- Prioritize mitigation efforts where collisions are most severe (intervention)
-- Allocate resources efficiently based on different risk profiles
+# 2. Building a Theory: What Causes Roadkill?
 
-## Analysis Roadmap
+## **The Causal Story**
 
-This blog post walks through a complete statistical analysis:
+Imagine you're a deer deciding whether to cross a road. Several factors affect your collision risk:
 
-1. **Theoretical framework**: How variables relate causally (DAG)
-2. **Data preparation**: Integrating roadkill observations with traffic, road networks, and land use
-3. **Model selection**: Why traditional regression fails and how hurdle models solve the problem
-4. **Validation**: Testing the model on simulated data with known parameters
-5. **Real-world application**: Fitting the model to Danish roadkill data
-6. **Interpretation**: What the results mean for conservation policy
+1.  **Traffic volume**: More vehicles = more chances for collision
+2.  **Your habitat**: You're more likely to be near roads that pass through forests or parks
+3.  **Road characteristics**: Wider, faster roads are harder to cross safely
+4.  **Human development**: You avoid heavily urbanized areas
 
----
+## **Visualizing Causal Relationships: The DAG**
 
-# 2. Theoretical Framework: What Causes Roadkill?
-
-Before diving into data, we need a clear theory about *how* different factors influence wildlife-vehicle collisions. A **Directed Acyclic Graph (DAG)** helps us visualize these causal relationships and justify which variables to include in our statistical model.
-
-## Causal Diagram
-
-The DAG below represents our hypothesized causal structure:
+\[MAKE THIS FUNNY SOMEHOW\] A Directed Acyclic Graph (DAG) helps us map out these causal connections. Think of it as a flowchart showing which factors influence others:
 
 ```{r}
 #| label: dag
@@ -92,27 +81,43 @@ ggdag(roadkill_dag, text_size = 3.5, node_size = 20) +
         plot.subtitle = element_text(size = 11))
 ```
 
-**Interpretation**:
+**Key relationships:**
 
-- **Traffic (AADT)** directly affects roadkill probability (more vehicles → more collision opportunities)
-- **Land use** influences wildlife presence near roads (forests/parks attract wildlife)
-- **Road type** is a common cause affecting traffic volume, speed limits, and surrounding land use
-- **Speed limit** affects collision severity and driver reaction time
-- We control for **road type** to avoid confounding when estimating traffic effects
+-   **Traffic (AADT)** directly affects roadkill probability (more vehicles → more collision opportunities)
+-   **Land use** influences wildlife presence near roads (forests/parks attract wildlife)
+-   **Road type** is a common cause affecting traffic volume, speed limits, and surrounding land use
+-   **Speed limit** affects collision severity and driver reaction time
+-   We control for **road type** to avoid confounding when estimating traffic effects
 
-**Why This Matters for Our Model**:
+------------------------------------------------------------------------
 
-This DAG justifies our modeling approach: we must include road type, speed limit, and land use as control variables to properly isolate the causal effect of traffic on roadkill. Failing to account for these relationships would produce biased estimates (confounding).
+# 3. Hypothesis
 
-Now that we have our theoretical framework, let's prepare the data.
+Based on our causal theory and existing wildlife ecology research, we make three sets of predictions:
 
----
+| Hypothesis | Variable | Expected Effect | Rationale |
+|------------------|------------------|--------------------|------------------|
+| **H1: Traffic** | AADT (↑) | \+ occurrence, + intensity | More vehicles → more collision opportunities |
+| **H2a: Wildlife habitat** | Forest/Park (↑) | \+ occurrence, + intensity | Attracts wildlife near roads |
+| **H2b: Urban development** | Residential (↑) | \- occurrence, - intensity | Reduces wildlife presence |
+| **H3a: Road infrastructure** | Major roads | \+ occurrence, + intensity | Higher speeds, more lanes |
+| **H3b: Speed** | Speed limit (↑) | \+ occurrence, + intensity | Reduced reaction time, higher mortality |
 
-# 3. Data Preparation: Building the Analysis Dataset
+We'll test this in *both* parts of our model:
 
-Our analysis requires integrating multiple geospatial datasets covering Denmark. This section outlines the data sources and processing steps.
+**Note:** All effects are interpreted as rates per km (controlled via offset for road length).
+
+# 4. Data & Methods
+
+| Dataset | Source | Variables | Coverage |
+|-----------------|-----------------|--------------------|------------------|
+| Roadkill observations | Global Roadkill Database | GPS coordinates, species | 2017-2019 |
+| Road network | OpenStreetMap | Geometry, type, speed limits | Denmark |
+| Traffic counts | Danish Road Directorate | AADT (vehicles/day) | Monitoring stations |
+| Land use | OpenStreetMap | Forest, farmland, residential, parks | 500m buffers |
 
 ## Technical Setup
+
 ```{r}
 #| label: setup
 
@@ -122,8 +127,6 @@ library(terra)
 library(here)
 library(pscl)
 library(yaml)
-library(ggdag)
-library(dagitty)
 library(patchwork)
 
 # Load configuration
@@ -144,18 +147,16 @@ dk_bbox_wgs84 <- st_bbox(c(
 # Transform to projected CRS
 dk_bbox_proj <- st_transform(st_as_sfc(dk_bbox_wgs84), CRS_M) %>%
   st_bbox()
-
-cat("Setup complete!\n")
 ```
 
 ## Data Sources
 
 We combine four datasets:
 
-1. **Roadkill observations**: Global Roadkill Database (2017-2019) - GPS coordinates of reported wildlife-vehicle collisions
-2. **Road network**: OpenStreetMap - Complete Danish road geometry with attributes (type, speed limit)
-3. **Traffic counts**: Vejdirektoratet (Danish Road Directorate) - Annual Average Daily Traffic (AADT) from monitoring stations
-4. **Land use**: OpenStreetMap - Polygons classifying areas as forest, farmland, residential, parks, etc.
+1.  **Roadkill observations**: Global Roadkill Database (2017-2019) - GPS coordinates of reported wildlife-vehicle collisions
+2.  **Road network**: OpenStreetMap - Complete Danish road geometry with attributes (type, speed limit)
+3.  **Traffic counts**: Vejdirektoratet (Danish Road Directorate) - Annual Average Daily Traffic (AADT) from monitoring stations
+4.  **Land use**: OpenStreetMap - Polygons classifying areas as forest, farmland, residential, parks, etc.
 
 **Time period**: 2017-2019 to align with land cover classifications
 
@@ -179,7 +180,6 @@ road_kill_dk <- read_csv(here(config$roadkill_csv_path)) %>%
     st_transform(CRS_M) %>%
     st_crop(dk_bbox_proj)
 ```
-
 
 ```{r}
 #| label: load-roads-cached
@@ -207,6 +207,7 @@ if (file.exists(roads_cache)) {
 cat("Roads loaded:", format(nrow(roads_raw), big.mark = ","), "segments\n\n")
 
 ```
+
 ```{r}
 #| label: load-traffic-cached
 
@@ -277,9 +278,9 @@ cat("\nTop land use classes:\n")
 print(head(landuse_summary, 10))
 ```
 
-**Computational Note**: These shapefiles are large (millions of features). We cache processed versions to avoid reloading on subsequent runs. First run takes ~5-10 minutes; cached runs are instantaneous.
+**Computational Note**: These shapefiles are large (millions of features). We cache processed versions to avoid reloading on subsequent runs. First run takes \~5-10 minutes; cached runs are instantaneous.
 
----
+------------------------------------------------------------------------
 
 ## Step 2: Filter Road Network to Motorized Roads
 
@@ -309,16 +310,16 @@ cat("  Total length:", format(round(sum(car_roads$len_km), 0), big.mark = ","), 
 cat("  Mean segment length:", round(mean(car_roads$len_km), 2), "km\n\n")
 ```
 
-**Why filter by road type?**
-Including pedestrian paths would dilute our analysis—wildlife aren't killed on sidewalks. Focusing on motorized roads ensures our predictors (traffic volume, speed) are relevant.
+**Why filter by road type?** Including pedestrian paths would dilute our analysis—wildlife aren't killed on sidewalks. Focusing on motorized roads ensures our predictors (traffic volume, speed) are relevant.
 
----
+------------------------------------------------------------------------
 
 ## Step 3: Match Traffic Counts to Road Segments
 
 Traffic monitoring stations are point locations with AADT (vehicles/day). Roads are line geometries. We need to assign each road segment the traffic volume from its nearest monitoring station.
 
-**Challenge**: This requires computing distances between ~200,000 road segments and ~1,000 traffic stations—computationally expensive.
+**Challenge**: This requires computing distances between \~200,000 road segments and \~1,000 traffic stations—computationally expensive.
+
 ```{r}
 #| label: match-traffic
 
@@ -358,8 +359,9 @@ Not all roads have nearby traffic stations. Matching distant roads to far-away s
 
 **Threshold choice**: 75th percentile of distances balances two goals:
 
-- **Coverage**: Include enough roads for statistical power (75% of network)
-- **Accuracy**: Avoid questionable matches (exclude roads >10km from any station)
+-   **Coverage**: Include enough roads for statistical power (75% of network)
+-   **Accuracy**: Avoid questionable matches (exclude roads \>10km from any station)
+
 ```{r}
 #| label: apply-threshold
 
@@ -391,12 +393,12 @@ cat("AADT range:",
 
 By filtering to roads with traffic data, our analysis focuses on Denmark's **monitored road network**:
 
-- ✓ **Included**: Major highways, urban arterials, well-monitored corridors
-- ✗ **Excluded**: Remote rural roads far from monitoring infrastructure
+-   [x] **Included**: Major highways, urban arterials, well-monitored corridors
+-   ✗ **Excluded**: Remote rural roads far from monitoring infrastructure
 
 This is policy-relevant (most traffic and roadkill occur on monitored roads) but limits generalizability to all road types.
 
----
+------------------------------------------------------------------------
 
 ## Step 4: Characterize Land Use Around Roads
 
@@ -538,15 +540,11 @@ config$landuse_residential_code
 config$landuse_park_code
 ```
 
-**Why 500m buffers?**
-This distance approximates wildlife movement ranges and habitat edge effects. Roads near forests within 500m may experience wildlife crossing activity; roads farther away less so.
+**Why 500m buffers?** This distance approximates wildlife movement ranges and habitat edge effects. Roads near forests within 500m may experience wildlife crossing activity; roads farther away less so.
 
-**Land use categories**:
-- **Forest/Parks**: Wildlife habitat (deer, foxes, etc.)
-- **Farmland**: Agricultural areas with edge habitat
-- **Residential**: Urban development (lower wildlife density)
+**Land use categories**: - **Forest/Parks**: Wildlife habitat (deer, foxes, etc.) - **Farmland**: Agricultural areas with edge habitat - **Residential**: Urban development (lower wildlife density)
 
----
+------------------------------------------------------------------------
 
 ## Step 5: Count Roadkill Events per Road Segment
 
@@ -583,17 +581,14 @@ cat("  Unique road segments with roadkill:",
 
 **Spatial join logic**: Each roadkill point is assigned to the nearest road segment (straight-line distance). This assumes roadkill occurs on or very near the road where collision happened.
 
----
+------------------------------------------------------------------------
 
 ## Step 6: Merge All Data Sources into Final Dataset
 
-We now combine:
-- Road geometry and characteristics (type, speed, length)
-- Traffic volume (AADT)
-- Land use proportions (forest, farmland, residential, parks)
-- Roadkill counts (our outcome variable)
+We now combine: - Road geometry and characteristics (type, speed, length) - Traffic volume (AADT) - Land use proportions (forest, farmland, residential, parks) - Roadkill counts (our outcome variable)
 
 into a single analysis-ready dataset.
+
 ```{r}
 #| label: create-model-data
 
@@ -643,13 +638,13 @@ cat("Total roadkill events:", format(sum(model_data$roadkill_count), big.mark = 
 
 **Key observations that inform our modeling choice**:
 
-1. **Zero-inflation**: ~83% of roads have zero roadkill → standard Poisson/negative binomial models assume fewer zeros
-2. **Overdispersion**: Variance >> Mean → negative binomial (not Poisson) needed for count component
-3. **Exposure variable**: Road length matters (longer roads = more opportunity for collisions) → use as offset
+1.  **Zero-inflation**: \~83% of roads have zero roadkill → standard Poisson/negative binomial models assume fewer zeros
+2.  **Overdispersion**: Variance \>\> Mean → negative binomial (not Poisson) needed for count component
+3.  **Exposure variable**: Road length matters (longer roads = more opportunity for collisions) → use as offset
 
 These patterns point us toward a **hurdle model with negative binomial count component**. Before fitting it, let's visualize the data.
 
----
+------------------------------------------------------------------------
 
 # 4. Exploratory Data Analysis: Visualizing the Patterns
 
@@ -717,14 +712,14 @@ p4 <- ggplot(model_data, aes(x = len_km, y = roadkill_count)) +
 
 **What We Learn from These Plots**:
 
-1. **Panel A (distribution)**: Massive spike at zero confirms zero-inflation—most roads never experience roadkill
-2. **Panel B (traffic effect)**: Clear positive trend—higher AADT associates with more roadkill
-3. **Panel C (road type)**: Major roads show higher roadkill intensity than minor roads (conditional on having any)
-4. **Panel D (road length)**: Longer segments have more events, confirming we need a length offset
+1.  **Panel A (distribution)**: Massive spike at zero confirms zero-inflation—most roads never experience roadkill
+2.  **Panel B (traffic effect)**: Clear positive trend—higher AADT associates with more roadkill
+3.  **Panel C (road type)**: Major roads show higher roadkill intensity than minor roads (conditional on having any)
+4.  **Panel D (road length)**: Longer segments have more events, confirming we need a length offset
 
 These patterns validate our hypotheses from the DAG. Now let's build a statistical model to quantify these effects.
 
----
+------------------------------------------------------------------------
 
 # 5. Model Selection: Why We Need a Hurdle Model
 
@@ -734,13 +729,12 @@ Traditional count regression models (Poisson, negative binomial) don't work well
 
 A **hurdle model** recognizes that two separate processes govern our data:
 
-1. **"Will roadkill occur at all?"** (Binary process: zero vs. non-zero)
-   - Modeled with logistic regression
-   - Predictors: factors influencing wildlife-road intersection probability
-
-2. **"If roadkill occurs, how many events?"** (Count process: intensity)
-   - Modeled with truncated count distribution (here: negative binomial)
-   - Predictors: factors influencing collision frequency given presence
+1.  **"Will roadkill occur at all?"** (Binary process: zero vs. non-zero)
+    -   Modeled with logistic regression
+    -   Predictors: factors influencing wildlife-road intersection probability
+2.  **"If roadkill occurs, how many events?"** (Count process: intensity)
+    -   Modeled with truncated count distribution (here: negative binomial)
+    -   Predictors: factors influencing collision frequency given presence
 
 Think of it as a two-stage process: first an animal must cross the road (stage 1), then given crossing happens, how often do collisions occur (stage 2)?
 
@@ -752,9 +746,9 @@ Before applying this model to real data, let's verify it works by simulating dat
 
 A hurdle model assumes:
 
-1. **Binary component**: Logistic regression for zero vs. non-zero
-2. **Count component**: Negative binomial for positive counts (conditional on being > 0)
-3. **Independence**: The two components can have different predictors
+1.  **Binary component**: Logistic regression for zero vs. non-zero
+2.  **Count component**: Negative binomial for positive counts (conditional on being \> 0)
+3.  **Independence**: The two components can have different predictors
 
 ### Simulating Data from a Hurdle Model
 
@@ -872,7 +866,7 @@ p_sim1 + p_sim2
 
 **Key Takeaway**: The simulation proves our modeling framework works—when we feed the hurdle model data generated from known parameters, it successfully recovers those parameters. This gives us confidence to apply it to real data where the true parameters are unknown.
 
----
+------------------------------------------------------------------------
 
 # 6. Applying the Hurdle Model to Real Roadkill Data
 
@@ -891,9 +885,9 @@ $$
 
 Where:
 
-- $\pi_i$ = Probability of zero (from logistic regression)
-- $f_{\text{NB}}(\cdot)$ = Negative binomial PMF with mean $\mu_i$ and dispersion $\theta$
-- **Offset**: $\log(\text{length}_i)$ controls for road exposure
+-   $\pi_i$ = Probability of zero (from logistic regression)
+-   $f_{\text{NB}}(\cdot)$ = Negative binomial PMF with mean $\mu_i$ and dispersion $\theta$
+-   **Offset**: $\log(\text{length}_i)$ controls for road exposure
 
 **Predictors** (from config):
 
@@ -908,18 +902,11 @@ for (pred in config$model_predictors) {
 
 Based on our DAG and ecological theory, we test the following hypotheses:
 
-**H1: Traffic Volume Effect**
-Higher traffic volume (AADT) increases both (a) the probability of roadkill occurrence and (b) the intensity of roadkill events.
-*Rationale*: More vehicles → more collision opportunities
+**H1: Traffic Volume Effect** Higher traffic volume (AADT) increases both (a) the probability of roadkill occurrence and (b) the intensity of roadkill events. *Rationale*: More vehicles → more collision opportunities
 
-**H2: Land Use Effects**
-- **Forest/Park areas**: Positive association with roadkill (wildlife habitat attracts animals near roads)
-- **Farmland**: Positive association (wildlife use agricultural edges)
-- **Residential areas**: Negative association (reduced wildlife presence)
+**H2: Land Use Effects** - **Forest/Park areas**: Positive association with roadkill (wildlife habitat attracts animals near roads) - **Farmland**: Positive association (wildlife use agricultural edges) - **Residential areas**: Negative association (reduced wildlife presence)
 
-**H3: Road Characteristics**
-- **Major roads**: Higher roadkill due to higher speeds and traffic
-- **Speed limit**: Higher speeds increase collision probability and severity
+**H3: Road Characteristics** - **Major roads**: Higher roadkill due to higher speeds and traffic - **Speed limit**: Higher speeds increase collision probability and severity
 
 We will evaluate these hypotheses by examining coefficient significance and confidence intervals in both model components.
 
@@ -946,7 +933,6 @@ hurdle_model <- hurdle(
 cat("Model fitted successfully!\n\n")
 print(summary(hurdle_model))
 ```
-
 
 ```{r}
 #| label: model-diagnostics
@@ -979,12 +965,12 @@ cat("=== RESULTS TABLE ===\n")
 print(results, n = Inf)
 ```
 
-
 **Model diagnostics** (AIC, BIC, log-likelihood) help us assess model fit. Lower values indicate better fit. These will be compared to simpler models if needed.
 
----
+------------------------------------------------------------------------
 
 # 7. Model Results & Interpretation
+
 ```{r}
 #| label: results-table
 
@@ -1025,25 +1011,15 @@ results %>%
 
 ## How to Interpret Coefficients
 
-**Zero Component** (first section of results):
-- **Positive coefficients** → increase probability of roadkill occurring
-- **Negative coefficients** → decrease probability (protective effect)
-- Coefficients are on the *logit scale* (log-odds)
+**Zero Component** (first section of results): - **Positive coefficients** → increase probability of roadkill occurring - **Negative coefficients** → decrease probability (protective effect) - Coefficients are on the *logit scale* (log-odds)
 
-**Count Component** (second section of results):
-- **Positive coefficients** → increase expected roadkill count (given presence)
-- **Negative coefficients** → decrease intensity
-- Coefficients are on the *log scale* (multiplicative effects)
+**Count Component** (second section of results): - **Positive coefficients** → increase expected roadkill count (given presence) - **Negative coefficients** → decrease intensity - Coefficients are on the *log scale* (multiplicative effects)
 
-**Offset (road length)**:
-- Controlled automatically—results are roadkill *rates* per km, not raw counts
-- Ensures we don't just find "longer roads have more roadkill" (obvious)
+**Offset (road length)**: - Controlled automatically—results are roadkill *rates* per km, not raw counts - Ensures we don't just find "longer roads have more roadkill" (obvious)
 
-**Statistical significance**:
-- Stars (*** = p<0.001, ** = p<0.01, * = p<0.05) indicate strong evidence against null hypothesis
-- Confidence intervals (via SE) quantify uncertainty
+**Statistical significance**: - Stars (\*\*\* = p\<0.001, \*\* = p\<0.01, \* = p\<0.05) indicate strong evidence against null hypothesis - Confidence intervals (via SE) quantify uncertainty
 
----
+------------------------------------------------------------------------
 
 # 8. Hypothesis Testing & Conclusions
 
@@ -1065,46 +1041,44 @@ cat("Traffic (log_AADT) Effects:\n")
 print(traffic_coefs, n = 2)
 ```
 
-**Interpretation**:
-- **Zero component**: Traffic volume significantly affects the probability of roadkill occurrence (p < 0.05 likely)
-- **Count component**: Traffic also influences roadkill intensity given presence
-- A 10% increase in traffic is associated with a measurable increase in roadkill probability and count
+**Interpretation**: - **Zero component**: Traffic volume significantly affects the probability of roadkill occurrence (p \< 0.05 likely) - **Count component**: Traffic also influences roadkill intensity given presence - A 10% increase in traffic is associated with a measurable increase in roadkill probability and count
 
 ### H2: Land Use Effects — **PARTIALLY SUPPORTED**
 
 The land use variables show varying effects:
 
-- **Forest/Park**: Likely shows positive association with roadkill (wildlife habitat)
-- **Farmland**: Effects vary by model component (edge habitat vs. open space trade-offs)
-- **Residential**: Negative or non-significant (reduced wildlife)
+-   **Forest/Park**: Likely shows positive association with roadkill (wildlife habitat)
+-   **Farmland**: Effects vary by model component (edge habitat vs. open space trade-offs)
+-   **Residential**: Negative or non-significant (reduced wildlife)
 
 These patterns align with ecological theory about wildlife-vehicle collision hotspots.
 
 ### H3: Road Characteristics — **SUPPORTED**
 
-- **Road type**: Major roads show different baseline roadkill rates than minor roads
-- **Speed limit**: Higher speed limits associated with increased collision risk
-- The offset term confirms longer road segments have proportionally more roadkill
+-   **Road type**: Major roads show different baseline roadkill rates than minor roads
+-   **Speed limit**: Higher speed limits associated with increased collision risk
+-   The offset term confirms longer road segments have proportionally more roadkill
 
 ## Policy Implications
 
 Our findings suggest several evidence-based mitigation strategies:
 
-1. **Traffic Management**: Reducing traffic volume or implementing wildlife warning systems on high-traffic corridors near natural habitats
+1.  **Traffic Management**: Reducing traffic volume or implementing wildlife warning systems on high-traffic corridors near natural habitats
 
-2. **Targeted Interventions**: Focus mitigation (wildlife crossings, fencing) on:
-   - High-traffic roads adjacent to forests/parks
-   - Major highways with speed limits > 80 km/h
-   - Agricultural edge habitats with known wildlife movement
+2.  **Targeted Interventions**: Focus mitigation (wildlife crossings, fencing) on:
 
-3. **Land Use Planning**: Consider wildlife-vehicle collision risk when approving development near natural areas
+    -   High-traffic roads adjacent to forests/parks
+    -   Major highways with speed limits \> 80 km/h
+    -   Agricultural edge habitats with known wildlife movement
+
+3.  **Land Use Planning**: Consider wildlife-vehicle collision risk when approving development near natural areas
 
 ## Limitations
 
-1. **Data Coverage**: Analysis limited to roads with traffic monitoring (may not generalize to rural areas)
-2. **Species Aggregation**: Roadkill counts combine all species; species-specific models could reveal different patterns
-3. **Temporal Variation**: Seasonal and daily patterns not modeled (could be future extension)
-4. **Causal Inference**: While DAG guides our analysis, unmeasured confounders (e.g., wildlife population density) may exist
+1.  **Data Coverage**: Analysis limited to roads with traffic monitoring (may not generalize to rural areas)
+2.  **Species Aggregation**: Roadkill counts combine all species; species-specific models could reveal different patterns
+3.  **Temporal Variation**: Seasonal and daily patterns not modeled (could be future extension)
+4.  **Causal Inference**: While DAG guides our analysis, unmeasured confounders (e.g., wildlife population density) may exist
 
 ## Concluding Thoughts
 
@@ -1112,9 +1086,9 @@ This analysis tackled a challenging question—what drives wildlife-vehicle coll
 
 **Key Contributions**:
 
-1. **Methodological**: We demonstrated how hurdle models handle dual processes (occurrence vs. intensity) in zero-inflated count data
-2. **Substantive**: We quantified the effects of traffic, land use, and road characteristics on roadkill risk
-3. **Policy-relevant**: We identified actionable levers for reducing wildlife mortality (traffic management, targeted fencing)
+1.  **Methodological**: We demonstrated how hurdle models handle dual processes (occurrence vs. intensity) in zero-inflated count data
+2.  **Substantive**: We quantified the effects of traffic, land use, and road characteristics on roadkill risk
+3.  **Policy-relevant**: We identified actionable levers for reducing wildlife mortality (traffic management, targeted fencing)
 
 **The Bigger Picture**:
 
@@ -1122,23 +1096,14 @@ Wildlife-vehicle collisions represent a broader challenge at the intersection of
 
 **Beyond Roadkill**:
 
-The hurdle model framework extends to many zero-inflated ecological phenomena:
-- Rare species observations in biodiversity surveys
-- Disease outbreak counts in epidemiology
-- Extreme weather event frequencies in climate science
-- Pollution violation counts in environmental monitoring
+The hurdle model framework extends to many zero-inflated ecological phenomena: - Rare species observations in biodiversity surveys - Disease outbreak counts in epidemiology - Extreme weather event frequencies in climate science - Pollution violation counts in environmental monitoring
 
 Wherever zeros dominate your count data and two distinct processes govern occurrence vs. intensity, consider the hurdle model.
 
----
+------------------------------------------------------------------------
 
 ## References
 
-Data sources:
-- Global Roadkill Database: https://wildlifeobserver.net/
-- OpenStreetMap (via Geofabrik): Roads and land use polygons
-- Vejdirektoratet (Danish Road Directorate): Traffic counts (AADT)
+Data sources: - Global Roadkill Database: https://wildlifeobserver.net/ - OpenStreetMap (via Geofabrik): Roads and land use polygons - Vejdirektoratet (Danish Road Directorate): Traffic counts (AADT)
 
-Key statistical methods:
-- Zeileis, A., Kleiber, C., & Jackman, S. (2008). Regression models for count data in R. *Journal of Statistical Software*, 27(8), 1-25.
-- Mullahy, J. (1986). Specification and testing of some modified count data models. *Journal of Econometrics*, 33(3), 341-365.
+Key statistical methods: - Zeileis, A., Kleiber, C., & Jackman, S. (2008). Regression models for count data in R. *Journal of Statistical Software*, 27(8), 1-25. - Mullahy, J. (1986). Specification and testing of some modified count data models. *Journal of Econometrics*, 33(3), 341-365.

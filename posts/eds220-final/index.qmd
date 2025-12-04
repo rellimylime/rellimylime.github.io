@@ -258,8 +258,8 @@ To provide geographic context, we overlay the fire perimeters onto our false col
 #| label: final-map
 #| code-fold: true
 #| fig-cap: "False color composite with fire perimeter overlays"
-#| fig-width: 12
-#| fig-height: 12
+#| fig-width: 9
+#| fig-height: 9
 
 # Reproject fire perimeters to match Landsat CRS
 eaton = eaton.to_crs(landsat.rio.crs)
@@ -369,7 +369,7 @@ The Environmental Justice Index includes percentile rankings for various vulnera
 #| label: eji-vulnerability-map
 #| code-fold: true
 #| fig-cap: "Socioeconomic vulnerability comparison between fire areas"
-#| fig-width: 16
+#| fig-width: 10
 #| fig-height: 8
 
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 8))

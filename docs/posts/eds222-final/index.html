@@ -330,7 +330,7 @@ window.Quarto = {
 <h1>1. Introduction: Why This Matters</h1>
 <p>Wildlife-vehicle collisions threaten biodiversity and pose safety risks. Understanding which road and landscape characteristics predict roadkill hotspots enables evidence-based mitigation. We analyze ~11,000 roadkill events on 241,000 Danish road segments (2017-2019) to test whether traffic volume, forest proximity, and urban development predict collision rates.</p>
 <p><strong>The puzzle</strong>: Some roads experience frequent wildlife collisions while others have zero incidents. Is it just random chance or collection bias? Or are there systematic patterns we can identify and address?</p>
-<p>If we can predict which roads are most likely to become collision hotspots, transportation planners and conservationists?????? can install wildlife crossings, adjust speed limits, or ….?</p>
+<p>If we can predict which roads are most likely to become collision hotspots, transportation planners and conservationists can install wildlife crossings, implement warning systems, or adjust speed limits in high-risk areas.</p>
 <section id="research-question" class="level3">
 <h3 class="anchored" data-anchor-id="research-question"><strong>Research Question</strong></h3>
 <p><strong>How do traffic volume and land use characteristics affect wildlife-vehicle collisions on Danish roads?</strong></p>
@@ -356,7 +356,7 @@ window.Quarto = {
 </section>
 <section id="visualizing-causal-relationships-the-dag" class="level3">
 <h3 class="anchored" data-anchor-id="visualizing-causal-relationships-the-dag"><strong>Visualizing Causal Relationships: The DAG</strong></h3>
-<p>[MAKE THIS FUNNY SOMEHOW] A Directed Acyclic Graph (DAG) helps us map out these causal connections. Think of it as a flowchart showing which factors influence others:</p>
+<p>Now, let’s formalize our deer’s decision-making process. A Directed Acyclic Graph (DAG) is basically a flowchart of “things that could ruin a deer’s day.” It maps out which factors influence others—and crucially, prevents us from accidentally claiming that getting hit by a car somehow causes more cars to exist:</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -374,6 +374,7 @@ window.Quarto = {
 <li><strong>Speed limit</strong> affects collision severity and driver reaction time</li>
 <li>We control for <strong>road type</strong> to avoid confounding when estimating traffic effects</li>
 </ul>
+<p><strong>NOTE</strong>: Without considering wildlife density and surrounding habitats, this model estimates relationships conditional on unobserved wildlife presence, which is approximated using nearby land-use rather than direct population data.</p>
 <hr>
 </section>
 </section>
@@ -478,7 +479,7 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
-<p>Technical Setup: [ADD LIST OF REQUIRED PACKAGES]</p>
+<p>Technical Setup: [<code>tidyverse</code>, <code>sf</code>, <code>terra</code>, <code>here</code>, <code>pscl</code>, <code>yaml</code>, <code>patchwork</code>, <code>dagitty</code>, <code>ggdag</code>]</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -1380,10 +1381,13 @@ P(Y_i = y) = \begin{cases}
 <section id="limitations" class="level3">
 <h3 class="anchored" data-anchor-id="limitations">Limitations</h3>
 <ol type="1">
-<li><p><strong>Spatial coverage</strong>: Analysis limited to roads near traffic monitoring (~75% of network)</p></li>
-<li><p><strong>Species aggregation</strong>: All species combined; taxa-specific patterns not explored</p></li>
-<li><p><strong>Temporal aggregation</strong>: Seasonal/daily variation not modeled; OSM data used from 2024, AADT data from 2019, and roadkill occurrences from 2017-2019</p></li>
-<li><p><strong>Unmeasured confounders</strong>: Wildlife population density, driver behavior not available, presence of overpasses/other corridors, visibility on roads.</p></li>
+<li><p><strong>Spatial coverage.</strong> The analysis includes only roads near traffic counters (about 75% of the network). Low-traffic and rural roads may be underrepresented.</p></li>
+<li><p><strong>Species grouping.</strong> All species are combined into one outcome. This hides differences in behavior and risk between species.</p></li>
+<li><p><strong>Timing differences across datasets.</strong> Road data are from 2024, traffic data from 2019, and crash records from 2017–2019. Seasonal and daily patterns are not modeled, and these timing differences may add error.</p></li>
+<li><p><strong>Missing variables.</strong> The model does not include direct data on animal population size, movement, road features (such as fencing and lighting), or driver behavior. These factors could affect collision risk and may influence the results.</p></li>
+<li><p><strong>Reporting bias.</strong> Not all collisions are reported, and reporting likely differs by location. Rural areas in particular may appear safer simply because fewer events are recorded.</p></li>
+<li><p><strong>Spatial clustering.</strong> Collisions tend to cluster in certain areas, but this spatial pattern is not explicitly modeled. This may lead to uncertainty being understated.</p></li>
+<li><p><strong>Interpretation.</strong> Results show associations, not cause-and-effect. Land use is used as a stand-in for animal presence, and traffic estimates are imperfect.</p></li>
 </ol>
 <section id="conclusions" class="level4">
 <h4 class="anchored" data-anchor-id="conclusions">Conclusions</h4>

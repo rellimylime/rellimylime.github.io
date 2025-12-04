@@ -24,7 +24,7 @@ Wildlife-vehicle collisions threaten biodiversity and pose safety risks. Underst
 
 **The puzzle**: Some roads experience frequent wildlife collisions while others have zero incidents. Is it just random chance or collection bias? Or are there systematic patterns we can identify and address?
 
-If we can predict which roads are most likely to become collision hotspots, transportation planners and conservationists?????? can install wildlife crossings, adjust speed limits, or ....?
+If we can predict which roads are most likely to become collision hotspots, transportation planners and conservationists can install wildlife crossings, implement warning systems, or adjust speed limits in high-risk areas.
 
 ### **Research Question**
 
@@ -50,20 +50,24 @@ Imagine you're a deer deciding whether to cross a road. Several factors affect y
 
 ### **Visualizing Causal Relationships: The DAG**
 
-\[MAKE THIS FUNNY SOMEHOW\] A Directed Acyclic Graph (DAG) helps us map out these causal connections. Think of it as a flowchart showing which factors influence others:
+Now, let's formalize our deer's decision-making process. A Directed Acyclic Graph (DAG) is basically a flowchart of "things that could ruin a deer's day." It maps out which factors influence others—and crucially, prevents us from accidentally claiming that getting hit by a car somehow causes more cars to exist:
 
 ```{r}
 #| label: aesthetics
 #| include: false
 
 # Define colors to match website
-# Core colors for all visualizations
-primary_color <- "#2A9D8F"    # Forest teal - main color
-accent_color <- "#E76F51"     # Warm coral - secondary/accent
+primary_color <- "#2A9D8F"
+accent_color <- "#E76F51"
+neutral_color <- "#6A4C93"
 text_dark <- "#2B2D42"
 text_mid <- "#5A5A5A"
 bg_warm <- "#FFFEF9"
 
+# DAG libraries
+library(ggdag)
+library(dagitty)
+library(tidyverse)
 
 # Unified theme for all plots
 theme_cohesive <- function() {
@@ -89,36 +93,79 @@ theme_cohesive <- function() {
 #| fig-height: 6
 #| echo: false
 
-library(ggplot2)
-library(ggdag)
-library(dagitty)
-
 # Define DAG
 roadkill_dag <- dagify(
   Roadkill ~ Traffic + LandUse + RoadType + Speed,
-  Traffic ~ RoadType,
+  Traffic ~ RoadType + LandUse,
   Speed ~ RoadType,
-  LandUse ~ RoadType,
-  exposure = "Traffic",
+  RoadType ~ LandUse,
   outcome = "Roadkill",
+  labels = c(
+    "Roadkill" = "Roadkill",
+    "Traffic" = "Traffic\nVolume",
+    "LandUse" = "Land\nUse",
+    "RoadType" = "Road\nType",
+    "Speed" = "Speed\nLimit"
+  ),
   coords = list(
     x = c(Traffic = 1, RoadType = 1, Speed = 2, LandUse = 2, Roadkill = 3),
     y = c(Traffic = 2, RoadType = 1, Speed = 1, LandUse = 2, Roadkill = 1.5)
   )
 )
 
-# Plot DAG
-ggdag(roadkill_dag, text_size = 3.8, node_size = 18) +
+# Prepare for plotting with labels
+dag_tidy <- roadkill_dag %>% 
+  tidy_dagitty() %>%
+  mutate(
+    color_group = case_when(
+      name == "Roadkill" ~ "outcome",
+      TRUE ~ "other"
+    )
+  )
+
+# Plot with custom styling
+ggplot(dag_tidy, aes(x = x, y = y, xend = xend, yend = yend)) +
+  # Edges
+  geom_dag_edges(
+    edge_width = 0.8,
+    arrow_directed = grid::arrow(length = unit(10, "pt"), type = "closed"),
+    edge_color = text_mid
+  ) +
+  # Nodes with colors
+  geom_dag_point(
+    aes(color = color_group),
+    size = 20,
+    show.legend = FALSE
+  ) +
+  # Text labels
+  geom_dag_text(
+    aes(label = label),
+    color = "white",
+    size = 3.5,
+    fontface = "bold",
+    family = "sans"
+  ) +
+  # Color scheme
+  scale_color_manual(
+    values = c(
+      "outcome" = accent_color,
+      "other" = neutral_color
+    )
+  ) +
+  # Theme
   theme_dag() +
-  geom_dag_point(color = primary_color, size = 18) +
-  geom_dag_edges(edge_color = text_mid) +
-  geom_dag_text(color = "white") +
-  labs(title = "Causal Diagram: Factors Influencing Wildlife-Vehicle Collisions",
-       subtitle = "Traffic volume is our primary exposure of interest") +
+  labs(
+    title = "Causal Diagram: Factors Influencing Wildlife-Vehicle Collisions"
+  ) +
   theme(
-    plot.title = element_text(size = 14, face = "bold", color = text_dark),
-    plot.subtitle = element_text(size = 11, color = text_mid),
-    plot.background = element_rect(fill = bg_warm, color = NA)
+    plot.title = element_text(
+      size = 14, 
+      face = "bold", 
+      color = text_dark,
+      hjust = 0.5
+    ),
+    plot.background = element_rect(fill = bg_warm, color = NA),
+    panel.background = element_rect(fill = bg_warm, color = NA)
   )
 ```
 
@@ -129,6 +176,8 @@ ggdag(roadkill_dag, text_size = 3.8, node_size = 18) +
 -   **Road type** is a common cause affecting traffic volume, and speed limits
 -   **Speed limit** affects collision severity and driver reaction time
 -   We control for **road type** to avoid confounding when estimating traffic effects
+
+**NOTE**: Without considering wildlife density and surrounding habitats, this model estimates relationships conditional on unobserved wildlife presence, which is approximated using nearby land-use rather than direct population data.
 
 ------------------------------------------------------------------------
 
@@ -161,7 +210,7 @@ We'll test this in *both* parts of our model:
 | Traffic counts | Danish Road Directorate [@vejdirektoratet2019] | AADT (vehicles/day) | Monitoring stations |
 | Land use | OpenStreetMap [@osm2024] | Forest, farmland, residential, parks | 500m buffers |
 
-Technical Setup: \[ADD LIST OF REQUIRED PACKAGES\]
+Technical Setup: \[`tidyverse`, `sf`, `terra`, `here`, `pscl`, `yaml`, `patchwork`, `dagitty`, `ggdag`\]
 
 ```{r}
 #| label: setup
@@ -1156,6 +1205,7 @@ Speed limit `r ifelse(speed_zero$P_value < 0.05 | speed_count$P_value < 0.05, "s
 
 H3 Status: `r ifelse((major_zero$P_value < 0.05 | major_count$P_value < 0.05) & (speed_zero$P_value < 0.05 | speed_count$P_value < 0.05), "**SUPPORTED**", "PARTIALLY SUPPORTED")`
 :::
+
 ------------------------------------------------------------------------
 
 # 8. Discussion
@@ -1209,15 +1259,29 @@ Our findings suggest several evidence-based mitigation strategies:
 
 3.  **Land use planning**: Consider roadkill risk when approving development near wildlife habitat
 
+
 ### Limitations
 
-1.  **Spatial coverage**: Analysis limited to roads near traffic monitoring (\~75% of network)
+1. **Spatial coverage.**
+The analysis includes only roads near traffic counters (about 75% of the network). Low-traffic and rural roads may be underrepresented.
 
-2.  **Species aggregation**: All species combined; taxa-specific patterns not explored
+2. **Species grouping.**
+All species are combined into one outcome. This hides differences in behavior and risk between species.
 
-3.  **Temporal aggregation**: Seasonal/daily variation not modeled; OSM data used from 2024, AADT data from 2019, and roadkill occurrences from 2017-2019
+3. **Timing differences across datasets.**
+Road data are from 2024, traffic data from 2019, and crash records from 2017–2019. Seasonal and daily patterns are not modeled, and these timing differences may add error.
 
-4.  **Unmeasured confounders**: Wildlife population density, driver behavior not available, presence of overpasses/other corridors, visibility on roads.
+4. **Missing variables.**
+The model does not include direct data on animal population size, movement, road features (such as fencing and lighting), or driver behavior. These factors could affect collision risk and may influence the results.
+
+5. **Reporting bias.**
+Not all collisions are reported, and reporting likely differs by location. Rural areas in particular may appear safer simply because fewer events are recorded.
+
+6. **Spatial clustering.**
+Collisions tend to cluster in certain areas, but this spatial pattern is not explicitly modeled. This may lead to uncertainty being understated.
+
+7. **Interpretation.**
+Results show associations, not cause-and-effect. Land use is used as a stand-in for animal presence, and traffic estimates are imperfect.
 
 #### Conclusions
 

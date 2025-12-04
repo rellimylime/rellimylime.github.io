@@ -46,7 +46,7 @@ These shapefiles delineate the official fire perimeters for the Eaton and Palisa
 
 ### Environmental Justice Index (EJI) Data
 
-The CDC/ATSDR Environmental Justice Index [@cdc2024eji] provides census tract-level data on environmental and socioeconomic factors. This analysis uses the 2024 California EJI dataset, which includes demographic information, poverty statistics, and environmental burden indicators for communities across the state.
+The CDC/ATSDR Environmental Justice Index [@cdc_eji] provides census tract-level data on environmental and socioeconomic factors. This analysis uses the 2024 California EJI dataset, which includes demographic information, poverty statistics, and environmental burden indicators for communities across the state.
 
 ------------------------------------------------------------------------
 

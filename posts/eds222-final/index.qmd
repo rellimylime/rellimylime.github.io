@@ -50,13 +50,13 @@ Imagine you're a deer deciding whether to cross a road. Several factors affect y
 
 ### **Visualizing Causal Relationships: The DAG**
 
-Now, let's formalize our deer's decision-making process. A Directed Acyclic Graph (DAG) is basically a flowchart of "things that could ruin a deer's day." It maps out which factors influence others—and crucially, prevents us from accidentally claiming that getting hit by a car somehow causes more cars to exist:
+Now, let's formalize our deer's decision-making process with a Directed Acyclic Graph (DAG).
 
 ```{r}
 #| label: aesthetics
 #| include: false
 
-# Define colors to match website
+# Define colors to match my website
 primary_color <- "#2A9D8F"
 accent_color <- "#E76F51"
 neutral_color <- "#6A4C93"
@@ -89,7 +89,7 @@ theme_cohesive <- function() {
 
 ```{r}
 #| label: dag
-#| fig-width: 10
+#| fig-width: 8
 #| fig-height: 6
 #| echo: false
 

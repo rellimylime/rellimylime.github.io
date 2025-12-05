@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.23">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Emily Miller">
+
+<title>When Climate Models Miss the Fog: What I Learned From California’s Blackouts – Emily Miller</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-bee60ecf57315cb3986c6e19731cdde6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Emily Miller</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-bona-fides" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Bona Fides</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-bona-fides">    
+        <li>
+    <a class="dropdown-item" href="../../research.html">
+ <span class="dropdown-text">Research</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../cv.html">
+ <span class="dropdown-text">Resume</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-creative" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Creative</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-creative">    
+        <li>
+    <a class="dropdown-item" href="../../art.html">
+ <span class="dropdown-text">Art &amp; Poetry</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../adventures.html">
+ <span class="dropdown-text">Adventures</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/rellimylime"> <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page-left">
+      <h1 class="title">When Climate Models Miss the Fog: What I Learned From California’s Blackouts</h1>
+                      </div>
+  </div>
+    
+  <div class="quarto-title-meta-author column-page-left">
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Affiliation</div>
+    
+      <div class="quarto-title-meta-contents">
+      <p class="author"><a href="https://rellimylime.github.io/">Emily Miller</a> <a href="https://orcid.org/0009-0003-8651-5397" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+    </div>
+    <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              <a href="https://bren.ucsb.edu/">
+              The Bren School of Environmental Science and Management, UCSB
+              </a>
+            </p>
+        </div>
+    </div>
+
+  <div class="quarto-title-meta column-page-left">
+
+        
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#following-the-thread" id="toc-following-the-thread" class="nav-link active" data-scroll-target="#following-the-thread">Following the Thread</a></li>
+  <li><a href="#the-marine-layer-problem" id="toc-the-marine-layer-problem" class="nav-link" data-scroll-target="#the-marine-layer-problem">The Marine Layer Problem</a></li>
+  <li><a href="#the-path-from-models-to-blackouts" id="toc-the-path-from-models-to-blackouts" class="nav-link" data-scroll-target="#the-path-from-models-to-blackouts">The Path From Models to Blackouts</a></li>
+  <li><a href="#why-this-matters-beyond-one-heat-wave" id="toc-why-this-matters-beyond-one-heat-wave" class="nav-link" data-scroll-target="#why-this-matters-beyond-one-heat-wave">Why This Matters Beyond One Heat Wave</a></li>
+  <li><a href="#the-technical-challenge" id="toc-the-technical-challenge" class="nav-link" data-scroll-target="#the-technical-challenge">The Technical Challenge</a></li>
+  <li><a href="#what-we-can-do" id="toc-what-we-can-do" class="nav-link" data-scroll-target="#what-we-can-do">What We Can Do</a></li>
+  <li><a href="#why-i-think-about-this" id="toc-why-i-think-about-this" class="nav-link" data-scroll-target="#why-i-think-about-this">Why I Think About This</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+
+
+
+
+
+<p>August 2020. Opening the door is akin to opening the oven in the middle of summer in Davis CA. For the past few years, we had adopted the practice of doing one last blast chill from the AC before avoiding power use after 3pm. This was a responsibility communicated to our whole community; if we want to avoid blackouts, we need to limit our use during the hottest hours of the evening.</p>
+<p>Before digging into this topic further, my understanding was that this was straightforward heat wave business; everyone running AC, grid can’t keep up, but while doing some exploratory research for my Ethics and Bias in Environmental Data Science class, I stumbled upon something that connected directly to this experience in an interesting way.</p>
+<p>Part of California’s blackout problem stemmed from systematic errors in how we modeled solar generation capacity years earlier. This isn’t a story about renewable energy failing. It’s about what happens when the climate models we use to make billion-dollar infrastructure decisions contain biases remain invisible until it’s too late.</p>
+<hr>
+<section id="following-the-thread" class="level2">
+<h2 class="anchored" data-anchor-id="following-the-thread">Following the Thread</h2>
+<p>I started looking into this because I wanted to understand case studies of model bias that had real consequences. The 2020 blackouts kept coming up in my reading, but not for the reasons I expected.</p>
+<p>The California Independent System Operator’s root cause analysis <span class="citation" data-cites="caiso2021root">[@caiso2021root]</span> pointed to three main factors: unprecedented heat, inadequate planning for evening “net peak” demand, and market forecasting errors. But embedded in those findings was something more subtle: resource planning hadn’t kept pace with California’s changing energy mix.</p>
+<p>Here’s what I found when I dug deeper: In the 2010s, California made massive investments in solar infrastructure—billions of dollars’ worth—based on projections of where and how much solar energy these installations would generate over their 25-30 year lifespans. Those projections came from downscaled climate models, specifically CMIP5 outputs that had been refined to California’s regional scale.</p>
+<p>The problem? The models systematically overestimated solar generation potential in certain regions, particularly areas influenced by California’s complex coastal meteorology.</p>
+</section>
+<section id="the-marine-layer-problem" class="level2">
+<h2 class="anchored" data-anchor-id="the-marine-layer-problem">The Marine Layer Problem</h2>
+<p>California’s coast has a distinctive climate feature: the marine layer. Cold Pacific waters create a stable layer of cool, moist air that gets trapped under warmer air above, forming a strong temperature inversion. When conditions are right, this marine layer produces fog and low stratus clouds that can persist for hours or days.</p>
+<p>This isn’t just a beach nuisance—it’s climatically critical. Coastal low clouds can reduce incoming solar radiation by 30-50% when they’re present <span class="citation" data-cites="iacobellis2013variability">[@iacobellis2013variability]</span>. They affect coastal temperatures, drive inland through gaps like the Golden Gate, and historically have provided moisture to ecosystems like redwood forests <span class="citation" data-cites="johnstone2010fog">[@johnstone2010fog]</span>.</p>
+<p>Here’s where the models struggle: Global Climate Models (GCMs) like those in CMIP5 operate at coarse spatial resolution—typically 100-200km grid cells. California’s marine layer dynamics happen at much finer scales <span class="citation" data-cites="koracin2005fog">[@koracin2005fog]</span>, driven by: - Sea surface temperature gradients - Topographic channeling through coastal ranges - Diurnal heating/cooling cycles - Offshore upwelling patterns</p>
+<p>Even “downscaled” versions of these models—refined to 10-20km resolution using statistical or dynamical techniques—have trouble capturing the formation, persistence, and inland penetration of coastal low clouds.</p>
+<p>A 2024 California Energy Commission technical report on downscaling methods <span class="citation" data-cites="pierce2024downscaling">[@pierce2024downscaling]</span> noted: “Coastal Low Clouds (CLC), including stratocumulus, stratus, and fog, are a persistent, seasonal feature of the region’s climate… Accounting for these clouds improves solar energy forecasting.”</p>
+<p>The problem is that CMIP5-era models systematically underestimated: 1. Marine layer frequency and persistence 2. The inland extent of coastal fog 3. Afternoon/evening cloud cover in coastal and near-coastal areas</p>
+<p>The result? Solar irradiance projections that were too optimistic, especially for afternoon/evening hours—exactly when California’s “net peak” demand (after accounting for mid-day solar) occurs.</p>
+<hr>
+</section>
+<section id="the-path-from-models-to-blackouts" class="level2">
+<h2 class="anchored" data-anchor-id="the-path-from-models-to-blackouts">The Path From Models to Blackouts</h2>
+<p>So how does a bias in cloud cover modeling in the 2010s contribute to blackouts in 2020? The chain looks like this:</p>
+<p><strong>Step 1: Overoptimistic generation forecasts (2010-2015)</strong> Solar developers and utilities use downscaled CMIP5 projections to estimate generation potential. Models underestimate afternoon cloud cover → projected generation is 10-15% higher than reality in affected regions.</p>
+<p><strong>Step 2: Investment and siting decisions (2012-2018)</strong><br>
+Based on these projections, billions flow into solar installations. Project economics assume certain capacity factors (how much power gets generated relative to maximum capacity). Land use changes—agricultural land converted to solar farms in the Central Valley.</p>
+<p><strong>Step 3: Grid planning assumptions (2015-2020)</strong><br>
+California’s grid operator (CAISO) plans for a future where solar provides increasing amounts of power. But their “resource adequacy” models assume generation levels that match the overoptimistic projections.</p>
+<p><strong>Step 4: The “net peak” emerges</strong><br>
+As solar capacity grows, a new challenge appears: managing the evening “ramp” when solar generation drops off but demand stays high (people come home, turn on AC, cook dinner, etc.). CAISO’s planning assumes more solar will be available during this critical 5-8pm window than actually materializes.</p>
+<p><strong>Step 5: August 2020</strong><br>
+Record-breaking heat wave hits the entire Western US. Everyone’s running AC. Solar performs well during the mid-day peak—but starts dropping off earlier and faster than grid models expected, partly because of cloud cover patterns that the original climate models hadn’t captured accurately.</p>
+<p>CAISO’s root cause analysis <span class="citation" data-cites="caiso2021root">[@caiso2021root]</span> states: “Resource planning targets have not kept pace with the evolving power mix, wherein demand during peak hours outpaces the supply of solar-produced power.”</p>
+<p>That’s bureaucratic language for: we thought we’d have more power available at this time of day than we actually do.</p>
+<p>Combined with other factors (neighboring states also in crisis, some gas plants offline, market forecasting errors), the result was my phone buzzing with a blackout alert on a sweltering August evening.</p>
+<hr>
+</section>
+<section id="why-this-matters-beyond-one-heat-wave" class="level2">
+<h2 class="anchored" data-anchor-id="why-this-matters-beyond-one-heat-wave">Why This Matters Beyond One Heat Wave</h2>
+<p>I’m not claiming that marine layer bias in climate models was the <em>primary</em> cause of California’s blackouts. The CAISO analysis makes clear it was a perfect storm of factors. But the model bias was part of the systemic chain—one link in a series of assumptions and decisions that put the grid in a vulnerable position.</p>
+<p>What strikes me is how invisible this connection is. When I experienced that blackout, I had no idea that decisions made 5-10 years earlier, based on climate projections that seemed rigorous and scientific, had quietly baked in errors that would manifest years later under stress.</p>
+<p>This pattern shows up everywhere in environmental data science:</p>
+</section>
+<section id="the-technical-challenge" class="level2">
+<h2 class="anchored" data-anchor-id="the-technical-challenge">The Technical Challenge</h2>
+<p>Climate modelers know about these biases. Coastal low cloud representation is a notorious problem in GCMs—it’s been flagged in every CMIP assessment going back decades.</p>
+<p>The core issue is that marine layer physics operates at scales GCMs can’t resolve: - <strong>Boundary layer dynamics</strong>: The marine layer is typically 300-800m deep. GCMs have vertical resolution of ~100m in the lowest levels—barely enough to capture the inversion structure. - <strong>Cloud microphysics</strong>: Fog and low stratus formation depends on aerosol concentrations (sea salt, iodine from kelp), which most models treat as fixed background values rather than dynamic variables. - <strong>Topographic interactions</strong>: Coastal ranges create gaps (Golden Gate, Carquinez Strait) that channel marine air inland. A 100km GCM grid cell can’t represent these features.</p>
+<p>Downscaling helps, but it can’t fix everything. The two main approaches are:</p>
+<p><strong>Statistical downscaling</strong> (e.g., LOCA - Localized Constructed Analogs): Uses historical relationships between large-scale climate patterns and local observations <span class="citation" data-cites="pierce2023loca">[@pierce2023loca]</span>. Fast, cheap, widely used. But assumes future relationships will match past patterns—questionable under climate change <span class="citation" data-cites="ekstrom2015appraisal">[@ekstrom2015appraisal]</span>. Also struggles with variables like cloud cover that don’t have long observational records.</p>
+<p><strong>Dynamical downscaling</strong> (e.g., WRF - Weather Research and Forecasting model): Runs a high-resolution regional climate model nested within the GCM <span class="citation" data-cites="cec2022evaluating">[@cec2022evaluating]</span>. Can explicitly simulate physics at 3-10km scale. But inherits GCM boundary conditions and biases. And “high resolution” still isn’t fine enough to fully capture marine layer processes.</p>
+<p>California’s most recent downscaling effort (for the 5th Climate Assessment) uses a hybrid approach—LOCA2 combines statistical methods with pattern libraries from dynamically downscaled runs <span class="citation" data-cites="pierce2024downscaling">[@pierce2024downscaling]</span>. A 2024 technical report notes this improves solar radiation estimates… but still recommends that “given our shift to clean energy, we have to change planning assumptions and analysis to account for” the limitations.</p>
+<p>Translation: even our best current methods have biases that matter for decision-making.</p>
+<p>Different bias correction methods can change answers significantly <span class="citation" data-cites="maraun2016bias">[@maraun2016bias]</span>: - <strong>Quantile mapping</strong>: Matches model distribution to observed distribution, but assumes bias is stationary over time - <strong>Delta method</strong>: Uses model <em>changes</em> rather than absolute values, but assumes models capture trends correctly even if baseline is wrong - <strong>Deep learning corrections</strong>: Train neural networks on historical errors, but risk overfitting <span class="citation" data-cites="mcgovern2024identifying">[@mcgovern2024identifying]</span> - <strong>Ensemble averaging</strong>: Combine multiple models to reduce individual biases, but can mask structural uncertainties</p>
+<p>Each method makes different assumptions. Each gives different results. And the choice of correction method can change your projection as much as the climate change signal itself <span class="citation" data-cites="ekstrom2015appraisal">[@ekstrom2015appraisal]</span>.</p>
+<ul>
+<li><strong>Flood risk modeling</strong> → Insurance pricing → Land use decisions → Who lives where</li>
+<li><strong>Crop yield projections</strong> → Agricultural investment → Food security policy → International trade</li>
+<li><strong>Hydropower forecasting</strong> → Energy mix decisions → Electricity rates → Industrial development</li>
+<li><strong>Fire risk assessment</strong> → Building codes → Insurance availability → Community resilience</li>
+</ul>
+<p>In each case, biased models generate biased projections, which inform biased decisions, which create real-world consequences—often for people who have no idea the original model even existed.</p>
+<p>And here’s what makes it particularly insidious: the bias doesn’t announce itself. The projections look authoritative. They come with error bars and confidence intervals. They’re peer-reviewed, published, cited. The agencies using them are staffed with smart, well-trained people doing their best with the tools available.</p>
+<p>The problem isn’t incompetence. It’s that we’ve built systems that rely on models with known limitations, and those limitations propagate silently through decision chains until something breaks.</p>
+<hr>
+</section>
+<section id="what-we-can-do" class="level2">
+<h2 class="anchored" data-anchor-id="what-we-can-do">What We Can Do</h2>
+<p>I don’t think the answer is to stop using climate models—they’re the best tools we have for understanding future conditions. But we need to be much smarter about acknowledging and working with their limitations.</p>
+<p><strong>1. Bake uncertainty into decisions from the start</strong><br>
+Don’t make billion-dollar commitments based on single-model projections. Design systems that can adapt if reality diverges from projections. For California’s grid: that means maintaining flexible generation capacity, investing in storage, planning for higher evening peaks than models predict.</p>
+<p><strong>2. Cross-validate with multiple methods</strong><br>
+Don’t rely solely on climate models. Use: - Historical analogs (when similar heat waves hit in the past, what happened?) - Empirical relationships (how does actual solar generation track with weather obs?) - Expert elicitation (what do grid operators and solar engineers see on the ground?) - Stress testing (what if generation is 20% lower than projected?)</p>
+<p><strong>3. Create feedback loops between models and reality</strong><br>
+Once solar farms are operating, compare actual vs.&nbsp;projected generation. Feed that learning back into model improvement and planning assumptions. California is doing this now—CAISO has updated resource adequacy models based on 2020 experience—but it would have been better to catch the discrepancies earlier.</p>
+<p><strong>4. Invest in the unglamorous work</strong><br>
+Bias correction and regional model improvement don’t make headlines. But given how much rides on these projections, we massively under-invest in making them better. We need: - Better observations of marine layer dynamics (more buoys, coastal radar, satellite validation) - Higher resolution models that can resolve key processes - Long-term monitoring of how projections perform vs.&nbsp;reality - Transparent documentation of known biases and their magnitudes</p>
+<p><strong>5. Train decision-makers to be critical consumers</strong><br>
+Engineers, planners, and policy-makers need to understand what climate models can and can’t tell them. A projection is not a prediction. An ensemble mean is not a forecast. Uncertainty is information, not a bug. Model limitations should be discussed upfront in every assessment, not buried in technical appendices.</p>
+<hr>
+</section>
+<section id="why-i-think-about-this" class="level2">
+<h2 class="anchored" data-anchor-id="why-i-think-about-this">Why I Think About This</h2>
+<p>For my family, these summertime blackouts were uncomfortable, inconvenient, but not catastrophic. For others, people dependent on medical equipment, elderly folks without AC, families losing food in fridges, these blackouts are far more impactful.</p>
+<p>And the thing is, these grid reliability issues will keep happening. California’s 2024-2025 planning documents still show tight supply margins during evening peaks. The marine layer isn’t going away. Neither is climate change, which may be altering fog patterns in ways we still don’t fully understand <span class="citation" data-cites="torregrosa2014fog">[@torregrosa2014fog]</span>—research suggests California coastal fog has declined 33% since 1950 <span class="citation" data-cites="johnstone2010fog">[@johnstone2010fog]</span>, but the causes and future trajectory are uncertain.</p>
+<p>What bugs me most is how easily these issues slip through. Smart people, good intentions, rigorous methods—and still, systematic biases propagate through planning processes and don’t surface until systems fail under stress.</p>
+<p>This isn’t unique to energy systems. I see it in every domain of environmental data science I look at. Models of crop yields, water availability, species distributions, fire risk, flood hazards—all rest on climate projections with known limitations. Those limitations rarely make it into the summary documents that inform decisions <span class="citation" data-cites="young2014improving">[@young2014improving]</span>.</p>
+<p>We can do better. Not by building perfect models, but by building decision processes that explicitly account for model uncertainty and biases, and learning from mismatches between predictions and reality.</p>
+<p>That starts with recognizing that data, especially in environmental science, is never neutral, complete, or certain <span class="citation" data-cites="barrowman2018raw walker2018practicing">[@barrowman2018raw; @walker2018practicing]</span>. Every dataset carries the fingerprints of choices, assumptions, and limitations baked into its creation.</p>
+<p>Understanding those limitations isn’t pedantic. It’s how we avoid making the same mistakes again.</p>
+<hr>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<div id="refs" role="list">
+
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

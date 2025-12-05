@@ -846,7 +846,7 @@ p4 <- ggplot(model_data, aes(x = len_km, y = roadkill_count)) +
 
 ## Visualizations
 
-eda_visualization_themed.png.png)
+![](eda_visualization_themed.png)
 
 ## Key patterns
 

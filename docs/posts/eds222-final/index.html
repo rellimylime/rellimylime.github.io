@@ -361,7 +361,7 @@ window.Quarto = {
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/dag-1.png" class="img-fluid figure-img" width="960"></p>
+<p><img src="index_files/figure-html/dag-1.png" class="img-fluid figure-img" width="768"></p>
 </figure>
 </div>
 </div>
@@ -513,7 +513,7 @@ window.Quarto = {
 </div>
 <section id="load-roadkill-observations" class="level4">
 <h4 class="anchored" data-anchor-id="load-roadkill-observations">Load Roadkill Observations</h4>
-<p>Roadkill observations are GPS point locations filtered to Denmark and the study period, then transformed to a projected coordinate system for spatial analysis.</p>
+<p>Roadkill observations are GPS point locations filtered to Denmark and the study period (2017-2019), then transformed to a projected coordinate system (EPSG:4326) for analysis.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -539,7 +539,6 @@ window.Quarto = {
 </section>
 <section id="load-road-network" class="level4">
 <h4 class="anchored" data-anchor-id="load-road-network">Load Road Network</h4>
-<p>We cache large shapefiles to avoid reloading on subsequent runs (first run ~5-10 minutes, subsequent runs instantaneous).</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -670,7 +669,7 @@ window.Quarto = {
 </table>
 </div>
 </div>
-<p><strong>Computational Note</strong>: These shapefiles are large (millions of features). We cache processed versions to avoid reloading on subsequent runs. First run takes ~5-10 minutes; cached runs are instantaneous.</p>
+<p><strong>Computational Note</strong>: These shapefiles are large (millions of features); we cache the processed/projected versions to avoid reloading and processing during every run. First runs take ~5-10 minutes each; cached runs take seconds.</p>
 <hr>
 </section>
 </section>
@@ -678,7 +677,7 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="data-processing-pipeline">Data Processing Pipeline</h3>
 <section id="filter-to-motorized-roads" class="level4">
 <h4 class="anchored" data-anchor-id="filter-to-motorized-roads">Filter to Motorized Roads</h4>
-<p>We restrict analysis to roads accessible by motor vehicles, excluding pedestrian paths and cycleways where wildlife-vehicle collisions cannot occur.</p>
+<p>We restrict analysis to roads accessible by motor vehicles, excluding pedestrian paths and cycleways and other places where wildlife-vehicle collisions cannot occur.</p>
 <blockquote class="blockquote">
 <ul>
 <li>Motorized road segments: 322,776</li>
@@ -686,11 +685,10 @@ window.Quarto = {
 <li>Mean segment length: 0.3 km</li>
 </ul>
 </blockquote>
-<p><strong>Why filter by road type?</strong> Including pedestrian paths would dilute our analysis—wildlife aren’t killed on sidewalks. Focusing on motorized roads ensures our predictors (traffic volume, speed) are relevant to collision risk.</p>
 </section>
 <section id="match-traffic-to-road-segments" class="level4">
 <h4 class="anchored" data-anchor-id="match-traffic-to-road-segments">Match Traffic to Road Segments</h4>
-<p>Traffic monitoring stations are point locations. Since there are far more roads than monitoring stations, I opted to assigning each road segment with the AADT from its nearest station, applying a distance threshold. This means we only assign traffic data to roads within ~3.7 km of a monitoring station, avoiding unreliable matches to distant stations. This balances <strong>coverage</strong> (75% of roads get traffic data) with <strong>accuracy</strong> (avoiding spurious long-distance matches).</p>
+<p>Traffic monitoring stations are point locations. Since there are far more roads than monitoring stations, I assigned each road segment with the AADT from its nearest station, applying a distance threshold. This means we only assign traffic data to roads within ~3.7 km of a monitoring station, avoiding matches to stations that are unreasonably far away. This balances <strong>coverage</strong> (75% of roads get traffic data) with <strong>accuracy</strong> (avoiding spurious long-distance matches).</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -715,7 +713,7 @@ window.Quarto = {
 <li>AADT range: 0 - 59,632 vehicles/day</li>
 </ul>
 </blockquote>
-<p><strong>Note</strong>: Analysis is limited to Denmark’s monitored road network (major highways and urban roads). Remote rural roads are excluded.</p>
+<p><strong>Note</strong>: Analysis is limited to Denmark’s <em>monitored</em> road network (major highways and urban roads). Remote rural roads are likely not included.</p>
 <hr>
 </section>
 <section id="extract-land-use-around-roads" class="level4">
@@ -742,7 +740,7 @@ window.Quarto = {
 </section>
 <section id="create-final-analysis-dataset" class="level4">
 <h4 class="anchored" data-anchor-id="create-final-analysis-dataset">Create Final Analysis Dataset</h4>
-<p>We merge all data sources and apply transformations required for modeling: log-transform traffic and road length, classify road types, and impute missing speed limits.</p>
+<p>We merge all data sources and apply transformations required for modeling: log-transform traffic and road length, classify road types, and assign missing speed limits.</p>
 <div class="cell">
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -799,7 +797,7 @@ window.Quarto = {
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Visualizations</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Key patterns</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<p><img src="eda_visualization.png" class="img-fluid"></p>
+<p>eda_visualization_themed.png.png)</p>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <ol type="1">

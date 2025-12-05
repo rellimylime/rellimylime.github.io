@@ -246,7 +246,7 @@ dk_bbox_proj <- st_transform(st_as_sfc(dk_bbox_wgs84), CRS_M) %>%
 
 #### Load Roadkill Observations
 
-Roadkill observations are GPS point locations filtered to Denmark and the study period, then transformed to a projected coordinate system for spatial analysis.
+Roadkill observations are GPS point locations filtered to Denmark and the study period (2017-2019), then transformed to a projected coordinate system (EPSG:4326) for analysis.
 
 ```{r}
 #| label: load-roadkill
@@ -264,13 +264,11 @@ road_kill_dk <- read_csv(here(config$roadkill_csv_path)) %>%
     st_crop(dk_bbox_proj)
 ```
 
-> - Roadkill observations: `r format(nrow(road_kill_dk), big.mark = ",")`
-- Time period: 2017-2019
-- Coordinate system: ETRS89 / UTM zone 32N
+> -   Roadkill observations: `r format(nrow(road_kill_dk), big.mark = ",")`
+> -   Time period: 2017-2019
+> -   Coordinate system: ETRS89 / UTM zone 32N
 
 #### Load Road Network
-
-We cache large shapefiles to avoid reloading on subsequent runs (first run \~5-10 minutes, subsequent runs instantaneous).
 
 ```{r}
 #| label: load-roads-cached
@@ -391,7 +389,7 @@ cat("\nTop land use classes:\n")
 print(head(landuse_summary, 10))
 ```
 
-Top land use classes: 
+Top land use classes:
 
 ```{r}
 #| label: show-landuse-summary
@@ -399,8 +397,7 @@ Top land use classes:
 knitr::kable(head(landuse_summary, 10), caption = "Top 10 Land Use Classes")
 ```
 
-
-**Computational Note**: These shapefiles are large (millions of features). We cache processed versions to avoid reloading on subsequent runs. First run takes \~5-10 minutes; cached runs are instantaneous.
+**Computational Note**: These shapefiles are large (millions of features); we cache the processed/projected versions to avoid reloading and processing during every run. First runs take \~5-10 minutes each; cached runs take seconds.
 
 ------------------------------------------------------------------------
 
@@ -408,7 +405,7 @@ knitr::kable(head(landuse_summary, 10), caption = "Top 10 Land Use Classes")
 
 #### Filter to Motorized Roads
 
-We restrict analysis to roads accessible by motor vehicles, excluding pedestrian paths and cycleways where wildlife-vehicle collisions cannot occur.
+We restrict analysis to roads accessible by motor vehicles, excluding pedestrian paths and cycleways and other places where wildlife-vehicle collisions cannot occur.
 
 ```{r}
 #| label: filter-roads
@@ -435,15 +432,14 @@ cat("  Segments:", format(nrow(car_roads), big.mark = ","), "\n")
 cat("  Total length:", format(round(sum(car_roads$len_km), 0), big.mark = ","), "km\n")
 cat("  Mean segment length:", round(mean(car_roads$len_km), 2), "km\n\n")
 ```
-> - Motorized road segments: `r format(nrow(car_roads), big.mark = ",")`
-- Total road length: `r format(round(sum(car_roads$len_km)), big.mark = ",")` km 
-- Mean segment length: `r round(mean(car_roads$len_km), 2)` km
 
-**Why filter by road type?** Including pedestrian paths would dilute our analysis—wildlife aren't killed on sidewalks. Focusing on motorized roads ensures our predictors (traffic volume, speed) are relevant to collision risk.
+> -   Motorized road segments: `r format(nrow(car_roads), big.mark = ",")`
+> -   Total road length: `r format(round(sum(car_roads$len_km)), big.mark = ",")` km
+> -   Mean segment length: `r round(mean(car_roads$len_km), 2)` km
 
 #### Match Traffic to Road Segments
 
-Traffic monitoring stations are point locations. Since there are far more roads than monitoring stations, I opted to assigning each road segment with the AADT from its nearest station, applying a distance threshold. This means we only assign traffic data to roads within \~3.7 km of a monitoring station, avoiding unreliable matches to distant stations. This balances **coverage** (75% of roads get traffic data) with **accuracy** (avoiding spurious long-distance matches).
+Traffic monitoring stations are point locations. Since there are far more roads than monitoring stations, I assigned each road segment with the AADT from its nearest station, applying a distance threshold. This means we only assign traffic data to roads within \~3.7 km of a monitoring station, avoiding matches to stations that are unreasonably far away. This balances **coverage** (75% of roads get traffic data) with **accuracy** (avoiding spurious long-distance matches).
 
 ```{r}
 #| label: match-traffic
@@ -498,11 +494,11 @@ roads_traf <- car_roads %>%
   )
 ```
 
-> - Distance threshold: `r format(round(dist_threshold), big.mark = ",")` m (75th percentile)
--  Roads with traffic data: `r format(sum(!is.na(roads_traf$AADT)), big.mark = ",")` (`r round(mean(!is.na(roads_traf$AADT)) * 100, 1)`%)
-- AADT range: `r format(min(roads_traf$AADT, na.rm = TRUE), big.mark = ",")` - `r format(max(roads_traf$AADT, na.rm = TRUE), big.mark = ",")` vehicles/day
+> -   Distance threshold: `r format(round(dist_threshold), big.mark = ",")` m (75th percentile)
+> -   Roads with traffic data: `r format(sum(!is.na(roads_traf$AADT)), big.mark = ",")` (`r round(mean(!is.na(roads_traf$AADT)) * 100, 1)`%)
+> -   AADT range: `r format(min(roads_traf$AADT, na.rm = TRUE), big.mark = ",")` - `r format(max(roads_traf$AADT, na.rm = TRUE), big.mark = ",")` vehicles/day
 
-**Note**: Analysis is limited to Denmark's monitored road network (major highways and urban roads). Remote rural roads are excluded.
+**Note**: Analysis is limited to Denmark's *monitored* road network (major highways and urban roads). Remote rural roads are likely not included.
 
 ------------------------------------------------------------------------
 
@@ -515,6 +511,7 @@ We calculate the percentage of forest, farmland, residential, and park land use 
 #| code-fold: true
 #| include: false
 
+# Define cache path for landuse data
 landuse_cache_file <- here(config$landuse_props_path)
 
 if (file.exists(landuse_cache_file)) {
@@ -526,7 +523,7 @@ if (file.exists(landuse_cache_file)) {
   library(terra)
   
   # Rasterize land use
-  cat("Step 1: Converting land use to raster (~2-3 min)...\n")
+  cat("Converting land use to raster (~2-3 min)...\n")
   
   # Get extent from roads
   roads_extent <- st_bbox(roads_traf) %>% st_as_sfc() %>% st_buffer(1000)
@@ -558,7 +555,7 @@ if (file.exists(landuse_cache_file)) {
   cat("  Raster created.\n\n")
   
   # Extract for road buffers
-  cat("Step 2: Extracting land use for road buffers...\n")
+  cat("Extracting land use for road buffers...\n")
   
   roads_with_id <- roads_traf %>%
     mutate(road_id = row_number())
@@ -626,7 +623,7 @@ if (file.exists(landuse_cache_file)) {
     mutate(across(starts_with("pct_"), ~ replace_na(., 0)))
   
   saveRDS(lu_props, landuse_cache_file)
-  cat("\nCache saved!\n")
+  cat("\nCache saved\n")
 }
 
 
@@ -639,10 +636,10 @@ cat("Mean % Park:", round(mean(lu_props$pct_park), 1), "%\n")
 
 Mean land use composition within 500m:
 
-> - Forest: `r round(mean(lu_props$pct_forest), 1)`%
-- Farmland: `r round(mean(lu_props$pct_farmland), 1)`%
-- Residential: `r round(mean(lu_props$pct_residential), 1)`%
-- Parks: `r round(mean(lu_props$pct_park), 1)`%
+> -   Forest: `r round(mean(lu_props$pct_forest), 1)`%
+> -   Farmland: `r round(mean(lu_props$pct_farmland), 1)`%
+> -   Residential: `r round(mean(lu_props$pct_residential), 1)`%
+> -   Parks: `r round(mean(lu_props$pct_park), 1)`%
 
 #### Aggregate Roadkill by Road Segment
 
@@ -679,11 +676,11 @@ cat("  Unique road segments with roadkill:",
     format(nrow(roadkill_by_segment), big.mark = ","), "\n\n")
 ```
 
-> - Road segments with roadkill: `r format(nrow(roadkill_by_segment), big.mark = ",")`
+> -   Road segments with roadkill: `r format(nrow(roadkill_by_segment), big.mark = ",")`
 
 #### Create Final Analysis Dataset
 
-We merge all data sources and apply transformations required for modeling: log-transform traffic and road length, classify road types, and impute missing speed limits.
+We merge all data sources and apply transformations required for modeling: log-transform traffic and road length, classify road types, and assign missing speed limits.
 
 ```{r}
 #| label: create-model-data
@@ -762,78 +759,108 @@ knitr::kable(summary_stats, caption = "Final Dataset Characteristics")
 
 **Key observations**:
 
-> - High zero-inflation (`r round(mean(model_data$roadkill_count == 0) * 100, 1)`%) justifies hurdle model
-- Overdispersion (Var/Mean = `r round(var(model_data$roadkill_count) / mean(model_data$roadkill_count), 2)`) justifies negative binomial distribution
+> -   High zero-inflation (`r round(mean(model_data$roadkill_count == 0) * 100, 1)`%) justifies hurdle model
+> -   Overdispersion (Var/Mean = `r round(var(model_data$roadkill_count) / mean(model_data$roadkill_count), 2)`) justifies negative binomial distribution
 
 ------------------------------------------------------------------------
 
-# 5. Exploratory Analysis 
+# 5. Exploratory Analysis
 
-::: {.panel-tabset}
-
+::: panel-tabset
 ```{r}
 #| label: eda-plots
 #| echo: false
 #| fig-width: 14
 #| fig-height: 10
-#| eval: false
 
 library(patchwork)
 
+# Plot 1: Distribution histogram
 p1 <- ggplot(model_data, aes(x = roadkill_count)) +
-  geom_histogram(binwidth = 1, fill = "steelblue", color = "black", alpha = 0.7) +
-  labs(title = "A. Distribution of Roadkill Counts",
-       subtitle = "High zero-inflation evident",
-       x = "Roadkill Events per Segment", y = "Frequency") +
-  theme_minimal() +
-  theme(plot.title = element_text(face = "bold"))
+  geom_histogram(binwidth = 1, fill = primary_color, color = text_dark, alpha = 0.8) +
+  scale_y_continuous(labels = scales::comma) +
+  labs(
+    title = "A. Distribution of Roadkill Counts",
+    subtitle = "High zero-inflation evident",
+    x = "Roadkill Events per Segment", 
+    y = "Frequency"
+  ) +
+  theme_cohesive()
 
+# Plot 2: Traffic volume
 p2 <- ggplot(model_data, aes(x = AADT, y = roadkill_count)) +
-  geom_point(alpha = 0.1, size = 0.5) +
-  geom_smooth(method = "loess", color = "red", se = TRUE) +
+  geom_hex(bins = 50, alpha = 0.8) +
+  geom_smooth(method = "loess", color = accent_color, fill = accent_color, 
+              se = TRUE, alpha = 0.3, linewidth = 1.2) +
   scale_x_log10(labels = scales::comma) +
-  labs(title = "B. Roadkill vs Traffic Volume",
-       subtitle = "Positive relationship visible",
-       x = "AADT (log scale, vehicles/day)", y = "Roadkill Count") +
-  theme_minimal() +
-  theme(plot.title = element_text(face = "bold"))
+  scale_fill_gradient(low = bg_warm, high = neutral_color, 
+                      name = "Count", trans = "log10") +
+  labs(
+    title = "B. Roadkill vs Traffic Volume",
+    subtitle = "Positive relationship visible",
+    x = "AADT (log scale, vehicles/day)", 
+    y = "Roadkill Count"
+  ) +
+  theme_cohesive() +
+  theme(legend.position = "right")
 
+# Plot 3: Boxplot by road type (this one is fine but needs better colors)
 p3 <- ggplot(model_data %>% filter(roadkill_count > 0),
              aes(x = road_type, y = roadkill_count, fill = road_type)) +
-  geom_boxplot(alpha = 0.7) +
+  geom_boxplot(alpha = 0.7, show.legend = FALSE, outlier.alpha = 0.3) +
+  scale_fill_manual(values = c(
+    "Major" = accent_color,
+    "Minor" = primary_color,
+    "Links/Ramps" = neutral_color,
+    "Other" = text_mid
+  )) +
   scale_y_log10() +
-  labs(title = "C. Roadkill by Road Type",
-       subtitle = "Among segments with at least one event",
-       x = "Road Classification", y = "Roadkill Count (log scale)") +
-  theme_minimal() +
-  theme(plot.title = element_text(face = "bold"), legend.position = "none")
+  labs(
+    title = "C. Roadkill by Road Type",
+    subtitle = "Among segments with at least one event",
+    x = "Road Classification", 
+    y = "Roadkill Count (log scale)"
+  ) +
+  theme_cohesive()
 
+# Plot 4: Road length - ALSO use hexbin
 p4 <- ggplot(model_data, aes(x = len_km, y = roadkill_count)) +
-  geom_point(alpha = 0.1, size = 0.5) +
-  geom_smooth(method = "loess", color = "darkgreen", se = TRUE) +
+  geom_hex(bins = 50, alpha = 0.8) +
+  geom_smooth(method = "loess", color = neutral_color, fill = neutral_color,
+              se = TRUE, alpha = 0.3, linewidth = 1.2) +
   scale_x_log10() +
-  labs(title = "D. Roadkill vs Road Length",
-       subtitle = "Longer segments have more events",
-       x = "Segment Length (km, log scale)", y = "Roadkill Count") +
-  theme_minimal() +
-  theme(plot.title = element_text(face = "bold"))
+  scale_fill_gradient(low = bg_warm, high = primary_color, 
+                      name = "Count", trans = "log10") +
+  labs(
+    title = "D. Roadkill vs Road Length",
+    subtitle = "Longer segments have more events",
+    x = "Segment Length (km, log scale)", 
+    y = "Roadkill Count"
+  ) +
+  theme_cohesive() +
+  theme(legend.position = "right")
 
-(p1 + p2) / (p3 + p4)
+# Combine plots
+# (p1 + p2) / (p3 + p4)
 ```
 
 ## Visualizations
-![](eda_visualization.png)
+
+eda_visualization_themed.png.png)
 
 ## Key patterns
 
-1. **Panel A (distribution)**: Massive spike at zero confirms zero-inflation—most roads never experience roadkill
-2. **Panel B (traffic effect)**: Clear positive trend—higher AADT associates with more roadkill
-3. **Panel C (road type)**: Major roads show higher roadkill intensity than minor roads (conditional on having any)
-4. **Panel D (road length)**: Longer segments have more events, confirming we need a length offset
-
+1.  **Panel A (distribution)**: Massive spike at zero confirms zero-inflation—most roads never experience roadkill
+2.  **Panel B (traffic effect)**: Clear positive trend—higher AADT associates with more roadkill
+3.  **Panel C (road type)**: Major roads show higher roadkill intensity than minor roads (conditional on having any)
+4.  **Panel D (road length)**: Longer segments have more events, confirming we need a length offset
 :::
 
 These patterns validate our hypotheses from the DAG. Now let's build a statistical model to quantify these effects.
+
+
+
+
 
 ------------------------------------------------------------------------
 
@@ -921,9 +948,9 @@ sim_data <- tibble(x = x_sim, y = y_sim)
 
 Simulated data characteristics:
 
-> - Zero rate: `r round(mean(sim_data$y == 0) * 100, 1)`%
-- Mean count (all): `r round(mean(sim_data$y), 3)`
-- Mean count (non-zero only): `r round(mean(sim_data$y[sim_data$y > 0]), 3)`
+> -   Zero rate: `r round(mean(sim_data$y == 0) * 100, 1)`%
+> -   Mean count (all): `r round(mean(sim_data$y), 3)`
+> -   Mean count (non-zero only): `r round(mean(sim_data$y[sim_data$y > 0]), 3)`
 
 ```{r}
 #| label: fit-simulated
@@ -1052,8 +1079,8 @@ hurdle_model <- hurdle(
 #### Model Diagnostics
 
 > -   Log-Likelihood: `r round(logLik(hurdle_model), 1)`
--   AIC: `r round(AIC(hurdle_model), 1)`
--   BIC: `r round(BIC(hurdle_model), 1)`
+> -   AIC: `r round(AIC(hurdle_model), 1)`
+> -   BIC: `r round(BIC(hurdle_model), 1)`
 
 ### Model Coefficients
 
@@ -1126,7 +1153,8 @@ speed_count <- get_coef("count_speed_limit")
 ```
 
 #### H1: Traffic Volume Effect
-::: columns
+
+::::: columns
 ::: column
 **Occurrence component:**
 
@@ -1141,13 +1169,11 @@ speed_count <- get_coef("count_speed_limit")
 -   Coefficient: `r traffic_count$Estimate`, SE: `r traffic_count$SE`, p = `r traffic_count$P_value` `r traffic_count$Sig`
 
 -   Result: Traffic `r ifelse(traffic_count$P_value < 0.05, "significantly", "does not significantly")` affect `r ifelse(traffic_count$P_value < 0.05, "s", "")` collision intensity
-
 :::
-:::
+:::::
 
-::: columns
+::::: columns
 ::: column
-
 H1 Status: `r ifelse(traffic_zero$P_value < 0.05 | traffic_count$P_value < 0.05, "**SUPPORTED**", "**NOT SUPPORTED**")`
 :::
 
@@ -1158,20 +1184,19 @@ H1 Status: `r ifelse(traffic_zero$P_value < 0.05 | traffic_count$P_value < 0.05,
 
 -   Changes expected count by `r round((exp(traffic_count$Estimate * log(1.10)) - 1) * 100, 1)`%
 :::
-:::
+:::::
 
 #### H2: Land Use Effects
 
-::: columns
+::::: columns
 ::: column
-
 ##### H2a: Forest/Park habitat
 
 Occurrence: p = `r forest_zero$P_value` `r forest_zero$Sig` \| Intensity: p = `r forest_count$P_value` `r forest_count$Sig`
 
 Forest coverage `r ifelse(forest_zero$P_value < 0.05 | forest_count$P_value < 0.05, "significantly affects", "does not significantly affect")` roadkill patterns.
-
 :::
+
 ::: column
 ##### H2b: Residential development
 
@@ -1181,13 +1206,12 @@ Residential areas show `r ifelse(residential_zero$Estimate < 0, "negative", "pos
 :::
 
 H2 Status: `r ifelse((forest_zero$P_value < 0.05 | forest_count$P_value < 0.05) & (residential_zero$P_value < 0.05 | residential_count$P_value < 0.05), "**SUPPORTED**", "PARTIALLY SUPPORTED")`
-:::
+:::::
 
 #### H3: Road Characteristics
 
-::: columns
+::::: columns
 ::: column
-
 ##### H3a: Major roads
 
 Occurrence: p = `r major_zero$P_value` `r major_zero$Sig` \| Intensity: p = `r major_count$P_value` `r major_count$Sig`
@@ -1204,7 +1228,7 @@ Speed limit `r ifelse(speed_zero$P_value < 0.05 | speed_count$P_value < 0.05, "s
 :::
 
 H3 Status: `r ifelse((major_zero$P_value < 0.05 | major_count$P_value < 0.05) & (speed_zero$P_value < 0.05 | speed_count$P_value < 0.05), "**SUPPORTED**", "PARTIALLY SUPPORTED")`
-:::
+:::::
 
 ------------------------------------------------------------------------
 
@@ -1259,29 +1283,21 @@ Our findings suggest several evidence-based mitigation strategies:
 
 3.  **Land use planning**: Consider roadkill risk when approving development near wildlife habitat
 
-
 ### Limitations
 
-1. **Spatial coverage.**
-The analysis includes only roads near traffic counters (about 75% of the network). Low-traffic and rural roads may be underrepresented.
+1.  **Spatial coverage.** The analysis includes only roads near traffic counters (about 75% of the network). Low-traffic and rural roads may be underrepresented.
 
-2. **Species grouping.**
-All species are combined into one outcome. This hides differences in behavior and risk between species.
+2.  **Species grouping.** All species are combined into one outcome. This hides differences in behavior and risk between species.
 
-3. **Timing differences across datasets.**
-Road data are from 2024, traffic data from 2019, and crash records from 2017–2019. Seasonal and daily patterns are not modeled, and these timing differences may add error.
+3.  **Timing differences across datasets.** Road data are from 2024, traffic data from 2019, and crash records from 2017–2019. Seasonal and daily patterns are not modeled, and these timing differences may add error.
 
-4. **Missing variables.**
-The model does not include direct data on animal population size, movement, road features (such as fencing and lighting), or driver behavior. These factors could affect collision risk and may influence the results.
+4.  **Missing variables.** The model does not include direct data on animal population size, movement, road features (such as fencing and lighting), or driver behavior. These factors could affect collision risk and may influence the results.
 
-5. **Reporting bias.**
-Not all collisions are reported, and reporting likely differs by location. Rural areas in particular may appear safer simply because fewer events are recorded.
+5.  **Reporting bias.** Not all collisions are reported, and reporting likely differs by location. Rural areas in particular may appear safer simply because fewer events are recorded.
 
-6. **Spatial clustering.**
-Collisions tend to cluster in certain areas, but this spatial pattern is not explicitly modeled. This may lead to uncertainty being understated.
+6.  **Spatial clustering.** Collisions tend to cluster in certain areas, but this spatial pattern is not explicitly modeled. This may lead to uncertainty being understated.
 
-7. **Interpretation.**
-Results show associations, not cause-and-effect. Land use is used as a stand-in for animal presence, and traffic estimates are imperfect.
+7.  **Interpretation.** Results show associations, not cause-and-effect. Land use is used as a stand-in for animal presence, and traffic estimates are imperfect.
 
 #### Conclusions
 

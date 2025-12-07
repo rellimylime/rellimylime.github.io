@@ -18,7 +18,7 @@ bibliography: references.bib
 
 ## Introduction
 
-In February 2021, a historic winter storm swept across Texas, bringing record-low temperatures and overwhelming the state's power grid. At the peak of the crisis, more than 4.5 million homes and businesses lost power, leaving residents without electricity for heating during freezing temperatures [@busby2021]. The event resulted in at least 246 deaths and an estimated \$195 billion in economic damages, making it one of the costliest natural disasters in U.S. history [@noaa2021].
+In February 2021, a historic winter storm swept across Texas, bringing record-low temperatures and overwhelming the state's power grid. At the peak of the crisis, more than 4.5 million homes and businesses lost power, leaving residents without electricity for heating during freezing temperatures. The event resulted in at least 246 deaths and an estimated \$195 billion in economic damages, making it one of the costliest natural disasters in U.S. history.
 
 ### Research Question
 
@@ -26,21 +26,21 @@ This analysis addresses a critical question: **Which communities in the Houston 
 
 Understanding the spatial distribution of power outages and their relationship to socioeconomic factors is essential for:
 
-- Improving power grid resilience and emergency response planning
-- Identifying vulnerable communities that may need additional support during future crises
-- Informing equitable infrastructure investment decisions
+-   Improving power grid resilience and emergency response planning
+-   Identifying vulnerable communities that may need additional support during future crises
+-   Informing equitable infrastructure investment decisions
 
 ## Background
 
 ### The 2021 Texas Winter Storm Crisis
 
-The February 2021 winter storm, known as Winter Storm Uri, exposed critical vulnerabilities in Texas's isolated power grid. Unlike other states, Texas operates its own grid (ERCOT), which is not connected to neighboring states, limiting backup power options during emergencies [@nrel2021]. The unprecedented cold caused natural gas pipelines to freeze, wind turbines to ice over, and power plants to fail, creating a cascading crisis.
+The February 2021 winter storm, known as Winter Storm Uri, exposed critical vulnerabilities in Texas's isolated power grid. Unlike other states, Texas operates its own grid (ERCOT), which is not connected to neighboring states, limiting backup power options during emergencies. The unprecedented cold caused natural gas pipelines to freeze, wind turbines to ice over, and power plants to fail, creating a cascading crisis.
 
-While the blackouts affected millions of Texans, their impacts were not uniformly distributed. Previous research on climate disasters has shown that low-income communities and communities of color often experience disproportionate impacts from extreme weather events [@hsiang2019]. These communities may face longer recovery times, limited access to emergency resources, and inadequate infrastructure [@cutter2006].
+While the blackouts affected millions of Texans, their impacts were not uniformly distributed. Previous research on climate disasters has shown that low-income communities and communities of color often experience disproportionate impacts from extreme weather events. These communities may face longer recovery times, limited access to emergency resources, and inadequate infrastructure.
 
 ### Remote Sensing for Disaster Assessment
 
-Satellite-based night lights data provides a powerful tool for assessing power outages at scale. NASA's Visible Infrared Imaging Radiometer Suite (VIIRS) captures daily nighttime light emissions, allowing researchers to detect changes in electrical grid function [@roman2018]. By comparing light intensity before and after disasters, we can identify affected areas without relying solely on utility company reports, which may be incomplete during major crises.
+Satellite-based night lights data provides a powerful tool for assessing power outages at scale. NASA's Visible Infrared Imaging Radiometer Suite (VIIRS) captures daily nighttime light emissions, allowing researchers to detect changes in electrical grid function. By comparing light intensity before and after disasters, we can identify affected areas without relying solely on utility company reports, which may be incomplete during major crises.
 
 This analysis combines VIIRS night lights data with OpenStreetMap building footprints and U.S. Census socioeconomic data to map blackout impacts and explore potential environmental justice dimensions of the 2021 Texas blackouts.
 
@@ -79,12 +79,12 @@ library(kableExtra)     # Table formatting
 
 The analysis follows these steps:
 
-1. **Load and prepare spatial data** — Read VIIRS night lights tiles, building footprints, road networks, and census data
-2. **Calculate light intensity changes** — Compare pre- and post-storm imagery to identify areas with significant light reduction
-3. **Define blackout threshold** — Classify areas with light intensity drops >200 nW cm⁻²sr⁻¹ as experiencing blackouts
-4. **Filter highway corridors** — Exclude areas within 200m of major highways to avoid misidentifying reduced traffic as power outages
-5. **Identify impacted buildings** — Intersect blackout areas with residential building footprints
-6. **Analyze socioeconomic patterns** — Compare median household income distributions between census tracts with and without blackouts
+1.  **Load and prepare spatial data** — Read VIIRS night lights tiles, building footprints, road networks, and census data
+2.  **Calculate light intensity changes** — Compare pre- and post-storm imagery to identify areas with significant light reduction
+3.  **Define blackout threshold** — Classify areas with light intensity drops \>200 nW cm⁻²sr⁻¹ as experiencing blackouts
+4.  **Filter highway corridors** — Exclude areas within 200m of major highways to avoid misidentifying reduced traffic as power outages
+5.  **Identify impacted buildings** — Intersect blackout areas with residential building footprints
+6.  **Analyze socioeconomic patterns** — Compare median household income distributions between census tracts with and without blackouts
 
 ### Loading and Preparing the Data
 
@@ -523,10 +523,10 @@ Contrary to patterns often observed in climate disasters, this analysis found mi
 
 While this analysis found relatively equitable blackout exposure across income levels, the *impacts* of those blackouts may have been highly inequitable. Research following the 2021 storms documented that low-income communities faced:
 
-- Greater difficulty evacuating to heated locations
-- Limited access to backup heating sources
-- Longer recovery times
-- Higher health impacts from cold exposure [@gronlund2022]
+-   Greater difficulty evacuating to heated locations
+-   Limited access to backup heating sources
+-   Longer recovery times
+-   Higher health impacts from cold exposure [@gronlund2022]
 
 This distinction between exposure and vulnerability is critical for emergency planning. Even when disasters affect communities uniformly, pre-existing inequalities shape how severely people experience those impacts.
 
@@ -544,24 +544,24 @@ Several methodological limitations should be noted:
 
 Future research could enhance this analysis by:
 
-- Incorporating daily VIIRS data throughout the multi-day blackout event to assess temporal patterns
-- Comparing blackout exposure to other socioeconomic indicators (race, age, housing tenure)
-- Analyzing recovery times and their relationship to community characteristics
-- Integrating health outcome data to assess disparate impacts beyond simple exposure
-- Conducting ground-truthing with utility company outage records where available
+-   Incorporating daily VIIRS data throughout the multi-day blackout event to assess temporal patterns
+-   Comparing blackout exposure to other socioeconomic indicators (race, age, housing tenure)
+-   Analyzing recovery times and their relationship to community characteristics
+-   Integrating health outcome data to assess disparate impacts beyond simple exposure
+-   Conducting ground-truthing with utility company outage records where available
 
 ### Policy Recommendations
 
 This analysis supports several policy recommendations for improving grid resilience and emergency preparedness:
 
-1. **Infrastructure hardening:** The widespread nature of blackouts indicates systemic vulnerabilities that require comprehensive winterization of generation facilities and transmission infrastructure
-2. **Emergency response planning:** Even when disasters affect communities uniformly, response systems should account for differential vulnerabilities and capacities to cope with outages
-3. **Grid interconnection:** Texas's electrical isolation limited backup power options during the crisis, suggesting value in greater regional grid connectivity
-4. **Continued monitoring:** Remote sensing approaches like this analysis can complement utility reporting to provide rapid, independent assessment of disaster impacts
+1.  **Infrastructure hardening:** The widespread nature of blackouts indicates systemic vulnerabilities that require comprehensive winterization of generation facilities and transmission infrastructure
+2.  **Emergency response planning:** Even when disasters affect communities uniformly, response systems should account for differential vulnerabilities and capacities to cope with outages
+3.  **Grid interconnection:** Texas's electrical isolation limited backup power options during the crisis, suggesting value in greater regional grid connectivity
+4.  **Continued monitoring:** Remote sensing approaches like this analysis can complement utility reporting to provide rapid, independent assessment of disaster impacts
 
 ## Conclusion
 
-The February 2021 Texas blackouts represented a catastrophic failure of critical infrastructure affecting millions of residents. This spatial analysis demonstrates how satellite remote sensing combined with socioeconomic data can rapidly assess disaster impacts and identify affected communities. While the blackouts affected Houston relatively uniformly across income levels—likely due to the systemic nature of the grid failure—this does not mean the crisis was experienced equitably. Understanding both exposure patterns and underlying vulnerabilities remains essential for building more resilient and just infrastructure systems.
+The February 2021 Texas blackouts represented a catastrophic failure of critical infrastructure affecting millions of residents. This spatial analysis demonstrates how satellite remote sensing combined with socioeconomic data can rapidly assess disaster impacts and identify affected communities. While the blackouts affected Houston relatively uniformly across income levels, likely due to the systemic nature of the grid failure, this does not mean the crisis was experienced equitably. Understanding both exposure patterns and underlying vulnerabilities remains essential for building more resilient and just infrastructure systems.
 
 As climate change increases the frequency and severity of extreme weather events, tools and approaches for rapid disaster assessment will become increasingly valuable for emergency response, recovery planning, and long-term adaptation.
 

@@ -302,7 +302,7 @@ div.csl-indent {
 
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>In February 2021, a historic winter storm swept across Texas, bringing record-low temperatures and overwhelming the state’s power grid. At the peak of the crisis, more than 4.5 million homes and businesses lost power, leaving residents without electricity for heating during freezing temperatures <span class="citation" data-cites="busby2021">(<a href="#ref-busby2021" role="doc-biblioref">Busby et al. 2021</a>)</span>. The event resulted in at least 246 deaths and an estimated $195 billion in economic damages, making it one of the costliest natural disasters in U.S. history <span class="citation" data-cites="noaa2021">(<a href="#ref-noaa2021" role="doc-biblioref">NOAA National Centers for Environmental Information 2021</a>)</span>.</p>
+<p>In February 2021, a historic winter storm swept across Texas, bringing record-low temperatures and overwhelming the state’s power grid. At the peak of the crisis, more than 4.5 million homes and businesses lost power, leaving residents without electricity for heating during freezing temperatures. The event resulted in at least 246 deaths and an estimated $195 billion in economic damages, making it one of the costliest natural disasters in U.S. history.</p>
 <section id="research-question" class="level3">
 <h3 class="anchored" data-anchor-id="research-question">Research Question</h3>
 <p>This analysis addresses a critical question: <strong>Which communities in the Houston metropolitan area were most affected by the blackouts, and were there disparities in impacts across different income levels?</strong></p>
@@ -318,12 +318,12 @@ div.csl-indent {
 <h2 class="anchored" data-anchor-id="background">Background</h2>
 <section id="the-2021-texas-winter-storm-crisis" class="level3">
 <h3 class="anchored" data-anchor-id="the-2021-texas-winter-storm-crisis">The 2021 Texas Winter Storm Crisis</h3>
-<p>The February 2021 winter storm, known as Winter Storm Uri, exposed critical vulnerabilities in Texas’s isolated power grid. Unlike other states, Texas operates its own grid (ERCOT), which is not connected to neighboring states, limiting backup power options during emergencies <span class="citation" data-cites="nrel2021">(<a href="#ref-nrel2021" role="doc-biblioref">Federal Energy Regulatory Commission and North American Electric Reliability Corporation 2021</a>)</span>. The unprecedented cold caused natural gas pipelines to freeze, wind turbines to ice over, and power plants to fail, creating a cascading crisis.</p>
-<p>While the blackouts affected millions of Texans, their impacts were not uniformly distributed. Previous research on climate disasters has shown that low-income communities and communities of color often experience disproportionate impacts from extreme weather events <span class="citation" data-cites="hsiang2019">(<a href="#ref-hsiang2019" role="doc-biblioref">Hsiang et al. 2017</a>)</span>. These communities may face longer recovery times, limited access to emergency resources, and inadequate infrastructure <span class="citation" data-cites="cutter2006">(<a href="#ref-cutter2006" role="doc-biblioref">Cutter, Boruff, and Shirley 2003</a>)</span>.</p>
+<p>The February 2021 winter storm, known as Winter Storm Uri, exposed critical vulnerabilities in Texas’s isolated power grid. Unlike other states, Texas operates its own grid (ERCOT), which is not connected to neighboring states, limiting backup power options during emergencies. The unprecedented cold caused natural gas pipelines to freeze, wind turbines to ice over, and power plants to fail, creating a cascading crisis.</p>
+<p>While the blackouts affected millions of Texans, their impacts were not uniformly distributed. Previous research on climate disasters has shown that low-income communities and communities of color often experience disproportionate impacts from extreme weather events. These communities may face longer recovery times, limited access to emergency resources, and inadequate infrastructure.</p>
 </section>
 <section id="remote-sensing-for-disaster-assessment" class="level3">
 <h3 class="anchored" data-anchor-id="remote-sensing-for-disaster-assessment">Remote Sensing for Disaster Assessment</h3>
-<p>Satellite-based night lights data provides a powerful tool for assessing power outages at scale. NASA’s Visible Infrared Imaging Radiometer Suite (VIIRS) captures daily nighttime light emissions, allowing researchers to detect changes in electrical grid function <span class="citation" data-cites="roman2018">(<a href="#ref-roman2018" role="doc-biblioref">Román et al. 2018</a>)</span>. By comparing light intensity before and after disasters, we can identify affected areas without relying solely on utility company reports, which may be incomplete during major crises.</p>
+<p>Satellite-based night lights data provides a powerful tool for assessing power outages at scale. NASA’s Visible Infrared Imaging Radiometer Suite (VIIRS) captures daily nighttime light emissions, allowing researchers to detect changes in electrical grid function. By comparing light intensity before and after disasters, we can identify affected areas without relying solely on utility company reports, which may be incomplete during major crises.</p>
 <p>This analysis combines VIIRS night lights data with OpenStreetMap building footprints and U.S. Census socioeconomic data to map blackout impacts and explore potential environmental justice dimensions of the 2021 Texas blackouts.</p>
 </section>
 </section>
@@ -601,7 +601,7 @@ div.csl-indent {
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>pct_impacted <span class="ot">&lt;-</span> <span class="fu">round</span>((n_blackout_homes <span class="sc">/</span> n_total_homes) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p><strong>Finding:</strong> Approximately <strong>157,408</strong> residential buildings (33.1% of structures in the dataset) experienced blackouts during the February 2021 storms.</p>
+<p><strong>Finding:</strong> Approximately <strong>157,410</strong> residential buildings (33.1% of structures in the dataset) experienced blackouts during the February 2021 storms.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -809,7 +809,7 @@ div.csl-indent {
 <h2 class="anchored" data-anchor-id="discussion">Discussion</h2>
 <section id="main-findings" class="level3">
 <h3 class="anchored" data-anchor-id="main-findings">Main Findings</h3>
-<p>This spatial analysis identified approximately <strong>157,408</strong> residential buildings in the Houston metropolitan area that experienced power outages during the February 2021 winter storms. The widespread nature of these blackouts—affecting 33.1% of buildings in the study area—underscores the severity of the grid failure.</p>
+<p>This spatial analysis identified approximately <strong>157,410</strong> residential buildings in the Houston metropolitan area that experienced power outages during the February 2021 winter storms. The widespread nature of these blackouts—affecting 33.1% of buildings in the study area—underscores the severity of the grid failure.</p>
 <p>Contrary to patterns often observed in climate disasters, this analysis found minimal income-based disparities in blackout exposure. Both lower-income and higher-income census tracts experienced similar rates of power loss. This pattern likely reflects the unprecedented scale and systemic nature of the grid failure. When the entire electrical system was compromised by extreme cold, infrastructure vulnerabilities transcended neighborhood boundaries.</p>
 </section>
 <section id="broader-implications" class="level3">
@@ -852,7 +852,7 @@ div.csl-indent {
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<p>The February 2021 Texas blackouts represented a catastrophic failure of critical infrastructure affecting millions of residents. This spatial analysis demonstrates how satellite remote sensing combined with socioeconomic data can rapidly assess disaster impacts and identify affected communities. While the blackouts affected Houston relatively uniformly across income levels—likely due to the systemic nature of the grid failure—this does not mean the crisis was experienced equitably. Understanding both exposure patterns and underlying vulnerabilities remains essential for building more resilient and just infrastructure systems.</p>
+<p>The February 2021 Texas blackouts represented a catastrophic failure of critical infrastructure affecting millions of residents. This spatial analysis demonstrates how satellite remote sensing combined with socioeconomic data can rapidly assess disaster impacts and identify affected communities. While the blackouts affected Houston relatively uniformly across income levels, likely due to the systemic nature of the grid failure, this does not mean the crisis was experienced equitably. Understanding both exposure patterns and underlying vulnerabilities remains essential for building more resilient and just infrastructure systems.</p>
 <p>As climate change increases the frequency and severity of extreme weather events, tools and approaches for rapid disaster assessment will become increasingly valuable for emergency response, recovery planning, and long-term adaptation.</p>
 </section>
 <section id="data-sources-and-acknowledgments" class="level2">
@@ -864,32 +864,14 @@ div.csl-indent {
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-busby2021" class="csl-entry" role="listitem">
-Busby, Joshua W., Kyri Baker, Morgan D. Bazilian, Alex Q. Gilbert, Emily Grubert, Varun Rai, Joshua D. Rhodes, Sarang Shidore, C. Anna Smith, and Michael E. Webber. 2021. <span>“Cascading Risks: Understanding the 2021 Winter Blackout in Texas.”</span> <em>Energy Research &amp; Social Science</em> 77: 102106. <a href="https://doi.org/10.1016/j.erss.2021.102106">https://doi.org/10.1016/j.erss.2021.102106</a>.
-</div>
-<div id="ref-cutter2006" class="csl-entry" role="listitem">
-Cutter, Susan L., Bryan J. Boruff, and W. Lynn Shirley. 2003. <span>“Vulnerability to Environmental Hazards.”</span> <em>Social Science Quarterly</em> 84 (2): 242–61. <a href="https://doi.org/10.1111/1540-6237.8402002">https://doi.org/10.1111/1540-6237.8402002</a>.
-</div>
-<div id="ref-nrel2021" class="csl-entry" role="listitem">
-Federal Energy Regulatory Commission and North American Electric Reliability Corporation. 2021. <span>“The February 2021 Cold Weather Outages in Texas and the South Central United States.”</span> FERC; NERC. <a href="https://www.ferc.gov/media/february-2021-cold-weather-outages-texas-and-south-central-united-states-ferc-nerc-and">https://www.ferc.gov/media/february-2021-cold-weather-outages-texas-and-south-central-united-states-ferc-nerc-and</a>.
-</div>
 <div id="ref-gronlund2022" class="csl-entry" role="listitem">
 Gronlund, Carina J. 2014. <span>“Racial and Socioeconomic Disparities in Heat-Related Health Effects and Their Mechanisms: A Review.”</span> <em>Current Epidemiology Reports</em> 1 (3): 165–73. <a href="https://doi.org/10.1007/s40471-014-0014-4">https://doi.org/10.1007/s40471-014-0014-4</a>.
-</div>
-<div id="ref-hsiang2019" class="csl-entry" role="listitem">
-Hsiang, Solomon, Robert Kopp, Amir Jina, James Rising, Michael Delgado, Shashank Mohan, D. J. Rasmussen, et al. 2017. <span>“Estimating Economic Damage from Climate Change in the United States.”</span> <em>Science</em> 356 (6345): 1362–69. <a href="https://doi.org/10.1126/science.aal4369">https://doi.org/10.1126/science.aal4369</a>.
 </div>
 <div id="ref-nasa2021" class="csl-entry" role="listitem">
 NASA LAADS DAAC. 2021. <span>“VIIRS/NPP Daily Gridded Day Night Band 15 Arc-Second Linear Lat Lon Grid Night.”</span> NASA Level-1; Atmosphere Archive &amp; Distribution System Distributed Active Archive Center. <a href="https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/products/VNP46A1/">https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/products/VNP46A1/</a>.
 </div>
-<div id="ref-noaa2021" class="csl-entry" role="listitem">
-NOAA National Centers for Environmental Information. 2021. <span>“Billion-Dollar Weather and Climate Disasters.”</span> National Oceanic; Atmospheric Administration. <a href="https://www.ncei.noaa.gov/access/billions/">https://www.ncei.noaa.gov/access/billions/</a>.
-</div>
 <div id="ref-openstreetmap2021" class="csl-entry" role="listitem">
 OpenStreetMap Contributors. 2021. <span>“OpenStreetMap Data Extracts.”</span> Geofabrik GmbH. <a href="https://download.geofabrik.de/">https://download.geofabrik.de/</a>.
-</div>
-<div id="ref-roman2018" class="csl-entry" role="listitem">
-Román, Miguel O., Zhuosen Wang, Qingsong Sun, Virginia Kalb, Steven D. Miller, Andrew Molthan, Lori Schultz, et al. 2018. <span>“NASA’s Black Marble Nighttime Lights Product Suite.”</span> <em>Remote Sensing of Environment</em> 210: 113–43. <a href="https://doi.org/10.1016/j.rse.2018.03.017">https://doi.org/10.1016/j.rse.2018.03.017</a>.
 </div>
 <div id="ref-census2019" class="csl-entry" role="listitem">
 U.S. Census Bureau. 2019. <span>“American Community Survey 5-Year Data (2015-2019).”</span> U.S. Census Bureau. <a href="https://www.census.gov/programs-surveys/acs/technical-documentation/table-and-geography-changes/2019/5-year.html">https://www.census.gov/programs-surveys/acs/technical-documentation/table-and-geography-changes/2019/5-year.html</a>.

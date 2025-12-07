@@ -1,6 +1,21 @@
 ---
-title: "index"
-format: html
+title: "..."
+description: "..."
+author: Emily Miller
+date: 2025-12-06
+categories: [MEDS, R, Statistics, Aquaculture]
+image: aquaculture.jpg
+citation:
+  url: https://rellimylime.github.io/posts/eds223-final2/
+bibliography: references.bib
+output: 
+  html_document:
+    code_download: true
+execute:
+  eval: true
+  echo: true
+  warning: false
+  message: false
 ---
 
 # Introduction

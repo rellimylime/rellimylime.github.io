@@ -2,10 +2,10 @@
 title: "When Climate Models Miss the Fog"
 description: "What I Learned From California's Blackouts"
 author: Emily Miller
-date: 2025-11-29
-categories: [...]
+date: 2024-11-29
+categories: [MEDS, Climate Science, Data Science, Ethics]
 format: html
-image: eds242-final-cover2.jpeg
+image: eds242-final-cover.jpg
 citation:
   url: https://rellimylime.github.io/posts/eds242-final/
 bibliography: references.bib
@@ -33,17 +33,31 @@ The problem? The models systematically overestimated solar generation potential 
 
 California's coast has a distinctive climate feature: the marine layer. Cold Pacific waters create a stable layer of cool, moist air that gets trapped under warmer air above, forming a strong temperature inversion. When conditions are right, this marine layer produces fog and low stratus clouds that can persist for hours or days.
 
-This isn't just a beach nuisance—it's climatically critical. Coastal low clouds can reduce incoming solar radiation by 30-50% when they're present [@iacobellis2013variability]. They affect coastal temperatures, drive inland through gaps like the Golden Gate, and historically have provided moisture to ecosystems like redwood forests [@johnstone2010fog].
+Coastal low clouds can reduce incoming solar radiation by 30-50% when they're present [@iacobellis2013variability]. They affect coastal temperatures, drive inland through gaps like the Golden Gate, and historically have provided the necessary moisture to ecosystems like redwood forests [@johnstone2010fog].
 
-Here's where the models struggle: Global Climate Models (GCMs) like those in CMIP5 operate at coarse spatial resolution—typically 100-200km grid cells. California's marine layer dynamics happen at much finer scales [@koracin2005fog], driven by: - Sea surface temperature gradients - Topographic channeling through coastal ranges - Diurnal heating/cooling cycles - Offshore upwelling patterns
+Here's where the models struggle: Global Climate Models (GCMs) like those in CMIP5 operate at coarse spatial resolution, typically 100-200km grid cells. California's marine layer dynamics happen at much finer scales [@koracin2005fog], driven by:
 
-Even "downscaled" versions of these models—refined to 10-20km resolution using statistical or dynamical techniques—have trouble capturing the formation, persistence, and inland penetration of coastal low clouds.
+\- Sea surface temperature gradients
+
+\- Topographic channeling through coastal ranges
+
+\- Diurnal heating/cooling cycles
+
+\- Offshore upwelling patterns
+
+Even "downscaled" versions of these models, e.g. those refined to 10-20km resolution using statistical or dynamical techniques, have trouble capturing the formation, persistence, and inland penetration of coastal low clouds.
 
 A 2024 California Energy Commission technical report on downscaling methods [@pierce2024downscaling] noted: "Coastal Low Clouds (CLC), including stratocumulus, stratus, and fog, are a persistent, seasonal feature of the region's climate... Accounting for these clouds improves solar energy forecasting."
 
-The problem is that CMIP5-era models systematically underestimated: 1. Marine layer frequency and persistence 2. The inland extent of coastal fog 3. Afternoon/evening cloud cover in coastal and near-coastal areas
+The problem is that CMIP5-era models systematically underestimated:
 
-The result? Solar irradiance projections that were too optimistic, especially for afternoon/evening hours—exactly when California's "net peak" demand (after accounting for mid-day solar) occurs.
+1\. Marine layer frequency and persistence
+
+2\. The inland extent of coastal fog
+
+3\. Afternoon/evening cloud cover in coastal and near-coastal areas
+
+The result? Solar irradiance projections that were too optimistic, especially for afternoon/evening hours; exactly when California's "net peak" demand (after accounting for mid-day solar) occurs.
 
 ------------------------------------------------------------------------
 
@@ -54,52 +68,67 @@ So how does a bias in cloud cover modeling in the 2010s contribute to blackouts 
 **Step 1: Overoptimistic generation forecasts (2010-2015)** Solar developers and utilities use downscaled CMIP5 projections to estimate generation potential. Models underestimate afternoon cloud cover → projected generation is 10-15% higher than reality in affected regions.
 
 **Step 2: Investment and siting decisions (2012-2018)**\
-Based on these projections, billions flow into solar installations. Project economics assume certain capacity factors (how much power gets generated relative to maximum capacity). Land use changes—agricultural land converted to solar farms in the Central Valley.
+Based on these projections, billions are invested into solar installations. Project economics assume certain capacity factors (how much power gets generated relative to maximum capacity). Land use changes and agricultural land is converted to solar farms in the Central Valley.
 
 **Step 3: Grid planning assumptions (2015-2020)**\
 California's grid operator (CAISO) plans for a future where solar provides increasing amounts of power. But their "resource adequacy" models assume generation levels that match the overoptimistic projections.
 
 **Step 4: The "net peak" emerges**\
-As solar capacity grows, a new challenge appears: managing the evening "ramp" when solar generation drops off but demand stays high (people come home, turn on AC, cook dinner, etc.). CAISO's planning assumes more solar will be available during this critical 5-8pm window than actually materializes.
+As solar capacity grows, a new challenge appears: managing the evening "ramp" when solar generation drops off but demand stays high (people come home, turn on AC, cook dinner, etc.). CAISO's planning assumes more solar will be available during this critical 5-8pm window than actually is.
 
 **Step 5: August 2020**\
-Record-breaking heat wave hits the entire Western US. Everyone's running AC. Solar performs well during the mid-day peak—but starts dropping off earlier and faster than grid models expected, partly because of cloud cover patterns that the original climate models hadn't captured accurately.
+Record-breaking heat wave hits the entire Western US. Everyone's running AC. Solar performs well during the mid-day peak but starts dropping off earlier and faster than grid models expected, partly because of cloud cover patterns that the original climate models hadn't captured accurately.
 
 CAISO's root cause analysis [@caiso2021root] states: "Resource planning targets have not kept pace with the evolving power mix, wherein demand during peak hours outpaces the supply of solar-produced power."
 
-That's bureaucratic language for: we thought we'd have more power available at this time of day than we actually do.
-
-Combined with other factors (neighboring states also in crisis, some gas plants offline, market forecasting errors), the result was my phone buzzing with a blackout alert on a sweltering August evening.
+Translation: "we thought we'd have more power available at this time of day than we actually do."
 
 ------------------------------------------------------------------------
 
 ## Why This Matters Beyond One Heat Wave
 
-I'm not claiming that marine layer bias in climate models was the *primary* cause of California's blackouts. The CAISO analysis makes clear it was a perfect storm of factors. But the model bias was part of the systemic chain—one link in a series of assumptions and decisions that put the grid in a vulnerable position.
+The marine layer bias in climate models was not necessarily the *primary* cause of California's blackouts, the CAISO analysis makes clear it was a perfect storm of factors, but the model bias was part of the systemic chain; one link in a series of assumptions and decisions that put the grid in a vulnerable position.
 
-What strikes me is how invisible this connection is. When I experienced that blackout, I had no idea that decisions made 5-10 years earlier, based on climate projections that seemed rigorous and scientific, had quietly baked in errors that would manifest years later under stress.
+What strikes me is how invisible this connection is. When I experienced that blackout, I had no idea that decisions made 5-10 years earlier, based on climate projections that likely seemed rigorous and scientific, had quietly baked in errors that would manifest years later under stress.
 
-This pattern shows up everywhere in environmental data science:
+------------------------------------------------------------------------
 
 ## The Technical Challenge
 
-Climate modelers know about these biases. Coastal low cloud representation is a notorious problem in GCMs—it's been flagged in every CMIP assessment going back decades.
+Climate modelers know about these biases. Marine boundary layer clouds remain one of the largest sources of uncertainty in climate models [@klein2017].
 
-The core issue is that marine layer physics operates at scales GCMs can't resolve: - **Boundary layer dynamics**: The marine layer is typically 300-800m deep. GCMs have vertical resolution of \~100m in the lowest levels—barely enough to capture the inversion structure. - **Cloud microphysics**: Fog and low stratus formation depends on aerosol concentrations (sea salt, iodine from kelp), which most models treat as fixed background values rather than dynamic variables. - **Topographic interactions**: Coastal ranges create gaps (Golden Gate, Carquinez Strait) that channel marine air inland. A 100km GCM grid cell can't represent these features.
+### The Resolution Problem
+
+The core issue is that marine layer physics operates at scales GCMs can't resolve. Coastal fog and low stratus depend on boundary layer processes, cloud microphysics, and topographic features that occur at sub-grid scales [@klein2017].
+
+### Downscaling Approaches
 
 Downscaling helps, but it can't fix everything. The two main approaches are:
 
-**Statistical downscaling** (e.g., LOCA - Localized Constructed Analogs): Uses historical relationships between large-scale climate patterns and local observations [@pierce2023loca]. Fast, cheap, widely used. But assumes future relationships will match past patterns—questionable under climate change [@ekstrom2015appraisal]. Also struggles with variables like cloud cover that don't have long observational records.
+**Statistical downscaling** (e.g., LOCA - Localized Constructed Analogs): Uses historical relationships between large-scale climate patterns and local observations [@pierce2023loca]. Fast, cheap, widely used. But assumes future relationships will match past patterns, questionable under climate change [@ekstrom2015appraisal]. Also struggles with variables that don't have long observational records.
 
-**Dynamical downscaling** (e.g., WRF - Weather Research and Forecasting model): Runs a high-resolution regional climate model nested within the GCM [@cec2022evaluating]. Can explicitly simulate physics at 3-10km scale. But inherits GCM boundary conditions and biases. And "high resolution" still isn't fine enough to fully capture marine layer processes.
+**Dynamical downscaling** (e.g., WRF - Weather Research and Forecasting model): Runs a high-resolution regional climate model nested within the GCM [@cec2022evaluating]. Can explicitly simulate physics at 3-10km scale. But \*inherits GCM boundary conditions and biases\*.
 
-California's most recent downscaling effort (for the 5th Climate Assessment) uses a hybrid approach—LOCA2 combines statistical methods with pattern libraries from dynamically downscaled runs [@pierce2024downscaling]. A 2024 technical report notes this improves solar radiation estimates... but still recommends that "given our shift to clean energy, we have to change planning assumptions and analysis to account for" the limitations.
+### Current State of the Art
+
+California's most recent downscaling effort (for the 5th Climate Assessment) used a hybrid approach; LOCA2 combines statistical methods with pattern libraries from dynamically downscaled model runs [@pierce2024downscaling]. A 2024 technical report notes this improves solar radiation estimates... but still recommends that "given our shift to clean energy, we have to change planning assumptions and analysis to account for" the limitations.
 
 Translation: even our best current methods have biases that matter for decision-making.
 
-Different bias correction methods can change answers significantly [@maraun2016bias]: - **Quantile mapping**: Matches model distribution to observed distribution, but assumes bias is stationary over time - **Delta method**: Uses model *changes* rather than absolute values, but assumes models capture trends correctly even if baseline is wrong - **Deep learning corrections**: Train neural networks on historical errors, but risk overfitting [@mcgovern2024identifying] - **Ensemble averaging**: Combine multiple models to reduce individual biases, but can mask structural uncertainties
+### The Bias Correction Dilemma
+
+Different bias correction methods can change answers significantly [@maraun2016bias]:
+
+-   **Quantile mapping**: Matches model distribution to observed distribution, but assumes bias is stationary over time
+-   **Delta method**: Uses model *changes* rather than absolute values, but assumes models capture trends correctly even if baseline is wrong
+-   **Deep learning corrections**: Train neural networks on historical errors, but risk overfitting [@mcgovern2024identifying]
+-   **Ensemble averaging**: Combine multiple models to reduce individual biases, but may mask structural uncertainties
 
 Each method makes different assumptions. Each gives different results. And the choice of correction method can change your projection as much as the climate change signal itself [@ekstrom2015appraisal].
+
+### Cascading Consequences Across Sectors
+
+This pattern shows up everywhere in environmental data science:
 
 -   **Flood risk modeling** → Insurance pricing → Land use decisions → Who lives where
 -   **Crop yield projections** → Agricultural investment → Food security policy → International trade
@@ -118,19 +147,34 @@ The problem isn't incompetence. It's that we've built systems that rely on model
 
 I don't think the answer is to stop using climate models—they're the best tools we have for understanding future conditions. But we need to be much smarter about acknowledging and working with their limitations.
 
-**1. Bake uncertainty into decisions from the start**\
+### 1. Bake Uncertainty Into Decisions
+
 Don't make billion-dollar commitments based on single-model projections. Design systems that can adapt if reality diverges from projections. For California's grid: that means maintaining flexible generation capacity, investing in storage, planning for higher evening peaks than models predict.
 
-**2. Cross-validate with multiple methods**\
-Don't rely solely on climate models. Use: - Historical analogs (when similar heat waves hit in the past, what happened?) - Empirical relationships (how does actual solar generation track with weather obs?) - Expert elicitation (what do grid operators and solar engineers see on the ground?) - Stress testing (what if generation is 20% lower than projected?)
+### 2. Cross-Validate With Multiple Methods
 
-**3. Create feedback loops between models and reality**\
+Don't rely solely on climate models. Use:
+
+-   Historical analogs (when similar heat waves hit in the past, what happened?)
+-   Empirical relationships (how does actual solar generation track with weather obs?)
+-   Expert elicitation (what do grid operators and solar engineers see on the ground?)
+-   Stress testing (what if generation is 20% lower than projected?)
+
+### 3. Create Feedback Loops Between Models and Reality
+
 Once solar farms are operating, compare actual vs. projected generation. Feed that learning back into model improvement and planning assumptions. California is doing this now—CAISO has updated resource adequacy models based on 2020 experience—but it would have been better to catch the discrepancies earlier.
 
-**4. Invest in the unglamorous work**\
-Bias correction and regional model improvement don't make headlines. But given how much rides on these projections, we massively under-invest in making them better. We need: - Better observations of marine layer dynamics (more buoys, coastal radar, satellite validation) - Higher resolution models that can resolve key processes - Long-term monitoring of how projections perform vs. reality - Transparent documentation of known biases and their magnitudes
+### 4. Invest in the Unglamorous Work
 
-**5. Train decision-makers to be critical consumers**\
+Bias correction and regional model improvement don't make headlines. But given how much rides on these projections, we massively under-invest in making them better. We need:
+
+-   Better observations of marine layer dynamics (more buoys, coastal radar, satellite validation)
+-   Higher resolution models that can resolve key processes
+-   Long-term monitoring of how projections perform vs. reality
+-   Transparent documentation of known biases and their magnitudes
+
+### 5. Train Decision-Makers to Be Critical Consumers
+
 Engineers, planners, and policy-makers need to understand what climate models can and can't tell them. A projection is not a prediction. An ensemble mean is not a forecast. Uncertainty is information, not a bug. Model limitations should be discussed upfront in every assessment, not buried in technical appendices.
 
 ------------------------------------------------------------------------

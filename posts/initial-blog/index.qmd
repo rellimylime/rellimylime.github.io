@@ -7,8 +7,8 @@ image: PXL_20230921_205848129.jpg
 citation:
   url: https://rellimylime.github.io/posts/initial-blog/
 bibliography: references.bib
-#draft: true
 draft-mode: linked # Doesn't appear but can be found with the link directly
+hidden: true
 ---
 
 This is where my blog post begins! This is a footnote[^1]

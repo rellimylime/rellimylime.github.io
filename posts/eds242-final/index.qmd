@@ -1,6 +1,6 @@
 ---
-title: "When Climate Models Miss the Fog: What I Learned From California's Blackouts"
-description: "..."
+title: "When Climate Models Miss the Fog"
+description: "What I Learned From California's Blackouts"
 author: Emily Miller
 date: 2025-11-29
 categories: [...]

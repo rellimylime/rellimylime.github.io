@@ -246,9 +246,9 @@ plt.show()
 
 **Why this band combination?**
 
->- **Healthy vegetation** has high NIR reflectance and low SWIR reflectance → appears bright green
-- **Burned areas** have low NIR reflectance and moderate SWIR reflectance → appears reddish-brown
-- **Urban areas** show moderate reflectance across bands → appears in neutral tones
+> -   **Healthy vegetation** has high NIR reflectance and low SWIR reflectance → appears bright green
+> -   **Burned areas** have low NIR reflectance and moderate SWIR reflectance → appears reddish-brown
+> -   **Urban areas** show moderate reflectance across bands → appears in neutral tones
 
 ### Creating the Final Map
 
@@ -309,9 +309,9 @@ This false color composite displays the Eaton and Palisades fire areas captured 
 
 **Key features:**
 
->- **Bright green areas** = Healthy vegetation (high NIR reflectance)
-- **Reddish-brown areas** = Burned areas and bare soil (low NIR, moderate SWIR)
-- **Urban/developed areas** = Neutral tones (moderate reflectance across bands)
+> -   **Bright green areas** = Healthy vegetation (high NIR reflectance)
+> -   **Reddish-brown areas** = Burned areas and bare soil (low NIR, moderate SWIR)
+> -   **Urban/developed areas** = Neutral tones (moderate reflectance across bands)
 
 The fire perimeters are overlaid in **yellow (Eaton Fire)** and **red (Palisades Fire)** to delineate the official burn boundaries. This false color combination is particularly effective for assessing fire severity and monitoring landscape recovery, as the spectral signatures of healthy vs. burned vegetation are distinctly different in the infrared wavelengths.
 
@@ -443,9 +443,9 @@ This analysis reveals stark differences in socioeconomic vulnerability between t
 
 The contrasting patterns reveal that while both fires caused extensive physical damage, the Eaton fire imposed greater socioeconomic burden on vulnerable populations who typically have fewer resources for evacuation, temporary housing, and long-term recovery. This disparity is crucial for:
 
->- **Emergency response planning** - ensuring resources reach vulnerable populations during active disasters
-- **Recovery assistance** - targeting aid to communities with fewer economic resources for rebuilding
-- **Long-term resilience planning** - addressing pre-existing vulnerabilities that compound disaster impacts and hinder recovery
+> -   **Emergency response planning** - ensuring resources reach vulnerable populations during active disasters
+> -   **Recovery assistance** - targeting aid to communities with fewer economic resources for rebuilding
+> -   **Long-term resilience planning** - addressing pre-existing vulnerabilities that compound disaster impacts and hinder recovery
 
 ## Conclusion
 

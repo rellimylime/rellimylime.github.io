@@ -1,6 +1,14 @@
 ---
 title: "When Climate Models Miss the Fog: What I Learned From California's Blackouts"
+description: "..."
+author: Emily Miller
+date: 2025-11-29
+categories: [...]
 format: html
+image: eds242-final-cover.jpg
+citation:
+  url: https://rellimylime.github.io/posts/eds242-final/
+bibliography: references.bib
 ---
 
 August 2020. Opening the door is akin to opening the oven in the middle of summer in Davis CA. For the past few years, we had adopted the practice of doing one last blast chill from the AC before avoiding power use after 3pm. This was a responsibility communicated to our whole community; if we want to avoid blackouts, we need to limit our use during the hottest hours of the evening.

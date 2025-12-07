@@ -135,17 +135,17 @@ This pattern shows up everywhere in environmental data science:
 -   **Hydropower forecasting** → Energy mix decisions → Electricity rates → Industrial development
 -   **Fire risk assessment** → Building codes → Insurance availability → Community resilience
 
-In each case, biased models generate biased projections, which inform biased decisions, which create real-world consequences—often for people who have no idea the original model even existed.
+In each case, biased models generate biased projections, which inform biased decisions, which create real-world consequences, often for people who have no idea the original model even existed.
 
 And here's what makes it particularly insidious: the bias doesn't announce itself. The projections look authoritative. They come with error bars and confidence intervals. They're peer-reviewed, published, cited. The agencies using them are staffed with smart, well-trained people doing their best with the tools available.
 
-The problem isn't incompetence. It's that we've built systems that rely on models with known limitations, and those limitations propagate silently through decision chains until something breaks.
+The problem isn't one of incompetence. It's that we've built systems that rely on models with known limitations, and those limitations propagate silently through decision chains until something breaks or goes wrong.
 
 ------------------------------------------------------------------------
 
 ## What We Can Do
 
-I don't think the answer is to stop using climate models—they're the best tools we have for understanding future conditions. But we need to be much smarter about acknowledging and working with their limitations.
+I don't think the answer is to stop using climate models, they're the best tools we have for understanding future conditions. But we need to be much smarter about acknowledging and working with their limitations.
 
 ### 1. Bake Uncertainty Into Decisions
 
@@ -155,14 +155,14 @@ Don't make billion-dollar commitments based on single-model projections. Design 
 
 Don't rely solely on climate models. Use:
 
--   Historical analogs (when similar heat waves hit in the past, what happened?)
+-   Historical records (when similar heat waves hit in the past, what happened?)
 -   Empirical relationships (how does actual solar generation track with weather obs?)
--   Expert elicitation (what do grid operators and solar engineers see on the ground?)
+-   Expert opinions (what do grid operators and solar engineers see on the ground?)
 -   Stress testing (what if generation is 20% lower than projected?)
 
 ### 3. Create Feedback Loops Between Models and Reality
 
-Once solar farms are operating, compare actual vs. projected generation. Feed that learning back into model improvement and planning assumptions. California is doing this now—CAISO has updated resource adequacy models based on 2020 experience—but it would have been better to catch the discrepancies earlier.
+Once solar farms are operating, compare actual vs. projected generation. Feed that learning back into model improvement and planning assumptions. California is doing this now, CAISO has updated resource adequacy models based on 2020 experience, but it would have been better to catch the discrepancies earlier.
 
 ### 4. Invest in the Unglamorous Work
 
@@ -183,11 +183,11 @@ Engineers, planners, and policy-makers need to understand what climate models ca
 
 For my family, these summertime blackouts were uncomfortable, inconvenient, but not catastrophic. For others, people dependent on medical equipment, elderly folks without AC, families losing food in fridges, these blackouts are far more impactful.
 
-And the thing is, these grid reliability issues will keep happening. California's 2024-2025 planning documents still show tight supply margins during evening peaks. The marine layer isn't going away. Neither is climate change, which may be altering fog patterns in ways we still don't fully understand [@torregrosa2014fog]—research suggests California coastal fog has declined 33% since 1950 [@johnstone2010fog], but the causes and future trajectory are uncertain.
+And the thing is, these grid reliability issues will keep happening. California's 2024-2025 planning documents still show tight supply margins during evening peaks. The marine layer isn't going away. Neither is climate change, which may be altering fog patterns in ways we still don't fully understand [@torregrosa2014fog], research suggests California coastal fog has declined 33% since 1950 [@johnstone2010fog], but the causes and future trajectory are uncertain.
 
-What bugs me most is how easily these issues slip through. Smart people, good intentions, rigorous methods—and still, systematic biases propagate through planning processes and don't surface until systems fail under stress.
+What bugs me most is how easily these issues slip through. Smart people, good intentions, rigorous methods, and still, systematic biases propagate through planning processes and don't surface until systems fail under stress.
 
-This isn't unique to energy systems. I see it in every domain of environmental data science I look at. Models of crop yields, water availability, species distributions, fire risk, flood hazards—all rest on climate projections with known limitations. Those limitations rarely make it into the summary documents that inform decisions [@young2014improving].
+This isn't unique to energy systems. I see it in every domain of environmental data science I look at. Models of crop yields, water availability, species distributions, fire risk, flood hazards, all rest on climate projections with known limitations. Those limitations don't make it into the summary documents that inform decisions as often as they need to[@young2014improving].
 
 We can do better. Not by building perfect models, but by building decision processes that explicitly account for model uncertainty and biases, and learning from mismatches between predictions and reality.
 

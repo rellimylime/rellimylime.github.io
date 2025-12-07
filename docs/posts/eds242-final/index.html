@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Emily Miller">
-<meta name="dcterms.date" content="2025-11-29">
+<meta name="dcterms.date" content="2024-11-29">
 <meta name="description" content="What I Learned From California’s Blackouts">
 
 <title>When Climate Models Miss the Fog – Emily Miller</title>
@@ -181,7 +181,10 @@ div.csl-indent {
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">...</div>
+                <div class="quarto-category">MEDS</div>
+                <div class="quarto-category">Climate Science</div>
+                <div class="quarto-category">Data Science</div>
+                <div class="quarto-category">Ethics</div>
               </div>
                   </div>
   </div>
@@ -199,7 +202,7 @@ div.csl-indent {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">November 29, 2025</p>
+        <p class="date">November 29, 2024</p>
       </div>
     </div>
     
@@ -219,8 +222,22 @@ div.csl-indent {
   <li><a href="#the-marine-layer-problem" id="toc-the-marine-layer-problem" class="nav-link" data-scroll-target="#the-marine-layer-problem">The Marine Layer Problem</a></li>
   <li><a href="#the-path-from-models-to-blackouts" id="toc-the-path-from-models-to-blackouts" class="nav-link" data-scroll-target="#the-path-from-models-to-blackouts">The Path From Models to Blackouts</a></li>
   <li><a href="#why-this-matters-beyond-one-heat-wave" id="toc-why-this-matters-beyond-one-heat-wave" class="nav-link" data-scroll-target="#why-this-matters-beyond-one-heat-wave">Why This Matters Beyond One Heat Wave</a></li>
-  <li><a href="#the-technical-challenge" id="toc-the-technical-challenge" class="nav-link" data-scroll-target="#the-technical-challenge">The Technical Challenge</a></li>
-  <li><a href="#what-we-can-do" id="toc-what-we-can-do" class="nav-link" data-scroll-target="#what-we-can-do">What We Can Do</a></li>
+  <li><a href="#the-technical-challenge" id="toc-the-technical-challenge" class="nav-link" data-scroll-target="#the-technical-challenge">The Technical Challenge</a>
+  <ul class="collapse">
+  <li><a href="#the-resolution-problem" id="toc-the-resolution-problem" class="nav-link" data-scroll-target="#the-resolution-problem">The Resolution Problem</a></li>
+  <li><a href="#downscaling-approaches" id="toc-downscaling-approaches" class="nav-link" data-scroll-target="#downscaling-approaches">Downscaling Approaches</a></li>
+  <li><a href="#current-state-of-the-art" id="toc-current-state-of-the-art" class="nav-link" data-scroll-target="#current-state-of-the-art">Current State of the Art</a></li>
+  <li><a href="#the-bias-correction-dilemma" id="toc-the-bias-correction-dilemma" class="nav-link" data-scroll-target="#the-bias-correction-dilemma">The Bias Correction Dilemma</a></li>
+  <li><a href="#cascading-consequences-across-sectors" id="toc-cascading-consequences-across-sectors" class="nav-link" data-scroll-target="#cascading-consequences-across-sectors">Cascading Consequences Across Sectors</a></li>
+  </ul></li>
+  <li><a href="#what-we-can-do" id="toc-what-we-can-do" class="nav-link" data-scroll-target="#what-we-can-do">What We Can Do</a>
+  <ul class="collapse">
+  <li><a href="#bake-uncertainty-into-decisions" id="toc-bake-uncertainty-into-decisions" class="nav-link" data-scroll-target="#bake-uncertainty-into-decisions">1. Bake Uncertainty Into Decisions</a></li>
+  <li><a href="#cross-validate-with-multiple-methods" id="toc-cross-validate-with-multiple-methods" class="nav-link" data-scroll-target="#cross-validate-with-multiple-methods">2. Cross-Validate With Multiple Methods</a></li>
+  <li><a href="#create-feedback-loops-between-models-and-reality" id="toc-create-feedback-loops-between-models-and-reality" class="nav-link" data-scroll-target="#create-feedback-loops-between-models-and-reality">3. Create Feedback Loops Between Models and Reality</a></li>
+  <li><a href="#invest-in-the-unglamorous-work" id="toc-invest-in-the-unglamorous-work" class="nav-link" data-scroll-target="#invest-in-the-unglamorous-work">4. Invest in the Unglamorous Work</a></li>
+  <li><a href="#train-decision-makers-to-be-critical-consumers" id="toc-train-decision-makers-to-be-critical-consumers" class="nav-link" data-scroll-target="#train-decision-makers-to-be-critical-consumers">5. Train Decision-Makers to Be Critical Consumers</a></li>
+  </ul></li>
   <li><a href="#why-i-think-about-this" id="toc-why-i-think-about-this" class="nav-link" data-scroll-target="#why-i-think-about-this">Why I Think About This</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
@@ -247,12 +264,19 @@ div.csl-indent {
 <section id="the-marine-layer-problem" class="level2">
 <h2 class="anchored" data-anchor-id="the-marine-layer-problem">The Marine Layer Problem</h2>
 <p>California’s coast has a distinctive climate feature: the marine layer. Cold Pacific waters create a stable layer of cool, moist air that gets trapped under warmer air above, forming a strong temperature inversion. When conditions are right, this marine layer produces fog and low stratus clouds that can persist for hours or days.</p>
-<p>This isn’t just a beach nuisance—it’s climatically critical. Coastal low clouds can reduce incoming solar radiation by 30-50% when they’re present <span class="citation" data-cites="iacobellis2013variability">(<a href="#ref-iacobellis2013variability" role="doc-biblioref">Iacobellis and Cayan 2013</a>)</span>. They affect coastal temperatures, drive inland through gaps like the Golden Gate, and historically have provided moisture to ecosystems like redwood forests <span class="citation" data-cites="johnstone2010fog">(<a href="#ref-johnstone2010fog" role="doc-biblioref">Johnstone and Dawson 2010</a>)</span>.</p>
-<p>Here’s where the models struggle: Global Climate Models (GCMs) like those in CMIP5 operate at coarse spatial resolution—typically 100-200km grid cells. California’s marine layer dynamics happen at much finer scales <span class="citation" data-cites="koracin2005fog">(<a href="#ref-koracin2005fog" role="doc-biblioref">Koračin et al. 2005</a>)</span>, driven by: - Sea surface temperature gradients - Topographic channeling through coastal ranges - Diurnal heating/cooling cycles - Offshore upwelling patterns</p>
-<p>Even “downscaled” versions of these models—refined to 10-20km resolution using statistical or dynamical techniques—have trouble capturing the formation, persistence, and inland penetration of coastal low clouds.</p>
+<p>Coastal low clouds can reduce incoming solar radiation by 30-50% when they’re present <span class="citation" data-cites="iacobellis2013variability">(<a href="#ref-iacobellis2013variability" role="doc-biblioref">Iacobellis and Cayan 2013</a>)</span>. They affect coastal temperatures, drive inland through gaps like the Golden Gate, and historically have provided the necessary moisture to ecosystems like redwood forests <span class="citation" data-cites="johnstone2010fog">(<a href="#ref-johnstone2010fog" role="doc-biblioref">Johnstone and Dawson 2010</a>)</span>.</p>
+<p>Here’s where the models struggle: Global Climate Models (GCMs) like those in CMIP5 operate at coarse spatial resolution, typically 100-200km grid cells. California’s marine layer dynamics happen at much finer scales <span class="citation" data-cites="koracin2005fog">(<a href="#ref-koracin2005fog" role="doc-biblioref">Koračin et al. 2005</a>)</span>, driven by:</p>
+<p>- Sea surface temperature gradients</p>
+<p>- Topographic channeling through coastal ranges</p>
+<p>- Diurnal heating/cooling cycles</p>
+<p>- Offshore upwelling patterns</p>
+<p>Even “downscaled” versions of these models, e.g.&nbsp;those refined to 10-20km resolution using statistical or dynamical techniques, have trouble capturing the formation, persistence, and inland penetration of coastal low clouds.</p>
 <p>A 2024 California Energy Commission technical report on downscaling methods <span class="citation" data-cites="pierce2024downscaling">(<a href="#ref-pierce2024downscaling" role="doc-biblioref">Pierce et al. 2024</a>)</span> noted: “Coastal Low Clouds (CLC), including stratocumulus, stratus, and fog, are a persistent, seasonal feature of the region’s climate… Accounting for these clouds improves solar energy forecasting.”</p>
-<p>The problem is that CMIP5-era models systematically underestimated: 1. Marine layer frequency and persistence 2. The inland extent of coastal fog 3. Afternoon/evening cloud cover in coastal and near-coastal areas</p>
-<p>The result? Solar irradiance projections that were too optimistic, especially for afternoon/evening hours—exactly when California’s “net peak” demand (after accounting for mid-day solar) occurs.</p>
+<p>The problem is that CMIP5-era models systematically underestimated:</p>
+<p>1. Marine layer frequency and persistence</p>
+<p>2. The inland extent of coastal fog</p>
+<p>3. Afternoon/evening cloud cover in coastal and near-coastal areas</p>
+<p>The result? Solar irradiance projections that were too optimistic, especially for afternoon/evening hours; exactly when California’s “net peak” demand (after accounting for mid-day solar) occurs.</p>
 <hr>
 </section>
 <section id="the-path-from-models-to-blackouts" class="level2">
@@ -260,67 +284,110 @@ div.csl-indent {
 <p>So how does a bias in cloud cover modeling in the 2010s contribute to blackouts in 2020? The chain looks like this:</p>
 <p><strong>Step 1: Overoptimistic generation forecasts (2010-2015)</strong> Solar developers and utilities use downscaled CMIP5 projections to estimate generation potential. Models underestimate afternoon cloud cover → projected generation is 10-15% higher than reality in affected regions.</p>
 <p><strong>Step 2: Investment and siting decisions (2012-2018)</strong><br>
-Based on these projections, billions flow into solar installations. Project economics assume certain capacity factors (how much power gets generated relative to maximum capacity). Land use changes—agricultural land converted to solar farms in the Central Valley.</p>
+Based on these projections, billions are invested into solar installations. Project economics assume certain capacity factors (how much power gets generated relative to maximum capacity). Land use changes and agricultural land is converted to solar farms in the Central Valley.</p>
 <p><strong>Step 3: Grid planning assumptions (2015-2020)</strong><br>
 California’s grid operator (CAISO) plans for a future where solar provides increasing amounts of power. But their “resource adequacy” models assume generation levels that match the overoptimistic projections.</p>
 <p><strong>Step 4: The “net peak” emerges</strong><br>
-As solar capacity grows, a new challenge appears: managing the evening “ramp” when solar generation drops off but demand stays high (people come home, turn on AC, cook dinner, etc.). CAISO’s planning assumes more solar will be available during this critical 5-8pm window than actually materializes.</p>
+As solar capacity grows, a new challenge appears: managing the evening “ramp” when solar generation drops off but demand stays high (people come home, turn on AC, cook dinner, etc.). CAISO’s planning assumes more solar will be available during this critical 5-8pm window than actually is.</p>
 <p><strong>Step 5: August 2020</strong><br>
-Record-breaking heat wave hits the entire Western US. Everyone’s running AC. Solar performs well during the mid-day peak—but starts dropping off earlier and faster than grid models expected, partly because of cloud cover patterns that the original climate models hadn’t captured accurately.</p>
+Record-breaking heat wave hits the entire Western US. Everyone’s running AC. Solar performs well during the mid-day peak but starts dropping off earlier and faster than grid models expected, partly because of cloud cover patterns that the original climate models hadn’t captured accurately.</p>
 <p>CAISO’s root cause analysis <span class="citation" data-cites="caiso2021root">(<a href="#ref-caiso2021root" role="doc-biblioref">California Independent System Operator (CAISO), California Public Utilities Commission (CPUC), and California Energy Commission (CEC) 2021</a>)</span> states: “Resource planning targets have not kept pace with the evolving power mix, wherein demand during peak hours outpaces the supply of solar-produced power.”</p>
-<p>That’s bureaucratic language for: we thought we’d have more power available at this time of day than we actually do.</p>
-<p>Combined with other factors (neighboring states also in crisis, some gas plants offline, market forecasting errors), the result was my phone buzzing with a blackout alert on a sweltering August evening.</p>
+<p>Translation: “we thought we’d have more power available at this time of day than we actually do.”</p>
 <hr>
 </section>
 <section id="why-this-matters-beyond-one-heat-wave" class="level2">
 <h2 class="anchored" data-anchor-id="why-this-matters-beyond-one-heat-wave">Why This Matters Beyond One Heat Wave</h2>
-<p>I’m not claiming that marine layer bias in climate models was the <em>primary</em> cause of California’s blackouts. The CAISO analysis makes clear it was a perfect storm of factors. But the model bias was part of the systemic chain—one link in a series of assumptions and decisions that put the grid in a vulnerable position.</p>
-<p>What strikes me is how invisible this connection is. When I experienced that blackout, I had no idea that decisions made 5-10 years earlier, based on climate projections that seemed rigorous and scientific, had quietly baked in errors that would manifest years later under stress.</p>
-<p>This pattern shows up everywhere in environmental data science:</p>
+<p>The marine layer bias in climate models was not necessarily the <em>primary</em> cause of California’s blackouts, the CAISO analysis makes clear it was a perfect storm of factors, but the model bias was part of the systemic chain; one link in a series of assumptions and decisions that put the grid in a vulnerable position.</p>
+<p>What strikes me is how invisible this connection is. When I experienced that blackout, I had no idea that decisions made 5-10 years earlier, based on climate projections that likely seemed rigorous and scientific, had quietly baked in errors that would manifest years later under stress.</p>
+<hr>
 </section>
 <section id="the-technical-challenge" class="level2">
 <h2 class="anchored" data-anchor-id="the-technical-challenge">The Technical Challenge</h2>
-<p>Climate modelers know about these biases. Coastal low cloud representation is a notorious problem in GCMs—it’s been flagged in every CMIP assessment going back decades.</p>
-<p>The core issue is that marine layer physics operates at scales GCMs can’t resolve: - <strong>Boundary layer dynamics</strong>: The marine layer is typically 300-800m deep. GCMs have vertical resolution of ~100m in the lowest levels—barely enough to capture the inversion structure. - <strong>Cloud microphysics</strong>: Fog and low stratus formation depends on aerosol concentrations (sea salt, iodine from kelp), which most models treat as fixed background values rather than dynamic variables. - <strong>Topographic interactions</strong>: Coastal ranges create gaps (Golden Gate, Carquinez Strait) that channel marine air inland. A 100km GCM grid cell can’t represent these features.</p>
+<p>Climate modelers know about these biases. Marine boundary layer clouds remain one of the largest sources of uncertainty in climate models <span class="citation" data-cites="klein2017">(<a href="#ref-klein2017" role="doc-biblioref">Klein et al. 2017</a>)</span>.</p>
+<section id="the-resolution-problem" class="level3">
+<h3 class="anchored" data-anchor-id="the-resolution-problem">The Resolution Problem</h3>
+<p>The core issue is that marine layer physics operates at scales GCMs can’t resolve. Coastal fog and low stratus depend on boundary layer processes, cloud microphysics, and topographic features that occur at sub-grid scales <span class="citation" data-cites="klein2017">(<a href="#ref-klein2017" role="doc-biblioref">Klein et al. 2017</a>)</span>.</p>
+</section>
+<section id="downscaling-approaches" class="level3">
+<h3 class="anchored" data-anchor-id="downscaling-approaches">Downscaling Approaches</h3>
 <p>Downscaling helps, but it can’t fix everything. The two main approaches are:</p>
-<p><strong>Statistical downscaling</strong> (e.g., LOCA - Localized Constructed Analogs): Uses historical relationships between large-scale climate patterns and local observations <span class="citation" data-cites="pierce2023loca">(<a href="#ref-pierce2023loca" role="doc-biblioref">Pierce et al. 2023</a>)</span>. Fast, cheap, widely used. But assumes future relationships will match past patterns—questionable under climate change <span class="citation" data-cites="ekstrom2015appraisal">(<a href="#ref-ekstrom2015appraisal" role="doc-biblioref">Ekström, Grose, and Whetton 2015</a>)</span>. Also struggles with variables like cloud cover that don’t have long observational records.</p>
-<p><strong>Dynamical downscaling</strong> (e.g., WRF - Weather Research and Forecasting model): Runs a high-resolution regional climate model nested within the GCM <span class="citation" data-cites="cec2022evaluating">(<a href="#ref-cec2022evaluating" role="doc-biblioref">California Energy Commission 2022</a>)</span>. Can explicitly simulate physics at 3-10km scale. But inherits GCM boundary conditions and biases. And “high resolution” still isn’t fine enough to fully capture marine layer processes.</p>
-<p>California’s most recent downscaling effort (for the 5th Climate Assessment) uses a hybrid approach—LOCA2 combines statistical methods with pattern libraries from dynamically downscaled runs <span class="citation" data-cites="pierce2024downscaling">(<a href="#ref-pierce2024downscaling" role="doc-biblioref">Pierce et al. 2024</a>)</span>. A 2024 technical report notes this improves solar radiation estimates… but still recommends that “given our shift to clean energy, we have to change planning assumptions and analysis to account for” the limitations.</p>
+<p><strong>Statistical downscaling</strong> (e.g., LOCA - Localized Constructed Analogs): Uses historical relationships between large-scale climate patterns and local observations <span class="citation" data-cites="pierce2023loca">(<a href="#ref-pierce2023loca" role="doc-biblioref">Pierce et al. 2023</a>)</span>. Fast, cheap, widely used. But assumes future relationships will match past patterns, questionable under climate change <span class="citation" data-cites="ekstrom2015appraisal">(<a href="#ref-ekstrom2015appraisal" role="doc-biblioref">Ekström, Grose, and Whetton 2015</a>)</span>. Also struggles with variables that don’t have long observational records.</p>
+<p><strong>Dynamical downscaling</strong> (e.g., WRF - Weather Research and Forecasting model): Runs a high-resolution regional climate model nested within the GCM <span class="citation" data-cites="cec2022evaluating">(<a href="#ref-cec2022evaluating" role="doc-biblioref">California Energy Commission 2022</a>)</span>. Can explicitly simulate physics at 3-10km scale. But *inherits GCM boundary conditions and biases*.</p>
+</section>
+<section id="current-state-of-the-art" class="level3">
+<h3 class="anchored" data-anchor-id="current-state-of-the-art">Current State of the Art</h3>
+<p>California’s most recent downscaling effort (for the 5th Climate Assessment) used a hybrid approach; LOCA2 combines statistical methods with pattern libraries from dynamically downscaled model runs <span class="citation" data-cites="pierce2024downscaling">(<a href="#ref-pierce2024downscaling" role="doc-biblioref">Pierce et al. 2024</a>)</span>. A 2024 technical report notes this improves solar radiation estimates… but still recommends that “given our shift to clean energy, we have to change planning assumptions and analysis to account for” the limitations.</p>
 <p>Translation: even our best current methods have biases that matter for decision-making.</p>
-<p>Different bias correction methods can change answers significantly <span class="citation" data-cites="maraun2016bias">(<a href="#ref-maraun2016bias" role="doc-biblioref">Maraun 2016</a>)</span>: - <strong>Quantile mapping</strong>: Matches model distribution to observed distribution, but assumes bias is stationary over time - <strong>Delta method</strong>: Uses model <em>changes</em> rather than absolute values, but assumes models capture trends correctly even if baseline is wrong - <strong>Deep learning corrections</strong>: Train neural networks on historical errors, but risk overfitting <span class="citation" data-cites="mcgovern2024identifying">(<a href="#ref-mcgovern2024identifying" role="doc-biblioref">McGovern et al. 2024</a>)</span> - <strong>Ensemble averaging</strong>: Combine multiple models to reduce individual biases, but can mask structural uncertainties</p>
+</section>
+<section id="the-bias-correction-dilemma" class="level3">
+<h3 class="anchored" data-anchor-id="the-bias-correction-dilemma">The Bias Correction Dilemma</h3>
+<p>Different bias correction methods can change answers significantly <span class="citation" data-cites="maraun2016bias">(<a href="#ref-maraun2016bias" role="doc-biblioref">Maraun 2016</a>)</span>:</p>
+<ul>
+<li><strong>Quantile mapping</strong>: Matches model distribution to observed distribution, but assumes bias is stationary over time</li>
+<li><strong>Delta method</strong>: Uses model <em>changes</em> rather than absolute values, but assumes models capture trends correctly even if baseline is wrong</li>
+<li><strong>Deep learning corrections</strong>: Train neural networks on historical errors, but risk overfitting <span class="citation" data-cites="mcgovern2024identifying">(<a href="#ref-mcgovern2024identifying" role="doc-biblioref">McGovern et al. 2024</a>)</span></li>
+<li><strong>Ensemble averaging</strong>: Combine multiple models to reduce individual biases, but may mask structural uncertainties</li>
+</ul>
 <p>Each method makes different assumptions. Each gives different results. And the choice of correction method can change your projection as much as the climate change signal itself <span class="citation" data-cites="ekstrom2015appraisal">(<a href="#ref-ekstrom2015appraisal" role="doc-biblioref">Ekström, Grose, and Whetton 2015</a>)</span>.</p>
+</section>
+<section id="cascading-consequences-across-sectors" class="level3">
+<h3 class="anchored" data-anchor-id="cascading-consequences-across-sectors">Cascading Consequences Across Sectors</h3>
+<p>This pattern shows up everywhere in environmental data science:</p>
 <ul>
 <li><strong>Flood risk modeling</strong> → Insurance pricing → Land use decisions → Who lives where</li>
 <li><strong>Crop yield projections</strong> → Agricultural investment → Food security policy → International trade</li>
 <li><strong>Hydropower forecasting</strong> → Energy mix decisions → Electricity rates → Industrial development</li>
 <li><strong>Fire risk assessment</strong> → Building codes → Insurance availability → Community resilience</li>
 </ul>
-<p>In each case, biased models generate biased projections, which inform biased decisions, which create real-world consequences—often for people who have no idea the original model even existed.</p>
+<p>In each case, biased models generate biased projections, which inform biased decisions, which create real-world consequences, often for people who have no idea the original model even existed.</p>
 <p>And here’s what makes it particularly insidious: the bias doesn’t announce itself. The projections look authoritative. They come with error bars and confidence intervals. They’re peer-reviewed, published, cited. The agencies using them are staffed with smart, well-trained people doing their best with the tools available.</p>
-<p>The problem isn’t incompetence. It’s that we’ve built systems that rely on models with known limitations, and those limitations propagate silently through decision chains until something breaks.</p>
+<p>The problem isn’t one of incompetence. It’s that we’ve built systems that rely on models with known limitations, and those limitations propagate silently through decision chains until something breaks or goes wrong.</p>
 <hr>
+</section>
 </section>
 <section id="what-we-can-do" class="level2">
 <h2 class="anchored" data-anchor-id="what-we-can-do">What We Can Do</h2>
-<p>I don’t think the answer is to stop using climate models—they’re the best tools we have for understanding future conditions. But we need to be much smarter about acknowledging and working with their limitations.</p>
-<p><strong>1. Bake uncertainty into decisions from the start</strong><br>
-Don’t make billion-dollar commitments based on single-model projections. Design systems that can adapt if reality diverges from projections. For California’s grid: that means maintaining flexible generation capacity, investing in storage, planning for higher evening peaks than models predict.</p>
-<p><strong>2. Cross-validate with multiple methods</strong><br>
-Don’t rely solely on climate models. Use: - Historical analogs (when similar heat waves hit in the past, what happened?) - Empirical relationships (how does actual solar generation track with weather obs?) - Expert elicitation (what do grid operators and solar engineers see on the ground?) - Stress testing (what if generation is 20% lower than projected?)</p>
-<p><strong>3. Create feedback loops between models and reality</strong><br>
-Once solar farms are operating, compare actual vs.&nbsp;projected generation. Feed that learning back into model improvement and planning assumptions. California is doing this now—CAISO has updated resource adequacy models based on 2020 experience—but it would have been better to catch the discrepancies earlier.</p>
-<p><strong>4. Invest in the unglamorous work</strong><br>
-Bias correction and regional model improvement don’t make headlines. But given how much rides on these projections, we massively under-invest in making them better. We need: - Better observations of marine layer dynamics (more buoys, coastal radar, satellite validation) - Higher resolution models that can resolve key processes - Long-term monitoring of how projections perform vs.&nbsp;reality - Transparent documentation of known biases and their magnitudes</p>
-<p><strong>5. Train decision-makers to be critical consumers</strong><br>
-Engineers, planners, and policy-makers need to understand what climate models can and can’t tell them. A projection is not a prediction. An ensemble mean is not a forecast. Uncertainty is information, not a bug. Model limitations should be discussed upfront in every assessment, not buried in technical appendices.</p>
+<p>I don’t think the answer is to stop using climate models, they’re the best tools we have for understanding future conditions. But we need to be much smarter about acknowledging and working with their limitations.</p>
+<section id="bake-uncertainty-into-decisions" class="level3">
+<h3 class="anchored" data-anchor-id="bake-uncertainty-into-decisions">1. Bake Uncertainty Into Decisions</h3>
+<p>Don’t make billion-dollar commitments based on single-model projections. Design systems that can adapt if reality diverges from projections. For California’s grid: that means maintaining flexible generation capacity, investing in storage, planning for higher evening peaks than models predict.</p>
+</section>
+<section id="cross-validate-with-multiple-methods" class="level3">
+<h3 class="anchored" data-anchor-id="cross-validate-with-multiple-methods">2. Cross-Validate With Multiple Methods</h3>
+<p>Don’t rely solely on climate models. Use:</p>
+<ul>
+<li>Historical records (when similar heat waves hit in the past, what happened?)</li>
+<li>Empirical relationships (how does actual solar generation track with weather obs?)</li>
+<li>Expert opinions (what do grid operators and solar engineers see on the ground?)</li>
+<li>Stress testing (what if generation is 20% lower than projected?)</li>
+</ul>
+</section>
+<section id="create-feedback-loops-between-models-and-reality" class="level3">
+<h3 class="anchored" data-anchor-id="create-feedback-loops-between-models-and-reality">3. Create Feedback Loops Between Models and Reality</h3>
+<p>Once solar farms are operating, compare actual vs.&nbsp;projected generation. Feed that learning back into model improvement and planning assumptions. California is doing this now, CAISO has updated resource adequacy models based on 2020 experience, but it would have been better to catch the discrepancies earlier.</p>
+</section>
+<section id="invest-in-the-unglamorous-work" class="level3">
+<h3 class="anchored" data-anchor-id="invest-in-the-unglamorous-work">4. Invest in the Unglamorous Work</h3>
+<p>Bias correction and regional model improvement don’t make headlines. But given how much rides on these projections, we massively under-invest in making them better. We need:</p>
+<ul>
+<li>Better observations of marine layer dynamics (more buoys, coastal radar, satellite validation)</li>
+<li>Higher resolution models that can resolve key processes</li>
+<li>Long-term monitoring of how projections perform vs.&nbsp;reality</li>
+<li>Transparent documentation of known biases and their magnitudes</li>
+</ul>
+</section>
+<section id="train-decision-makers-to-be-critical-consumers" class="level3">
+<h3 class="anchored" data-anchor-id="train-decision-makers-to-be-critical-consumers">5. Train Decision-Makers to Be Critical Consumers</h3>
+<p>Engineers, planners, and policy-makers need to understand what climate models can and can’t tell them. A projection is not a prediction. An ensemble mean is not a forecast. Uncertainty is information, not a bug. Model limitations should be discussed upfront in every assessment, not buried in technical appendices.</p>
 <hr>
+</section>
 </section>
 <section id="why-i-think-about-this" class="level2">
 <h2 class="anchored" data-anchor-id="why-i-think-about-this">Why I Think About This</h2>
 <p>For my family, these summertime blackouts were uncomfortable, inconvenient, but not catastrophic. For others, people dependent on medical equipment, elderly folks without AC, families losing food in fridges, these blackouts are far more impactful.</p>
-<p>And the thing is, these grid reliability issues will keep happening. California’s 2024-2025 planning documents still show tight supply margins during evening peaks. The marine layer isn’t going away. Neither is climate change, which may be altering fog patterns in ways we still don’t fully understand <span class="citation" data-cites="torregrosa2014fog">(<a href="#ref-torregrosa2014fog" role="doc-biblioref">Torregrosa, O’Brien, and Faloona 2014</a>)</span>—research suggests California coastal fog has declined 33% since 1950 <span class="citation" data-cites="johnstone2010fog">(<a href="#ref-johnstone2010fog" role="doc-biblioref">Johnstone and Dawson 2010</a>)</span>, but the causes and future trajectory are uncertain.</p>
-<p>What bugs me most is how easily these issues slip through. Smart people, good intentions, rigorous methods—and still, systematic biases propagate through planning processes and don’t surface until systems fail under stress.</p>
-<p>This isn’t unique to energy systems. I see it in every domain of environmental data science I look at. Models of crop yields, water availability, species distributions, fire risk, flood hazards—all rest on climate projections with known limitations. Those limitations rarely make it into the summary documents that inform decisions <span class="citation" data-cites="young2014improving">(<a href="#ref-young2014improving" role="doc-biblioref">Young et al. 2014</a>)</span>.</p>
+<p>And the thing is, these grid reliability issues will keep happening. California’s 2024-2025 planning documents still show tight supply margins during evening peaks. The marine layer isn’t going away. Neither is climate change, which may be altering fog patterns in ways we still don’t fully understand <span class="citation" data-cites="torregrosa2014fog">(<a href="#ref-torregrosa2014fog" role="doc-biblioref">Torregrosa, O’Brien, and Faloona 2014</a>)</span>, research suggests California coastal fog has declined 33% since 1950 <span class="citation" data-cites="johnstone2010fog">(<a href="#ref-johnstone2010fog" role="doc-biblioref">Johnstone and Dawson 2010</a>)</span>, but the causes and future trajectory are uncertain.</p>
+<p>What bugs me most is how easily these issues slip through. Smart people, good intentions, rigorous methods, and still, systematic biases propagate through planning processes and don’t surface until systems fail under stress.</p>
+<p>This isn’t unique to energy systems. I see it in every domain of environmental data science I look at. Models of crop yields, water availability, species distributions, fire risk, flood hazards, all rest on climate projections with known limitations. Those limitations don’t make it into the summary documents that inform decisions as often as they need to<span class="citation" data-cites="young2014improving">(<a href="#ref-young2014improving" role="doc-biblioref">Young et al. 2014</a>)</span>.</p>
 <p>We can do better. Not by building perfect models, but by building decision processes that explicitly account for model uncertainty and biases, and learning from mismatches between predictions and reality.</p>
 <p>That starts with recognizing that data, especially in environmental science, is never neutral, complete, or certain <span class="citation" data-cites="barrowman2018raw walker2018practicing">(<a href="#ref-barrowman2018raw" role="doc-biblioref">Barrowman 2018</a>; <a href="#ref-walker2018practicing" role="doc-biblioref">Walker et al. 2018</a>)</span>. Every dataset carries the fingerprints of choices, assumptions, and limitations baked into its creation.</p>
 <p>Understanding those limitations isn’t pedantic. It’s how we avoid making the same mistakes again.</p>
@@ -346,6 +413,9 @@ Iacobellis, S. F., and D. R. Cayan. 2013. <span>“The Variability of California
 </div>
 <div id="ref-johnstone2010fog" class="csl-entry" role="listitem">
 Johnstone, J. A., and T. E. Dawson. 2010. <span>“Climatic Context and Ecological Implications of Summer Fog Decline in the Coast Redwood Region.”</span> <em>Proceedings of the National Academy of Sciences</em> 107 (10): 4533–38. <a href="https://doi.org/10.1073/pnas.0915062107">https://doi.org/10.1073/pnas.0915062107</a>.
+</div>
+<div id="ref-klein2017" class="csl-entry" role="listitem">
+Klein, Stephen A., Alex Hall, Joel R. Norris, and Robert Pincus. 2017. <span>“Low-Cloud Feedbacks from Cloud-Controlling Factors: A Review.”</span> <em>Surveys in Geophysics</em> 38 (6): 1307–29. <a href="https://doi.org/10.1007/s10712-017-9433-3">https://doi.org/10.1007/s10712-017-9433-3</a>.
 </div>
 <div id="ref-koracin2005fog" class="csl-entry" role="listitem">
 Koračin, D., J. A. Businger, C. E. Dorman, and J. M. Lewis. 2005. <span>“Formation, Evolution, and Dissipation of Coastal Sea Fog.”</span> <em>Boundary-Layer Meteorology</em> 117 (3): 447–78. <a href="https://doi.org/10.1007/s10546-005-2772-5">https://doi.org/10.1007/s10546-005-2772-5</a>.
@@ -376,16 +446,16 @@ Young, J. C., K. A. Waylen, S. Sarkki, S. Albon, I. Bainbridge, E. Balian, J. Da
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{miller2025,
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{miller2024,
   author = {Miller, Emily and Miller, Emily},
   title = {When {Climate} {Models} {Miss} the {Fog}},
-  date = {2025-11-29},
+  date = {2024-11-29},
   url = {https://rellimylime.github.io/posts/eds242-final/},
   langid = {en}
 }
-</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-miller2025" class="csl-entry quarto-appendix-citeas" role="listitem">
-Miller, Emily, and Emily Miller. 2025. <span>“When Climate Models Miss
-the Fog.”</span> November 29, 2025. <a href="https://rellimylime.github.io/posts/eds242-final/">https://rellimylime.github.io/posts/eds242-final/</a>.
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-miller2024" class="csl-entry quarto-appendix-citeas" role="listitem">
+Miller, Emily, and Emily Miller. 2024. <span>“When Climate Models Miss
+the Fog.”</span> November 29, 2024. <a href="https://rellimylime.github.io/posts/eds242-final/">https://rellimylime.github.io/posts/eds242-final/</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {

@@ -1,14 +1,14 @@
 ---
-title: "..."
-description: "..."
+title: "Prioritizing Marine Aquaculture Locations on the US West Coast"
+description: "Using geospatial analysis to identify optimal locations for oyster and abalone farming based on sea surface temperature and depth criteria"
 author: Emily Miller
-date: 2025-12-06
-categories: [MEDS, R, Statistics, Aquaculture]
+date: 2024-11-15
+categories: [MEDS, R, Geospatial Analysis, Marine Science]
 image: aquaculture.jpg
 citation:
   url: https://rellimylime.github.io/posts/eds223-final2/
 bibliography: references.bib
-output: 
+output:
   html_document:
     code_download: true
 execute:
@@ -20,21 +20,38 @@ execute:
 
 # Introduction
 
-Marine aquaculture represents a critical opportunity for sustainable food production as global seafood demand continues to rise. Unlike land-based meat production, marine aquaculture can provide protein with lower environmental costs when strategically located in suitable environments (Hall et al., 2011). Recent research has demonstrated that global seafood demand could theoretically be met using less than 0.015% of the global ocean area (Gentry et al., 2017), highlighting the importance of identifying optimal locations for development.
+## Background and Motivation
 
-This analysis evaluates the potential for marine aquaculture along the US West Coast by identifying Exclusive Economic Zones (EEZs) with suitable environmental conditions for oyster and black abalone cultivation. Using geospatial analysis of sea surface temperature and bathymetry data, we determine which regions offer the greatest area of suitable habitat for each species. The analysis addresses three key questions:
+Marine aquaculture represents a critical opportunity for sustainable food production as global seafood demand continues to rise. Unlike land-based meat production, marine aquaculture can provide protein with lower environmental costs when strategically located in suitable environments [@hall2011]. Recent research has demonstrated that global seafood demand could theoretically be met using less than 0.015% of the global ocean area [@gentry2017], highlighting the importance of identifying optimal locations for development.
 
-1. Which West Coast EEZs have the largest areas of suitable conditions for oyster aquaculture?
-2. Which regions are most suitable for black abalone cultivation?
-3. How do suitability patterns differ between these two species?
+The US West Coast, with its diverse marine ecosystems and extensive Exclusive Economic Zones (EEZs), presents significant potential for marine aquaculture expansion. However, successful aquaculture operations depend largely on environmental conditions, particularly sea surface temperature and water depth, which determine species survival and growth rates.
+
+## Research Questions
+
+This analysis evaluates the potential for marine aquaculture along the US West Coast by identifying EEZs with suitable environmental conditions for two commercially important species: oysters (*Crassostrea* spp.) and black abalone (*Haliotis cracherodii*). Using geospatial analysis of satellite-derived sea surface temperature and bathymetry data, we address three key questions:
+
+1.  **Which West Coast EEZs have the largest areas of suitable conditions for oyster aquaculture?**
+2.  **Which regions are most suitable for black abalone cultivation?**
+3.  **How do suitability patterns differ between these two species?**
 
 By developing a generalizable workflow, this analysis can be applied to assess aquaculture potential for additional species, supporting evidence-based decision-making for sustainable marine resource development.
 
-# Setup
+# Data and Methods
+
+## Setup and Required Packages
+
+This analysis uses several R packages for geospatial data processing and visualization:
+
+-   `tidyverse` — Data manipulation and visualization
+-   `sf` — Spatial vector data handling
+-   `terra` — Raster data processing
+-   `tmap` — Thematic mapping
+-   `kableExtra` — Table formatting
 
 ```{r setup}
 #| message: false
 #| warning: false
+#| code-fold: true
 
 # Load required packages
 library(tidyverse)
@@ -46,27 +63,34 @@ library(kableExtra)
 library(testthat)
 ```
 
-# Data Loading
+## Data Sources
 
-## Load Exclusive Economic Zones (EEZ)
+### Exclusive Economic Zones (EEZ)
+
+We use maritime boundary data for the US West Coast EEZs, which define the regions where the United States has rights to explore and exploit marine resources [@marineregions]. The shapefile includes boundaries for California (Northern, Central, and Southern), Oregon, and Washington.
 
 ```{r load-eez}
 #| message: false
 #| warning: false
+#| code-fold: true
 
 # Load West Coast EEZ shapefile
 wc_df <- st_read("data/wc_regions_clean.shp")
 
 # Check CRS
 st_crs(wc_df)$epsg
-
 ```
 
-## Load Sea Surface Temperature (SST) Data
+The EEZ data uses EPSG:4326 (WGS 84), a geographic coordinate reference system.
+
+### Sea Surface Temperature (SST)
+
+Average annual sea surface temperature data from 2008-2012 provides a multi-year baseline for identifying thermally suitable aquaculture locations [@noaa_coralreef]. The data comes from NOAA's 5km Daily Global Satellite Sea Surface Temperature product, aggregated to annual averages and provided in degrees Kelvin.
 
 ```{r load-sst}
 #| message: false
 #| warning: false
+#| code-fold: true
 
 # Load SST rasters for 2008-2012
 
@@ -78,7 +102,7 @@ read_tif <- function(year) {
 # Apply function
 sst_list <- lapply(2008:2012, read_tif)
 
-# Combine into raster stack 
+# Combine into raster stack
 sst_stack <- rast(sst_list)
 
 # Inspect properties
@@ -86,14 +110,18 @@ names(sst_stack)
 st_crs(sst_stack["average_annual_sst_2008"])
 summary(values(sst_stack))
 global(sst_stack, fun = "isNA")
-
 ```
 
-## Load Bathymetry (Depth) Data
+We've loaded 5 years of annual SST data and combined them into a raster stack for further processing.
+
+### Bathymetry (Depth)
+
+Ocean depth data comes from the General Bathymetric Chart of the Oceans (GEBCO) 2022 Grid [@gebco2022], providing global bathymetric measurements. Depth is a critical parameter for aquaculture site selection as different species have specific depth requirements based on their feeding behavior, oxygen requirements, and substrate preferences.
 
 ```{r load-depth}
 #| message: false
 #| warning: false
+#| code-fold: true
 
 # Load depth raster
 depth <- rast(("data/depth.tif"))
@@ -102,9 +130,16 @@ depth <- rast(("data/depth.tif"))
 st_crs(depth)
 ```
 
-## Verify Coordinate Reference Systems
+The bathymetry data also uses EPSG:4326, matching our SST and EEZ data.
+
+### Verifying Coordinate Reference Systems
+
+Before proceeding with spatial analysis, we must ensure all datasets share a common coordinate reference system (CRS). Spatial operations like overlays and intersections will fail or produce incorrect results if the CRS doesn't match.
 
 ```{r check-crs}
+#| code-fold: true
+#| output: false
+
 # Check sst crs
 crs(sst_stack, describe = TRUE)$code
 
@@ -114,33 +149,43 @@ crs(sst_stack) <- "EPSG:4326"
 # Check again
 crs(sst_stack, describe = TRUE)$code
 
-# Check extrent makes sense for this CRS
-ext(sst_stack) 
+# Check extent makes sense for this CRS
+ext(sst_stack)
 
 # Verify sst and depth crs are the same
 crs(sst_stack) == crs(depth)
 
 # Check if wc_df crs matches
 crs(sst_stack, describe = TRUE)$code == st_crs(wc_df)$epsg
-
-
 ```
 
-# Data Processing
+All three datasets (SST, depth, and EEZ boundaries) now use EPSG:4326 (WGS 84), ensuring compatibility for subsequent spatial operations.
 
-## Calculate Mean SST (2008-2012)
+## Data Processing Workflow
+
+### Step 1: Calculate Mean SST (2008-2012)
+
+To create a stable baseline for identifying suitable temperatures, we calculate the mean SST across all five years (2008-2012). This multi-year average reduces the influence of short-term temperature anomalies and provides a more representative measure of typical thermal conditions.
 
 ```{r mean-sst}
+#| code-fold: true
+
 # Calculate mean SST across all years using app()
 sst_mean <- app(sst_stack, mean, na.rm = TRUE)
 
 # Visualize with plot()
-plot(sst_mean)
+plot(sst_mean, main = "Mean Sea Surface Temperature (2008-2012)")
 ```
 
-## Convert SST from Kelvin to Celsius
+The spatial pattern shows a clear north-south temperature gradient along the West Coast, with cooler waters in the north (Washington/Oregon) and warmer waters in Southern California.
+
+### Step 2: Convert SST from Kelvin to Celsius
+
+The NOAA SST data is provided in degrees Kelvin. For easier interpretation and to match species requirement data (which uses Celsius), we convert to degrees Celsius by subtracting 273.15.
 
 ```{r convert-temp}
+#| code-fold: true
+
 # Convert from Kelvin to Celsius (subtract 273.15)
 sst_mean_c <- sst_mean - 273.15
 
@@ -148,77 +193,105 @@ sst_mean_c <- sst_mean - 273.15
 summary(sst_mean_c)
 ```
 
-## Align Depth Data with SST
+The temperature range along the West Coast spans approximately 8-21°C, which falls within the thermal tolerance of many marine aquaculture species.
+
+### Step 3: Align Depth Data with SST
+
+To perform raster algebra (combining temperature and depth layers), we need the rasters to have identical spatial properties: extent, resolution, and CRS. The depth and SST rasters currently have different resolutions and extents, so we crop and resample the depth data to match the SST grid.
 
 ```{r align-depth}
+#| code-fold: true
+
 # Crop depth to SST extent using crop()
 depth_crop <- crop(depth, sst_mean_c)
 
 # Resample depth to match SST resolution using resample() with method = "near"
 depth_resampled <- resample(depth_crop, sst_mean_c, method = "near")
 
-# Verify alignment 
+# Verify alignment
 res(depth_resampled) == res(sst_mean_c)
 ext(depth_resampled) == ext(sst_mean_c)
 crs(depth_resampled) == crs(sst_mean_c)
 ```
 
+We use the "nearest neighbor" resampling method, which is appropriate for preserving discrete depth values without interpolation artifacts. The depth and SST rasters are now perfectly aligned.
+
 # Species Suitability Analysis
 
-## Oyster Suitability
+## Oyster (*Crassostrea* spp.) Suitability
 
-### Define Oyster Requirements
+### Species Requirements
 
-Oysters require:
-- Sea surface temperature: 11-30°C
-- Depth: 0-70 meters below sea level
+Oysters are among the most widely cultivated marine organisms globally, valued for their hardiness and ability to filter feed in coastal waters. Based on data from SeaLifeBase [@sealifebase], oysters require:
+
+-   **Sea surface temperature**: 11-30°C
+-   **Depth**: 0-70 meters below sea level
+
+These requirements reflect oyster's tolerance for relatively warm waters and their preference for shallow to moderate depths where food availability is high and substrate is accessible.
+
+### Suitability Mapping
+
+We use binary reclassification to identify areas meeting both temperature and depth criteria. For each environmental layer, cells within the suitable range are assigned a value of 1, while unsuitable cells receive 0. Multiplying the two layers together produces a final suitability map where only locations meeting *both* criteria receive a value of 1.
 
 ```{r oyster-suitability}
+#| code-fold: true
+
 # Reclassify SST for oysters using classify()
 # Create rcl matrix: <11°C = 0, 11-30°C = 1, >30°C = 0
 sst_rcl_mat_oyster <- matrix(c(-Inf, 11, 0,
-                                11, 30, 1, 
-                                30, Inf, 0), 
-                              ncol = 3, 
+                                11, 30, 1,
+                                30, Inf, 0),
+                              ncol = 3,
                               byrow = TRUE)
 
 sst_rcl_oyster <- classify(sst_mean_c, sst_rcl_mat_oyster)
 
 # Reclassify depth for oysters using classify()
 # Create rcl matrix: <-70m = 0, -70m to 0m = 1, >0m = 0
-depth_rcl_mat_oyster <- matrix(c(-Inf, -70, 0, 
+depth_rcl_mat_oyster <- matrix(c(-Inf, -70, 0,
                                  -70, 0, 1,
-                                 0, Inf, 0), 
-                               ncol = 3, 
+                                 0, Inf, 0),
+                               ncol = 3,
                                byrow = TRUE)
 
 depth_rcl_oyster <- classify(depth_resampled, depth_rcl_mat_oyster)
 
-# Combine suitability layers 
+# Combine suitability layers
 suitable_zones_oyster <- sst_rcl_oyster * depth_rcl_oyster
 
 # Visualize with plot()
-plot(suitable_zones_oyster, 
-     main = "Oyster Suitability\n (1 = Suitable, 0 = Unsuitable)",
-     cex.main = 0.9)
+plot(suitable_zones_oyster,
+     main = "Oyster Suitability\n(1 = Suitable, 0 = Unsuitable)",
+     cex.main = 0.9,
+     col = c("gray90", "darkgreen"))
 ```
 
-## Black Abalone Suitability
+The map reveals extensive suitable habitat for oysters along the West Coast, particularly in California's coastal waters where temperatures and depths align with oyster requirements.
 
-### Define Black Abalone Requirements
+## Black Abalone (*Haliotis cracherodii*) Suitability
 
-Black Abalone requires:
-- Sea surface temperature: 12.2-18.6°C
-- Depth: 0-6 meters below sea level
-- Source: SeaLifeBase
+### Species Requirements
+
+Black abalone is a marine gastropod native to the Pacific coast, historically important both ecologically and commercially. However, the species has experienced significant population declines and is now listed as endangered. Understanding suitable habitat is crucial for both aquaculture development and conservation planning. Based on SeaLifeBase [@sealifebase], black abalone requires:
+
+-   **Sea surface temperature**: 12.2-18.6°C
+-   **Depth**: 0-6 meters below sea level
+
+These narrower requirements reflect black abalone's preference for cool, shallow rocky intertidal and subtidal zones typical of the California coastline.
+
+### Suitability Mapping
+
+We apply the same binary reclassification approach used for oysters, but with black abalone's more restrictive temperature and depth ranges.
 
 ```{r species-suitability}
+#| code-fold: true
+
 # Reclassify SST for black abalone using classify()
 # Suitable: 12.2-18.6°C = 1, Unsuitable: <12.2°C or >18.6°C = 0
 sst_rcl_mat_abalone <- matrix(c(-Inf, 12.2, 0,
-                                 12.2, 18.6, 1, 
-                                 18.6, Inf, 0),  
-                               ncol = 3, 
+                                 12.2, 18.6, 1,
+                                 18.6, Inf, 0),
+                               ncol = 3,
                                byrow = TRUE)
 
 # Apply reclassification matrix to mean SST raster
@@ -226,39 +299,57 @@ sst_rcl_abalone <- classify(sst_mean_c, sst_rcl_mat_abalone)
 
 # Reclassify depth for black abalone using classify()
 # Suitable: 0-6m below sea level = -6 to 0 in raster values
-depth_rcl_mat_abalone <- matrix(c(-Inf, -6, 0,  
-                                   -6, 0, 1,     
-                                   0, Inf, 0),   
-                                 ncol = 3, 
+depth_rcl_mat_abalone <- matrix(c(-Inf, -6, 0,
+                                   -6, 0, 1,
+                                   0, Inf, 0),
+                                 ncol = 3,
                                  byrow = TRUE)
 
 # Apply reclassification matrix to resampled depth raster
 depth_rcl_abalone <- classify(depth_resampled, depth_rcl_mat_abalone)
 
-# Combine suitability layers 
+# Combine suitability layers
 suitable_zones_abalone <- sst_rcl_abalone * depth_rcl_abalone
 
 # Visualize with plot()
-plot(suitable_zones_abalone, main = "Black Abalone Suitability\n (1 = Suitable, 0 = Unsuitable)",
-     cex.main = 0.9)
+plot(suitable_zones_abalone,
+     main = "Black Abalone Suitability\n(1 = Suitable, 0 = Unsuitable)",
+     cex.main = 0.9,
+     col = c("gray90", "darkblue"))
 ```
 
-# Calculate Suitable Area by EEZ
+The map shows much more limited suitable habitat for black abalone compared to oysters, with suitable areas concentrated in central California where temperatures remain within the narrow thermal window and very shallow depths occur.
 
-## Prepare EEZ for Area Calculation
+# Results: Suitable Area by EEZ
+
+## Step 1: Prepare EEZ for Area Calculation
+
+To calculate suitable area within each EEZ region, we need to convert the EEZ vector boundaries to raster format. This allows us to use zonal statistics to sum suitable areas within each region.
 
 ```{r prep-eez}
+#| code-fold: true
+
 # Transform EEZ to match raster CRS
 eez <- st_transform(wc_df, crs(sst_mean_c))
 
 # Rasterize EEZ using rasterize() with rgn_id for field
 eez_rast <- rasterize(eez, suitable_zones_oyster, field = "rgn_id")
-
 ```
 
-## Calculate Suitable Area for Oysters
+Each EEZ region is now represented in raster format with cells assigned their corresponding region ID, enabling region-specific area calculations.
+
+## Step 2: Calculate Suitable Area for Oysters
+
+We use zonal statistics to sum the suitable area within each EEZ region. The process involves:
+
+1.  Masking the suitability layer to EEZ boundaries
+2.  Calculating the area of each raster cell
+3.  Multiplying suitability (0/1) by cell area to get suitable area per cell
+4.  Summing suitable area within each region
 
 ```{r calculate-oyster-area}
+#| code-fold: true
+
 # Mask suitable areas to EEZ using mask()
 eez_suitable_oyster <- mask(suitable_zones_oyster, eez_rast)
 
@@ -275,42 +366,50 @@ area_by_region_oyster <- zonal(suitable_area_oyster, eez_rast, fun = "sum", na.r
 names(area_by_region_oyster)[2] <- "suitable_area_km2"
 
 # Join results with EEZ sf object to get region names
-area_by_region_oyster_joined <- eez %>% 
-  left_join(area_by_region_oyster, by = "rgn_id") %>% 
+area_by_region_oyster_joined <- eez %>%
+  left_join(area_by_region_oyster, by = "rgn_id") %>%
   arrange(desc(suitable_area_km2))
-  
-oyster_results <- area_by_region_oyster_joined %>% 
-  st_drop_geometry() %>% 
+
+oyster_results <- area_by_region_oyster_joined %>%
+  st_drop_geometry() %>%
   select(rgn, suitable_area_km2) %>%
   head(10)
 
 # Display top 10 regions in table with kable()
-kable(oyster_results, 
+kable(oyster_results,
       caption = "Top 10 EEZ Regions for Oyster Aquaculture",
       col.names = c("Region", "Suitable Area (km²)"),
       digits = 2) %>%
   kable_styling(bootstrap_options = c("striped", "hover"))
 ```
 
+**Key Finding:** Central California leads with over 4,000 km² of suitable habitat, followed by Southern California and Washington, together accounting for more than 90% of all suitable oyster habitat on the West Coast.
+
 ```{r test-area-calc}
+#| code-fold: true
+#| output: false
+
 # Test that area calculations are reasonable
 test_that("Oyster area calculations are valid", {
   # Check total area > 0
   expect_true(sum(area_by_region_oyster$suitable_area_km2, na.rm = TRUE) > 0)
-  
+
   # Check all values >= 0
   expect_true(all(area_by_region_oyster$suitable_area_km2 >= 0, na.rm = TRUE))
-  
+
   # Check that we have results for multiple regions
   expect_true(nrow(area_by_region_oyster) > 0)
 })
 ```
 
-## Map Oyster Suitability by EEZ
+### Spatial Distribution of Oyster Suitability
+
+The map below visualizes how suitable area is distributed across West Coast EEZs, with darker blues indicating greater total suitable area.
 
 ```{r map-oyster}
 #| fig.width: 10
 #| fig.height: 8
+#| code-fold: true
 
 # Create map using tmap
 tm_shape(area_by_region_oyster_joined) +
@@ -328,9 +427,15 @@ tm_shape(area_by_region_oyster_joined) +
             frame = FALSE)
 ```
 
-## Calculate Suitable Area for Black Abalone
+The map confirms that California EEZs dominate oyster aquaculture potential, with Central and Southern California showing the highest concentration of suitable habitat.
+
+## Step 3: Calculate Suitable Area for Black Abalone
+
+We repeat the same zonal statistics workflow for black abalone, calculating the total suitable area within each EEZ region.
 
 ```{r calculate-species-area}
+#| code-fold: true
+
 # Mask suitable areas to EEZ using mask()
 eez_suitable_abalone <- mask(suitable_zones_abalone, eez_rast)
 
@@ -347,41 +452,48 @@ area_by_region_abalone <- zonal(suitable_area_abalone, eez_rast, fun = "sum", na
 names(area_by_region_abalone)[2] <- "suitable_area_km2"
 
 # Join results with EEZ sf object to get region names
-area_by_region_abalone_joined <- eez %>% 
-  left_join(area_by_region_abalone, by = "rgn_id") %>% 
+area_by_region_abalone_joined <- eez %>%
+  left_join(area_by_region_abalone, by = "rgn_id") %>%
   arrange(desc(suitable_area_km2))
-  
-abalone_results <- area_by_region_abalone_joined %>% 
-  st_drop_geometry() %>% 
+
+abalone_results <- area_by_region_abalone_joined %>%
+  st_drop_geometry() %>%
   select(rgn, suitable_area_km2) %>%
   head(10)
 
 # Display top 10 regions in table with kable()
-kable(abalone_results, 
+kable(abalone_results,
       caption = "Top 10 EEZ Regions for Black Abalone Aquaculture",
       col.names = c("Region", "Suitable Area (km²)"),
       digits = 2) %>%
   kable_styling(bootstrap_options = c("striped", "hover"))
 ```
+
+**Key Finding:** Black abalone has dramatically less suitable habitat than oysters—only 199.88 km² total across the entire West Coast. Central California accounts for 76% (152.37 km²) of all suitable habitat, while Oregon and Northern California have essentially no suitable areas.
+
 ```{r test-species-area}
+#| code-fold: true
+#| output: false
+
 # Test that area calculations are reasonable
 test_that("Black Abalone area calculations are valid", {
   # Check total area > 0
   expect_true(sum(area_by_region_abalone$suitable_area_km2, na.rm = TRUE) > 0)
-  
+
   # Check all values >= 0
   expect_true(all(area_by_region_abalone$suitable_area_km2 >= 0, na.rm = TRUE))
-  
+
   # Check that we have results for multiple regions
   expect_true(nrow(area_by_region_abalone) > 0)
 })
 ```
 
-## Map Black Abalone Suitability by EEZ
+### Spatial Distribution of Black Abalone Suitability
 
 ```{r map-species}
 #| fig.width: 10
 #| fig.height: 8
+#| code-fold: true
 
 # Create map using tmap
 tm_shape(area_by_region_abalone_joined) +
@@ -392,7 +504,7 @@ tm_shape(area_by_region_abalone_joined) +
   ) +
   tm_borders(col = "gray40", lwd = 0.5) +
   tm_title("Black Abalone Aquaculture Suitability by EEZ Region") +
-  tm_compass(type = "4star", 
+  tm_compass(type = "4star",
              position = c("left", "bottom")) +
   tm_scalebar(position = c("left", "bottom")) +
   tm_layout(legend.outside = TRUE,
@@ -400,11 +512,22 @@ tm_shape(area_by_region_abalone_joined) +
             frame = FALSE)
 ```
 
-# Generalizable Function
+The map reveals stark geographic concentration, with black abalone suitable habitat almost entirely restricted to Central California EEZ, reflecting the species' narrow thermal tolerance and very shallow depth requirements.
 
-## Create Suitability Function
+# Generalizable Workflow
+
+## Creating a Reusable Function
+
+The analysis workflow developed for oysters and black abalone can be generalized into a single function that accepts species-specific parameters. This enables rapid assessment of aquaculture suitability for any marine species with known temperature and depth requirements.
+
+The function takes five parameters:
+
+-   `min_temp`, `max_temp` — Temperature range in degrees Celsius
+-   `min_depth`, `max_depth` — Depth range in meters (negative values below sea level)
+-   `species_name` — Species name for labeling outputs
 
 ```{r create-function}
+#| code-fold: true
 calculate_suitability <- function(min_temp, max_temp, min_depth, max_depth, species_name) {
   
   # Validate inputs
@@ -491,12 +614,15 @@ calculate_suitability <- function(min_temp, max_temp, min_depth, max_depth, spec
 }
 ```
 
-## Apply Function to Oysters
+## Testing the Function: Oysters
+
+We can verify the function produces identical results to our step-by-step analysis by applying it to oysters with the same parameters.
 
 ```{r apply-function-oyster}
 #| message: false
 #| fig.width: 10
 #| fig.height: 8
+#| code-fold: true
 
 # Call function with oyster parameters
 oyster_output <- calculate_suitability(
@@ -514,14 +640,18 @@ kable(oyster_output$results,
       digits = 2) %>%
   kable_styling(bootstrap_options = c("striped", "hover"))
 
-# Display map and table
+# Display map
 print(oyster_output$map)
 ```
 
-## Apply Function to Black Abalone
+The function successfully replicates our earlier oyster analysis, confirming Central California's dominance.
+
+## Testing the Function: Black Abalone
+
 ```{r apply-function-species}
 #| fig.width: 10
 #| fig.height: 8
+#| code-fold: true
 
 # Call function with Black Abalone parameters
 abalone_output <- calculate_suitability(
@@ -543,38 +673,78 @@ kable(abalone_output$results,
   kable_styling(bootstrap_options = c("striped", "hover"))
 ```
 
-# Discussion
+The function also correctly identifies black abalone's highly restricted suitable habitat, concentrated almost entirely in Central California.
+
+# Discussion and Conclusions
 
 ## Key Findings
 
-**Oyster Aquaculture**: Central California has the most suitable area (4,069.88 km²), followed by Southern California (3,757.28 km²) and Washington (2,378.31 km²). These three regions contain over 90% of all suitable oyster habitat on the West Coast. Oregon has moderate potential (1,074.27 km²), while Northern California has minimal suitable area.
+### Oyster Aquaculture Potential
 
-**Black Abalone Aquaculture**: Total suitable area is dramatically smaller—only 199.88 km² across the entire West Coast. Central California dominates with 152.37 km² (76% of suitable habitat). Washington and Southern California have limited suitable areas, while Oregon and Northern California have none.
+Oysters demonstrate substantial aquaculture potential across the US West Coast, with over **11,000 km²** of suitable habitat identified across all five EEZ regions:
 
-**Key Difference**: Black abalone has 20 times less suitable habitat than oysters, potentially due to its narrow temperature tolerance (12.2-18.6°C vs. 11-30°C) and shallow depth requirement (0-6m vs. 0-70m). Both species show peak suitability in Central California, but oysters have viable habitat across all West Coast regions while black abalone is highly restricted.
+-   **Central California**: 4,069.88 km² — Leads the West Coast with the largest suitable area
+-   **Southern California**: 3,757.28 km² — Second highest potential
+-   **Washington**: 2,378.31 km² — Significant northern habitat
+-   **Oregon**: 1,074.27 km² — Moderate potential
+-   **Northern California**: Minimal suitable area
 
-## Limitations
+These three top regions (Central CA, Southern CA, and Washington) together account for **over 90%** of all suitable oyster habitat on the West Coast. The broad temperature tolerance (11-30°C) and moderate depth range (0-70m) enable oysters to thrive across diverse coastal environments.
 
-- **Temporal resolution**: Annual SST averages (2008-2012) may miss critical seasonal temperature extremes or variations important for specific life stages
-- **Environmental factors excluded**: Does not account for ocean currents, dissolved oxygen, salinity, wave exposure, water quality, or harmful algal blooms
-- **Socioeconomic constraints**: Ignores proximity to markets/infrastructure, conflicts with existing ocean uses, and regulatory/permitting requirements
-- **Species requirements**: Based on optimal growth ranges from SeaLifeBase; may not reflect full tolerance ranges or life-stage-specific needs
-- **Spatial resolution**: Bathymetry resolution (~500m) may be too coarse to accurately represent ideal depths, especially for shallow-water species like black abalone
+### Black Abalone Aquaculture Potential
 
-# Data Sources
+Black abalone presents a stark contrast, with only **199.88 km²** of suitable habitat total—approximately **50 times less** than oysters:
 
-**Sea Surface Temperature:**
-- Source: NOAA Coral Reef Watch. NOAA 5km Daily Global Satellite Sea Surface Temperature Anomaly v3.1
-- URL: https://coralreefwatch.noaa.gov/product/5km/index_5km_ssta.php
+-   **Central California**: 152.37 km² — Dominates with 76% of all suitable habitat
+-   **Washington**: 26.65 km² — Limited northern habitat
+-   **Southern California**: 20.86 km² — Small suitable area
+-   **Oregon & Northern California**: Essentially no suitable habitat (0 km²)
 
-**Bathymetry:**
-- Source: GEBCO Compilation Group (2022). GEBCO_2022 Grid
-- DOI: 10.5285/e0f0bb80-ab44-2739-e053-6c86abc0289c
+This dramatic restriction reflects black abalone's narrow thermal tolerance (12.2-18.6°C) and very shallow depth requirement (0-6m below sea level). The species is geographically constrained to cool, shallow coastal waters predominantly found in Central California.
 
-**Exclusive Economic Zones:**
-- Source: Marine Regions
-- URL: https://www.marineregions.org/
+### Comparative Analysis
 
-**Species Requirements:**
-- Source: SeaLifeBase
-- URL: https://www.sealifebase.org/
+The **50-fold difference** in suitable habitat between oysters and black abalone highlights how species-specific environmental requirements shape aquaculture potential:
+
+-   **Temperature breadth**: Oysters tolerate an 19°C temperature range vs. only 6.4°C for black abalone
+-   **Depth tolerance**: Oysters can inhabit depths to 70m vs. only 6m for black abalone
+-   **Geographic distribution**: Oysters have viable habitat in all West Coast EEZs; black abalone is restricted to 3 regions with 76% concentrated in one
+
+## Study Limitations
+
+### Environmental Simplifications
+
+-   **Temporal resolution**: Annual SST averages (2008-2012) smooth over seasonal temperature extremes, which may be critical for reproduction, larval development, and survival during extreme events
+-   **Missing environmental factors**: Analysis omits ocean currents (affecting larval dispersal), dissolved oxygen (metabolic requirements), salinity (osmoregulation), wave exposure (structural stress), water quality parameters, and harmful algal bloom frequency
+-   **Static baseline**: Climate change is shifting thermal regimes; 2008-2012 baseline may not represent future conditions
+
+### Biological Simplifications
+
+-   **Species requirements**: Based on optimal growth ranges from SeaLifeBase [@sealifebase]; may not reflect full physiological tolerance ranges, life-stage-specific needs, or acclimation potential
+-   **Habitat quality**: Binary suitability (suitable/unsuitable) doesn't capture gradient of habitat quality or productivity potential
+-   **Substrate requirements**: Ignores seafloor characteristics (rocky vs. sandy), which strongly influence settlement and growth
+
+### Practical Constraints
+
+-   **Socioeconomic factors**: Excludes proximity to processing facilities, markets, and infrastructure; conflicts with fishing, shipping, recreation, conservation areas; and complex regulatory/permitting landscapes
+-   **Spatial resolution**: Bathymetry resolution (\~500m pixels) may be too coarse for shallow-water species like black abalone, where micro-scale depth variation matters
+
+## Implications for Marine Aquaculture Planning
+
+This analysis demonstrates that **Central California EEZ** represents the most versatile region for marine aquaculture development on the West Coast, supporting substantial habitat for both broad-tolerance species (oysters) and narrow-tolerance species (black abalone).
+
+For aquaculture development priorities:
+
+-   **Oyster production**: Can be distributed across multiple regions (CA, WA, OR) for geographic diversification
+-   **Black abalone restoration/aquaculture**: Must focus on Central California, with conservation implications given the species' endangered status and limited suitable habitat
+
+The generalizable function developed here enables rapid assessment of additional candidate species, facilitating evidence-based site selection and multi-species aquaculture planning.
+
+## Acknowledgments
+
+This analysis was completed for **EDS 223: Geospatial Analysis and Remote Sensing** at the Bren School of Environmental Science & Management, UC Santa Barbara (November 2024). The workflow demonstrates the application of raster processing, spatial statistics, and reproducible geospatial analysis to real-world marine resource management questions.
+
+## References
+
+::: {#refs}
+:::

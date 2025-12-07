@@ -5,7 +5,7 @@ author: Emily Miller
 date: 2025-11-29
 categories: [...]
 format: html
-image: eds242-final-cover.jpg
+image: eds242-final-cover2.jpeg
 citation:
   url: https://rellimylime.github.io/posts/eds242-final/
 bibliography: references.bib

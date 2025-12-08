@@ -18,15 +18,15 @@ execute:
   message: false
 ---
 
-# Introduction
+## Introduction
 
-## Background and Motivation
+### Background and Motivation
 
 Marine aquaculture represents a critical opportunity for sustainable food production as global seafood demand continues to rise. Unlike land-based meat production, marine aquaculture can provide protein with lower environmental costs when strategically located in suitable environments [@hall2011]. Recent research has demonstrated that global seafood demand could theoretically be met using less than 0.015% of the global ocean area [@gentry2017], highlighting the importance of identifying optimal locations for development.
 
 The US West Coast, with its diverse marine ecosystems and extensive Exclusive Economic Zones (EEZs), presents significant potential for marine aquaculture expansion. However, successful aquaculture operations depend largely on environmental conditions, particularly sea surface temperature and water depth, which determine species survival and growth rates.
 
-## Research Questions
+### Research Questions
 
 This analysis evaluates the potential for marine aquaculture along the US West Coast by identifying EEZs with suitable environmental conditions for two commercially important species: oysters (*Crassostrea* spp.) and black abalone (*Haliotis cracherodii*). Using geospatial analysis of satellite-derived sea surface temperature and bathymetry data, we address three key questions:
 
@@ -36,9 +36,9 @@ This analysis evaluates the potential for marine aquaculture along the US West C
 
 By developing a generalizable workflow, this analysis can be applied to assess aquaculture potential for additional species, supporting evidence-based decision-making for sustainable marine resource development.
 
-# Data and Methods
+## Data and Methods
 
-## Setup and Required Packages
+### Setup and Required Packages
 
 This analysis uses several R packages for geospatial data processing and visualization:
 
@@ -63,9 +63,9 @@ library(kableExtra)
 library(testthat)
 ```
 
-## Data Sources
+### Data Sources
 
-### Exclusive Economic Zones (EEZ)
+#### Exclusive Economic Zones (EEZ)
 
 We use maritime boundary data for the US West Coast EEZs, which define the regions where the United States has rights to explore and exploit marine resources [@marineregions]. The shapefile includes boundaries for California (Northern, Central, and Southern), Oregon, and Washington.
 
@@ -84,7 +84,7 @@ st_crs(wc_df)$epsg
 
 The EEZ data uses EPSG:4326 (WGS 84), a geographic coordinate reference system.
 
-### Sea Surface Temperature (SST)
+#### Sea Surface Temperature (SST)
 
 Average annual sea surface temperature data from 2008-2012 provides a multi-year baseline for identifying thermally suitable aquaculture locations [@noaa_coralreef]. The data comes from NOAA's 5km Daily Global Satellite Sea Surface Temperature product, aggregated to annual averages and provided in degrees Kelvin.
 
@@ -116,7 +116,7 @@ global(sst_stack, fun = "isNA")
 
 We've loaded 5 years of annual SST data and combined them into a raster stack for further processing.
 
-### Bathymetry (Depth)
+#### Bathymetry (Depth)
 
 Ocean depth data comes from the General Bathymetric Chart of the Oceans (GEBCO) 2022 Grid [@gebco2022], providing global bathymetric measurements. Depth is a critical parameter for aquaculture site selection as different species have specific depth requirements based on their feeding behavior, oxygen requirements, and substrate preferences.
 
@@ -164,9 +164,9 @@ crs(sst_stack, describe = TRUE)$code == st_crs(wc_df)$epsg
 
 All three datasets (SST, depth, and EEZ boundaries) now use EPSG:4326 (WGS 84), ensuring compatibility for subsequent spatial operations.
 
-## Data Processing Workflow
+### Data Processing Workflow
 
-### Step 1: Calculate Mean SST (2008-2012)
+#### Step 1: Calculate Mean SST (2008-2012)
 
 To create a stable baseline for identifying suitable temperatures, we calculate the mean SST across all five years (2008-2012). This multi-year average reduces the influence of short-term temperature anomalies and provides a more representative measure of typical thermal conditions.
 
@@ -183,7 +183,7 @@ plot(sst_mean, main = "Mean Sea Surface Temperature (2008-2012)")
 
 The spatial pattern shows a clear north-south temperature gradient along the West Coast, with cooler waters in the north (Washington/Oregon) and warmer waters in Southern California.
 
-### Step 2: Convert SST from Kelvin to Celsius
+#### Step 2: Convert SST from Kelvin to Celsius
 
 The NOAA SST data is provided in degrees Kelvin. For easier interpretation and to match species requirement data (which uses Celsius), we convert to degrees Celsius by subtracting 273.15.
 
@@ -221,7 +221,7 @@ kable(temp_summary,
 
 The temperature range along the West Coast spans approximately 8-21°C, which falls within the thermal tolerance of many marine aquaculture species.
 
-### Step 3: Align Depth Data with SST
+#### Step 3: Align Depth Data with SST
 
 To perform raster algebra (combining temperature and depth layers), we need the rasters to have identical spatial properties: extent, resolution, and CRS. The depth and SST rasters currently have different resolutions and extents, so we crop and resample the depth data to match the SST grid.
 
@@ -243,11 +243,11 @@ crs(depth_resampled) == crs(sst_mean_c)
 
 We use the "nearest neighbor" resampling method, which is appropriate for preserving discrete depth values without interpolation artifacts. The depth and SST rasters are now perfectly aligned.
 
-# Species Suitability Analysis
+## Species Suitability Analysis
 
-## Oyster (*Crassostrea* spp.) Suitability
+### Oyster (*Crassostrea* spp.) Suitability
 
-### Species Requirements
+#### Species Requirements
 
 Oysters are among the most widely cultivated marine organisms globally, valued for their hardiness and ability to filter feed in coastal waters. Based on data from SeaLifeBase [@sealifebase], oysters require:
 
@@ -256,7 +256,7 @@ Oysters are among the most widely cultivated marine organisms globally, valued f
 
 These requirements reflect oyster's tolerance for relatively warm waters and their preference for shallow to moderate depths where food availability is high and substrate is accessible.
 
-### Suitability Mapping
+#### Suitability Mapping
 
 We use binary reclassification to identify areas meeting both temperature and depth criteria. For each environmental layer, cells within the suitable range are assigned a value of 1, while unsuitable cells receive 0. Multiplying the two layers together produces a final suitability map where only locations meeting *both* criteria receive a value of 1.
 
@@ -296,9 +296,9 @@ plot(suitable_zones_oyster,
 
 The map reveals extensive suitable habitat for oysters along the West Coast, particularly in California's coastal waters where temperatures and depths align with oyster requirements.
 
-## Black Abalone (*Haliotis cracherodii*) Suitability
+### Black Abalone (*Haliotis cracherodii*) Suitability
 
-### Species Requirements
+#### Species Requirements
 
 Black abalone is a marine gastropod native to the Pacific coast, historically important both ecologically and commercially. However, the species has experienced significant population declines and is now listed as endangered. Understanding suitable habitat is crucial for both aquaculture development and conservation planning. Based on SeaLifeBase [@sealifebase], black abalone requires:
 
@@ -307,7 +307,7 @@ Black abalone is a marine gastropod native to the Pacific coast, historically im
 
 These narrower requirements reflect black abalone's preference for cool, shallow rocky intertidal and subtidal zones typical of the California coastline.
 
-### Suitability Mapping
+#### Suitability Mapping
 
 We apply the same binary reclassification approach used for oysters, but with black abalone's more restrictive temperature and depth ranges.
 
@@ -349,9 +349,9 @@ plot(suitable_zones_abalone,
 
 The map shows much more limited suitable habitat for black abalone compared to oysters, with suitable areas concentrated in central California where temperatures remain within the narrow thermal window and very shallow depths occur.
 
-# Results: Suitable Area by EEZ
+## Results: Suitable Area by EEZ
 
-## Step 1: Prepare EEZ for Area Calculation
+### Step 1: Prepare EEZ for Area Calculation
 
 To calculate suitable area within each EEZ region, we need to convert the EEZ vector boundaries to raster format. This allows us to use zonal statistics to sum suitable areas within each region.
 
@@ -367,7 +367,7 @@ eez_rast <- rasterize(eez, suitable_zones_oyster, field = "rgn_id")
 
 Each EEZ region is now represented in raster format with cells assigned their corresponding region ID, enabling region-specific area calculations.
 
-## Step 2: Calculate Suitable Area for Oysters
+### Step 2: Calculate Suitable Area for Oysters
 
 We use zonal statistics to sum the suitable area within each EEZ region. The process involves:
 

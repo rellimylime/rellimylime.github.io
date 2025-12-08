@@ -186,7 +186,7 @@ ggplot(dag_tidy, aes(x = x, y = y, xend = xend, yend = yend)) +
 Based on our causal theory, we make three sets of predictions:
 
 | Hypothesis | Variable | Expected Effect | Rationale |
-|------------------|------------------|-------------------|------------------|
+|----|----|----|----|
 | **H1: Traffic** | AADT (↑) | \+ occurrence, + intensity | More vehicles → more collision opportunities |
 | **H2a: Wildlife habitat** | Forest/Park (↑) | \+ occurrence, + intensity | Attracts wildlife near roads |
 | **H2b: Urban development** | Residential (↑) | \- occurrence, - intensity | Reduces wildlife presence |
@@ -204,7 +204,7 @@ We'll test this in *both* parts of our model:
 ### Data Sources
 
 | Dataset | Source | Variables | Coverage |
-|------------------|------------------|-------------------|------------------|
+|----|----|----|----|
 | Roadkill observations | Global Roadkill Database [@grilo2025] | GPS coordinates, species | 2017-2019 |
 | Road network | OpenStreetMap [@osm2024] | Geometry, type, speed limits | Denmark |
 | Traffic counts | Danish Road Directorate [@vejdirektoratet2019] | AADT (vehicles/day) | Monitoring stations |
@@ -857,10 +857,6 @@ p4 <- ggplot(model_data, aes(x = len_km, y = roadkill_count)) +
 :::
 
 These patterns validate our hypotheses from the DAG. Now let's build a statistical model to quantify these effects.
-
-
-
-
 
 ------------------------------------------------------------------------
 

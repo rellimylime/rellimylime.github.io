@@ -193,17 +193,21 @@ The NOAA SST data is provided in degrees Kelvin. For easier interpretation and t
 # Convert from Kelvin to Celsius (subtract 273.15)
 sst_mean_c <- sst_mean - 273.15
 
+# Extract values as vector and calculate summary statistics
+sst_values <- as.vector(values(sst_mean_c))
+sst_values <- sst_values[!is.na(sst_values)]
+
 # Create summary statistics table
 temp_summary <- data.frame(
   Statistic = c("Minimum", "1st Quartile", "Median", "Mean", "3rd Quartile", "Maximum"),
-  Temperature_C = c(
-    round(global(sst_mean_c, fun = "min", na.rm = TRUE)[[1]], 2),
-    round(global(sst_mean_c, fun = function(x) quantile(x, 0.25, na.rm = TRUE))[[1]], 2),
-    round(global(sst_mean_c, fun = "median", na.rm = TRUE)[[1]], 2),
-    round(global(sst_mean_c, fun = "mean", na.rm = TRUE)[[1]], 2),
-    round(global(sst_mean_c, fun = function(x) quantile(x, 0.75, na.rm = TRUE))[[1]], 2),
-    round(global(sst_mean_c, fun = "max", na.rm = TRUE)[[1]], 2)
-  )
+  Temperature_C = round(c(
+    min(sst_values),
+    quantile(sst_values, 0.25),
+    median(sst_values),
+    mean(sst_values),
+    quantile(sst_values, 0.75),
+    max(sst_values)
+  ), 2)
 )
 
 kable(temp_summary,
@@ -553,6 +557,7 @@ The function takes five parameters:
 
 ```{r create-function}
 #| code-fold: true
+
 calculate_suitability <- function(min_temp, max_temp, min_depth, max_depth, species_name) {
   
   # Validate inputs

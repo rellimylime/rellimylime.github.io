@@ -6,7 +6,8 @@ toc: false
 ::: home-hero
 ![](images/PXL_20240914_192718413.jpg)
 
-####
+#### 
+
 Data scientist, environmental systems thinker, and compulsive fixer of things.
 :::
 
@@ -121,6 +122,30 @@ Data scientist, environmental systems thinker, and compulsive fixer of things.
 **"If you don't know where you are going, any road will get you there."**
 
 — Lewis Carroll
+:::
+
+::: slick-slide
+**"It’s easy to lie with statistics. It’s hard to tell the truth without statistics."**
+
+— Andrejs Dunkels
+:::
+
+::: slick-slide
+**"If you can’t explain it simply, you don’t understand it well enough."**
+
+— Albert Einstein
+:::
+
+::: slick-slide
+**"When a measure becomes a target, it ceases to be a good measure"**
+
+— Charles Goodhart
+:::
+
+::: slick-slide
+**"It is my experience that proofs involving matrices can be shortened by 50% if one throws the matrices out."** 
+
+— Emil Artin
 :::
 
 :::::::::::::::::::::

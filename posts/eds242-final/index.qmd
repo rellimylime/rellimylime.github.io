@@ -1,8 +1,8 @@
 ---
-title: "When Climate Models Miss the Fog"
-description: "What I Learned From California's Blackouts"
+title: "The Fog the Models Missed"
+description: "How climate model biases in California's marine layer contributed to the 2020 blackouts"
 author: Emily Miller
-date: 2024-11-29
+date: 2024-12-06
 categories: [MEDS, Climate Science, Data Science, Ethics]
 format: html
 image: eds242-final-cover.jpg
@@ -11,11 +11,9 @@ citation:
 bibliography: references.bib
 ---
 
-August 2020. Opening the door is akin to opening the oven in the middle of summer in Davis CA. For the past few years, we had adopted the practice of doing one last blast chill from the AC before avoiding power use after 3pm. This was a responsibility communicated to our whole community; if we want to avoid blackouts, we need to limit our use during the hottest hours of the evening.
+August 2020, Davis, California. Opening the door at 3pm felt like opening an oven, not unusual for a summer afternoon here, but this time someone had turned the setting to broil. My family had fallen into a routine that summer: one last blast of AC before the afternoon heat peaked, then we'd tough it out through the evening. This wasn't just us, it was a community-wide effort. The message from our utility was clear: if we wanted to avoid blackouts, everyone needed to cut power use during the hottest hours, right when we needed it most.
 
-Before digging into this topic further, my understanding was that this was straightforward heat wave business; everyone running AC, grid can't keep up, but while doing some exploratory research for my Ethics and Bias in Environmental Data Science class, I stumbled upon something that connected directly to this experience in an interesting way.
-
-Part of California's blackout problem stemmed from systematic errors in how we modeled solar generation capacity years earlier. This isn't a story about renewable energy failing. It's about what happens when the climate models we use to make billion-dollar infrastructure decisions contain biases remain invisible until it's too late.
+I thought I understood what was happening: extreme heat wave, everyone running AC, grid can't keep up. But while researching case studies for my Ethics and Bias in Environmental Data Science class, I discovered something unexpected. Part of California's blackout problem stemmed from decisions made years earlier, decisions based on climate models that systematically overestimated how much solar power would be available on hot summer evenings
 
 ------------------------------------------------------------------------
 
@@ -35,7 +33,7 @@ California's coast has a distinctive climate feature: the marine layer. Cold Pac
 
 Coastal low clouds can reduce incoming solar radiation by 30-50% when they're present [@iacobellis2013variability]. They affect coastal temperatures, drive inland through gaps like the Golden Gate, and historically have provided the necessary moisture to ecosystems like redwood forests [@johnstone2010fog].
 
-Here's where the models struggle: Global Climate Models (GCMs) like those in CMIP5 operate at coarse spatial resolution, typically 100-200km grid cells. California's marine layer dynamics happen at much finer scales [@koracin2005fog], driven by:
+Here's where the models struggle: Global Climate Models (GCMs) like those in CMIP5 operate at coarse spatial resolution, typically 100-200km grid cells. California's marine layer dynamics happen at much finer scales, driven by:
 
 \- Sea surface temperature gradients
 
@@ -95,7 +93,7 @@ What strikes me is how invisible this connection is. When I experienced that bla
 
 ## The Technical Challenge
 
-Climate modelers know about these biases. Marine boundary layer clouds remain one of the largest sources of uncertainty in climate models [@klein2017].
+Climate modelers know about these biases. Marine boundary layer clouds remain one of the largest sources of uncertainty in climate models [@klein2017]. Understanding different types of bias, from measurement bias to model specification bias, is crucial for interpreting these limitations [@konno2024bias].
 
 ### The Resolution Problem
 
@@ -105,9 +103,9 @@ The core issue is that marine layer physics operates at scales GCMs can't resolv
 
 Downscaling helps, but it can't fix everything. The two main approaches are:
 
-**Statistical downscaling** (e.g., LOCA - Localized Constructed Analogs): Uses historical relationships between large-scale climate patterns and local observations [@pierce2023loca]. Fast, cheap, widely used. But assumes future relationships will match past patterns, questionable under climate change [@ekstrom2015appraisal]. Also struggles with variables that don't have long observational records.
+**Statistical downscaling** (e.g., LOCA - Localized Constructed Analogs): Uses historical relationships between large-scale climate patterns and local observations [@pierce2024downscaling]. Fast, cheap, widely used. But assumes future relationships will match past patterns, questionable under climate change [@ekstrom2015appraisal]. Also struggles with variables that don't have long observational records.
 
-**Dynamical downscaling** (e.g., WRF - Weather Research and Forecasting model): Runs a high-resolution regional climate model nested within the GCM [@cec2022evaluating]. Can explicitly simulate physics at 3-10km scale. But \*inherits GCM boundary conditions and biases\*.
+**Dynamical downscaling** (e.g., WRF - Weather Research and Forecasting model): Runs a high-resolution regional climate model nested within the GCM. Can explicitly simulate physics at 3-10km scale. But *inherits GCM boundary conditions and baises*.
 
 ### Current State of the Art
 
@@ -121,7 +119,7 @@ Different bias correction methods can change answers significantly [@maraun2016b
 
 -   **Quantile mapping**: Matches model distribution to observed distribution, but assumes bias is stationary over time
 -   **Delta method**: Uses model *changes* rather than absolute values, but assumes models capture trends correctly even if baseline is wrong
--   **Deep learning corrections**: Train neural networks on historical errors, but risk overfitting [@mcgovern2024identifying]
+-   **Deep learning corrections**: Train neural networks on historical errors, but risk overfitting
 -   **Ensemble averaging**: Combine multiple models to reduce individual biases, but may mask structural uncertainties
 
 Each method makes different assumptions. Each gives different results. And the choice of correction method can change your projection as much as the climate change signal itself [@ekstrom2015appraisal].
@@ -135,11 +133,7 @@ This pattern shows up everywhere in environmental data science:
 -   **Hydropower forecasting** → Energy mix decisions → Electricity rates → Industrial development
 -   **Fire risk assessment** → Building codes → Insurance availability → Community resilience
 
-In each case, biased models generate biased projections, which inform biased decisions, which create real-world consequences, often for people who have no idea the original model even existed.
-
-And here's what makes it particularly insidious: the bias doesn't announce itself. The projections look authoritative. They come with error bars and confidence intervals. They're peer-reviewed, published, cited. The agencies using them are staffed with smart, well-trained people doing their best with the tools available.
-
-The problem isn't one of incompetence. It's that we've built systems that rely on models with known limitations, and those limitations propagate silently through decision chains until something breaks or goes wrong.
+In each case, model biases propagate through decision chains [@olteanu2019social]. The projections look authoritative, peer-reviewed, published, with confidence intervals. The agencies using them are often doing their best with available tools. But those limitations don't make it into the summary documents that inform decisions as often as they need to.
 
 ------------------------------------------------------------------------
 
@@ -149,11 +143,9 @@ I don't think the answer is to stop using climate models, they're the best tools
 
 ### 1. Bake Uncertainty Into Decisions
 
-Don't make billion-dollar commitments based on single-model projections. Design systems that can adapt if reality diverges from projections. For California's grid: that means maintaining flexible generation capacity, investing in storage, planning for higher evening peaks than models predict.
+Design systems that can adapt if reality diverges from projections. For California's grid, this means maintaining flexible generation capacity and planning for higher evening peaks than models predict.
 
 ### 2. Cross-Validate With Multiple Methods
-
-Don't rely solely on climate models. Use:
 
 -   Historical records (when similar heat waves hit in the past, what happened?)
 -   Empirical relationships (how does actual solar generation track with weather obs?)
@@ -181,19 +173,17 @@ Engineers, planners, and policy-makers need to understand what climate models ca
 
 ## Why I Think About This
 
-For my family, these summertime blackouts were uncomfortable, inconvenient, but not catastrophic. For others, people dependent on medical equipment, elderly folks without AC, families losing food in fridges, these blackouts are far more impactful.
+For my family, the 2020 blackouts were uncomfortable and inconvenient, but manageable. For others, e.g. people dependent on medical equipment, elderly folks without AC, or families losing groceries, the stakes were higher.
 
-And the thing is, these grid reliability issues will keep happening. California's 2024-2025 planning documents still show tight supply margins during evening peaks. The marine layer isn't going away. Neither is climate change, which may be altering fog patterns in ways we still don't fully understand [@torregrosa2014fog], research suggests California coastal fog has declined 33% since 1950 [@johnstone2010fog], but the causes and future trajectory are uncertain.
+California's grid planning documents still show tight supply margins during evening peaks. The marine layer isn't going anywhere, though there's some evidence it's changing. Research suggests California coastal fog has declined 33% since 1950 [@johnstone2010fog], but we don't fully understand why or what that means for the future [@torregrosa2014fog].
 
-What bugs me most is how easily these issues slip through. Smart people, good intentions, rigorous methods, and still, systematic biases propagate through planning processes and don't surface until systems fail under stress.
+What stays with me from digging into this case is how easily biases can slip through. Smart people, rigorous methods, peer-reviewed projections, and still, systematic errors propagate through planning processes until systems fail under stress.
 
-This isn't unique to energy systems. I see it in every domain of environmental data science I look at. Models of crop yields, water availability, species distributions, fire risk, flood hazards, all rest on climate projections with known limitations. Those limitations don't make it into the summary documents that inform decisions as often as they need to[@young2014improving].
+I see this pattern everywhere in environmental data science. Models of crop yields, water availability, species distributions, fire risk, all rest on climate projections with known limitations. Those limitations exist, they're documented in technical reports, but they don't always make it into the decision documents.
 
-We can do better. Not by building perfect models, but by building decision processes that explicitly account for model uncertainty and biases, and learning from mismatches between predictions and reality.
+We're not going to build perfect models. But we can build better decision processes, ones that explicitly account for uncertainty, validate projections against reality, and adapt when mismatches appear. That starts with recognizing that environmental data always carries the fingerprints of choices and assumptions baked into its creation [@walker2018practicing].
 
-That starts with recognizing that data, especially in environmental science, is never neutral, complete, or certain [@barrowman2018raw; @walker2018practicing]. Every dataset carries the fingerprints of choices, assumptions, and limitations baked into its creation.
-
-Understanding those limitations isn't pedantic. It's how we avoid making the same mistakes again.
+Understanding those limitations isn't about being critical for its own sake. It's about learning from what happened and doing better next time.
 
 ------------------------------------------------------------------------
 

@@ -73,6 +73,7 @@ We use maritime boundary data for the US West Coast EEZs, which define the regio
 #| message: false
 #| warning: false
 #| code-fold: true
+#| output: false
 
 # Load West Coast EEZ shapefile
 wc_df <- st_read("data/wc_regions_clean.shp")
@@ -91,6 +92,7 @@ Average annual sea surface temperature data from 2008-2012 provides a multi-year
 #| message: false
 #| warning: false
 #| code-fold: true
+#| output: false
 
 # Load SST rasters for 2008-2012
 
@@ -122,6 +124,7 @@ Ocean depth data comes from the General Bathymetric Chart of the Oceans (GEBCO) 
 #| message: false
 #| warning: false
 #| code-fold: true
+#| output: false
 
 # Load depth raster
 depth <- rast(("data/depth.tif"))
@@ -169,6 +172,7 @@ To create a stable baseline for identifying suitable temperatures, we calculate 
 
 ```{r mean-sst}
 #| code-fold: true
+#| output: false
 
 # Calculate mean SST across all years using app()
 sst_mean <- app(sst_stack, mean, na.rm = TRUE)
@@ -189,8 +193,26 @@ The NOAA SST data is provided in degrees Kelvin. For easier interpretation and t
 # Convert from Kelvin to Celsius (subtract 273.15)
 sst_mean_c <- sst_mean - 273.15
 
-# Check temperature range with summary()
-summary(sst_mean_c)
+# Create summary statistics table
+temp_summary <- data.frame(
+  Statistic = c("Minimum", "1st Quartile", "Median", "Mean", "3rd Quartile", "Maximum"),
+  Temperature_C = c(
+    round(global(sst_mean_c, fun = "min", na.rm = TRUE)[[1]], 2),
+    round(global(sst_mean_c, fun = function(x) quantile(x, 0.25, na.rm = TRUE))[[1]], 2),
+    round(global(sst_mean_c, fun = "median", na.rm = TRUE)[[1]], 2),
+    round(global(sst_mean_c, fun = "mean", na.rm = TRUE)[[1]], 2),
+    round(global(sst_mean_c, fun = function(x) quantile(x, 0.75, na.rm = TRUE))[[1]], 2),
+    round(global(sst_mean_c, fun = "max", na.rm = TRUE)[[1]], 2)
+  )
+)
+
+kable(temp_summary,
+      caption = "Summary Statistics for Mean SST (2008-2012) in °C",
+      col.names = c("Statistic", "Temperature (°C)"),
+      align = c("l", "r")) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
+                full_width = FALSE,
+                position = "left")
 ```
 
 The temperature range along the West Coast spans approximately 8-21°C, which falls within the thermal tolerance of many marine aquaculture species.
@@ -201,6 +223,7 @@ To perform raster algebra (combining temperature and depth layers), we need the 
 
 ```{r align-depth}
 #| code-fold: true
+#| output: false
 
 # Crop depth to SST extent using crop()
 depth_crop <- crop(depth, sst_mean_c)
@@ -235,6 +258,7 @@ We use binary reclassification to identify areas meeting both temperature and de
 
 ```{r oyster-suitability}
 #| code-fold: true
+#| output: false
 
 # Reclassify SST for oysters using classify()
 # Create rcl matrix: <11°C = 0, 11-30°C = 1, >30°C = 0
@@ -285,6 +309,7 @@ We apply the same binary reclassification approach used for oysters, but with bl
 
 ```{r species-suitability}
 #| code-fold: true
+#| output: false
 
 # Reclassify SST for black abalone using classify()
 # Suitable: 12.2-18.6°C = 1, Unsuitable: <12.2°C or >18.6°C = 0

@@ -63,7 +63,7 @@ neutral_color <- "#6A4C93"
 text_dark <- "#2B2D42"
 text_mid <- "#5A5A5A"
 bg_warm <- "#FFFEF9"
-
+backup_color <- "#E9C46A"
 # DAG libraries
 library(ggdag)
 library(dagitty)
@@ -186,11 +186,11 @@ ggplot(dag_tidy, aes(x = x, y = y, xend = xend, yend = yend)) +
 Based on our causal theory, we make three sets of predictions:
 
 | Hypothesis | Variable | Expected Effect | Rationale |
-|----|----|----|----|
+|------------------|------------------|------------------|------------------|
 | **H1: Traffic** | AADT (↑) | \+ occurrence, + intensity | More vehicles → more collision opportunities |
 | **H2a: Wildlife habitat** | Forest/Park (↑) | \+ occurrence, + intensity | Attracts wildlife near roads |
 | **H2b: Urban development** | Residential (↑) | \- occurrence, - intensity | Reduces wildlife presence |
-| **H3a: Road infrastructure** | Major roads | \+ occurrence, + intensity | Higher speeds, more lanes |
+| **H3a: Road infrastructure** | Major roads (vs Major baseline) | \- occurrence, - intensity | Lower speeds, fewer lanes than major roads |
 | **H3b: Speed** | Speed limit (↑) | \+ occurrence, + intensity | Reduced reaction time, higher mortality |
 
 We'll test this in *both* parts of our model:
@@ -204,7 +204,7 @@ We'll test this in *both* parts of our model:
 ### Data Sources
 
 | Dataset | Source | Variables | Coverage |
-|----|----|----|----|
+|------------------|------------------|------------------|------------------|
 | Roadkill observations | Global Roadkill Database [@grilo2025] | GPS coordinates, species | 2017-2019 |
 | Road network | OpenStreetMap [@osm2024] | Geometry, type, speed limits | Denmark |
 | Traffic counts | Danish Road Directorate [@vejdirektoratet2019] | AADT (vehicles/day) | Monitoring stations |
@@ -706,7 +706,6 @@ model_data <- roads_traf %>%
     road_type = case_when(
       code %in% config$road_car_codes_major ~ "Major",
       code %in% config$road_car_codes_minor ~ "Minor",
-      code %in% config$road_car_codes_links ~ "Links/Ramps",
       TRUE ~ "Other"
     ),
 
@@ -811,7 +810,6 @@ p3 <- ggplot(model_data %>% filter(roadkill_count > 0),
   scale_fill_manual(values = c(
     "Major" = accent_color,
     "Minor" = primary_color,
-    "Links/Ramps" = neutral_color,
     "Other" = text_mid
   )) +
   scale_y_log10() +
@@ -842,6 +840,89 @@ p4 <- ggplot(model_data, aes(x = len_km, y = roadkill_count)) +
 
 # Combine plots
 # (p1 + p2) / (p3 + p4)
+```
+
+```{r}
+#| label: predictor-distributions
+#| echo: false
+#| fig-width: 14
+#| fig-height: 12
+
+library(patchwork)
+
+# 1. Distribution of continuous predictors
+p_aadt_dist <- ggplot(model_data, aes(x = AADT)) +
+  geom_histogram(fill = primary_color, color = "white", alpha = 0.8, bins = 50) +
+  scale_x_log10(labels = scales::comma) +
+  labs(
+    title = "Distribution of Traffic Volume",
+    x = "AADT (vehicles/day, log scale)",
+    y = "Count of Road Segments"
+  ) +
+  theme_cohesive()
+
+p_length_dist <- ggplot(model_data, aes(x = len_km)) +
+  geom_histogram(fill = primary_color, color = "white", alpha = 0.8, bins = 50) +
+  scale_x_log10() +
+  labs(
+    title = "Distribution of Road Segment Length",
+    x = "Length (km, log scale)",
+    y = "Count of Road Segments"
+  ) +
+  theme_cohesive()
+
+p_speed_dist <- ggplot(model_data, aes(x = speed_limit)) +
+  geom_histogram(fill = primary_color, color = "white", alpha = 0.8, binwidth = 10) +
+  labs(
+    title = "Distribution of Speed Limits",
+    x = "Speed Limit (km/h)",
+    y = "Count of Road Segments"
+  ) +
+  theme_cohesive()
+
+# 2. Land use distributions
+landuse_long <- model_data %>%
+  select(pct_forest, pct_farmland, pct_residential, pct_park) %>%
+  pivot_longer(everything(), names_to = "landuse_type", values_to = "percentage") %>%
+  mutate(landuse_type = str_replace(landuse_type, "pct_", "") %>% str_to_title())
+
+p_landuse_dist <- ggplot(landuse_long, aes(x = percentage, fill = landuse_type)) +
+  geom_histogram(alpha = 0.8, bins = 30) +
+  facet_wrap(~landuse_type, scales = "free_y") +
+  scale_fill_manual(values = c(
+    "Forest" = backup_color,
+    "Farmland" = accent_color,
+    "Residential" = primary_color,
+    "Park" = neutral_color
+  )) +
+  labs(
+    title = "Distribution of Land Use Types (within 500m buffers)",
+    x = "Percentage of Buffer Area",
+    y = "Count of Road Segments"
+  ) +
+  theme_cohesive() +
+  theme(legend.position = "none")
+
+# 3. Categorical predictor - Road type
+p_roadtype <- model_data %>%
+  count(road_type) %>%
+  ggplot(aes(x = reorder(road_type, n), y = n, fill = road_type)) +
+  geom_col(alpha = 0.8, show.legend = FALSE) +
+  scale_fill_manual(values = c(
+    "Major" = accent_color,
+    "Minor" = primary_color,
+    "Other" = neutral_color
+  )) +
+  coord_flip() +
+  labs(
+    title = "Distribution of Road Types",
+    x = "Road Type",
+    y = "Count of Road Segments"
+  ) +
+  theme_cohesive()
+
+# Combine distribution plots
+(p_aadt_dist + p_length_dist) / (p_speed_dist + p_roadtype) / p_landuse_dist
 ```
 
 ## Visualizations
@@ -877,70 +958,90 @@ A **hurdle model** separates two processes:
 
 ### Model Specification
 
+A **hurdle model** separates the data-generating process into two parts:
+
+**Part 1: Zero hurdle (Binary component)**
+
+Models whether any roadkill occurs on a road segment.
+
 $$
-P(Y_i = y) = \begin{cases}
-\pi_i & \text{if } y = 0 \\
-(1 - \pi_i) \cdot f_{\text{NB}}(y; \mu_i, \theta) & \text{if } y > 0
-\end{cases}
+\begin{aligned}
+Z_i &\sim \text{Binomial}(\pi_i) \\
+\text{logit}(\pi_i) &= \alpha_0 + \alpha_1 \log(\text{AADT}_i) + \alpha_2 \text{Minor}_i\\
+&\quad + \alpha_4 \text{Speed}_i + \alpha_5 \text{Forest}_i + \alpha_6 \text{Farm}_i \\
+&\quad + \alpha_7 \text{Residential}_i + \alpha_8 \text{Park}_i
+\end{aligned}
 $$
 
-Zero component (logistic regression): $\text{logit}(\pi_i) = \alpha_0 + \alpha_1 \log(\text{AADT}_i) + \alpha_2 \text{RoadType}_i + \alpha_3 \text{Speed}_i + \alpha_4 \text{LandUse}_i$
+where:
 
-Count component (negative binomial): $\log(\mu_i) = \beta_0 + \beta_1 \log(\text{AADT}_i) + \beta_2 \text{RoadType}_i + \beta_3 \text{Speed}_i + \beta_4 \text{LandUse}_i + \log(\text{length}_i)$
+-   $Z_i = 1$ if roadkill occurs, $Z_i = 0$ otherwise
 
-Where $\log$(\text{length}$_i$) is an offset controlling for road exposure.
+-   $\pi_i$ is the probability of observing any roadkill on segment $i$
+
+-   $\text{Minor}_i$ is an indicator for road type (0 or 1; reference level: Major roads (0))
+
+**Part 2: Count component (Positive counts only)**
+
+Models the number of roadkill events, conditional on at least one event occurring ($Z_i = 1$).
+
+$$
+\begin{aligned}
+Y_i | Z_i = 1 &\sim \text{Negative Binomial}(\mu_i, \theta) \\
+\log(\mu_i) &= \beta_0 + \beta_1 \log(\text{AADT}_i) + \beta_2 \text{Minor}_i \\
+&\quad + \beta_4 \text{Speed}_i + \beta_5 \text{Forest}_i + \beta_6 \text{Farm}_i \\
+&\quad + \beta_7 \text{Residential}_i + \beta_8 \text{Park}_i + \log(\text{Length}_i)
+\end{aligned}
+$$
+
+where: - $Y_i$ is the count of roadkill events on segment $i$ - $\mu_i$ is the expected count given occurrence - $\theta$ is the dispersion parameter - $\log(\text{Length}_i)$ is an offset controlling for road segment exposure
+
+**Why Negative Binomial?**
+
+Our data show overdispersion (Variance/Mean = `r round(var(model_data$roadkill_count) / mean(model_data$roadkill_count), 2)`), which violates the Poisson assumption that variance equals the mean. The Negative Binomial distribution allows $\text{Var}(Y_i) > \mathbb{E}[Y_i]$.
 
 #### Model Validation: Simulation Test
 
 Before applying to real data, we verify the model recovers known parameters from simulated data.
 
 ```{r}
-#| label: simulate-hurdle
+#| label: simulate-hurdle1
 #| code-fold: true
 
 set.seed(42)
-n_sim <- 1000
+n_sim <- 10000
 x_sim <- rnorm(n_sim, mean = 10, sd = 2)
 
-# True parameters for pscl::hurdle
-# Zero component: models P(Y > 0) in logit scale
-# Positive coefficient = higher x → higher P(Y > 0) → MORE roadkill
-beta0_zero <- 0.5   
-beta1_zero <- 0.3   
+# True parameters for hurdle model
+beta0_zero <- -0.5   # Zero component models P(Y > 0)
+beta1_zero <- 0.3    
+beta0_count <- 0.5   # Count component models E[Y | Y > 0]
+beta1_count <- 0.2   
+theta <- 1.5         # Dispersion parameter
 
-# Count component: models E[Y | Y > 0] in log scale  
-beta0_count <- 1.0
-beta1_count <- 0.15
-theta <- 2.0
-
-# Generate the zero hurdle: P(Y > 0)
+# Generate binary outcomes (does roadkill occur?)
 logit_prob_nonzero <- beta0_zero + beta1_zero * x_sim
 prob_nonzero <- plogis(logit_prob_nonzero)
+z_sim <- rbinom(n_sim, size = 1, prob = prob_nonzero)
 
-# Initialize output
-y_sim <- rep(0, n_sim)
+# Generate positive counts for non-zero cases
+mu_untruncated <- exp(beta0_count + beta1_count * x_sim)
+y_counts <- numeric(n_sim)
 
-# For each observation
-for (i in 1:n_sim) {
-  # Step 1: Does the hurdle succeed? (Is Y > 0?)
-  hurdle_success <- rbinom(1, size = 1, prob = prob_nonzero[i])
-  
-  if (hurdle_success == 1) {
-    # Step 2: Generate truncated count (Y | Y > 0)
-    lambda_i <- exp(beta0_count + beta1_count * x_sim[i])
-    repeat {
-      y_candidate <- rnbinom(1, mu = lambda_i, size = theta)
-      if (y_candidate > 0) {
-        y_sim[i] <- y_candidate
-        break
-      }
-    }
-  }
-  # else: y_sim[i] stays 0
+# Generate all counts (will be zeroed out where z_sim == 0)
+temp_counts <- rnbinom(n_sim, mu = mu_untruncated, size = theta)
+# Truncate at 1 (reject zeros, replace with next draw)
+while(any(temp_counts == 0 & z_sim == 1)) {
+  need_redraw <- (temp_counts == 0 & z_sim == 1)
+  temp_counts[need_redraw] <- rnbinom(sum(need_redraw), 
+                                      mu = mu_untruncated[need_redraw], 
+                                      size = theta)
 }
+y_sim <- temp_counts * z_sim  # Multiply by occurrence (zeros out non-occurrences)
 
 sim_data <- tibble(x = x_sim, y = y_sim)
 ```
+
 
 Simulated data characteristics:
 
@@ -957,36 +1058,44 @@ sim_hurdle <- hurdle(y ~ x, data = sim_data, dist = "negbin")
 
 # Extract estimated parameters
 sim_coefs <- coef(sim_hurdle)
-
 ```
 
 #### Parameter recovery check
 
 ```{r}
-#| label: parameter-recovery
-#| echo: false
+#| label: recovery-check
+#| code-fold: true
+
+# Check parameter
+zero_intercept <- sim_coefs["zero_(Intercept)"]
+zero_slope <- sim_coefs["zero_x"]
+count_intercept <- sim_coefs["count_(Intercept)"]
+count_slope <- sim_coefs["count_x"]
 
 recovery_table <- tibble(
   Component = c("Zero", "Zero", "Count", "Count"),
   Parameter = c("Intercept", "Slope", "Intercept", "Slope"),
   `True Value` = c(beta0_zero, beta1_zero, beta0_count, beta1_count),
-  Estimated = round(sim_coefs[1:4], 3),
-  Difference = round(sim_coefs[1:4] - c(beta0_zero, beta1_zero, beta0_count, beta1_count), 3)
+  Estimated = round(c(zero_intercept, zero_slope, count_intercept, count_slope), 3),
+  Difference = round(c(zero_intercept, zero_slope, count_intercept, count_slope) - 
+                     c(beta0_zero, beta1_zero, beta0_count, beta1_count), 3)
 ) %>%
   mutate(Recovered = ifelse(abs(Difference) < 0.2, "✓", "✗"))
 
-knitr::kable(recovery_table, 
-             caption = "Parameter Recovery Check: Simulated Data",
-             digits = 3)
+knitr::kable(recovery_table, caption = "Parameter Recovery Check: Simulated Data", digits = 3)
 ```
+
+
 
 Conclusion: Model successfully recovers known parameters (differences \< 0.2). We can apply it to real data with confidence.
 
 ```{r}
 #| label: sim-visualization
+#| eval: false
 #| code-fold: true
-#| fig-width: 10
 #| fig-height: 4
+#| fig-width: 10
+#| include: false
 
 # Create prediction grid
 x_grid <- seq(min(sim_data$x), max(sim_data$x), length.out = 100)
@@ -1046,6 +1155,138 @@ p_sim2 <- sim_data %>%
   theme_cohesive()
 
 p_sim1 + p_sim2
+```
+
+```{r}
+#| label: sim-visualization2
+#| echo: false
+#| code-fold: true
+#| fig-height: 4
+#| fig-width: 10
+
+# Create prediction grid
+x_grid <- seq(min(sim_data$x), max(sim_data$x), length.out = 100)
+pred_data <- tibble(x = x_grid)
+
+# Extract coefficients and variance-covariance matrix
+coef_zero <- coef(sim_hurdle, model = "zero")
+coef_count <- coef(sim_hurdle, model = "count")
+vcov_zero <- vcov(sim_hurdle)[1:2, 1:2]  # First 2 rows/cols are zero component
+vcov_count <- vcov(sim_hurdle)[3:4, 3:4]  # Next 2 are count component
+
+# Zero component: Calculate predictions and SEs on logit scale
+# Linear predictor: intercept + slope * x
+logit_pred <- coef_zero[1] + coef_zero[2] * pred_data$x
+
+# Standard error calculation
+# For each x value: SE = sqrt(var(intercept) + x^2*var(slope) + 2*x*cov(intercept,slope))
+se_logit <- sqrt(
+  vcov_zero[1,1] +                          # variance of intercept
+  pred_data$x^2 * vcov_zero[2,2] +          # variance of slope * x^2
+  2 * pred_data$x * vcov_zero[1,2]          # covariance term
+)
+
+# Transform to probability scale with CI
+pred_data <- pred_data %>%
+  mutate(
+    prob_nonzero = plogis(logit_pred),
+    prob_lower = plogis(logit_pred - 1.96 * se_logit),
+    prob_upper = plogis(logit_pred + 1.96 * se_logit)
+  )
+
+# Count Component: Calculate predictions and SEs on log scale
+log_pred <- coef_count[1] + coef_count[2] * pred_data$x
+
+
+# Standard error calculation
+se_log <- sqrt(
+  vcov_count[1,1] +                         # variance of intercept
+  pred_data$x^2 * vcov_count[2,2] +         # variance of slope * x^2
+  2 * pred_data$x * vcov_count[1,2]         # covariance term
+)
+
+# Transform to count scale with CI
+pred_data <- pred_data %>%
+  mutate(
+    count_given_nonzero = exp(log_pred),
+    count_lower = exp(log_pred - 1.96 * se_log),
+    count_upper = exp(log_pred + 1.96 * se_log)
+  )
+
+# Plot 1: Zero hurdle component
+p_sim1 <- ggplot() +
+  # Raw binned proportions
+  stat_summary_bin(
+    data = sim_data,
+    aes(x = x, y = as.numeric(y > 0)),
+    fun = mean,
+    geom = "point",
+    bins = 20,
+    color = primary_color,
+    size = 3,
+    alpha = 0.6
+  ) +
+  # Confidence ribbon
+  geom_ribbon(
+    data = pred_data,
+    aes(x = x, ymin = prob_lower, ymax = prob_upper),
+    alpha = 0.2,
+    fill = accent_color
+  ) +
+  # Prediction line
+  geom_line(
+    data = pred_data, 
+    aes(x = x, y = prob_nonzero), 
+    color = accent_color, 
+    linewidth = 1.2
+  ) +
+  labs(
+    title = "A. Hurdle Component: Probability of Non-Zero",
+    x = "Predictor (x)", 
+    y = "Probability of Roadkill Occurrence"
+  ) +
+  scale_y_continuous(limits = c(0, 1), labels = scales::percent) +
+  theme_cohesive()
+
+# Plot 2: Count component
+p_sim2 <- ggplot() +
+  # Raw data points
+  geom_point(
+    data = sim_data %>% filter(y > 0),
+    aes(x = x, y = y), 
+    color = primary_color, 
+    alpha = 0.4,
+    size = 2
+  ) +
+  # Confidence ribbon
+  geom_ribbon(
+    data = pred_data,
+    aes(x = x, ymin = count_lower, ymax = count_upper),
+    alpha = 0.2,
+    fill = accent_color
+  ) +
+  # Prediction line
+  geom_line(
+    data = pred_data, 
+    aes(x = x, y = count_given_nonzero),
+    color = accent_color, 
+    linewidth = 1.2
+  ) +
+  labs(
+    title = "B. Count Component: Intensity Given Presence",
+    x = "Predictor (x)", 
+    y = "Count (y | y > 0)"
+  ) +
+  theme_cohesive()
+
+# Combine with shared subtitle
+p_sim1 + p_sim2 +
+  plot_annotation(
+    subtitle = "Points = raw data, Lines = model predictions, Ribbons = 95% CI",
+    theme = theme(
+      plot.subtitle = element_text(size = 11, color = text_mid, hjust = 0.5)
+    )
+  )
 ```
 
 **Key Takeaway**: The simulation proves our modeling framework works—when we feed the hurdle model data generated from known parameters, it successfully recovers those parameters. This gives us confidence to apply it to real data where the true parameters are unknown.
@@ -1114,6 +1355,251 @@ knitr::kable(results, caption = "Hurdle Model Results")
 
 -   **Significance**: \*\*\* p\<0.001, \*\* p\<0.01, \* p\<0.05
 
+### Model Fit to Data
+
+This visualization shows how well our hurdle model captures the observed roadkill patterns.
+```{r}
+#| label: model-predictions-vs-data
+#| fig-width: 14
+#| fig-height: 10
+#| echo: false
+
+forest_seq <- seq(0, max(model_data$pct_forest), length.out = 100)
+
+newdata_forest <- tibble(
+  pct_forest = forest_seq,
+  log_AADT = median(model_data$log_AADT),
+  road_type = factor("Major", levels = levels(factor(model_data$road_type))),
+  speed_limit = median(model_data$speed_limit),
+  pct_farmland = median(model_data$pct_farmland),
+  pct_residential = median(model_data$pct_residential),
+  pct_park = median(model_data$pct_park),
+  len_km = 1,
+  log_len_km = 0
+)
+
+# Create design matrix for forest predictions
+X_forest <- model.matrix(~ log_AADT + road_type + speed_limit + 
+                          pct_forest + pct_farmland + pct_residential + pct_park,
+                        data = newdata_forest)
+
+# Extract coefficients and vcov
+coef_zero <- coef(hurdle_model, model = "zero")
+coef_count <- coef(hurdle_model, model = "count")
+n_zero <- length(coef_zero)
+vcov_full <- vcov(hurdle_model)
+vcov_zero <- vcov_full[1:n_zero, 1:n_zero]
+vcov_count <- vcov_full[(n_zero+1):(n_zero+length(coef_count)), 
+                        (n_zero+1):(n_zero+length(coef_count))]
+
+# Zero component predictions with CI
+logit_pred <- X_forest %*% coef_zero
+se_logit <- sqrt(diag(X_forest %*% vcov_zero %*% t(X_forest)))
+
+newdata_forest <- newdata_forest %>%
+  mutate(
+    prob_nonzero = plogis(logit_pred),
+    prob_lower = plogis(logit_pred - 1.96 * se_logit),
+    prob_upper = plogis(logit_pred + 1.96 * se_logit)
+  )
+
+# Count component predictions with CI
+log_pred <- X_forest %*% coef_count
+se_log <- sqrt(diag(X_forest %*% vcov_count %*% t(X_forest)))
+
+newdata_forest <- newdata_forest %>%
+  mutate(
+    count_given_nonzero = exp(log_pred),
+    count_lower = exp(log_pred - 1.96 * se_log),
+    count_upper = exp(log_pred + 1.96 * se_log)
+  )
+
+# === ROAD TYPE EFFECT PREDICTIONS ===
+newdata_roadtype <- tibble(
+  road_type = factor(c("Major", "Minor", "Other"), 
+                     levels = levels(factor(model_data$road_type))),
+  log_AADT = median(model_data$log_AADT),
+  speed_limit = median(model_data$speed_limit),
+  pct_forest = median(model_data$pct_forest),
+  pct_farmland = median(model_data$pct_farmland),
+  pct_residential = median(model_data$pct_residential),
+  pct_park = median(model_data$pct_park),
+  len_km = 1,
+  log_len_km = 0
+)
+
+X_roadtype <- model.matrix(~ log_AADT + road_type + speed_limit + 
+                            pct_forest + pct_farmland + pct_residential + pct_park,
+                          data = newdata_roadtype)
+
+# Zero component with CI
+logit_pred_rt <- X_roadtype %*% coef_zero
+se_logit_rt <- sqrt(diag(X_roadtype %*% vcov_zero %*% t(X_roadtype)))
+
+newdata_roadtype <- newdata_roadtype %>%
+  mutate(
+    prob_nonzero = plogis(logit_pred_rt),
+    prob_lower = plogis(logit_pred_rt - 1.96 * se_logit_rt),
+    prob_upper = plogis(logit_pred_rt + 1.96 * se_logit_rt)
+  )
+
+# Count component with CI
+log_pred_rt <- X_roadtype %*% coef_count
+se_log_rt <- sqrt(diag(X_roadtype %*% vcov_count %*% t(X_roadtype)))
+
+newdata_roadtype <- newdata_roadtype %>%
+  mutate(
+    count_given_nonzero = exp(log_pred_rt),
+    count_lower = exp(log_pred_rt - 1.96 * se_log_rt),
+    count_upper = exp(log_pred_rt + 1.96 * se_log_rt)
+  )
+
+# === BETTER ORGANIZED PLOTS ===
+
+# Plot 1: Forest effect on occurrence
+p1 <- ggplot() +
+  stat_summary_bin(
+    data = model_data,
+    aes(x = pct_forest, y = as.numeric(roadkill_count > 0)),
+    fun = mean,
+    geom = "point",
+    bins = 20,
+    color = primary_color,
+    size = 2,
+    alpha = 0.6
+  ) +
+  geom_ribbon(
+    data = newdata_forest,
+    aes(x = pct_forest, ymin = prob_lower, ymax = prob_upper),
+    alpha = 0.2,
+    fill = accent_color
+  ) +
+  geom_line(
+    data = newdata_forest,
+    aes(x = pct_forest, y = prob_nonzero),
+    color = accent_color,
+    linewidth = 1.2
+  ) +
+  scale_y_continuous(labels = scales::percent) +
+  labs(
+    title = "A. Does Roadkill Occur? (Zero Hurdle)",
+    subtitle = "Forest coverage strongly predicts IF roadkill happens",
+    x = "% Forest within 500m",
+    y = "Probability of Any Roadkill"
+  ) +
+  theme_cohesive()
+
+# Plot 2: Road type occurrence
+empirical_roadtype <- model_data %>%
+  group_by(road_type) %>%
+  summarise(
+    empirical_prob = mean(roadkill_count > 0),
+    .groups = "drop"
+  )
+
+p2 <- ggplot() +
+  geom_col(
+    data = empirical_roadtype,
+    aes(x = road_type, y = empirical_prob),
+    fill = primary_color,
+    alpha = 0.6,
+    width = 0.7
+  ) +
+  geom_errorbar(
+    data = newdata_roadtype,
+    aes(x = road_type, ymin = prob_lower, ymax = prob_upper),
+    width = 0.2,
+    color = accent_color,
+    linewidth = 1
+  ) +
+  geom_point(
+    data = newdata_roadtype,
+    aes(x = road_type, y = prob_nonzero),
+    color = accent_color,
+    size = 4
+  ) +
+  scale_y_continuous(labels = scales::percent) +
+  labs(
+    title = "B. Does Roadkill Occur? (Zero Hurdle)",
+    subtitle = "Major roads 7x more likely to have roadkill",
+    x = "Road Type",
+    y = "Probability of Any Roadkill"
+  ) +
+  theme_cohesive()
+
+# Plot 3: Forest effect on intensity
+p3 <- ggplot() +
+  geom_point(
+    data = model_data %>% filter(roadkill_count > 0),
+    aes(x = pct_forest, y = roadkill_count / len_km),
+    color = primary_color,
+    alpha = 0.3,
+    size = 1.5
+  ) +
+  geom_ribbon(
+    data = newdata_forest,
+    aes(x = pct_forest, ymin = count_lower, ymax = count_upper),
+    alpha = 0.2,
+    fill = accent_color
+  ) +
+  geom_line(
+    data = newdata_forest,
+    aes(x = pct_forest, y = count_given_nonzero),
+    color = accent_color,
+    linewidth = 1.2
+  ) +
+  scale_y_log10() +
+  labs(
+    title = "C. How Much Roadkill? (Count Component)",
+    subtitle = "Forest has weak effect on intensity (nearly flat line)",
+    x = "% Forest within 500m",
+    y = "Roadkill Events per km"
+  ) +
+  theme_cohesive()
+
+# Plot 4: Road type intensity  
+p4 <- ggplot() +
+  geom_boxplot(
+    data = model_data %>% filter(roadkill_count > 0),
+    aes(x = road_type, y = roadkill_count / len_km),
+    fill = primary_color,
+    alpha = 0.6,
+    outlier.alpha = 0.3
+  ) +
+  geom_errorbar(
+    data = newdata_roadtype,
+    aes(x = road_type, ymin = count_lower, ymax = count_upper),
+    width = 0.2,
+    color = accent_color,
+    linewidth = 1
+  ) +
+  geom_point(
+    data = newdata_roadtype,
+    aes(x = road_type, y = count_given_nonzero),
+    color = accent_color,
+    size = 4
+  ) +
+  scale_y_log10() +
+  labs(
+    title = "D. How Much Roadkill? (Count Component)",
+    subtitle = "Road type also affects intensity, but less dramatically",
+    x = "Road Type",
+    y = "Roadkill Events per km"
+  ) +
+  theme_cohesive()
+
+(p1 + p2) / (p3 + p4) +
+  plot_annotation(
+    title = "Hurdle Model: Separating 'IF' from 'HOW MUCH'",
+    caption = "Green = observed data, Orange = model predictions with 95% CI. Top row shows OCCURRENCE (zero hurdle). Bottom row shows INTENSITY (count component, conditional on occurrence).",
+    theme = theme(
+      plot.title = element_text(size = 16, face = "bold", hjust = 0.5, color = text_dark),
+      plot.caption = element_text(size = 10, color = text_mid)
+    )
+  )
+```
+
+
 ### Hypothesis Testing
 
 ```{r}
@@ -1142,8 +1628,9 @@ forest_zero <- get_coef("zero_pct_forest")
 forest_count <- get_coef("count_pct_forest")
 residential_zero <- get_coef("zero_pct_residential")
 residential_count <- get_coef("count_pct_residential")
-major_zero <- get_coef("zero_road_typeMajor")
-major_count <- get_coef("count_road_typeMajor")
+# Since Major is the baseline, Minor shows the effect relative to Major
+minor_zero <- get_coef("zero_road_typeMinor")
+minor_count <- get_coef("count_road_typeMinor")
 speed_zero <- get_coef("zero_speed_limit")
 speed_count <- get_coef("count_speed_limit")
 ```
@@ -1208,11 +1695,11 @@ H2 Status: `r ifelse((forest_zero$P_value < 0.05 | forest_count$P_value < 0.05) 
 
 ::::: columns
 ::: column
-##### H3a: Major roads
+##### H3a: Minor roads (vs Major baseline)
 
-Occurrence: p = `r major_zero$P_value` `r major_zero$Sig` \| Intensity: p = `r major_count$P_value` `r major_count$Sig`
+Occurrence: p = `r minor_zero$P_value` `r minor_zero$Sig` \| Intensity: p = `r minor_count$P_value` `r minor_count$Sig`
 
-Major roads have `r ifelse(major_zero$Estimate > 0, "higher", "lower")` roadkill rates than minor roads.
+Minor roads have `r ifelse(minor_zero$Estimate > 0, "higher", "lower")` roadkill rates than major roads.
 :::
 
 ::: column
@@ -1223,7 +1710,7 @@ Occurrence: p = `r speed_zero$P_value` `r speed_zero$Sig` \| Intensity: p = `r s
 Speed limit `r ifelse(speed_zero$P_value < 0.05 | speed_count$P_value < 0.05, "significantly", "does not significantly")` affect `r ifelse(speed_zero$P_value < 0.05 | speed_count$P_value < 0.05, "s", "")` collision risk.
 :::
 
-H3 Status: `r ifelse((major_zero$P_value < 0.05 | major_count$P_value < 0.05) & (speed_zero$P_value < 0.05 | speed_count$P_value < 0.05), "**SUPPORTED**", "PARTIALLY SUPPORTED")`
+H3 Status: `r ifelse((minor_zero$P_value < 0.05 | minor_count$P_value < 0.05) & (speed_zero$P_value < 0.05 | speed_count$P_value < 0.05), "**SUPPORTED**", "PARTIALLY SUPPORTED")`
 :::::
 
 ------------------------------------------------------------------------
@@ -1233,35 +1720,37 @@ H3 Status: `r ifelse((major_zero$P_value < 0.05 | major_count$P_value < 0.05) & 
 ### Summary of Findings
 
 ```{r}
+#| label: summary-table-results
 #| echo: false
 
 summary_table <- tibble(
-  Hypothesis = c("H1: Traffic", "H2a: Forest", "H2b: Residential", "H3a: Major roads", "H3b: Speed"),
+  Hypothesis = c("H1: Traffic", "H2a: Forest", "H2b: Residential", "H3a: Minor roads", "H3b: Speed"),
   Occurrence = c(
     ifelse(traffic_zero$P_value < 0.05, ifelse(traffic_zero$Estimate > 0, "+", "−"), "NS"),
     ifelse(forest_zero$P_value < 0.05, ifelse(forest_zero$Estimate > 0, "+", "−"), "NS"),
     ifelse(residential_zero$P_value < 0.05, ifelse(residential_zero$Estimate > 0, "+", "−"), "NS"),
-    ifelse(major_zero$P_value < 0.05, ifelse(major_zero$Estimate > 0, "+", "−"), "NS"),
+    ifelse(minor_zero$P_value < 0.05, ifelse(minor_zero$Estimate > 0, "+", "−"), "NS"),
     ifelse(speed_zero$P_value < 0.05, ifelse(speed_zero$Estimate > 0, "+", "−"), "NS")
   ),
   Intensity = c(
     ifelse(traffic_count$P_value < 0.05, ifelse(traffic_count$Estimate > 0, "+", "−"), "NS"),
     ifelse(forest_count$P_value < 0.05, ifelse(forest_count$Estimate > 0, "+", "−"), "NS"),
     ifelse(residential_count$P_value < 0.05, ifelse(residential_count$Estimate > 0, "+", "−"), "NS"),
-    ifelse(major_count$P_value < 0.05, ifelse(major_count$Estimate > 0, "+", "−"), "NS"),
+    ifelse(minor_count$P_value < 0.05, ifelse(minor_count$Estimate > 0, "+", "−"), "NS"),
     ifelse(speed_count$P_value < 0.05, ifelse(speed_count$Estimate > 0, "+", "−"), "NS")
   ),
   Support = c(
     ifelse(traffic_zero$P_value < 0.05 | traffic_count$P_value < 0.05, "✓", "✗"),
     ifelse(forest_zero$P_value < 0.05 | forest_count$P_value < 0.05, "✓", "✗"),
     ifelse(residential_zero$P_value < 0.05 | residential_count$P_value < 0.05, "✓", "✗"),
-    ifelse(major_zero$P_value < 0.05 | major_count$P_value < 0.05, "✓", "✗"),
+    ifelse(minor_zero$P_value < 0.05 | minor_count$P_value < 0.05, "✓", "✗"),
     ifelse(speed_zero$P_value < 0.05 | speed_count$P_value < 0.05, "✓", "✗")
   )
 )
 
-knitr::kable(summary_table, caption = "Hypothesis Test Results (+ positive effect, − negative effect, NS not significant)")
+knitr::kable(summary_table, caption = "Hypothesis Test Results (+ positive effect, − negative effect, NS not significant; baseline: Major roads)")
 ```
+
 
 ### Policy Implications
 

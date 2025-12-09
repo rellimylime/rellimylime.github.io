@@ -307,6 +307,7 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#fit-model-to-real-data" id="toc-fit-model-to-real-data" class="nav-link" data-scroll-target="#fit-model-to-real-data">Fit Model to Real Data</a></li>
   <li><a href="#model-coefficients" id="toc-model-coefficients" class="nav-link" data-scroll-target="#model-coefficients">Model Coefficients</a></li>
+  <li><a href="#model-fit-to-data" id="toc-model-fit-to-data" class="nav-link" data-scroll-target="#model-fit-to-data">Model Fit to Data</a></li>
   <li><a href="#hypothesis-testing" id="toc-hypothesis-testing" class="nav-link" data-scroll-target="#hypothesis-testing">Hypothesis Testing</a></li>
   </ul></li>
   <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion">8. Discussion</a>
@@ -417,9 +418,9 @@ window.Quarto = {
 </tr>
 <tr class="even">
 <td><strong>H3a: Road infrastructure</strong></td>
-<td>Major roads</td>
-<td>+ occurrence, + intensity</td>
-<td>Higher speeds, more lanes</td>
+<td>Major roads (vs Major baseline)</td>
+<td>- occurrence, - intensity</td>
+<td>Lower speeds, fewer lanes than major roads</td>
 </tr>
 <tr class="odd">
 <td><strong>H3b: Speed</strong></td>
@@ -829,15 +830,36 @@ window.Quarto = {
 </section>
 <section id="model-specification" class="level3">
 <h3 class="anchored" data-anchor-id="model-specification">Model Specification</h3>
+<p>A <strong>hurdle model</strong> separates the data-generating process into two parts:</p>
+<p><strong>Part 1: Zero hurdle (Binary component)</strong></p>
+<p>Models whether any roadkill occurs on a road segment.</p>
 <p><span class="math display">\[
-P(Y_i = y) = \begin{cases}
-\pi_i &amp; \text{if } y = 0 \\
-(1 - \pi_i) \cdot f_{\text{NB}}(y; \mu_i, \theta) &amp; \text{if } y &gt; 0
-\end{cases}
+\begin{aligned}
+Z_i &amp;\sim \text{Binomial}(\pi_i) \\
+\text{logit}(\pi_i) &amp;= \alpha_0 + \alpha_1 \log(\text{AADT}_i) + \alpha_2 \text{Minor}_i\\
+&amp;\quad + \alpha_4 \text{Speed}_i + \alpha_5 \text{Forest}_i + \alpha_6 \text{Farm}_i \\
+&amp;\quad + \alpha_7 \text{Residential}_i + \alpha_8 \text{Park}_i
+\end{aligned}
 \]</span></p>
-<p>Zero component (logistic regression): <span class="math inline">\(\text{logit}(\pi_i) = \alpha_0 + \alpha_1 \log(\text{AADT}_i) + \alpha_2 \text{RoadType}_i + \alpha_3 \text{Speed}_i + \alpha_4 \text{LandUse}_i\)</span></p>
-<p>Count component (negative binomial): <span class="math inline">\(\log(\mu_i) = \beta_0 + \beta_1 \log(\text{AADT}_i) + \beta_2 \text{RoadType}_i + \beta_3 \text{Speed}_i + \beta_4 \text{LandUse}_i + \log(\text{length}_i)\)</span></p>
-<p>Where <span class="math inline">\(\log\)</span>(<span class="math inline">\(_i\)</span>) is an offset controlling for road exposure.</p>
+<p>where:</p>
+<ul>
+<li><p><span class="math inline">\(Z_i = 1\)</span> if roadkill occurs, <span class="math inline">\(Z_i = 0\)</span> otherwise</p></li>
+<li><p><span class="math inline">\(\pi_i\)</span> is the probability of observing any roadkill on segment <span class="math inline">\(i\)</span></p></li>
+<li><p><span class="math inline">\(\text{Minor}_i\)</span> is an indicator for road type (0 or 1; reference level: Major roads (0))</p></li>
+</ul>
+<p><strong>Part 2: Count component (Positive counts only)</strong></p>
+<p>Models the number of roadkill events, conditional on at least one event occurring (<span class="math inline">\(Z_i = 1\)</span>).</p>
+<p><span class="math display">\[
+\begin{aligned}
+Y_i | Z_i = 1 &amp;\sim \text{Negative Binomial}(\mu_i, \theta) \\
+\log(\mu_i) &amp;= \beta_0 + \beta_1 \log(\text{AADT}_i) + \beta_2 \text{Minor}_i \\
+&amp;\quad + \beta_4 \text{Speed}_i + \beta_5 \text{Forest}_i + \beta_6 \text{Farm}_i \\
+&amp;\quad + \beta_7 \text{Residential}_i + \beta_8 \text{Park}_i + \log(\text{Length}_i)
+\end{aligned}
+\]</span></p>
+<p>where: - <span class="math inline">\(Y_i\)</span> is the count of roadkill events on segment <span class="math inline">\(i\)</span> - <span class="math inline">\(\mu_i\)</span> is the expected count given occurrence - <span class="math inline">\(\theta\)</span> is the dispersion parameter - <span class="math inline">\(\log(\text{Length}_i)\)</span> is an offset controlling for road segment exposure</p>
+<p><strong>Why Negative Binomial?</strong></p>
+<p>Our data show overdispersion (Variance/Mean = 2.71), which violates the Poisson assumption that variance equals the mean. The Negative Binomial distribution allows <span class="math inline">\(\text{Var}(Y_i) &gt; \mathbb{E}[Y_i]\)</span>.</p>
 <section id="model-validation-simulation-test" class="level4">
 <h4 class="anchored" data-anchor-id="model-validation-simulation-test">Model Validation: Simulation Test</h4>
 <p>Before applying to real data, we verify the model recovers known parameters from simulated data.</p>
@@ -845,55 +867,45 @@ P(Y_i = y) = \begin{cases}
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>n_sim <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>n_sim <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>x_sim <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n_sim, <span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="dv">2</span>)</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># True parameters for pscl::hurdle</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Zero component: models P(Y &gt; 0) in logit scale</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Positive coefficient = higher x → higher P(Y &gt; 0) → MORE roadkill</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>beta0_zero <span class="ot">&lt;-</span> <span class="fl">0.5</span>   </span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>beta1_zero <span class="ot">&lt;-</span> <span class="fl">0.3</span>   </span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Count component: models E[Y | Y &gt; 0] in log scale  </span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>beta0_count <span class="ot">&lt;-</span> <span class="fl">1.0</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>beta1_count <span class="ot">&lt;-</span> <span class="fl">0.15</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> <span class="fl">2.0</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the zero hurdle: P(Y &gt; 0)</span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>logit_prob_nonzero <span class="ot">&lt;-</span> beta0_zero <span class="sc">+</span> beta1_zero <span class="sc">*</span> x_sim</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>prob_nonzero <span class="ot">&lt;-</span> <span class="fu">plogis</span>(logit_prob_nonzero)</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize output</span></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>y_sim <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, n_sim)</span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co"># For each observation</span></span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n_sim) {</span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Step 1: Does the hurdle succeed? (Is Y &gt; 0?)</span></span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  hurdle_success <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">1</span>, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> prob_nonzero[i])</span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (hurdle_success <span class="sc">==</span> <span class="dv">1</span>) {</span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Step 2: Generate truncated count (Y | Y &gt; 0)</span></span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>    lambda_i <span class="ot">&lt;-</span> <span class="fu">exp</span>(beta0_count <span class="sc">+</span> beta1_count <span class="sc">*</span> x_sim[i])</span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">repeat</span> {</span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>      y_candidate <span class="ot">&lt;-</span> <span class="fu">rnbinom</span>(<span class="dv">1</span>, <span class="at">mu =</span> lambda_i, <span class="at">size =</span> theta)</span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (y_candidate <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>        y_sim[i] <span class="ot">&lt;-</span> y_candidate</span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span></span>
-<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>      }</span>
-<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>  <span class="co"># else: y_sim[i] stays 0</span></span>
-<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>sim_data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> x_sim, <span class="at">y =</span> y_sim)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># True parameters for hurdle model</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>beta0_zero <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">0.5</span>   <span class="co"># Zero component models P(Y &gt; 0)</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>beta1_zero <span class="ot">&lt;-</span> <span class="fl">0.3</span>    </span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>beta0_count <span class="ot">&lt;-</span> <span class="fl">0.5</span>   <span class="co"># Count component models E[Y | Y &gt; 0]</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>beta1_count <span class="ot">&lt;-</span> <span class="fl">0.2</span>   </span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> <span class="fl">1.5</span>         <span class="co"># Dispersion parameter</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate binary outcomes (does roadkill occur?)</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>logit_prob_nonzero <span class="ot">&lt;-</span> beta0_zero <span class="sc">+</span> beta1_zero <span class="sc">*</span> x_sim</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>prob_nonzero <span class="ot">&lt;-</span> <span class="fu">plogis</span>(logit_prob_nonzero)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>z_sim <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n_sim, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> prob_nonzero)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate positive counts for non-zero cases</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>mu_untruncated <span class="ot">&lt;-</span> <span class="fu">exp</span>(beta0_count <span class="sc">+</span> beta1_count <span class="sc">*</span> x_sim)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>y_counts <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n_sim)</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate all counts (will be zeroed out where z_sim == 0)</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>temp_counts <span class="ot">&lt;-</span> <span class="fu">rnbinom</span>(n_sim, <span class="at">mu =</span> mu_untruncated, <span class="at">size =</span> theta)</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Truncate at 1 (reject zeros, replace with next draw)</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span>(<span class="fu">any</span>(temp_counts <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> z_sim <span class="sc">==</span> <span class="dv">1</span>)) {</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>  need_redraw <span class="ot">&lt;-</span> (temp_counts <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> z_sim <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  temp_counts[need_redraw] <span class="ot">&lt;-</span> <span class="fu">rnbinom</span>(<span class="fu">sum</span>(need_redraw), </span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">mu =</span> mu_untruncated[need_redraw], </span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">size =</span> theta)</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>y_sim <span class="ot">&lt;-</span> temp_counts <span class="sc">*</span> z_sim  <span class="co"># Multiply by occurrence (zeros out non-occurrences)</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>sim_data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> x_sim, <span class="at">y =</span> y_sim)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p>Simulated data characteristics:</p>
 <blockquote class="blockquote">
 <ul>
-<li>Zero rate: 4.4%</li>
-<li>Mean count (all): 12.918</li>
-<li>Mean count (non-zero only): 13.513</li>
+<li>Zero rate: 9%</li>
+<li>Mean count (all): 12.864</li>
+<li>Mean count (non-zero only): 14.131</li>
 </ul>
 </blockquote>
 <div class="cell">
@@ -910,6 +922,26 @@ P(Y_i = y) = \begin{cases}
 <section id="parameter-recovery-check" class="level4">
 <h4 class="anchored" data-anchor-id="parameter-recovery-check">Parameter recovery check</h4>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check parameter</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>zero_intercept <span class="ot">&lt;-</span> sim_coefs[<span class="st">"zero_(Intercept)"</span>]</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>zero_slope <span class="ot">&lt;-</span> sim_coefs[<span class="st">"zero_x"</span>]</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>count_intercept <span class="ot">&lt;-</span> sim_coefs[<span class="st">"count_(Intercept)"</span>]</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>count_slope <span class="ot">&lt;-</span> sim_coefs[<span class="st">"count_x"</span>]</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>recovery_table <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">Component =</span> <span class="fu">c</span>(<span class="st">"Zero"</span>, <span class="st">"Zero"</span>, <span class="st">"Count"</span>, <span class="st">"Count"</span>),</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">Parameter =</span> <span class="fu">c</span>(<span class="st">"Intercept"</span>, <span class="st">"Slope"</span>, <span class="st">"Intercept"</span>, <span class="st">"Slope"</span>),</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">True Value</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(beta0_zero, beta1_zero, beta0_count, beta1_count),</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">Estimated =</span> <span class="fu">round</span>(<span class="fu">c</span>(zero_intercept, zero_slope, count_intercept, count_slope), <span class="dv">3</span>),</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">Difference =</span> <span class="fu">round</span>(<span class="fu">c</span>(zero_intercept, zero_slope, count_intercept, count_slope) <span class="sc">-</span> </span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">c</span>(beta0_zero, beta1_zero, beta0_count, beta1_count), <span class="dv">3</span>)</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Recovered =</span> <span class="fu">ifelse</span>(<span class="fu">abs</span>(Difference) <span class="sc">&lt;</span> <span class="fl">0.2</span>, <span class="st">"✓"</span>, <span class="st">"✗"</span>))</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(recovery_table, <span class="at">caption =</span> <span class="st">"Parameter Recovery Check: Simulated Data"</span>, <span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>Parameter Recovery Check: Simulated Data</caption>
@@ -927,33 +959,33 @@ P(Y_i = y) = \begin{cases}
 <tr class="odd">
 <td style="text-align: left;">Zero</td>
 <td style="text-align: left;">Intercept</td>
-<td style="text-align: right;">0.50</td>
-<td style="text-align: right;">0.848</td>
-<td style="text-align: right;">0.348</td>
-<td style="text-align: left;">✗</td>
+<td style="text-align: right;">-0.5</td>
+<td style="text-align: right;">-0.342</td>
+<td style="text-align: right;">0.158</td>
+<td style="text-align: left;">✓</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Zero</td>
 <td style="text-align: left;">Slope</td>
-<td style="text-align: right;">0.30</td>
-<td style="text-align: right;">0.168</td>
-<td style="text-align: right;">-0.132</td>
+<td style="text-align: right;">0.3</td>
+<td style="text-align: right;">0.279</td>
+<td style="text-align: right;">-0.021</td>
 <td style="text-align: left;">✓</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Count</td>
 <td style="text-align: left;">Intercept</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">0.410</td>
-<td style="text-align: right;">-0.590</td>
-<td style="text-align: left;">✗</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">0.493</td>
+<td style="text-align: right;">-0.007</td>
+<td style="text-align: left;">✓</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Count</td>
 <td style="text-align: left;">Slope</td>
-<td style="text-align: right;">0.15</td>
-<td style="text-align: right;">0.283</td>
-<td style="text-align: right;">0.133</td>
+<td style="text-align: right;">0.2</td>
+<td style="text-align: right;">0.202</td>
+<td style="text-align: right;">0.002</td>
 <td style="text-align: left;">✓</td>
 </tr>
 </tbody>
@@ -962,71 +994,10 @@ P(Y_i = y) = \begin{cases}
 </div>
 <p>Conclusion: Model successfully recovers known parameters (differences &lt; 0.2). We can apply it to real data with confidence.</p>
 <div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create prediction grid</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>x_grid <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(sim_data<span class="sc">$</span>x), <span class="fu">max</span>(sim_data<span class="sc">$</span>x), <span class="at">length.out =</span> <span class="dv">100</span>)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>pred_data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> x_grid)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Get hurdle model predictions</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co"># type = "zero" returns P(Y &gt; 0) directly (NOT P(Y = 0)!)</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>pred_data<span class="sc">$</span>prob_nonzero <span class="ot">&lt;-</span> <span class="fu">predict</span>(sim_hurdle, <span class="at">newdata =</span> pred_data, <span class="at">type =</span> <span class="st">"zero"</span>)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Expected count given non-zero</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>pred_data<span class="sc">$</span>count_given_nonzero <span class="ot">&lt;-</span> <span class="fu">predict</span>(sim_hurdle, <span class="at">newdata =</span> pred_data, <span class="at">type =</span> <span class="st">"count"</span>)</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot 1: Zero hurdle component</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>p_sim1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add binned proportions to show empirical pattern</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary_bin</span>(</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> sim_data,</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> <span class="fu">as.numeric</span>(y <span class="sc">&gt;</span> <span class="dv">0</span>)),</span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">fun =</span> mean,</span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom =</span> <span class="st">"point"</span>,</span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">bins =</span> <span class="dv">20</span>,</span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> primary_color,</span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">3</span>,</span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.6</span></span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add the prediction line</span></span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> pred_data, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> prob_nonzero), </span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> accent_color, <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add confidence ribbon (optional)</span></span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(</span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> pred_data,</span>
-<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> x, </span>
-<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>        <span class="at">ymin =</span> <span class="fu">pmax</span>(<span class="dv">0</span>, prob_nonzero <span class="sc">-</span> <span class="fl">0.05</span>),  <span class="co"># approximate CI</span></span>
-<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>        <span class="at">ymax =</span> <span class="fu">pmin</span>(<span class="dv">1</span>, prob_nonzero <span class="sc">+</span> <span class="fl">0.05</span>)),</span>
-<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.2</span>,</span>
-<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> accent_color</span>
-<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"A. Hurdle Component: Probability of Non-Zero"</span>,</span>
-<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Points show binned proportions, line shows model predictions"</span>,</span>
-<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Predictor (x)"</span>, </span>
-<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Probability of Roadkill Occurrence"</span></span>
-<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
-<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_cohesive</span>()</span>
-<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot 2: Count component (conditional on non-zero)</span></span>
-<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>p_sim2 <span class="ot">&lt;-</span> sim_data <span class="sc">%&gt;%</span></span>
-<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(y <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), <span class="at">color =</span> primary_color, <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
-<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> pred_data, <span class="at">color =</span> accent_color, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> count_given_nonzero),</span>
-<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"B. Count Component: Intensity Given Presence"</span>,</span>
-<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Line shows fitted hurdle model predictions"</span>,</span>
-<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Predictor (x)"</span>, <span class="at">y =</span> <span class="st">"Count (y | y &gt; 0)"</span>) <span class="sc">+</span></span>
-<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_cohesive</span>()</span>
-<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a>p_sim1 <span class="sc">+</span> p_sim2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/sim-visualization-1.png" class="img-fluid figure-img" width="960"></p>
+<p><img src="index_files/figure-html/sim-visualization2-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1083,9 +1054,9 @@ P(Y_i = y) = \begin{cases}
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">count_(Intercept)</td>
-<td style="text-align: right;">-3.1605</td>
-<td style="text-align: right;">0.5252</td>
-<td style="text-align: right;">-6.02</td>
+<td style="text-align: right;">-1.7814</td>
+<td style="text-align: right;">0.2828</td>
+<td style="text-align: right;">-6.30</td>
 <td style="text-align: right;">0.00000</td>
 <td style="text-align: left;">***</td>
 </tr>
@@ -1098,20 +1069,20 @@ P(Y_i = y) = \begin{cases}
 <td style="text-align: left;">.</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">count_road_typeMajor</td>
-<td style="text-align: right;">1.3791</td>
-<td style="text-align: right;">0.4439</td>
-<td style="text-align: right;">3.11</td>
-<td style="text-align: right;">0.00189</td>
-<td style="text-align: left;">**</td>
+<td style="text-align: left;">count_road_typeMinor</td>
+<td style="text-align: right;">-0.8553</td>
+<td style="text-align: right;">0.0907</td>
+<td style="text-align: right;">-9.43</td>
+<td style="text-align: right;">0.00000</td>
+<td style="text-align: left;">***</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">count_road_typeMinor</td>
-<td style="text-align: right;">0.5238</td>
-<td style="text-align: right;">0.4531</td>
-<td style="text-align: right;">1.16</td>
-<td style="text-align: right;">0.24768</td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">count_road_typeOther</td>
+<td style="text-align: right;">-1.3791</td>
+<td style="text-align: right;">0.4439</td>
+<td style="text-align: right;">-3.11</td>
+<td style="text-align: right;">0.00189</td>
+<td style="text-align: left;">**</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">count_speed_limit</td>
@@ -1142,7 +1113,7 @@ P(Y_i = y) = \begin{cases}
 <td style="text-align: right;">0.0027</td>
 <td style="text-align: right;">0.0028</td>
 <td style="text-align: right;">0.96</td>
-<td style="text-align: right;">0.33541</td>
+<td style="text-align: right;">0.33542</td>
 <td style="text-align: left;"></td>
 </tr>
 <tr class="odd">
@@ -1150,14 +1121,14 @@ P(Y_i = y) = \begin{cases}
 <td style="text-align: right;">0.0014</td>
 <td style="text-align: right;">0.0041</td>
 <td style="text-align: right;">0.34</td>
-<td style="text-align: right;">0.73732</td>
+<td style="text-align: right;">0.73733</td>
 <td style="text-align: left;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">zero_(Intercept)</td>
-<td style="text-align: right;">-5.8268</td>
-<td style="text-align: right;">0.1567</td>
-<td style="text-align: right;">-37.19</td>
+<td style="text-align: right;">-4.2640</td>
+<td style="text-align: right;">0.1144</td>
+<td style="text-align: right;">-37.29</td>
 <td style="text-align: right;">0.00000</td>
 <td style="text-align: left;">***</td>
 </tr>
@@ -1170,20 +1141,20 @@ P(Y_i = y) = \begin{cases}
 <td style="text-align: left;"></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">zero_road_typeMajor</td>
-<td style="text-align: right;">1.5628</td>
-<td style="text-align: right;">0.1124</td>
-<td style="text-align: right;">13.90</td>
+<td style="text-align: left;">zero_road_typeMinor</td>
+<td style="text-align: right;">-1.2231</td>
+<td style="text-align: right;">0.0379</td>
+<td style="text-align: right;">-32.24</td>
 <td style="text-align: right;">0.00000</td>
 <td style="text-align: left;">***</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">zero_road_typeMinor</td>
-<td style="text-align: right;">0.3397</td>
-<td style="text-align: right;">0.1161</td>
-<td style="text-align: right;">2.93</td>
-<td style="text-align: right;">0.00344</td>
-<td style="text-align: left;">**</td>
+<td style="text-align: left;">zero_road_typeOther</td>
+<td style="text-align: right;">-1.5628</td>
+<td style="text-align: right;">0.1124</td>
+<td style="text-align: right;">-13.90</td>
+<td style="text-align: right;">0.00000</td>
+<td style="text-align: left;">***</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">zero_speed_limit</td>
@@ -1238,6 +1209,19 @@ P(Y_i = y) = \begin{cases}
 </ul>
 </section>
 </section>
+<section id="model-fit-to-data" class="level3">
+<h3 class="anchored" data-anchor-id="model-fit-to-data">Model Fit to Data</h3>
+<p>This visualization shows how well our hurdle model captures the observed roadkill patterns.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/model-predictions-vs-data-1.png" class="img-fluid figure-img" width="1344"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
 <section id="hypothesis-testing" class="level3">
 <h3 class="anchored" data-anchor-id="hypothesis-testing">Hypothesis Testing</h3>
 <section id="h1-traffic-volume-effect" class="level4">
@@ -1281,7 +1265,7 @@ P(Y_i = y) = \begin{cases}
 </div><div class="column">
 <section id="h2b-residential-development" class="level5">
 <h5 class="anchored" data-anchor-id="h2b-residential-development">H2b: Residential development</h5>
-<p>Occurrence: p = 0 *** | Intensity: p = 0.33541</p>
+<p>Occurrence: p = 0 *** | Intensity: p = 0.33542</p>
 <p>Residential areas show negative association (as predicted).</p>
 </section>
 </div><p>H2 Status: <strong>SUPPORTED</strong></p>
@@ -1291,10 +1275,10 @@ P(Y_i = y) = \begin{cases}
 <h4 class="anchored" data-anchor-id="h3-road-characteristics">H3: Road Characteristics</h4>
 <div class="columns">
 <div class="column">
-<section id="h3a-major-roads" class="level5">
-<h5 class="anchored" data-anchor-id="h3a-major-roads">H3a: Major roads</h5>
-<p>Occurrence: p = 0 *** | Intensity: p = 0.00189 **</p>
-<p>Major roads have higher roadkill rates than minor roads.</p>
+<section id="h3a-minor-roads-vs-major-baseline" class="level5">
+<h5 class="anchored" data-anchor-id="h3a-minor-roads-vs-major-baseline">H3a: Minor roads (vs Major baseline)</h5>
+<p>Occurrence: p = 0 *** | Intensity: p = 0 ***</p>
+<p>Minor roads have lower roadkill rates than major roads.</p>
 </section>
 </div><div class="column">
 <section id="h3b-speed-limit" class="level5">
@@ -1315,7 +1299,7 @@ P(Y_i = y) = \begin{cases}
 <div class="cell">
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
-<caption>Hypothesis Test Results (+ positive effect, − negative effect, NS not significant)</caption>
+<caption>Hypothesis Test Results (+ positive effect, − negative effect, NS not significant; baseline: Major roads)</caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Hypothesis</th>
@@ -1344,9 +1328,9 @@ P(Y_i = y) = \begin{cases}
 <td style="text-align: left;">✓</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">H3a: Major roads</td>
-<td style="text-align: left;">+</td>
-<td style="text-align: left;">+</td>
+<td style="text-align: left;">H3a: Minor roads</td>
+<td style="text-align: left;">−</td>
+<td style="text-align: left;">−</td>
 <td style="text-align: left;">✓</td>
 </tr>
 <tr class="odd">

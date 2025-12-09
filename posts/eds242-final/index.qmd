@@ -5,7 +5,7 @@ author: Emily Miller
 date: 2024-12-06
 categories: [MEDS, Climate Science, Data Science, Ethics]
 format: html
-image: eds242-final-cover2.jpg
+image: eds242-final-cover2.jpeg
 citation:
   url: https://rellimylime.github.io/posts/eds242-final/
 bibliography: references.bib

@@ -766,81 +766,6 @@ knitr::kable(summary_stats, caption = "Final Dataset Characteristics")
 # 5. Exploratory Analysis
 
 ::: panel-tabset
-```{r}
-#| label: eda-plots
-#| echo: false
-#| fig-width: 14
-#| fig-height: 10
-
-library(patchwork)
-
-# Plot 1: Distribution histogram
-p1 <- ggplot(model_data, aes(x = roadkill_count)) +
-  geom_histogram(binwidth = 1, fill = primary_color, color = text_dark, alpha = 0.8) +
-  scale_y_continuous(labels = scales::comma) +
-  labs(
-    title = "A. Distribution of Roadkill Counts",
-    subtitle = "High zero-inflation evident",
-    x = "Roadkill Events per Segment", 
-    y = "Frequency"
-  ) +
-  theme_cohesive()
-
-# Plot 2: Traffic volume
-p2 <- ggplot(model_data, aes(x = AADT, y = roadkill_count)) +
-  geom_hex(bins = 50, alpha = 0.8) +
-  geom_smooth(method = "loess", color = accent_color, fill = accent_color, 
-              se = TRUE, alpha = 0.3, linewidth = 1.2) +
-  scale_x_log10(labels = scales::comma) +
-  scale_fill_gradient(low = bg_warm, high = neutral_color, 
-                      name = "Count", trans = "log10") +
-  labs(
-    title = "B. Roadkill vs Traffic Volume",
-    subtitle = "Positive relationship visible",
-    x = "AADT (log scale, vehicles/day)", 
-    y = "Roadkill Count"
-  ) +
-  theme_cohesive() +
-  theme(legend.position = "right")
-
-# Plot 3: Boxplot by road type (this one is fine but needs better colors)
-p3 <- ggplot(model_data %>% filter(roadkill_count > 0),
-             aes(x = road_type, y = roadkill_count, fill = road_type)) +
-  geom_boxplot(alpha = 0.7, show.legend = FALSE, outlier.alpha = 0.3) +
-  scale_fill_manual(values = c(
-    "Major" = accent_color,
-    "Minor" = primary_color,
-    "Other" = text_mid
-  )) +
-  scale_y_log10() +
-  labs(
-    title = "C. Roadkill by Road Type",
-    subtitle = "Among segments with at least one event",
-    x = "Road Classification", 
-    y = "Roadkill Count (log scale)"
-  ) +
-  theme_cohesive()
-
-# Plot 4: Road length - ALSO use hexbin
-p4 <- ggplot(model_data, aes(x = len_km, y = roadkill_count)) +
-  geom_hex(bins = 50, alpha = 0.8) +
-  geom_smooth(method = "loess", color = neutral_color, fill = neutral_color,
-              se = TRUE, alpha = 0.3, linewidth = 1.2) +
-  scale_x_log10() +
-  scale_fill_gradient(low = bg_warm, high = primary_color, 
-                      name = "Count", trans = "log10") +
-  labs(
-    title = "D. Roadkill vs Road Length",
-    subtitle = "Longer segments have more events",
-    x = "Segment Length (km, log scale)", 
-    y = "Roadkill Count"
-  ) +
-  theme_cohesive() +
-  theme(legend.position = "right")
-
-# Combine plots
-# (p1 + p2) / (p3 + p4)
-```
 
 ```{r}
 #| label: predictor-distributions
@@ -931,11 +856,14 @@ p_roadtype <- model_data %>%
 
 ## Key patterns
 
-1.  **Panel A (roadkill distribution)**: Massive spike at zero (83% of segments) confirms high zero-inflation, with remaining segments showing right-skewed counts
-2.  **Panel B (traffic vs roadkill)**: Clear positive relationship - higher AADT correlates with more roadkill events (visible trend in hexbin density)
-3.  **Panel C (road type)**: Major roads show higher roadkill counts than minor roads among segments with at least one event
-4.  **Panel D (road length)**: Longer segments accumulate more events, confirming the need for a length offset in our model
-5.  **Predictor distributions**: Traffic volume and road length are log-normally distributed; speed limits are bimodal (\~50 km/h or missing); road network is dominated by Minor roads; land use shows farmland dominance with high variability in forest, residential, and park coverage
+**Predictor Distributions:**
+
+1. **Traffic volume** (top left): Log-normally distributed, centered around 1,000-10,000 vehicles/day, justifying log-transformation in the model
+2. **Road segment length** (top right): Also log-normally distributed (0.01-1 km typical), supporting the use of a length offset
+3. **Speed limits** (middle left): Speed limits show two distinct clusters - most roads either low-speed (~50 km/h) or have missing values
+4. **Road types** (middle right): Network dominated by Minor roads (~150,000 segments), with Major roads (~50,000) and Other types (~5,000) less common
+5. **Land use composition** (bottom): Within 500m buffers, farmland shows right-skewed distribution (0-20% typical), forest is more evenly distributed across 0-60%, parks are highly concentrated at 0% (rare feature), and residential areas are either sparse or dense with little in between
+
 :::
 
 These patterns validate our hypotheses from the DAG. Now let's build a statistical model to quantify these effects.
@@ -967,8 +895,8 @@ Models whether any roadkill occurs on a road segment.
 
 $$
 \begin{aligned}
-Z_i &\sim \text{Binomial}(\pi_i) \\
-\text{logit}(\pi_i) &= \alpha_0 + \alpha_1 \log(\text{AADT}_i) + \alpha_2 \text{Minor}_i\\
+Z_i &\sim \text{Binomial}(p_i) \\
+\text{logit}(p_i) &= \alpha_0 + \alpha_1 \log(\text{AADT}_i) + \alpha_2 \text{Minor}_i\\
 &\quad + \alpha_4 \text{Speed}_i + \alpha_5 \text{Forest}_i + \alpha_6 \text{Farm}_i \\
 &\quad + \alpha_7 \text{Residential}_i + \alpha_8 \text{Park}_i
 \end{aligned}
@@ -978,7 +906,7 @@ where:
 
 -   $Z_i = 1$ if roadkill occurs, $Z_i = 0$ otherwise
 
--   $\pi_i$ is the probability of observing any roadkill on segment $i$
+-   $\p_i$ is the probability of observing any roadkill on segment $i$
 
 -   $\text{Minor}_i$ is an indicator for road type (0 or 1; reference level: Major roads (0))
 
@@ -1035,7 +963,7 @@ z_sim <- rbinom(n_sim, size = 1, prob = prob_nonzero)
 mu_untruncated <- exp(beta0_count + beta1_count * x_sim)
 y_counts <- numeric(n_sim)
 
-# Generate all counts (will be zeroed out where z_sim == 0)
+# Generate all counts 
 temp_counts <- rnbinom(n_sim, mu = mu_untruncated, size = theta)
 # Truncate at 1 (reject zeros, replace with next draw)
 while(any(temp_counts == 0 & z_sim == 1)) {
@@ -1093,7 +1021,7 @@ knitr::kable(recovery_table, caption = "Parameter Recovery Check: Simulated Data
 
 Conclusion: Model successfully recovers known parameters (differences \< 0.2). We can apply it to real data with confidence.
 
-We use our predictions to calculate the standard error
+Next, we use our model predictions to calculate the standard error.
 
 ```{r}
 #| label: simulation-predictions
@@ -1233,7 +1161,7 @@ p_sim1 + p_sim2 +
   )
 ```
 
-**Key Takeaway**: The simulation proves our modeling framework works—when we feed the hurdle model data generated from known parameters, it successfully recovers those parameters. This gives us confidence to apply it to real data where the true parameters are unknown.
+**Key Takeaway**: When we feed the hurdle model data generated from known parameters, it successfully recovers those parameters. This gives us confidence to apply it to real data where the true parameters are unknown.
 
 ------------------------------------------------------------------------
 
@@ -1243,6 +1171,7 @@ p_sim1 + p_sim2 +
 
 ```{r}
 #| label: fit-model
+#| code-fold: true
 
 # Full model with traffic, road characteristics, and land use
 hurdle_model <- hurdle(
@@ -1267,6 +1196,7 @@ hurdle_model <- hurdle(
 
 ```{r}
 #| label: results-table
+#| code-fold: true
 #| echo: false
 
 # Extract coefficients
@@ -1304,11 +1234,21 @@ knitr::kable(results, caption = "Hurdle Model Results")
 This visualization shows how well our hurdle model captures the observed roadkill patterns.
 
 ```{r}
-#| label: model-predictions-vs-data
+#| label: calculate-predictions
 #| fig-width: 14
 #| fig-height: 10
 #| echo: false
 
+# Extract model coefficients
+coef_zero <- coef(hurdle_model, model = "zero")
+coef_count <- coef(hurdle_model, model = "count")
+n_zero <- length(coef_zero)
+vcov_full <- vcov(hurdle_model)
+vcov_zero <- vcov_full[1:n_zero, 1:n_zero]
+vcov_count <- vcov_full[(n_zero+1):(n_zero+length(coef_count)), 
+                        (n_zero+1):(n_zero+length(coef_count))]
+
+# Create prediction data
 forest_seq <- seq(0, max(model_data$pct_forest), length.out = 100)
 
 newdata_forest <- tibble(
@@ -1318,23 +1258,12 @@ newdata_forest <- tibble(
   speed_limit = median(model_data$speed_limit),
   pct_farmland = median(model_data$pct_farmland),
   pct_residential = median(model_data$pct_residential),
-  pct_park = median(model_data$pct_park),
-  len_km = 1,
-  log_len_km = 0
+  pct_park = median(model_data$pct_park)
 )
 
-# Create design matrix for forest predictions
-X_forest <- model.matrix(~ log_AADT + road_type + speed_limit + 
-                          pct_forest + pct_farmland + pct_residential + pct_park,
+# Create design matrix using newdata_forest
+X_forest <- model.matrix(~ log_AADT + road_type + speed_limit +         pct_forest + pct_farmland + pct_residential + pct_park,
                         data = newdata_forest)
-
-# Extract coefficients and vcov
-coef_zero <- coef(hurdle_model, model = "zero")
-coef_count <- coef(hurdle_model, model = "count")
-n_zero <- length(coef_zero)
-vcov_full <- vcov(hurdle_model)
-vcov_zero <- vcov_full[1:n_zero, 1:n_zero]
-vcov_count <- vcov_full[(n_zero+1):(n_zero+length(coef_count)),                      (n_zero+1):(n_zero+length(coef_count))]
 
 # Zero component predictions with CI
 logit_pred <- X_forest %*% coef_zero
@@ -1358,7 +1287,7 @@ newdata_forest <- newdata_forest %>%
     count_upper = exp(log_pred + 1.96 * se_log)
   )
 
-# === ROAD TYPE EFFECT PREDICTIONS ===
+# Road type effect predictions
 newdata_roadtype <- tibble(
   road_type = factor(c("Major", "Minor", "Other"), 
                      levels = levels(factor(model_data$road_type))),
@@ -1397,13 +1326,26 @@ newdata_roadtype <- newdata_roadtype %>%
     count_lower = exp(log_pred_rt - 1.96 * se_log_rt),
     count_upper = exp(log_pred_rt + 1.96 * se_log_rt)
   )
+
+# Prepare empirical data for comparison
+empirical_roadtype_occurrence <- model_data %>%
+  group_by(road_type) %>%
+  summarise(
+    empirical_prob = mean(roadkill_count > 0),
+    .groups = "drop"
+  )
+
+empirical_roadtype_intensity <- model_data %>%
+  filter(roadkill_count > 0) %>%
+  mutate(rate_per_km = roadkill_count / len_km)
 ```
 
 ```{r}
-#| label: model-predictions-vs-data-viz
+#| label: plot-occurrence-row
+#| code-fold: true
 #| fig-width: 14
-#| fig-height: 10
-#| echo: false
+#| fig-height: 5
+
 # Plot 1: Forest effect on occurrence
 p1 <- ggplot() +
   stat_summary_bin(
@@ -1437,28 +1379,23 @@ p1 <- ggplot() +
   ) +
   theme_cohesive()
 
-# Plot 2: Road type occurrence
-empirical_roadtype <- model_data %>%
-  group_by(road_type) %>%
-  summarise(
-    empirical_prob = mean(roadkill_count > 0),
-    .groups = "drop"
-  )
-
+# Plot 2: Road type occurrence (consistent style with Plot 4)
 p2 <- ggplot() +
-  geom_col(
-    data = empirical_roadtype,
+  # Background: observed proportions as semi-transparent points
+  geom_point(
+    data = empirical_roadtype_occurrence,
     aes(x = road_type, y = empirical_prob),
-    fill = primary_color,
-    alpha = 0.6,
-    width = 0.7
+    color = primary_color,
+    alpha = 0.4,
+    size = 8
   ) +
+  # Model predictions with error bars
   geom_errorbar(
     data = newdata_roadtype,
     aes(x = road_type, ymin = prob_lower, ymax = prob_upper),
     width = 0.2,
     color = accent_color,
-    linewidth = 1
+    linewidth = 1.2
   ) +
   geom_point(
     data = newdata_roadtype,
@@ -1474,6 +1411,15 @@ p2 <- ggplot() +
     y = "Probability of Any Roadkill"
   ) +
   theme_cohesive()
+
+p1 + p2
+```
+
+```{r}
+#| label: plot-intensity-row
+#| code-fold: true
+#| fig-width: 14
+#| fig-height: 5
 
 # Plot 3: Forest effect on intensity
 p3 <- ggplot() +
@@ -1505,21 +1451,25 @@ p3 <- ggplot() +
   ) +
   theme_cohesive()
 
-# Plot 4: Road type intensity  
+# Plot 4: Road type intensity (consistent style with Plot 2)
 p4 <- ggplot() +
-  geom_boxplot(
-    data = model_data %>% filter(roadkill_count > 0),
-    aes(x = road_type, y = roadkill_count / len_km),
-    fill = primary_color,
-    alpha = 0.6,
-    outlier.alpha = 0.3
+  # Background: jittered observed data points
+  geom_jitter(
+    data = empirical_roadtype_intensity,
+    aes(x = road_type, y = rate_per_km),
+    color = primary_color,
+    alpha = 0.2,
+    width = 0.15,
+    height = 0,
+    size = 1.5
   ) +
+  # Model predictions with error bars
   geom_errorbar(
     data = newdata_roadtype,
     aes(x = road_type, ymin = count_lower, ymax = count_upper),
     width = 0.2,
     color = accent_color,
-    linewidth = 1
+    linewidth = 1.2
   ) +
   geom_point(
     data = newdata_roadtype,
@@ -1536,16 +1486,10 @@ p4 <- ggplot() +
   ) +
   theme_cohesive()
 
-(p1 + p2) / (p3 + p4) +
-  plot_annotation(
-    title = "Hurdle Model: Separating 'IF' from 'HOW MUCH'",
-    caption = "Green = observed data, Orange = model predictions with 95% CI. Top row shows OCCURRENCE (zero hurdle). Bottom row shows INTENSITY (count component, conditional on occurrence).",
-    theme = theme(
-      plot.title = element_text(size = 16, face = "bold", hjust = 0.5, color = text_dark),
-      plot.caption = element_text(size = 10, color = text_mid)
-    )
-  )
+p3 + p4
 ```
+
+**Figure: Hurdle Model Fit**. Green = observed data, Orange = model predictions with 95% CI. Top row shows OCCURRENCE (zero hurdle): whether roadkill happens at all. Bottom row shows INTENSITY (count component): how many events occur, conditional on occurrence. Panels B and D now use consistent point + error bar styling for easy comparison between occurrence and intensity effects.
 
 ### Model Fit: Separating Occurrence from Intensity
 

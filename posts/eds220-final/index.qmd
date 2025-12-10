@@ -412,7 +412,7 @@ sm = plt.cm.ScalarMappable(
     cmap = 'YlOrRd',
     norm = plt.Normalize(vmin = vmin, vmax = vmax)
 )
-cbar_ax = fig.add_axes([0.25, 0.15, 0.5, 0.03])
+cbar_ax = fig.add_axes([0.25, 0.12, 0.5, 0.03])
 cbar = fig.colorbar(sm, cax = cbar_ax, orientation = 'horizontal')
 cbar.set_label('Percentile Rank (0-100)', fontsize = 14)
 

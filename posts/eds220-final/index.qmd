@@ -360,7 +360,7 @@ The Environmental Justice Index includes percentile rankings for various vulnera
 #| code-fold: true
 #| fig-cap: "Socioeconomic vulnerability comparison between fire areas"
 #| fig-width: 12
-#| fig-height: 8
+#| fig-height: 10
 
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize = (18, 8))
 

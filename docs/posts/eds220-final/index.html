@@ -380,7 +380,7 @@ div.csl-indent {
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Display as formatted table</span></span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>summary_df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div id="load-fire-perimeters" class="cell-output cell-output-display" data-execution_count="53">
+<div id="load-fire-perimeters" class="cell-output cell-output-display" data-execution_count="2">
 <div>
 
 
@@ -435,7 +435,7 @@ div.csl-indent {
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Display as formatted table</span></span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>crs_df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div id="crs-check" class="cell-output cell-output-display" data-execution_count="54">
+<div id="crs-check" class="cell-output cell-output-display" data-execution_count="3">
 <div>
 
 
@@ -496,7 +496,7 @@ div.csl-indent {
 <span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Display as formatted table</span></span>
 <span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>landsat_df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div id="load-landsat" class="cell-output cell-output-display" data-execution_count="55">
+<div id="load-landsat" class="cell-output cell-output-display" data-execution_count="4">
 <div>
 
 
@@ -584,7 +584,7 @@ div.csl-indent {
 <span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Display as formatted table</span></span>
 <span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>nan_df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div id="check-nan-values" class="cell-output cell-output-display" data-execution_count="57">
+<div id="check-nan-values" class="cell-output cell-output-display" data-execution_count="6">
 <div>
 
 
@@ -785,10 +785,10 @@ div.csl-indent {
 <section id="analyzing-socioeconomic-vulnerability" class="level3">
 <h3 class="anchored" data-anchor-id="analyzing-socioeconomic-vulnerability">Analyzing Socioeconomic Vulnerability</h3>
 <p>The Environmental Justice Index includes percentile rankings for various vulnerability indicators. Here we examine <code>EPL_POV200</code>, which represents the percentile rank of persons living below 200% of the federal poverty level—a measure of economic vulnerability.</p>
-<div id="cell-eji-vulnerability-map" class="cell" data-fig-height="10" data-fig-width="12" data-execution_count="13">
+<div id="cell-eji-vulnerability-map" class="cell" data-execution_count="13">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize <span class="op">=</span> (<span class="dv">18</span>, <span class="dv">8</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize <span class="op">=</span> (<span class="dv">18</span>, <span class="dv">12</span>))</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define variable to analyze</span></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>eji_variable <span class="op">=</span> <span class="st">'EPL_POV200'</span></span>
@@ -815,44 +815,42 @@ div.csl-indent {
 <span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>    edgecolor <span class="op">=</span> <span class="st">'black'</span>,</span>
 <span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>    linewidth <span class="op">=</span> <span class="fl">0.5</span></span>
 <span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'Low-Income Population</span><span class="ch">\n</span><span class="st">Palisades Fire Area'</span>,</span>
-<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>              fontsize <span class="op">=</span> <span class="dv">20</span>)</span>
-<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>ax1.axis(<span class="st">'off'</span>)</span>
-<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Eaton Fire area</span></span>
-<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>eji_clip_eaton_scaled.plot(</span>
-<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>    column <span class="op">=</span> eji_variable,</span>
-<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>    vmin <span class="op">=</span> vmin, vmax <span class="op">=</span> vmax,</span>
-<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>    cmap <span class="op">=</span> <span class="st">'YlOrRd'</span>,</span>
-<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>    legend <span class="op">=</span> <span class="va">False</span>,</span>
-<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>    ax <span class="op">=</span> ax2,</span>
-<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>    edgecolor <span class="op">=</span> <span class="st">'black'</span>,</span>
-<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a>    linewidth <span class="op">=</span> <span class="fl">0.5</span></span>
-<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">'Low-Income Population</span><span class="ch">\n</span><span class="st">Eaton Fire Area'</span>,</span>
-<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a>              fontsize <span class="op">=</span> <span class="dv">20</span>, fontweight <span class="op">=</span> <span class="st">'bold'</span>)</span>
-<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a>ax2.axis(<span class="st">'off'</span>)</span>
-<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a><span class="co"># Overall title</span></span>
-<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">'Percentile Rank of Low-Income Population in Fire-Affected Areas</span><span class="ch">\n</span><span class="st">(Income &lt;200</span><span class="sc">% F</span><span class="st">ederal Poverty Level)'</span>,</span>
-<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a>             fontsize <span class="op">=</span> <span class="dv">25</span>, fontweight <span class="op">=</span> <span class="st">'bold'</span>, y <span class="op">=</span> <span class="fl">0.98</span>)</span>
-<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a><span class="co"># Shared colorbar</span></span>
-<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a>sm <span class="op">=</span> plt.cm.ScalarMappable(</span>
-<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a>    cmap <span class="op">=</span> <span class="st">'YlOrRd'</span>,</span>
-<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a>    norm <span class="op">=</span> plt.Normalize(vmin <span class="op">=</span> vmin, vmax <span class="op">=</span> vmax)</span>
-<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a>cbar_ax <span class="op">=</span> fig.add_axes([<span class="fl">0.25</span>, <span class="fl">0.15</span>, <span class="fl">0.5</span>, <span class="fl">0.03</span>])</span>
-<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a>cbar <span class="op">=</span> fig.colorbar(sm, cax <span class="op">=</span> cbar_ax, orientation <span class="op">=</span> <span class="st">'horizontal'</span>)</span>
-<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a>cbar.set_label(<span class="st">'Percentile Rank (0-100)'</span>, fontsize <span class="op">=</span> <span class="dv">14</span>)</span>
-<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'Low-Income Population</span><span class="ch">\n</span><span class="st">Palisades Fire Area'</span>, fontsize <span class="op">=</span> <span class="dv">20</span>)</span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>ax1.axis(<span class="st">'off'</span>)</span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Eaton Fire area</span></span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>eji_clip_eaton_scaled.plot(</span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>    column <span class="op">=</span> eji_variable,</span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>    vmin <span class="op">=</span> vmin, vmax <span class="op">=</span> vmax,</span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>    cmap <span class="op">=</span> <span class="st">'YlOrRd'</span>,</span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>    legend <span class="op">=</span> <span class="va">False</span>,</span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>    ax <span class="op">=</span> ax2,</span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>    edgecolor <span class="op">=</span> <span class="st">'black'</span>,</span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>    linewidth <span class="op">=</span> <span class="fl">0.5</span></span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">'Low-Income Population</span><span class="ch">\n</span><span class="st">Eaton Fire Area'</span>, fontsize <span class="op">=</span> <span class="dv">20</span>)</span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a>ax2.axis(<span class="st">'off'</span>)</span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Overall title</span></span>
+<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">'Percentile Rank of Low-Income Population in Fire-Affected Areas</span><span class="ch">\n</span><span class="st">(Income &lt;200</span><span class="sc">% F</span><span class="st">ederal Poverty Level)'</span>,</span>
+<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a>             fontsize <span class="op">=</span> <span class="dv">25</span>, fontweight <span class="op">=</span> <span class="st">'bold'</span>, y <span class="op">=</span> <span class="fl">0.98</span>)</span>
+<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a><span class="co"># Shared colorbar</span></span>
+<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a>sm <span class="op">=</span> plt.cm.ScalarMappable(</span>
+<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a>    cmap <span class="op">=</span> <span class="st">'YlOrRd'</span>,</span>
+<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a>    norm <span class="op">=</span> plt.Normalize(vmin <span class="op">=</span> vmin, vmax <span class="op">=</span> vmax)</span>
+<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a>cbar_ax <span class="op">=</span> fig.add_axes([<span class="fl">0.25</span>, <span class="fl">0.12</span>, <span class="fl">0.5</span>, <span class="fl">0.03</span>])</span>
+<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a>cbar <span class="op">=</span> fig.colorbar(sm, cax <span class="op">=</span> cbar_ax, orientation <span class="op">=</span> <span class="st">'horizontal'</span>)</span>
+<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a>cbar.set_label(<span class="st">'Percentile Rank (0-100)'</span>, fontsize <span class="op">=</span> <span class="dv">14</span>)</span>
+<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="eji-vulnerability-map" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="index_files/figure-html/eji-vulnerability-map-output-1.png" width="1718" height="702" class="figure-img"></p>
+<p><img src="index_files/figure-html/eji-vulnerability-map-output-1.png" width="1718" height="1056" class="figure-img"></p>
 <figcaption>Socioeconomic vulnerability comparison between fire areas</figcaption>
 </figure>
 </div>

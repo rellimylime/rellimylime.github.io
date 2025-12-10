@@ -380,7 +380,7 @@ div.csl-indent {
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Display as formatted table</span></span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>summary_df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div id="load-fire-perimeters" class="cell-output cell-output-display" data-execution_count="2">
+<div id="load-fire-perimeters" class="cell-output cell-output-display" data-execution_count="14">
 <div>
 
 
@@ -435,7 +435,7 @@ div.csl-indent {
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Display as formatted table</span></span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>crs_df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div id="crs-check" class="cell-output cell-output-display" data-execution_count="3">
+<div id="crs-check" class="cell-output cell-output-display" data-execution_count="15">
 <div>
 
 
@@ -496,7 +496,7 @@ div.csl-indent {
 <span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Display as formatted table</span></span>
 <span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>landsat_df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div id="load-landsat" class="cell-output cell-output-display" data-execution_count="4">
+<div id="load-landsat" class="cell-output cell-output-display" data-execution_count="16">
 <div>
 
 
@@ -584,7 +584,7 @@ div.csl-indent {
 <span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Display as formatted table</span></span>
 <span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>nan_df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div id="check-nan-values" class="cell-output cell-output-display" data-execution_count="6">
+<div id="check-nan-values" class="cell-output cell-output-display" data-execution_count="18">
 <div>
 
 
@@ -634,18 +634,20 @@ div.csl-indent {
 </div>
 </div>
 </div>
-<pre class="{r}"><code>#| label: fill-nan-values
-#| code-fold: true
-
-# Fill NaN values with 0
-landsat = landsat.fillna(0)</code></pre>
+<div id="fill-nan-values" class="cell" data-execution_count="7">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill NaN values with 0</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>landsat <span class="op">=</span> landsat.fillna(<span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
 <p>All five spectral bands contain NaN values at the edges of the scene or in clouded areas. These are filled with zero to prevent visualization errors.</p>
 </section>
 </section>
 <section id="true-color-visualization" class="level3">
 <h3 class="anchored" data-anchor-id="true-color-visualization">True Color Visualization</h3>
 <p>Before creating specialized visualizations, we can verify our data by creating a true color image using the red, green, and blue bands—similar to how a standard camera would capture the scene.</p>
-<div id="cell-true-color-composite" class="cell" data-execution_count="7">
+<div id="cell-true-color-composite" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create true color composite with robust scaling</span></span>
@@ -669,7 +671,7 @@ landsat = landsat.fillna(0)</code></pre>
 <section id="false-color-analysis" class="level3">
 <h3 class="anchored" data-anchor-id="false-color-analysis">False Color Analysis</h3>
 <p>False color composites use non-visible wavelengths to reveal features invisible to the human eye. By assigning shortwave infrared (SWIR) to red, near-infrared (NIR) to green, and red to blue, we create an image where healthy vegetation appears bright green and burned areas show distinct reddish-brown tones.</p>
-<div id="cell-false-color-composite" class="cell" data-execution_count="8">
+<div id="cell-false-color-composite" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create false color composite (SWIR/NIR/Red)</span></span>
@@ -698,7 +700,7 @@ landsat = landsat.fillna(0)</code></pre>
 <section id="creating-the-final-map" class="level3">
 <h3 class="anchored" data-anchor-id="creating-the-final-map">Creating the Final Map</h3>
 <p>To provide geographic context, we overlay the fire perimeters onto our false color image. This requires reprojecting the vector data to match the raster’s coordinate system (EPSG:32611 - UTM Zone 11N).</p>
-<div id="cell-final-map" class="cell" data-fig-height="9" data-fig-width="9" data-execution_count="9">
+<div id="cell-final-map" class="cell" data-fig-height="9" data-fig-width="9" data-execution_count="10">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reproject fire perimeters to match Landsat CRS</span></span>
@@ -783,7 +785,7 @@ landsat = landsat.fillna(0)</code></pre>
 <section id="analyzing-socioeconomic-vulnerability" class="level3">
 <h3 class="anchored" data-anchor-id="analyzing-socioeconomic-vulnerability">Analyzing Socioeconomic Vulnerability</h3>
 <p>The Environmental Justice Index includes percentile rankings for various vulnerability indicators. Here we examine <code>EPL_POV200</code>, which represents the percentile rank of persons living below 200% of the federal poverty level—a measure of economic vulnerability.</p>
-<div id="cell-eji-vulnerability-map" class="cell" data-fig-height="8" data-fig-width="12" data-execution_count="12">
+<div id="cell-eji-vulnerability-map" class="cell" data-fig-height="8" data-fig-width="12" data-execution_count="13">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize <span class="op">=</span> (<span class="dv">18</span>, <span class="dv">8</span>))</span>

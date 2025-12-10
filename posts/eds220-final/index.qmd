@@ -192,7 +192,7 @@ nan_df = pd.DataFrame(nan_status)
 nan_df
 ```
 
-```{r}
+```{python}
 #| label: fill-nan-values
 #| code-fold: true
 

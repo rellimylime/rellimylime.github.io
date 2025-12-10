@@ -91,9 +91,6 @@ div.csl-indent {
     "search-label": "Search"
   }
 }</script>
-<script src="../../site_libs/quarto-diagram/mermaid.min.js"></script>
-<script src="../../site_libs/quarto-diagram/mermaid-init.js"></script>
-<link href="../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 </head>
@@ -278,10 +275,10 @@ Marine layer dynamics at &lt;10 km<br>
 <section id="the-path-from-models-to-blackouts" class="level2">
 <h2 class="anchored" data-anchor-id="the-path-from-models-to-blackouts">The Path From Models to Blackouts</h2>
 <p>So how does a bias in cloud cover modeling contribute to blackouts years later?</p>
-<p>The chain looks like this:</p>
-<div class="timeline">
-<p><strong>2010–2015</strong><br>
-CMIP5 downscaled models overestimate solar because they miss marine-layer clouds.</p>
+<p>The timeline might have looked something like this:</p>
+<section id="section" class="level4 timeline">
+<h4 class="anchored" data-anchor-id="section"><strong>2010–2015</strong></h4>
+<p><strong>Overoptimistic generation forecasts</strong> CMIP5 downscaled models overestimate solar because they miss marine-layer clouds.</p>
 <p><strong>2012–2018</strong><br>
 Developers invest heavily in solar based on these projections.</p>
 <p><strong>2015–2020</strong><br>
@@ -291,7 +288,7 @@ Actual output is lower, especially during marine-layer events.</p>
 Historic heat wave hits California.<br>
 Evening demand spikes.<br>
 Solar drops faster than expected → rolling blackouts.</p>
-</div>
+</section>
 <style>
 .timeline {
   border-left: 2px solid #999;
@@ -305,25 +302,6 @@ Solar drops faster than expected → rolling blackouts.</p>
   color: #333;
 }
 </style>
-<div class="cell" data-fig-width="8" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart LR
-    A["CMIP5 models&lt;br/&gt;overestimated solar"] --&gt; B["Developers invested&lt;br/&gt;billions in solar"]
-    B --&gt; C["Grid planning assumed&lt;br/&gt;high afternoon output"]
-    C --&gt; D["Evening ramp larger&lt;br/&gt;than expected"]
-    D --&gt; E["2020 heat wave&lt;br/&gt;blackouts"]
-
-    classDef plain fill:#f9f9f9,stroke:#888,color:#333
-    class A,B,C,D,E plain;
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
 <p><strong>Step 1: Overoptimistic generation forecasts (2010-2015)</strong> Solar developers use downscaled CMIP5 projections. Models underestimate afternoon cloud cover → projected generation 10-15% higher than reality.</p>
 <p><strong>Step 2: Investment decisions (2012-2018)</strong><br>
 Billions flow into solar installations. Agricultural land converts to solar farms in Central Valley.</p>

@@ -64,10 +64,11 @@ The Result?: Solar irradiance projections that were too optimistic, especially f
 
 So how does a bias in cloud cover modeling contribute to blackouts years later? 
 
-The chain looks like this:
+The timeline might have looked something like this:
 
 ::: {.timeline}
-**2010–2015**  
+#### **2010–2015**  
+**Overoptimistic generation forecasts**
 CMIP5 downscaled models overestimate solar because they miss marine-layer clouds.
 
 **2012–2018**  
@@ -97,18 +98,6 @@ Solar drops faster than expected → rolling blackouts.
 }
 </style>
 
-
-```{mermaid}
-%%| fig-width: 8
-flowchart LR
-    A["CMIP5 models<br/>overestimated solar"] --> B["Developers invested<br/>billions in solar"]
-    B --> C["Grid planning assumed<br/>high afternoon output"]
-    C --> D["Evening ramp larger<br/>than expected"]
-    D --> E["2020 heat wave<br/>blackouts"]
-
-    classDef plain fill:#f9f9f9,stroke:#888,color:#333
-    class A,B,C,D,E plain;
-```
 
 **Step 1: Overoptimistic generation forecasts (2010-2015)** Solar developers use downscaled CMIP5 projections. Models underestimate afternoon cloud cover → projected generation 10-15% higher than reality.
 

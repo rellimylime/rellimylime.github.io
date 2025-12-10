@@ -242,8 +242,12 @@ div.csl-indent {
 
 
 
-<p>August 2020, Davis, California. Opening the door at 3pm felt like opening an oven set to broil. My family rationed AC before the afternoon heat peaked, then toughed it out through the evening. The message from our utility was clear: if we wanted to avoid blackouts, everyone needed to cut power during the hottest hours.</p>
-<p>I thought I understood: heat wave, everyone running AC, grid overloaded. But while researching for my Ethics and Bias class, I discovered something unexpected. Part of California’s blackout problem stemmed from decisions made years earlier, based on climate models that systematically overestimated how much solar power would be available on hot summer evenings.</p>
+<p>Opening the door at 3pm in August 2020 felt like opening an oven.<br>
+My family rationed AC before the heat peaked, then toughed it out through the evening.<br>
+The message from our utility was clear: cut power or expect blackouts.</p>
+<p>I thought I understood why: heat wave → too many AC units → overloaded grid.</p>
+<p>But while researching for my Ethics and Bias class, I found something different.<br>
+Part of the blackout problem came from decisions made years earlier, based on climate models that <strong>overestimated how much solar power California would have on hot summer evenings</strong>.</p>
 <hr>
 <section id="following-the-thread" class="level2">
 <h2 class="anchored" data-anchor-id="following-the-thread">Following the Thread</h2>
@@ -252,8 +256,8 @@ div.csl-indent {
 </section>
 <section id="the-marine-layer-problem" class="level2">
 <h2 class="anchored" data-anchor-id="the-marine-layer-problem">The Marine Layer Problem</h2>
-<p>California’s coast has a distinctive climate feature: the marine layer. Cold Pacific waters create a stable layer of cool, moist air trapped under warmer air above, forming a temperature inversion that produces fog and low stratus clouds.</p>
-<p>Coastal low clouds can reduce incoming solar radiation by 30-50% <span class="citation" data-cites="iacobellis2013variability">(<a href="#ref-iacobellis2013variability" role="doc-biblioref">Iacobellis and Cayan 2013</a>)</span>. They drive inland through gaps like the Golden Gate and historically provided moisture to redwood forests <span class="citation" data-cites="johnstone2010fog">(<a href="#ref-johnstone2010fog" role="doc-biblioref">Johnstone and Dawson 2010</a>)</span>.</p>
+<p>California’s coast has a distinctive climate feature: the marine layer. Cold Pacific waters create a stable layer of cool, moist air trapped under warmer air above. That marine layer produces fog and low stratus clouds that <strong>cut incoming solar radiation by 30–50%</strong> <span class="citation" data-cites="iacobellis2013variability">(<a href="#ref-iacobellis2013variability" role="doc-biblioref">Iacobellis and Cayan 2013</a>)</span>.</p>
+<p>These clouds often push inland through gaps like the Golden Gate and shape microclimates, like in the redwood forests of northern California, that climate models struggle to resolve <span class="citation" data-cites="johnstone2010fog">(<a href="#ref-johnstone2010fog" role="doc-biblioref">Johnstone and Dawson 2010</a>)</span>.</p>
 <div class="columns">
 <div class="column" style="width:48%;">
 <p><strong>What the Models See</strong><br>
@@ -267,30 +271,53 @@ Marine layer dynamics at &lt;10 km<br>
 </div>
 <p>Global Climate Models (GCMs) in CMIP5 operate at coarse resolution—typically 100-200km grid cells. Marine layer dynamics happen at much finer scales, driven by sea surface gradients, topographic channeling, diurnal cycles, and upwelling.</p>
 <p>Even “downscaled” versions refined to 10-20km resolution struggle to capture marine layer formation, persistence, and inland penetration.</p>
-<p>A 2024 California Energy Commission report <span class="citation" data-cites="pierce2024downscaling">(<a href="#ref-pierce2024downscaling" role="doc-biblioref">Pierce et al. 2024</a>)</span> noted: “Coastal Low Clouds… are a persistent, seasonal feature… Accounting for these clouds improves solar energy forecasting.”</p>
-<p>CMIP5-era models systematically underestimated marine layer frequency, inland fog extent, and afternoon/evening cloud cover. Result? Solar irradiance projections that were too optimistic, especially for afternoon/evening hours—exactly when California’s “net peak” demand occurs.</p>
+<p>A 2024 CEC report <span class="citation" data-cites="pierce2024downscaling">(<a href="#ref-pierce2024downscaling" role="doc-biblioref">Pierce et al. 2024</a>)</span> states: &gt; “Coastal Low Clouds… are a persistent, seasonal feature… Accounting for these clouds improves solar energy forecasting.”</p>
+<p>CMIP5-era models systematically underestimated marine layer frequency, inland fog extent, and afternoon/evening cloud cover. The Result?: Solar irradiance projections that were too optimistic, especially for afternoon/evening hours—exactly when California’s “net peak” demand occurs.</p>
 <hr>
 </section>
 <section id="the-path-from-models-to-blackouts" class="level2">
 <h2 class="anchored" data-anchor-id="the-path-from-models-to-blackouts">The Path From Models to Blackouts</h2>
 <p>So how does a bias in cloud cover modeling contribute to blackouts years later?</p>
 <p>The chain looks like this:</p>
+<div class="timeline">
+<p><strong>2010–2015</strong><br>
+CMIP5 downscaled models overestimate solar because they miss marine-layer clouds.</p>
+<p><strong>2012–2018</strong><br>
+Developers invest heavily in solar based on these projections.</p>
+<p><strong>2015–2020</strong><br>
+Planning assumes strong late-afternoon solar output.<br>
+Actual output is lower, especially during marine-layer events.</p>
+<p><strong>August 2020</strong><br>
+Historic heat wave hits California.<br>
+Evening demand spikes.<br>
+Solar drops faster than expected → rolling blackouts.</p>
+</div>
+<style>
+.timeline {
+  border-left: 2px solid #999;
+  padding-left: 1rem;
+  margin: 2rem 0;
+}
+.timeline p {
+  margin: 0.25rem 0 1.5rem 0;
+}
+.timeline strong {
+  color: #333;
+}
+</style>
 <div class="cell" data-fig-width="8" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
-<pre class="mermaid mermaid-js">flowchart TD
-    A["2010-2015&lt;br/&gt;CMIP5 Models&lt;br/&gt;Overestimate Solar"] --&gt; B["2012-2018&lt;br/&gt;Billions Invested&lt;br/&gt;in Solar Farms"]
-    B --&gt; C["2015-2020&lt;br/&gt;Grid Planning&lt;br/&gt;Assumes High Generation"]
-    C --&gt; D["Net Peak Problem&lt;br/&gt;Evening Ramp&lt;br/&gt;Larger Than Expected"]
-    D --&gt; E["August 2020&lt;br/&gt;Heat Wave&lt;br/&gt;Blackouts"]
-    
-    style A fill:#fee5d9,stroke:#a63603
-    style B fill:#fcbba1,stroke:#a63603
-    style C fill:#fc9272,stroke:#a63603
-    style D fill:#fb6a4a,stroke:#a63603
-    style E fill:#de2d26,stroke:#a63603
+<pre class="mermaid mermaid-js">flowchart LR
+    A["CMIP5 models&lt;br/&gt;overestimated solar"] --&gt; B["Developers invested&lt;br/&gt;billions in solar"]
+    B --&gt; C["Grid planning assumed&lt;br/&gt;high afternoon output"]
+    C --&gt; D["Evening ramp larger&lt;br/&gt;than expected"]
+    D --&gt; E["2020 heat wave&lt;br/&gt;blackouts"]
+
+    classDef plain fill:#f9f9f9,stroke:#888,color:#333
+    class A,B,C,D,E plain;
 </pre>
 </div>
 <p></p></figure><p></p>
@@ -314,17 +341,16 @@ Heat wave. Solar performs well mid-day but drops off earlier and faster than exp
 <hr>
 <section id="why-this-matters-beyond-one-heat-wave" class="level3">
 <h3 class="anchored" data-anchor-id="why-this-matters-beyond-one-heat-wave">Why This Matters Beyond One Heat Wave</h3>
-<p>The marine layer bias wasn’t the <em>primary</em> cause of California’s blackouts—CAISO’s analysis shows it was a perfect storm. But the model bias was one link in a chain of assumptions that created vulnerability.</p>
-<p>What strikes me is the invisibility. When I experienced that blackout, decisions made years earlier based on seemingly rigorous projections had baked in errors that would manifest under stress.</p>
+<p>The marine layer bias wasn’t the <em>primary</em> cause of California’s blackouts—CAISO’s analysis shows it was a perfect storm. But the model bias was one link in a chain of assumptions that created vulnerability. It also shows how invisible these assumptions become once they leave the modeling world.</p>
 </section>
 </section>
 <section id="connections-to-eds-242-course-concepts" class="level2">
 <h2 class="anchored" data-anchor-id="connections-to-eds-242-course-concepts">Connections to EDS 242 Course Concepts</h2>
 <p>This case demonstrates several types of bias we studied:</p>
-<p><strong>Model specification bias</strong> (Konno et al.; Lecture 2’s Catalogue of Bias)—systematic errors in how marine layer physics are represented in the model structure itself.</p>
-<p><strong>Historical bias</strong> (Lecture 2)—the LOCA downscaling method assumes future relationships will match past patterns, which breaks down under climate change.</p>
-<p><strong>Reporting bias</strong> (Lecture 2)—model limitations were documented in technical reports but didn’t get reported in the summary documents that informed billion-dollar decisions. This is what Cori Lopazanski called the “problem of too much information” in her guest lecture—scientists have caveats, but those get lost in translation to policy.</p>
-<p><strong>Data invisibility</strong> (Lecture 1, Barrowman reading)—by 2020, the connection back to 2015 cloud modeling choices was completely invisible to everyone affected. As we learned in Lecture 9, these are “known unknowns” that become “unknown unknowns” as they propagate through decision systems.</p>
+<p><strong>Model specification bias</strong>: systematic errors in how marine layer physics are represented in the model structure itself (Konno et al.; Lecture 2’s Catalogue of Bias).</p>
+<p><strong>Historical bias</strong>: The LOCA downscaling method assumes future relationships will match past patterns, which breaks down under climate change. (Lecture 2)</p>
+<p><strong>Reporting bias</strong> model limitations were documented in technical reports but didn’t get reported in the summary documents that informed billion-dollar decisions. This is what Cori Lopazanski called the “problem of too much information” in her guest lecture—scientists have caveats, but those get lost in translation to policy.(Lecture 2, Cori Lopazanski guest lecturer)</p>
+<p><strong>Data invisibility</strong> By 2020, the connection back to 2015 cloud modeling choices was completely invisible to everyone affected. As we learned in Lecture 9, these are “known unknowns” that become “unknown unknowns” as they propagate through decision systems. (Lecture 1, Barrowman reading)</p>
 <p>The bias propagates through what Olteanu et al.&nbsp;call “decision chains,” compounding at each step. This connects to <strong>Environmental Data Justice</strong> themes from Lecture 8—who gets hurt when data systems fail? Not the modelers or grid planners, but families who lost groceries, elderly folks without AC, people on medical equipment.</p>
 
 <hr>
@@ -391,7 +417,7 @@ Heat wave. Solar performs well mid-day but drops off earlier and faster than exp
 <p>What stays with me is how easily biases slip through. Smart people, rigorous methods, peer-reviewed projections, and still, systematic errors propagate until systems fail under stress.</p>
 <p>I see this pattern everywhere in environmental data science. Models of crop yields, water availability, species distributions, fire risk—all rest on climate projections with known limitations. Those limitations exist, they’re documented in technical reports, but they don’t always make it into decision documents.</p>
 <p>We can build better decision processes, ones that explicitly account for uncertainty, validate projections against reality, and adapt when mismatches appear. That starts with recognizing that environmental data always carries the fingerprints of choices and assumptions baked into its creation <span class="citation" data-cites="walker2018practicing">(<a href="#ref-walker2018practicing" role="doc-biblioref">Walker et al. 2018</a>)</span>.</p>
-<p>Understanding those limitations isn’t about being critical for its own sake. It’s about learning from what happened and doing better next time.</p>
+<p>The point isn’t to chase perfect models. It’s to build systems that don’t fall apart when the models miss something.</p>
 <hr>
 </section>
 <section id="references" class="level2">

@@ -262,7 +262,7 @@ fig, ax = plt.subplots(figsize = (12, 12))
 landsat[['swir22', 'nir08', 'red']].to_array().plot.imshow(
     ax = ax,
     robust = True,
-    add_colorbar= False
+    add_colorbar = False
 )
 
 # Overlay fire perimeters
@@ -343,8 +343,8 @@ To understand which communities were directly impacted by the fires, we use spat
 #| output: false
 
 # Find census tracts intersecting fire perimeters
-eji_palisades = gpd.sjoin(eji_data, palisades_perimeters, predicate="intersects")
-eji_eaton = gpd.sjoin(eji_data, eaton_perimeters, predicate="intersects")
+eji_palisades = gpd.sjoin(eji_data, palisades_perimeters, predicate = "intersects")
+eji_eaton = gpd.sjoin(eji_data, eaton_perimeters, predicate = "intersects")
 
 # Clip to exact fire boundaries
 eji_clip_palisades = gpd.clip(eji_palisades, palisades_perimeters)
@@ -383,42 +383,42 @@ vmax = 100
 eji_clip_palisades_scaled.plot(
     column = eji_variable,
     vmin = vmin, vmax = vmax,
-    cmap='YlOrRd',
-    legend=False,
-    ax=ax1,
-    edgecolor='black',
-    linewidth=0.5
+    cmap = 'YlOrRd',
+    legend = False,
+    ax = ax1,
+    edgecolor = 'black',
+    linewidth = 0.5
 )
 ax1.set_title('Low-Income Population\nPalisades Fire Area',
-              fontsize=18, fontweight='bold')
+              fontsize = 20)
 ax1.axis('off')
 
 # Eaton Fire area
 eji_clip_eaton_scaled.plot(
-    column=eji_variable,
-    vmin=vmin, vmax=vmax,
-    cmap='YlOrRd',
-    legend=False,
-    ax=ax2,
-    edgecolor='black',
-    linewidth=0.5
+    column = eji_variable,
+    vmin = vmin, vmax = vmax,
+    cmap = 'YlOrRd',
+    legend = False,
+    ax = ax2,
+    edgecolor = 'black',
+    linewidth = 0.5
 )
 ax2.set_title('Low-Income Population\nEaton Fire Area',
-              fontsize=18, fontweight='bold')
+              fontsize = 20, fontweight = 'bold')
 ax2.axis('off')
 
 # Overall title
 fig.suptitle('Percentile Rank of Low-Income Population in Fire-Affected Areas\n(Income <200% Federal Poverty Level)',
-             fontsize=20, fontweight='bold', y=0.98)
+             fontsize = 25, fontweight = 'bold', y = 0.98)
 
 # Shared colorbar
 sm = plt.cm.ScalarMappable(
-    cmap='YlOrRd',
-    norm=plt.Normalize(vmin=vmin, vmax=vmax)
+    cmap = 'YlOrRd',
+    norm = plt.Normalize(vmin = vmin, vmax = vmax)
 )
 cbar_ax = fig.add_axes([0.25, 0.15, 0.5, 0.03])
-cbar = fig.colorbar(sm, cax=cbar_ax, orientation='horizontal')
-cbar.set_label('Percentile Rank (0-100)', fontsize=14)
+cbar = fig.colorbar(sm, cax = cbar_ax, orientation = 'horizontal')
+cbar.set_label('Percentile Rank (0-100)', fontsize = 14)
 
 plt.tight_layout()
 plt.show()

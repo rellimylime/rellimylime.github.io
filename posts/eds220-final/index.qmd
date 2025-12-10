@@ -66,7 +66,6 @@ import geopandas as gpd
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from IPython.display import Markdown
 ```
 
 ### Loading Fire Perimeter Data
@@ -97,7 +96,7 @@ summary_data = {
 summary_df = pd.DataFrame(summary_data)
 
 # Display as formatted table
-display(Markdown(summary_df.to_markdown(index=False)))
+summary_df
 ```
 
 Both datasets contain polygon geometries representing the fire boundaries, along with area and perimeter measurements.
@@ -121,7 +120,7 @@ crs_data = {
 crs_df = pd.DataFrame(crs_data)
 
 # Display as formatted table
-display(Markdown(crs_df.to_markdown(index=False)))
+crs_df
 ```
 
 Both datasets use EPSG:3857 (Web Mercator), a projected coordinate system suitable for web mapping applications.
@@ -162,7 +161,7 @@ landsat_summary = {
 landsat_df = pd.DataFrame(landsat_summary)
 
 # Display as formatted table
-display(Markdown(landsat_df.to_markdown(index=False)))
+landsat_df
 ```
 
 The dataset spans **1418 × 2742 pixels** and contains five spectral bands: **red, green, blue, nir08, swir22**.
@@ -206,8 +205,10 @@ for band in bands:
 nan_df = pd.DataFrame(nan_status)
 
 # Display as formatted table
-display(Markdown(nan_df.to_markdown(index=False)))
+nan_df
+```
 
+```{r}
 # Fill NaN values with 0
 landsat = landsat.fillna(0)
 ```
@@ -268,38 +269,38 @@ eaton = eaton.to_crs(landsat.rio.crs)
 palisades = palisades.to_crs(landsat.rio.crs)
 
 # Create comprehensive map
-fig, ax = plt.subplots(figsize=(12, 12))
+fig, ax = plt.subplots(figsize = (12, 12))
 
 # Plot false color composite
 landsat[['swir22', 'nir08', 'red']].to_array().plot.imshow(
-    ax=ax,
-    robust=True,
-    add_colorbar=False
+    ax = ax,
+    robust = True,
+    add_colorbar= False
 )
 
 # Overlay fire perimeters
-eaton.boundary.plot(ax=ax, edgecolor='yellow', linewidth=2, label='Eaton Fire')
-palisades.boundary.plot(ax=ax, edgecolor='red', linewidth=2, label='Palisades Fire')
+eaton.boundary.plot(ax = ax, edgecolor = 'yellow', linewidth = 2, label = 'Eaton Fire')
+palisades.boundary.plot(ax = ax, edgecolor = 'red', linewidth = 2, label = 'Palisades Fire')
 
 # Add labels and formatting
 plt.title('Eaton and Palisades Fires - False Color Analysis',
-          fontsize=20, fontweight='bold', pad=20)
-plt.legend(loc='upper right', fontsize=14)
-ax.set_xlabel('Easting (meters)', fontsize=14)
-ax.set_ylabel('Northing (meters)', fontsize=14)
+          fontsize = 20, fontweight = 'bold', pad = 20)
+plt.legend(loc = 'upper right', fontsize = 14)
+ax.set_xlabel('Easting (meters)', fontsize = 14)
+ax.set_ylabel('Northing (meters)', fontsize = 14)
 
 # Add fire name annotations
 ax.text(eaton.geometry.centroid.x.values[0],
         eaton.geometry.centroid.y.values[0] - 2700,
         'Eaton Fire',
-        color='black', fontsize=14, fontweight='bold',
-        bbox=dict(boxstyle='round', facecolor='white', alpha=0.7))
+        color = 'black', fontsize = 14, fontweight = 'bold',
+        bbox = dict(boxstyle = 'round', facecolor = 'white', alpha = 0.7))
 
 ax.text(palisades.geometry.centroid.x.values[0] - 22000,
         palisades.geometry.centroid.y.values[0] + 8000,
         'Palisades Fire',
-        color='black', fontsize=14, fontweight='bold',
-        bbox=dict(boxstyle='round', facecolor='white', alpha=0.7))
+        color = 'black', fontsize = 14, fontweight = 'bold',
+        bbox = dict(boxstyle = 'round', facecolor = 'white', alpha = 0.7))
 
 plt.tight_layout()
 plt.show()
@@ -374,7 +375,7 @@ The Environmental Justice Index includes percentile rankings for various vulnera
 #| fig-width: 12
 #| fig-height: 8
 
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(18, 8))
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize = (18, 8))
 
 # Define variable to analyze
 eji_variable = 'EPL_POV200'
@@ -393,8 +394,8 @@ vmax = 100
 
 # Palisades Fire area
 eji_clip_palisades_scaled.plot(
-    column=eji_variable,
-    vmin=vmin, vmax=vmax,
+    column = eji_variable,
+    vmin = vmin, vmax = vmax,
     cmap='YlOrRd',
     legend=False,
     ax=ax1,

@@ -785,13 +785,13 @@ div.csl-indent {
 <section id="analyzing-socioeconomic-vulnerability" class="level3">
 <h3 class="anchored" data-anchor-id="analyzing-socioeconomic-vulnerability">Analyzing Socioeconomic Vulnerability</h3>
 <p>The Environmental Justice Index includes percentile rankings for various vulnerability indicators. Here we examine <code>EPL_POV200</code>, which represents the percentile rank of persons living below 200% of the federal poverty level—a measure of economic vulnerability.</p>
-<div id="cell-eji-vulnerability-map" class="cell" data-execution_count="13">
+<div id="cell-eji-vulnerability-map" class="cell" data-fig-height="9" data-fig-width="18" data-execution_count="13">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize <span class="op">=</span> (<span class="dv">18</span>, <span class="dv">12</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize <span class="op">=</span> (<span class="dv">18</span>, <span class="dv">9</span>))</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define variable to analyze</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>eji_variable <span class="op">=</span> <span class="st">'EPL_POV200'</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>eji_variable <span class="op">=</span> <span class="st">'EPL_MINRTY'</span></span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Scale values to 0-100 for proper percentile display</span></span>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>eji_clip_palisades_scaled <span class="op">=</span> eji_clip_palisades.copy()</span>
@@ -815,7 +815,7 @@ div.csl-indent {
 <span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>    edgecolor <span class="op">=</span> <span class="st">'black'</span>,</span>
 <span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>    linewidth <span class="op">=</span> <span class="fl">0.5</span></span>
 <span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'Low-Income Population</span><span class="ch">\n</span><span class="st">Palisades Fire Area'</span>, fontsize <span class="op">=</span> <span class="dv">20</span>)</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'Minority Population</span><span class="ch">\n</span><span class="st">Palisades Fire Area'</span>, fontsize <span class="op">=</span> <span class="dv">20</span>)</span>
 <span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>ax1.axis(<span class="st">'off'</span>)</span>
 <span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Eaton Fire area</span></span>
@@ -828,12 +828,12 @@ div.csl-indent {
 <span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>    edgecolor <span class="op">=</span> <span class="st">'black'</span>,</span>
 <span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>    linewidth <span class="op">=</span> <span class="fl">0.5</span></span>
 <span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">'Low-Income Population</span><span class="ch">\n</span><span class="st">Eaton Fire Area'</span>, fontsize <span class="op">=</span> <span class="dv">20</span>)</span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">'Minority Population</span><span class="ch">\n</span><span class="st">Eaton Fire Area'</span>, fontsize <span class="op">=</span> <span class="dv">20</span>)</span>
 <span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a>ax2.axis(<span class="st">'off'</span>)</span>
 <span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Overall title</span></span>
-<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">'Percentile Rank of Low-Income Population in Fire-Affected Areas</span><span class="ch">\n</span><span class="st">(Income &lt;200</span><span class="sc">% F</span><span class="st">ederal Poverty Level)'</span>,</span>
-<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a>             fontsize <span class="op">=</span> <span class="dv">25</span>, fontweight <span class="op">=</span> <span class="st">'bold'</span>, y <span class="op">=</span> <span class="fl">0.98</span>)</span>
+<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">'Percentile Rank of Minority Population in Fire-Affected Areas'</span>, </span>
+<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a>fontsize <span class="op">=</span> <span class="dv">25</span>, y <span class="op">=</span> <span class="fl">0.98</span>)</span>
 <span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a><span class="co"># Shared colorbar</span></span>
 <span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a>sm <span class="op">=</span> plt.cm.ScalarMappable(</span>
@@ -850,7 +850,7 @@ div.csl-indent {
 <div class="cell-output cell-output-display">
 <div id="eji-vulnerability-map" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="index_files/figure-html/eji-vulnerability-map-output-1.png" width="1718" height="1056" class="figure-img"></p>
+<p><img src="index_files/figure-html/eji-vulnerability-map-output-1.png" width="1718" height="808" class="figure-img"></p>
 <figcaption>Socioeconomic vulnerability comparison between fire areas</figcaption>
 </figure>
 </div>
@@ -860,22 +860,22 @@ div.csl-indent {
 </section>
 <section id="key-findings" class="level2">
 <h2 class="anchored" data-anchor-id="key-findings">Key Findings</h2>
-<p>This analysis reveals stark differences in socioeconomic vulnerability between the two fire areas. The maps show <strong>percentile rankings</strong> of low-income population (households earning less than 200% of the federal poverty level) within fire-affected census tracts, where higher percentile values indicate greater economic vulnerability relative to other California communities.</p>
+<p>This analysis reveals stark racial and ethnic disparities in wildfire impacts between the two fire areas. The maps show <strong>percentile rankings</strong> of minority population (persons of color) within fire-affected census tracts, where higher percentile values indicate greater representation of minority residents relative to other California communities.</p>
 <p><strong>Palisades Fire Area:</strong></p>
 <blockquote class="blockquote">
-<p>The affected census tracts show predominantly low to moderate percentile rankings (light to medium orange colors, roughly 10th-40th percentiles). This indicates that the Palisades fire primarily impacted areas with relatively <strong>lower proportions of low-income residents</strong> compared to the state average—reflecting the area’s generally higher socioeconomic status along the Pacific coast.</p>
+<p>The affected census tracts show predominantly low percentile rankings (pale yellow colors, roughly 0th-30th percentiles). The Palisades fire primarily impacted areas with <strong>very low proportions of minority residents</strong>—reflecting the area’s demographics as a predominantly white, affluent coastal community.</p>
 </blockquote>
 <p><strong>Eaton Fire Area:</strong></p>
 <blockquote class="blockquote">
-<p>The burn area shows significantly higher percentile rankings, with large portions in the 50th-70th percentiles (darker orange) and some tracts reaching the 80th-90th percentiles (approaching dark red). The northern portions of the Eaton fire area, particularly around Altadena, show the highest vulnerability rankings. This demonstrates that the Eaton fire disproportionately affected communities with <strong>higher concentrations of economically vulnerable residents</strong>.</p>
+<p>The burn area shows dramatically higher percentile rankings, with vast portions in the 70th-100th percentiles (dark red). Nearly the entire Eaton fire footprint, particularly around Altadena, shows the highest minority population rankings in the state. The Eaton fire overwhelmingly affected <strong>communities of color</strong>.</p>
 </blockquote>
 <p><strong>Environmental Justice Implications:</strong></p>
-<p>The contrasting patterns reveal that while both fires caused extensive physical damage, the Eaton fire imposed greater socioeconomic burden on vulnerable populations who typically have fewer resources for evacuation, temporary housing, and long-term recovery. This disparity is crucial for:</p>
+<p>This stark geographic pattern reveals that wildfire impacts are deeply tied to historical patterns of segregation and structural inequality. Communities of color—who already face compounded environmental burdens, reduced access to resources, and barriers to recovery—bore the brunt of the Eaton fire’s destruction. This disparity is critical for:</p>
 <blockquote class="blockquote">
 <ul>
-<li><strong>Emergency response planning</strong> - ensuring resources reach vulnerable populations during active disasters</li>
-<li><strong>Recovery assistance</strong> - targeting aid to communities with fewer economic resources for rebuilding</li>
-<li><strong>Long-term resilience planning</strong> - addressing pre-existing vulnerabilities that compound disaster impacts and hinder recovery</li>
+<li><strong>Emergency response</strong> - ensuring equitable resource distribution during active disasters</li>
+<li><strong>Recovery assistance</strong> - directing aid to communities facing systemic barriers to rebuilding</li>
+<li><strong>Long-term planning</strong> - addressing how climate disasters compound existing racial inequities</li>
 </ul>
 </blockquote>
 </section>

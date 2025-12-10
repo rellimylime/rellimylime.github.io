@@ -358,12 +358,14 @@ The Environmental Justice Index includes percentile rankings for various vulnera
 ```{python}
 #| label: eji-vulnerability-map
 #| code-fold: true
+#| fig-width: 18
+#| fig-height: 9
 #| fig-cap: "Socioeconomic vulnerability comparison between fire areas"
 
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize = (18, 12))
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize = (18, 9))
 
 # Define variable to analyze
-eji_variable = 'EPL_POV200'
+eji_variable = 'EPL_MINRTY'
 
 # Scale values to 0-100 for proper percentile display
 eji_clip_palisades_scaled = eji_clip_palisades.copy()
@@ -387,7 +389,7 @@ eji_clip_palisades_scaled.plot(
     edgecolor = 'black',
     linewidth = 0.5
 )
-ax1.set_title('Low-Income Population\nPalisades Fire Area', fontsize = 20)
+ax1.set_title('Minority Population\nPalisades Fire Area', fontsize = 20)
 ax1.axis('off')
 
 # Eaton Fire area
@@ -400,12 +402,12 @@ eji_clip_eaton_scaled.plot(
     edgecolor = 'black',
     linewidth = 0.5
 )
-ax2.set_title('Low-Income Population\nEaton Fire Area', fontsize = 20)
+ax2.set_title('Minority Population\nEaton Fire Area', fontsize = 20)
 ax2.axis('off')
 
 # Overall title
-fig.suptitle('Percentile Rank of Low-Income Population in Fire-Affected Areas\n(Income <200% Federal Poverty Level)',
-             fontsize = 25, fontweight = 'bold', y = 0.98)
+fig.suptitle('Percentile Rank of Minority Population in Fire-Affected Areas', 
+fontsize = 25, y = 0.98)
 
 # Shared colorbar
 sm = plt.cm.ScalarMappable(
@@ -422,23 +424,23 @@ plt.show()
 
 ## Key Findings
 
-This analysis reveals stark differences in socioeconomic vulnerability between the two fire areas. The maps show **percentile rankings** of low-income population (households earning less than 200% of the federal poverty level) within fire-affected census tracts, where higher percentile values indicate greater economic vulnerability relative to other California communities.
+This analysis reveals stark racial and ethnic disparities in wildfire impacts between the two fire areas. The maps show **percentile rankings** of minority population (persons of color) within fire-affected census tracts, where higher percentile values indicate greater representation of minority residents relative to other California communities.
 
 **Palisades Fire Area:**
 
-> The affected census tracts show predominantly low to moderate percentile rankings (light to medium orange colors, roughly 10th-40th percentiles). This indicates that the Palisades fire primarily impacted areas with relatively **lower proportions of low-income residents** compared to the state average—reflecting the area's generally higher socioeconomic status along the Pacific coast.
+> The affected census tracts show predominantly low percentile rankings (pale yellow colors, roughly 0th-30th percentiles). The Palisades fire primarily impacted areas with **very low proportions of minority residents**—reflecting the area's demographics as a predominantly white, affluent coastal community.
 
 **Eaton Fire Area:**
 
-> The burn area shows significantly higher percentile rankings, with large portions in the 50th-70th percentiles (darker orange) and some tracts reaching the 80th-90th percentiles (approaching dark red). The northern portions of the Eaton fire area, particularly around Altadena, show the highest vulnerability rankings. This demonstrates that the Eaton fire disproportionately affected communities with **higher concentrations of economically vulnerable residents**.
+> The burn area shows dramatically higher percentile rankings, with vast portions in the 70th-100th percentiles (dark red). Nearly the entire Eaton fire footprint, particularly around Altadena, shows the highest minority population rankings in the state. The Eaton fire overwhelmingly affected **communities of color**.
 
 **Environmental Justice Implications:**
 
-The contrasting patterns reveal that while both fires caused extensive physical damage, the Eaton fire imposed greater socioeconomic burden on vulnerable populations who typically have fewer resources for evacuation, temporary housing, and long-term recovery. This disparity is crucial for:
+This stark geographic pattern reveals that wildfire impacts are deeply tied to historical patterns of segregation and structural inequality. Communities of color—who already face compounded environmental burdens, reduced access to resources, and barriers to recovery—bore the brunt of the Eaton fire's destruction. This disparity is critical for:
 
-> -   **Emergency response planning** - ensuring resources reach vulnerable populations during active disasters
-> -   **Recovery assistance** - targeting aid to communities with fewer economic resources for rebuilding
-> -   **Long-term resilience planning** - addressing pre-existing vulnerabilities that compound disaster impacts and hinder recovery
+> -   **Emergency response** - ensuring equitable resource distribution during active disasters
+> -   **Recovery assistance** - directing aid to communities facing systemic barriers to rebuilding
+> -   **Long-term planning** - addressing how climate disasters compound existing racial inequities
 
 ## Conclusion
 

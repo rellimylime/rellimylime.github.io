@@ -1400,6 +1400,10 @@ newdata_roadtype <- newdata_roadtype %>%
 ```
 
 ```{r}
+#| label: model-predictions-vs-data-viz
+#| fig-width: 14
+#| fig-height: 10
+#| echo: false
 # Plot 1: Forest effect on occurrence
 p1 <- ggplot() +
   stat_summary_bin(

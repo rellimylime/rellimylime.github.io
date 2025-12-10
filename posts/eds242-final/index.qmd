@@ -67,21 +67,28 @@ So how does a bias in cloud cover modeling contribute to blackouts years later?
 The timeline might have looked something like this:
 
 ::: {.timeline}
-#### **2010–2015**  
-**Overoptimistic generation forecasts**
-CMIP5 downscaled models overestimate solar because they miss marine-layer clouds.
+**2010–2015**: Overoptimistic generation forecasts
 
-**2012–2018**  
-Developers invest heavily in solar based on these projections.
+Solar developers use downscaled CMIP5 projections. Models underestimate afternoon cloud cover → projected generation 10-15% higher than reality.
 
-**2015–2020**  
-Planning assumes strong late-afternoon solar output.  
-Actual output is lower, especially during marine-layer events.
+**2012–2018**: Investment decisions 
 
-**August 2020**  
-Historic heat wave hits California.  
-Evening demand spikes.  
-Solar drops faster than expected → rolling blackouts.
+CAISO plans for solar providing increasing power, assuming generation levels matching the overoptimistic projections.
+
+**2015–2020**: Grid planning  
+
+CAISO plans for solar providing increasing power, assuming generation levels matching the overoptimistic projections.
+
+**2016-2020**: The "net peak" emerges
+
+Managing the evening "ramp" becomes critical. CAISO assumes more solar during the 5-8pm window than materializes.
+
+**August 2020**: Heat Wave 
+
+- Historic heat wave hits California → Evening demand spikes.  
+- Solar drops faster than expected → rolling blackouts.
+- Solar performs well mid-day but drops off earlier and faster than expected, partly due to cloud patterns the models hadn't captured.
+
 :::
 
 <style>
@@ -98,25 +105,11 @@ Solar drops faster than expected → rolling blackouts.
 }
 </style>
 
-
-**Step 1: Overoptimistic generation forecasts (2010-2015)** Solar developers use downscaled CMIP5 projections. Models underestimate afternoon cloud cover → projected generation 10-15% higher than reality.
-
-**Step 2: Investment decisions (2012-2018)**  
-Billions flow into solar installations. Agricultural land converts to solar farms in Central Valley.
-
-**Step 3: Grid planning (2015-2020)**  
-CAISO plans for solar providing increasing power, assuming generation levels matching the overoptimistic projections.
-
-**Step 4: The "net peak" emerges**  
-Managing the evening "ramp" becomes critical. CAISO assumes more solar during the 5-8pm window than materializes.
-
-**Step 5: August 2020**  
-Heat wave. Solar performs well mid-day but drops off earlier and faster than expected, partly due to cloud patterns the models hadn't captured.
-
-CAISO's root cause analysis [@caiso2021root] states: "Resource planning targets have not kept pace with the evolving power mix, wherein demand during peak hours outpaces the supply of solar-produced power."
+CAISO's root cause analysis [@caiso2021root] states: 
+> "Resource planning targets have not kept pace with the evolving power mix, wherein demand during peak hours outpaces the supply of solar-produced power."
 
 
-> #### Translation
+Translation:
 > We thought we'd have more power available at this time of day than we actually do.
 
 

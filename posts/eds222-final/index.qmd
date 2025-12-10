@@ -927,14 +927,15 @@ p_roadtype <- model_data %>%
 
 ## Visualizations
 
-![](eda_visualization_themed.png)
+![](eda_visualization_themed2.png)
 
 ## Key patterns
 
-1.  **Panel A (distribution)**: Massive spike at zero confirms zero-inflation—most roads never experience roadkill
-2.  **Panel B (traffic effect)**: Clear positive trend—higher AADT associates with more roadkill
-3.  **Panel C (road type)**: Major roads show higher roadkill intensity than minor roads (conditional on having any)
-4.  **Panel D (road length)**: Longer segments have more events, confirming we need a length offset
+1.  **Panel A (roadkill distribution)**: Massive spike at zero (83% of segments) confirms high zero-inflation, with remaining segments showing right-skewed counts
+2.  **Panel B (traffic vs roadkill)**: Clear positive relationship - higher AADT correlates with more roadkill events (visible trend in hexbin density)
+3.  **Panel C (road type)**: Major roads show higher roadkill counts than minor roads among segments with at least one event
+4.  **Panel D (road length)**: Longer segments accumulate more events, confirming the need for a length offset in our model
+5.  **Predictor distributions**: Traffic volume and road length are log-normally distributed; speed limits are bimodal (\~50 km/h or missing); road network is dominated by Minor roads; land use shows farmland dominance with high variability in forest, residential, and park coverage
 :::
 
 These patterns validate our hypotheses from the DAG. Now let's build a statistical model to quantify these effects.
@@ -994,7 +995,13 @@ Y_i | Z_i = 1 &\sim \text{Negative Binomial}(\mu_i, \theta) \\
 \end{aligned}
 $$
 
-where: - $Y_i$ is the count of roadkill events on segment $i$ - $\mu_i$ is the expected count given occurrence - $\theta$ is the dispersion parameter - $\log(\text{Length}_i)$ is an offset controlling for road segment exposure
+where:
+
+-   $Y_i$ is the count of roadkill events on segment $i$
+
+-   $\mu_i$ is the expected count given occurrence - $\theta$ is the dispersion parameter
+
+-   $\log(\text{Length}_i)$ is an offset controlling for road segment exposure
 
 **Why Negative Binomial?**
 
@@ -1042,7 +1049,6 @@ y_sim <- temp_counts * z_sim  # Multiply by occurrence (zeros out non-occurrence
 sim_data <- tibble(x = x_sim, y = y_sim)
 ```
 
-
 Simulated data characteristics:
 
 > -   Zero rate: `r round(mean(sim_data$y == 0) * 100, 1)`%
@@ -1085,84 +1091,14 @@ recovery_table <- tibble(
 knitr::kable(recovery_table, caption = "Parameter Recovery Check: Simulated Data", digits = 3)
 ```
 
-
-
 Conclusion: Model successfully recovers known parameters (differences \< 0.2). We can apply it to real data with confidence.
 
-```{r}
-#| label: sim-visualization
-#| eval: false
-#| code-fold: true
-#| fig-height: 4
-#| fig-width: 10
-#| include: false
-
-# Create prediction grid
-x_grid <- seq(min(sim_data$x), max(sim_data$x), length.out = 100)
-pred_data <- tibble(x = x_grid)
-
-# Get hurdle model predictions
-# type = "zero" returns P(Y > 0) directly (NOT P(Y = 0)!)
-pred_data$prob_nonzero <- predict(sim_hurdle, newdata = pred_data, type = "zero")
-
-# Expected count given non-zero
-pred_data$count_given_nonzero <- predict(sim_hurdle, newdata = pred_data, type = "count")
-
-# Plot 1: Zero hurdle component
-p_sim1 <- ggplot() +
-  # Add binned proportions to show empirical pattern
-  stat_summary_bin(
-    data = sim_data,
-    aes(x = x, y = as.numeric(y > 0)),
-    fun = mean,
-    geom = "point",
-    bins = 20,
-    color = primary_color,
-    size = 3,
-    alpha = 0.6
-  ) +
-  # Add the prediction line
-  geom_line(data = pred_data, aes(x = x, y = prob_nonzero), 
-            color = accent_color, linewidth = 1.2) +
-  # Add confidence ribbon (optional)
-  geom_ribbon(
-    data = pred_data,
-    aes(x = x, 
-        ymin = pmax(0, prob_nonzero - 0.05),  # approximate CI
-        ymax = pmin(1, prob_nonzero + 0.05)),
-    alpha = 0.2,
-    fill = accent_color
-  ) +
-  labs(
-    title = "A. Hurdle Component: Probability of Non-Zero",
-    subtitle = "Points show binned proportions, line shows model predictions",
-    x = "Predictor (x)", 
-    y = "Probability of Roadkill Occurrence"
-  ) +
-  scale_y_continuous(limits = c(0, 1), labels = scales::percent) +
-  theme_cohesive()
-
-# Plot 2: Count component (conditional on non-zero)
-p_sim2 <- sim_data %>%
-  filter(y > 0) %>%
-  ggplot() +
-  geom_point(aes(x = x, y = y), color = primary_color, alpha = 0.4) +
-  geom_line(data = pred_data, color = accent_color, aes(x = x, y = count_given_nonzero),
-            color = "red", linewidth = 1) +
-  labs(title = "B. Count Component: Intensity Given Presence",
-       subtitle = "Line shows fitted hurdle model predictions",
-       x = "Predictor (x)", y = "Count (y | y > 0)") +
-  theme_cohesive()
-
-p_sim1 + p_sim2
-```
+We use our predictions to calculate the standard error
 
 ```{r}
-#| label: sim-visualization2
+#| label: simulation-predictions
 #| echo: false
 #| code-fold: true
-#| fig-height: 4
-#| fig-width: 10
 
 # Create prediction grid
 x_grid <- seq(min(sim_data$x), max(sim_data$x), length.out = 100)
@@ -1212,6 +1148,14 @@ pred_data <- pred_data %>%
     count_lower = exp(log_pred - 1.96 * se_log),
     count_upper = exp(log_pred + 1.96 * se_log)
   )
+```
+
+```{r}
+#| label: sim-visualization
+#| echo: false
+#| code-fold: true
+#| fig-height: 4
+#| fig-width: 10
 
 # Plot 1: Zero hurdle component
 p_sim1 <- ggplot() +
@@ -1279,7 +1223,7 @@ p_sim2 <- ggplot() +
   ) +
   theme_cohesive()
 
-# Combine with shared subtitle
+# Combine and add shared subtitle
 p_sim1 + p_sim2 +
   plot_annotation(
     subtitle = "Points = raw data, Lines = model predictions, Ribbons = 95% CI",
@@ -1358,6 +1302,7 @@ knitr::kable(results, caption = "Hurdle Model Results")
 ### Model Fit to Data
 
 This visualization shows how well our hurdle model captures the observed roadkill patterns.
+
 ```{r}
 #| label: model-predictions-vs-data
 #| fig-width: 14
@@ -1389,8 +1334,7 @@ coef_count <- coef(hurdle_model, model = "count")
 n_zero <- length(coef_zero)
 vcov_full <- vcov(hurdle_model)
 vcov_zero <- vcov_full[1:n_zero, 1:n_zero]
-vcov_count <- vcov_full[(n_zero+1):(n_zero+length(coef_count)), 
-                        (n_zero+1):(n_zero+length(coef_count))]
+vcov_count <- vcov_full[(n_zero+1):(n_zero+length(coef_count)),                      (n_zero+1):(n_zero+length(coef_count))]
 
 # Zero component predictions with CI
 logit_pred <- X_forest %*% coef_zero
@@ -1453,9 +1397,9 @@ newdata_roadtype <- newdata_roadtype %>%
     count_lower = exp(log_pred_rt - 1.96 * se_log_rt),
     count_upper = exp(log_pred_rt + 1.96 * se_log_rt)
   )
+```
 
-# === BETTER ORGANIZED PLOTS ===
-
+```{r}
 # Plot 1: Forest effect on occurrence
 p1 <- ggplot() +
   stat_summary_bin(
@@ -1599,6 +1543,15 @@ p4 <- ggplot() +
   )
 ```
 
+### Model Fit: Separating Occurrence from Intensity
+
+The model successfully captures two distinct processes revealed in the data:
+
+**Left column (Forest effect):** Panel A shows forest coverage strongly predicts whether roadkill occurs - probability rises from \~2% to \~20% as forest increases from 0% to 100%. However, Panel C shows that once roadkill does occur, forest has minimal effect on intensity (nearly flat trend line). Forest acts as a "gatekeeper" for occurrence but not intensity.
+
+**Right column (Road type effect):** Panel B shows Major roads are 7x more likely to experience any roadkill than Minor roads (\~7% vs \~1% probability). Panel D shows Major roads also have slightly higher intensity when roadkill does occur, though the difference is less dramatic than for occurrence.
+
+**Model performance:** The tight agreement between observed data (green) and predictions (orange with 95% CI) confirms the hurdle model adequately captures these relationships. The distinct patterns between top and bottom rows validate our two-component modeling approach - a single count model would miss this
 
 ### Hypothesis Testing
 
@@ -1751,7 +1704,6 @@ summary_table <- tibble(
 knitr::kable(summary_table, caption = "Hypothesis Test Results (+ positive effect, − negative effect, NS not significant; baseline: Major roads)")
 ```
 
-
 ### Policy Implications
 
 Our findings suggest several evidence-based mitigation strategies:
@@ -1804,3 +1756,4 @@ The hurdle model approach extends beyond roadkill to any ecological phenomenon w
 
 ::: {#refs}
 :::
+

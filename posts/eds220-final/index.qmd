@@ -79,11 +79,6 @@ Fire perimeters provide the spatial boundaries for our analysis, allowing us to 
 # Load fire perimeter shapefiles
 eaton = gpd.read_file('data/Eaton_Perimeter_20250121.shp')
 palisades = gpd.read_file('data/Palisades_Perimeter_20250121.shp')
-```
-
-```{python}
-#| label: fire-perimeter-summary
-#| echo: false
 
 # Create summary table for data exploration
 summary_data = {
@@ -106,7 +101,6 @@ Both datasets contain polygon geometries representing the fire boundaries, along
 ```{python}
 #| label: crs-check
 #| code-fold: true
-#| echo: false
 
 # Create CRS information table
 crs_data = {
@@ -132,19 +126,9 @@ The Landsat 8 scene contains multiple spectral bands that capture different wave
 ```{python}
 #| label: load-landsat
 #| code-fold: true
-#| output: false
 
 # Import Landsat data
 landsat = xr.open_dataset('data/landsat8-2025-02-23-palisades-eaton.nc')
-
-# Display dataset information
-landsat
-```
-
-```{python}
-#| label: landsat-summary
-#| code-fold: true
-#| echo: false
 
 # Create Landsat dataset summary table
 landsat_summary = {

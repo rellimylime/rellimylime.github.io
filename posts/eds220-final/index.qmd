@@ -209,6 +209,9 @@ nan_df
 ```
 
 ```{r}
+#| label: fill-nan-values
+#| code-fold: true
+
 # Fill NaN values with 0
 landsat = landsat.fillna(0)
 ```

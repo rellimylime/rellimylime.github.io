@@ -359,10 +359,8 @@ The Environmental Justice Index includes percentile rankings for various vulnera
 #| label: eji-vulnerability-map
 #| code-fold: true
 #| fig-cap: "Socioeconomic vulnerability comparison between fire areas"
-#| fig-width: 12
-#| fig-height: 10
 
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize = (18, 8))
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize = (18, 12))
 
 # Define variable to analyze
 eji_variable = 'EPL_POV200'
@@ -389,8 +387,7 @@ eji_clip_palisades_scaled.plot(
     edgecolor = 'black',
     linewidth = 0.5
 )
-ax1.set_title('Low-Income Population\nPalisades Fire Area',
-              fontsize = 20)
+ax1.set_title('Low-Income Population\nPalisades Fire Area', fontsize = 20)
 ax1.axis('off')
 
 # Eaton Fire area
@@ -403,8 +400,7 @@ eji_clip_eaton_scaled.plot(
     edgecolor = 'black',
     linewidth = 0.5
 )
-ax2.set_title('Low-Income Population\nEaton Fire Area',
-              fontsize = 20, fontweight = 'bold')
+ax2.set_title('Low-Income Population\nEaton Fire Area', fontsize = 20)
 ax2.axis('off')
 
 # Overall title

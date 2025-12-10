@@ -69,19 +69,19 @@ The timeline might have looked something like this:
 ::: {.timeline}
 **2010–2015**: Overoptimistic generation forecasts
 
-Solar developers use downscaled CMIP5 projections. Models underestimate afternoon cloud cover → projected generation 10-15% higher than reality.
+- Solar developers use downscaled CMIP5 projections. Models underestimate afternoon cloud cover → projected generation 10-15% higher than reality.
 
 **2012–2018**: Investment decisions 
 
-CAISO plans for solar providing increasing power, assuming generation levels matching the overoptimistic projections.
+- CAISO plans for solar providing increasing power, assuming generation levels matching the overoptimistic projections.
 
 **2015–2020**: Grid planning  
 
-CAISO plans for solar providing increasing power, assuming generation levels matching the overoptimistic projections.
+- CAISO plans for solar providing increasing power, assuming generation levels matching the overoptimistic projections.
 
 **2016-2020**: The "net peak" emerges
 
-Managing the evening "ramp" becomes critical. CAISO assumes more solar during the 5-8pm window than materializes.
+- Managing the evening "ramp" becomes critical. CAISO assumes more solar during the 5-8pm window than materializes.
 
 **August 2020**: Heat Wave 
 
@@ -106,12 +106,12 @@ Managing the evening "ramp" becomes critical. CAISO assumes more solar during th
 </style>
 
 CAISO's root cause analysis [@caiso2021root] states: 
+
 > "Resource planning targets have not kept pace with the evolving power mix, wherein demand during peak hours outpaces the supply of solar-produced power."
 
-
 Translation:
-> We thought we'd have more power available at this time of day than we actually do.
 
+> We thought we'd have more power available at this time of day than we actually do.
 
 ------------------------------------------------------------------------
 
@@ -134,8 +134,6 @@ This case demonstrates several types of bias we studied:
 (Lecture 1, Barrowman reading)
 
 The bias propagates through what Olteanu et al. call "decision chains," compounding at each step. This connects to **Environmental Data Justice** themes from Lecture 8—who gets hurt when data systems fail? Not the modelers or grid planners, but families who lost groceries, elderly folks without AC, people on medical equipment.
-
-</details>
 
 ------------------------------------------------------------------------
 

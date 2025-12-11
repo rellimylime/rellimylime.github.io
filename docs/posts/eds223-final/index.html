@@ -343,7 +343,7 @@ div.csl-indent {
 <p><strong>VIIRS Night Lights Data</strong> — NASA’s VIIRS instrument provides daily measurements of nighttime light intensity. I used two dates of imagery: February 7, 2021 (before the storm) and February 16, 2021 (during the height of the blackouts). The data is measured in nanowatts per square centimeter per steradian (nW cm⁻²sr⁻¹) <span class="citation" data-cites="nasa2021">(<a href="#ref-nasa2021" role="doc-biblioref">NASA LAADS DAAC 2021</a>)</span>.</p>
 <p><strong>OpenStreetMap Building Footprints</strong> — Residential building polygons for the Houston metropolitan area, including houses, apartments, and other residential structures <span class="citation" data-cites="openstreetmap2021">(<a href="#ref-openstreetmap2021" role="doc-biblioref">OpenStreetMap Contributors 2021</a>)</span>.</p>
 <p><strong>OpenStreetMap Road Network</strong> — Highway and major road data used to filter out areas where reduced light may be due to decreased traffic rather than power outages <span class="citation" data-cites="openstreetmap2021">(<a href="#ref-openstreetmap2021" role="doc-biblioref">OpenStreetMap Contributors 2021</a>)</span>.</p>
-<p><strong>U.S. Census American Community Survey</strong> — 2015-2019 five-year estimates at the census tract level, including median household income data <span class="citation" data-cites="census2019">(<a href="#ref-census2019" role="doc-biblioref">U.S. Census Bureau 2019</a>)</span>.</p>
+<p><strong>U.S. Census American Community Survey</strong> — 2015-2019 five-year estimates at the census tract level, including median household income datndefinedandefine</p>
 </section>
 <section id="analytical-approach" class="level3">
 <h3 class="anchored" data-anchor-id="analytical-approach">Analytical Approach</h3>
@@ -454,7 +454,7 @@ div.csl-indent {
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(combined_crop) <span class="sc">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>map <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(combined_crop) <span class="sc">+</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_raster</span>(<span class="at">col.scale =</span> <span class="fu">tm_scale</span>(<span class="at">values =</span> <span class="st">"inferno"</span>),</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">col.legend =</span> <span class="fu">tm_legend</span>(<span class="at">title =</span> <span class="st">"Light Intensity</span><span class="sc">\n</span><span class="st">(nW cm⁻²sr⁻¹)"</span>,</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">title.size =</span> <span class="fl">0.9</span>,</span>
@@ -466,17 +466,12 @@ div.csl-indent {
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend.outside.size =</span> <span class="fl">0.12</span>,</span>
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">panel.labels =</span> <span class="fu">c</span>(<span class="st">"February 7 (Before)"</span>, <span class="st">"February 16 (After)"</span>),</span>
 <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">fontfamily =</span> <span class="st">"sans"</span>) <span class="sc">+</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_graticules</span>(<span class="at">lwd =</span> <span class="fl">0.2</span>, <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">labels.size =</span> <span class="fl">0.5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_graticules</span>(<span class="at">lwd =</span> <span class="fl">0.2</span>, <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">labels.size =</span> <span class="fl">0.5</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>map</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="1152"></p>
-<figcaption>Night lights imagery showing Houston before (left) and during (right) the February 2021 blackouts. Darker areas in the right panel indicate regions that lost power. The widespread darkening across the metropolitan area illustrates the extensive scale of the grid failure.</figcaption>
-</figure>
 </div>
-</div>
-</div>
+<p><img src="before-after-fig.png" class="img-fluid"></p>
 <p>The comparison reveals significant light reduction across much of the Houston metropolitan area. The bright urban core visible on February 7 dims substantially by February 16, indicating widespread power failures.</p>
 </section>
 <section id="identifying-blackout-areas" class="level3">
@@ -589,7 +584,7 @@ div.csl-indent {
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="960"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="960"></p>
 <figcaption>Refinement of blackout areas by excluding highway corridors. The yellow lines show major highways with 200m buffers applied. This step removes areas where reduced light may be due to decreased traffic rather than residential power outages.</figcaption>
 </figure>
 </div>
@@ -656,7 +651,7 @@ div.csl-indent {
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="960"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="960"></p>
 <figcaption>Spatial distribution of impacted and non-impacted residential buildings. Dark red points represent homes that experienced blackouts, while light pink points indicate buildings that maintained power throughout the crisis.</figcaption>
 </figure>
 </div>
@@ -863,9 +858,6 @@ NASA LAADS DAAC. 2021. <span>“VIIRS/NPP Daily Gridded Day Night Band 15 Arc-Se
 </div>
 <div id="ref-openstreetmap2021" class="csl-entry" role="listitem">
 OpenStreetMap Contributors. 2021. <span>“OpenStreetMap Data Extracts.”</span> Geofabrik GmbH. <a href="https://download.geofabrik.de/">https://download.geofabrik.de/</a>.
-</div>
-<div id="ref-census2019" class="csl-entry" role="listitem">
-U.S. Census Bureau. 2019. <span>“American Community Survey 5-Year Data (2015-2019).”</span> U.S. Census Bureau. <a href="https://www.census.gov/programs-surveys/acs/technical-documentation/table-and-geography-changes/2019/5-year.html">https://www.census.gov/programs-surveys/acs/technical-documentation/table-and-geography-changes/2019/5-year.html</a>.
 </div>
 </div>
 

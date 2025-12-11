@@ -55,14 +55,12 @@ This analysis integrates four primary datasets:
 
 **OpenStreetMap Road Network** — Highway and major road data used to filter out areas where reduced light may be due to decreased traffic rather than power outages [@openstreetmap2021].
 
-**U.S. Census American Community Survey** — 2015-2019 five-year estimates at the census tract level, including median household income data [@census2019].
+**U.S. Census American Community Survey** — 2015-2019 five-year estimates at the census tract level, including median household income datndefinedandefine
 
 ### Analytical Approach
 
 ```{r}
 #| label: setup
-#| message: false
-#| warning: false
 #| code-fold: true
 #| output: false
 
@@ -89,8 +87,6 @@ The analysis follows these steps:
 
 ```{r}
 #| label: load_data
-#| message: false
-#| warning: false
 #| code-fold: true
 #| output: false
 
@@ -119,8 +115,6 @@ houses <- st_read(here("posts/eds223-final/data/gis_osm_buildings_a_free_1.gpkg/
 
 ```{r}
 #| label: prepare_census
-#| message: false
-#| warning: false
 #| code-fold: true
 #| output: false
 
@@ -148,7 +142,6 @@ The stark difference in nighttime light emissions reveals the massive scale of t
 
 ```{r}
 #| label: before_after_prep
-#| warning: false
 #| code-fold: true
 #| output: false
 
@@ -178,13 +171,14 @@ names(combined_crop) <- c("February 7, 2021 (Before)", "February 16, 2021 (After
 ```
 
 ```{r}
-#| fig-cap: "Night lights imagery showing Houston before (left) and during (right) the February 2021 blackouts. Darker areas in the right panel indicate regions that lost power. The widespread darkening across the metropolitan area illustrates the extensive scale of the grid failure."
-#| fig-width: 12
-#| fig-height: 6
-#| warning: false
+#| label: before_after_map
+#| fig-cap: Night lights imagery showing Houston before (left) and during (right) the February 2021 blackouts. Darker areas in the right panel indicate regions that lost power. The widespread darkening across the metropolitan area illustrates the extensive scale of the grid failure.
 #| code-fold: true
+#| fig-height: 6
+#| fig-width: 12
+#| output: false
 
-tm_shape(combined_crop) +
+map <- tm_shape(combined_crop) +
   tm_raster(col.scale = tm_scale(values = "inferno"),
             col.legend = tm_legend(title = "Light Intensity\n(nW cm⁻²sr⁻¹)",
                                    title.size = 0.9,
@@ -197,7 +191,11 @@ tm_shape(combined_crop) +
             panel.labels = c("February 7 (Before)", "February 16 (After)"),
             fontfamily = "sans") +
   tm_graticules(lwd = 0.2, col = "white", alpha = 0.3, labels.size = 0.5)
+
+map
 ```
+
+![](before-after-fig.png)
 
 The comparison reveals significant light reduction across much of the Houston metropolitan area. The bright urban core visible on February 7 dims substantially by February 16, indicating widespread power failures.
 
@@ -524,7 +522,7 @@ kable(income_stats,
 
 ### Main Findings
 
-This analysis identified approximately **`r format(n_blackout_homes, big.mark = ",")`** residential buildings (`r pct_impacted`% of the study area) that lost power during the February 2021 storms. Unlike typical climate disasters, blackout exposure showed minimal income-based disparities—tracts with and without blackouts had median incomes differing by only ~\$3,000 (5%). This likely reflects the systemic nature of the grid failure: when the entire system collapsed, infrastructure vulnerabilities crossed neighborhood boundaries.
+This analysis identified approximately **`r format(n_blackout_homes, big.mark = ",")`** residential buildings (`r pct_impacted`% of the study area) that lost power during the February 2021 storms. Unlike typical climate disasters, blackout exposure showed minimal income-based disparities—tracts with and without blackouts had median incomes differing by only \~\$3,000 (5%). This likely reflects the systemic nature of the grid failure: when the entire system collapsed, infrastructure vulnerabilities crossed neighborhood boundaries.
 
 However, *exposure* differs from *impact*. Low-income communities faced greater difficulty evacuating, accessing backup heating, and recovering—even when blackout rates were similar [@gronlund2022].
 

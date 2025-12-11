@@ -765,7 +765,6 @@ knitr::kable(summary_stats, caption = "Final Dataset Characteristics")
 # 5. Exploratory Analysis
 
 ::: panel-tabset
-
 ```{r}
 #| label: predictor-distributions
 #| echo: false
@@ -857,12 +856,11 @@ p_roadtype <- model_data %>%
 
 **Predictor Distributions:**
 
-1. **Traffic volume** (top left): Log-normally distributed, centered around 1,000-10,000 vehicles/day, justifying log-transformation in the model
-2. **Road segment length** (top right): Also log-normally distributed (0.01-1 km typical), supporting the use of a length offset
-3. **Speed limits** (middle left): Speed limits show two distinct clusters - most roads either low-speed (~50 km/h) or have missing values
-4. **Road types** (middle right): Network dominated by Minor roads (~150,000 segments), with Major roads (~50,000) and Other types (~5,000) less common
-5. **Land use composition** (bottom): Within 500m buffers, farmland shows right-skewed distribution (0-20% typical), forest is more evenly distributed across 0-60%, parks are highly concentrated at 0% (rare feature), and residential areas are either sparse or dense with little in between
-
+1.  **Traffic volume** (top left): Log-normally distributed, centered around 1,000-10,000 vehicles/day, justifying log-transformation in the model
+2.  **Road segment length** (top right): Also log-normally distributed (0.01-1 km typical), supporting the use of a length offset
+3.  **Speed limits** (middle left): Speed limits show two distinct clusters - most roads either low-speed (\~50 km/h) or have missing values
+4.  **Road types** (middle right): Network dominated by Minor roads (\~150,000 segments), with Major roads (\~50,000) and Other types (\~5,000) less common
+5.  **Land use composition** (bottom): Within 500m buffers, farmland shows right-skewed distribution (0-20% typical), forest is more evenly distributed across 0-60%, parks are highly concentrated at 0% (rare feature), and residential areas are either sparse or dense with little in between
 :::
 
 These patterns validate our hypotheses from the DAG. Now let's build a statistical model to quantify these effects.
@@ -1703,4 +1701,3 @@ The hurdle model approach extends beyond roadkill to any ecological phenomenon w
 
 ::: {#refs}
 :::
-

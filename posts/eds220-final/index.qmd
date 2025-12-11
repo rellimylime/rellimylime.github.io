@@ -414,6 +414,7 @@ sm = plt.cm.ScalarMappable(
 cbar_ax = fig.add_axes([0.25, 0.12, 0.5, 0.03])
 cbar = fig.colorbar(sm, cax = cbar_ax, orientation = 'horizontal')
 cbar.set_label('Percentile Rank (0-100)', fontsize = 18)
+cbar.ax.tick_params(labelsize=16)
 
 plt.tight_layout()
 plt.show()

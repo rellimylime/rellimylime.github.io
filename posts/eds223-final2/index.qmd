@@ -1,7 +1,6 @@
 ---
 title: "Prioritizing Marine Aquaculture Locations on the US West Coast"
 description: "Using geospatial analysis to identify optimal locations for oyster and abalone farming based on sea surface temperature and depth criteria"
-author: Emily Miller
 date: 2024-11-15
 categories: [MEDS, R, Geospatial Analysis, Marine Science]
 image: aquaculture.jpg

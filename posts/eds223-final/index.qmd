@@ -1,7 +1,6 @@
 ---
 title: "Mapping the Texas Blackouts: A Spatial Analysis of the 2021 Winter Storm Impacts"
 description: "Using satellite night lights data and socioeconomic indicators to identify which Houston communities lost power during the historic February 2021 winter storms"
-author: "Emily Miller"
 date: "2025-12-03"
 categories: [geospatial analysis, remote sensing, environmental justice, R]
 image: eds223-final-cover.jpg

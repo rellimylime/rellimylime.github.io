@@ -17,7 +17,7 @@ The message from our utility was clear: cut power or expect blackouts.
 
 I thought I understood why: heat wave → too many AC units → overloaded grid.
 
-But while researching for my Ethics and Bias class, I found something different.  
+But while researching for my EDS 242 Ethics and Bias class, I found something different.  
 Part of the blackout problem came from decisions made years earlier, based on climate models that **overestimated how much solar power California would have on hot summer evenings**.
 
 ------------------------------------------------------------------------

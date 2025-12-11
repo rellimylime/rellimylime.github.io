@@ -11,6 +11,8 @@ citation:
 bibliography: references.bib
 ---
 
+![https://www.kqed.org/news/11878348/during-rolling-blackouts-last-summer-california-kept-exporting-power-out-of-state-theres-still-no-permanent-fix](rolling-blackout.jpg)
+
 Opening the door at 3pm in August 2020 felt like opening an oven.  
 My family rationed AC before the heat peaked, then toughed it out through the evening.  
 The message from our utility was clear: cut power or expect blackouts.
@@ -35,6 +37,8 @@ That marine layer produces fog and low stratus clouds that **cut incoming solar 
 
 These clouds often push inland through gaps like the Golden Gate and shape microclimates, like in the redwood forests of northern California, that climate models struggle to resolve [@johnstone2010fog].
 
+![Source: https://patch.com/california/millvalley/fog-rolls-over-hills-marin-county-photo-day](marin-fog.webp)
+
 ::: {.columns}
 ::: {.column width="48%"}
 **What the Models See**  
@@ -57,6 +61,8 @@ A 2024 CEC report [@pierce2024downscaling] states:
 
 CMIP5-era models systematically underestimated marine layer frequency, inland fog extent, and afternoon/evening cloud cover. 
 The Result?: Solar irradiance projections that were too optimistic, especially for afternoon/evening hours—exactly when California's "net peak" demand occurs.
+
+![https://www.usgs.gov/media/images/landsat-image-shows-marine-stratus-and-stratocumulus-cloud-layer-san-francisco-bay](fog-detail.jpg)
 
 ------------------------------------------------------------------------
 

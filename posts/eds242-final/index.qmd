@@ -1,7 +1,6 @@
 ---
 title: "The Fog the Models Missed"
 description: "How climate model biases in California's marine layer contributed to the 2020 blackouts"
-author: Emily Miller
 date: 2024-12-06
 categories: [MEDS, Climate Science, Data Science, Ethics]
 format: html

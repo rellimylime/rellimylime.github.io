@@ -11,11 +11,11 @@ citation:
 bibliography: references.bib
 ---
 
-![https://www.kqed.org/news/11878348/during-rolling-blackouts-last-summer-california-kept-exporting-power-out-of-state-theres-still-no-permanent-fix](rolling-blackout.jpg)
-
 Opening the door at 3pm in August 2020 felt like opening an oven.  
 My family rationed AC before the heat peaked, then toughed it out through the evening.  
 The message from our utility was clear: cut power or expect blackouts.
+
+![https://www.kqed.org/news/11878348/during-rolling-blackouts-last-summer-california-kept-exporting-power-out-of-state-theres-still-no-permanent-fix](rolling-blackout.jpg)
 
 I thought I understood why: heat wave → too many AC units → overloaded grid.
 

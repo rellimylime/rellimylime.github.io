@@ -160,9 +160,6 @@ Before we can perform spatial operations, we need to verify and restore the coor
 
 # Recover the geospatial information from spatial_ref
 landsat = landsat.rio.write_crs(landsat.spatial_ref.crs_wkt)
-
-# Verify CRS was set
-print(f"Landsat CRS: {landsat.rio.crs}")
 ```
 
 > The dataset's CRS is restored from the `spatial_ref` metadata variable, setting it to **EPSG:32611** (WGS 84 / UTM zone 11N), which is appropriate for the Los Angeles area.

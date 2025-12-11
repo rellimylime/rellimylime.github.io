@@ -35,9 +35,9 @@ In the 2010s, California made massive investments in solar infrastructure based 
 California's coast has a distinctive climate feature: the marine layer. Cold Pacific waters create a stable layer of cool, moist air trapped under warmer air above. 
 That marine layer produces fog and low stratus clouds that **cut incoming solar radiation by 30–50%** [@iacobellis2013variability].
 
-These clouds often push inland through gaps like the Golden Gate and shape microclimates, like in the redwood forests of northern California, that climate models struggle to resolve [@johnstone2010fog].
-
 ![Source: https://patch.com/california/millvalley/fog-rolls-over-hills-marin-county-photo-day](marin-fog.webp)
+
+These clouds often push inland through gaps like the Golden Gate and shape microclimates, like in the redwood forests of northern California, that climate models struggle to resolve [@johnstone2010fog].
 
 ::: {.columns}
 ::: {.column width="48%"}

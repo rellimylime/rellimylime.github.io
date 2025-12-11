@@ -33,7 +33,7 @@ This analysis demonstrates several key Python-based geospatial analysis techniqu
 -   **False color visualization** using `xarray` and `rioxarray` to process Landsat 8 SWIR/NIR/Red bands for burn scar identification
 -   **Multi-dataset integration** with `geopandas` combining satellite raster imagery with vector fire perimeter and census tract data
 -   **CRS management and reprojection** using `rio.write_crs()` and `to_crs()` to ensure spatial alignment across different data sources
--   **Environmental justice analysis** with spatial joins (`gpd.sjoin()`) and clipping to examine socioeconomic vulnerability in fire-affected areas
+-   **Environmental justice analysis** with spatial joins (`gpd.sjoin()`) and clipping to examine racial demographics in fire-affected areas
 
 ## Data
 
@@ -47,7 +47,7 @@ These shapefiles delineate the official fire perimeters for the Eaton and Palisa
 
 ### Environmental Justice Index (EJI) Data
 
-The CDC/ATSDR Environmental Justice Index [@cdc_eji] provides census tract-level data on environmental and socioeconomic factors. This analysis uses the 2024 California EJI dataset, which includes demographic information, poverty statistics, and environmental burden indicators for communities across the state.
+The CDC/ATSDR Environmental Justice Index [@cdc_eji] provides census tract-level demographic and socioeconomic data. This analysis uses the 2024 California EJI dataset to examine the racial composition of fire-affected communities through minority population percentile rankings.
 
 ------------------------------------------------------------------------
 
@@ -307,9 +307,9 @@ The fire perimeters are overlaid in **yellow (Eaton Fire)** and **red (Palisades
 
 ------------------------------------------------------------------------
 
-## Analysis 2: Environmental Justice Dimensions
+## Analysis 2: Demographic Dimensions
 
-Wildfires don't impact all communities equally. This analysis examines the socioeconomic characteristics of census tracts affected by the fires to understand the environmental justice implications.
+Wildfires don't impact all communities equally. This analysis examines the racial composition of census tracts affected by the fires to understand environmental justice implications.
 
 ### Data Preparation
 
@@ -351,16 +351,16 @@ eji_clip_palisades = gpd.clip(eji_palisades, palisades_perimeters)
 eji_clip_eaton = gpd.clip(eji_eaton, eaton_perimeters)
 ```
 
-### Analyzing Socioeconomic Vulnerability
+### Analyzing Racial Composition
 
-The Environmental Justice Index includes percentile rankings for various vulnerability indicators. Here we examine `EPL_POV200`, which represents the percentile rank of persons living below 200% of the federal poverty level—a measure of economic vulnerability.
+The Environmental Justice Index includes percentile rankings for demographic characteristics. Here we examine `EPL_MINRTY`, which represents the percentile rank of minority population (persons of color)—a measure of racial and ethnic composition relative to other California communities.
 
 ```{python}
-#| label: eji-vulnerability-map
+#| label: eji-racial-map
 #| code-fold: true
 #| fig-width: 18
 #| fig-height: 9
-#| fig-cap: "Socioeconomic vulnerability comparison between fire areas"
+#| fig-cap: "Racial demographic comparison between fire areas"
 
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize = (18, 9))
 
@@ -416,7 +416,7 @@ sm = plt.cm.ScalarMappable(
 )
 cbar_ax = fig.add_axes([0.25, 0.12, 0.5, 0.03])
 cbar = fig.colorbar(sm, cax = cbar_ax, orientation = 'horizontal')
-cbar.set_label('Percentile Rank (0-100)', fontsize = 14)
+cbar.set_label('Percentile Rank (0-100)', fontsize = 18)
 
 plt.tight_layout()
 plt.show()
@@ -424,33 +424,21 @@ plt.show()
 
 ## Key Findings
 
-This analysis reveals stark racial and ethnic disparities in wildfire impacts between the two fire areas. The maps show **percentile rankings** of minority population (persons of color) within fire-affected census tracts, where higher percentile values indicate greater representation of minority residents relative to other California communities.
+The demographic analysis reveals stark differences in the racial composition of communities affected by the two fires. The maps show percentile rankings of minority population, where higher values indicate greater representation of people of color relative to other California census tracts.
 
-**Palisades Fire Area:**
+**Palisades Fire Area:** Predominantly low percentile rankings (0th-30th percentiles, pale yellow). The fire primarily impacted areas with very low proportions of minority residents—a predominantly white, affluent coastal community.
 
-> The affected census tracts show predominantly low percentile rankings (pale yellow colors, roughly 0th-30th percentiles). The Palisades fire primarily impacted areas with **very low proportions of minority residents**—reflecting the area's demographics as a predominantly white, affluent coastal community.
+**Eaton Fire Area:** Dramatically high percentile rankings (70th-100th percentiles, dark red). Nearly the entire burn area shows the highest minority population concentrations in the state. The Eaton fire overwhelmingly affected communities of color, particularly in Altadena.
 
-**Eaton Fire Area:**
+**Implications for Recovery:**
 
-> The burn area shows dramatically higher percentile rankings, with vast portions in the 70th-100th percentiles (dark red). Nearly the entire Eaton fire footprint, particularly around Altadena, shows the highest minority population rankings in the state. The Eaton fire overwhelmingly affected **communities of color**.
-
-**Environmental Justice Implications:**
-
-This stark geographic pattern reveals that wildfire impacts are deeply tied to historical patterns of segregation and structural inequality. Communities of color—who already face compounded environmental burdens, reduced access to resources, and barriers to recovery—bore the brunt of the Eaton fire's destruction. This disparity is critical for:
-
-> -   **Emergency response** - ensuring equitable resource distribution during active disasters
-> -   **Recovery assistance** - directing aid to communities facing systemic barriers to rebuilding
-> -   **Long-term planning** - addressing how climate disasters compound existing racial inequities
+Research on disaster recovery consistently shows that communities of color face systemic barriers including reduced insurance coverage, limited financial reserves, and difficulties navigating aid bureaucracies. Identifying the demographic composition of affected areas is a critical first step for targeting recovery resources and monitoring for equitable outcomes. Future analysis should examine differential resource allocation, damage assessments, and recovery timelines to assess whether these fires followed historical patterns of inequitable disaster response.
 
 ## Conclusion
 
-This analysis demonstrates the power of integrating remote sensing techniques with environmental justice data to understand wildfire impacts through both physical and social lenses. The false color analysis using Landsat 8 imagery reveals the spatial extent and severity of burn scars across the landscape, while the environmental justice analysis uncovers critical disparities in who bears the burden of these disasters.
+This analysis shows that proximity doesn't mean equal impact. Though geographically close, the Eaton and Palisades fires had profoundly different social consequences. The Palisades fire affected wealthy, predominantly white neighborhoods. The Eaton fire devastated communities of color already facing systemic barriers to recovery.
 
-The stark contrast between the two fires—with Eaton disproportionately affecting economically vulnerable communities in the Altadena area while Palisades primarily impacted wealthier coastal neighborhoods—underscores the unequal distribution of climate disaster impacts. Communities with higher percentile rankings of low-income residents face compounded challenges: limited financial reserves for evacuation and temporary housing, reduced access to insurance, barriers to navigating recovery bureaucracy, and fewer resources for long-term rebuilding.
-
-The combination of `xarray`, `rioxarray`, and `geopandas` provides a robust Python-based workflow for this critical multi-dataset geospatial analysis. By processing satellite imagery alongside census-based vulnerability data, we can identify not just where fires burned, but whose communities bore the burden—information essential for equitable resource allocation and recovery planning.
-
-As climate change drives increased wildfire frequency and intensity across California and the Western United States, these integrated analytical approaches become indispensable tools for disaster response, recovery planning, and climate justice advocacy. Making both the physical and social dimensions of wildfire impacts visible empowers decision-makers to support vulnerable communities more effectively and challenges us to address the structural inequities that make some populations disproportionately vulnerable to environmental disasters.
+The combination of `xarray`, `rioxarray`, and `geopandas` transforms wildfire analysis from purely physical assessment to social justice documentation. Satellite data shows where fires burned; census data reveals whose communities bore the burden. As climate change intensifies California wildfires, these integrated approaches become essential for equity-centered disaster response and recovery planning that addresses the structural inequalities behind disparate climate impacts.
 
 ## References
 

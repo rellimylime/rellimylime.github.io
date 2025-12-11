@@ -283,11 +283,11 @@ div.csl-indent {
   <li><a href="#creating-the-final-map" id="toc-creating-the-final-map" class="nav-link" data-scroll-target="#creating-the-final-map">Creating the Final Map</a></li>
   <li><a href="#figure-interpretation" id="toc-figure-interpretation" class="nav-link" data-scroll-target="#figure-interpretation">Figure Interpretation</a></li>
   </ul></li>
-  <li><a href="#analysis-2-environmental-justice-dimensions" id="toc-analysis-2-environmental-justice-dimensions" class="nav-link" data-scroll-target="#analysis-2-environmental-justice-dimensions">Analysis 2: Environmental Justice Dimensions</a>
+  <li><a href="#analysis-2-demographic-dimensions" id="toc-analysis-2-demographic-dimensions" class="nav-link" data-scroll-target="#analysis-2-demographic-dimensions">Analysis 2: Demographic Dimensions</a>
   <ul class="collapse">
   <li><a href="#data-preparation" id="toc-data-preparation" class="nav-link" data-scroll-target="#data-preparation">Data Preparation</a></li>
   <li><a href="#identifying-affected-communities" id="toc-identifying-affected-communities" class="nav-link" data-scroll-target="#identifying-affected-communities">Identifying Affected Communities</a></li>
-  <li><a href="#analyzing-socioeconomic-vulnerability" id="toc-analyzing-socioeconomic-vulnerability" class="nav-link" data-scroll-target="#analyzing-socioeconomic-vulnerability">Analyzing Socioeconomic Vulnerability</a></li>
+  <li><a href="#analyzing-racial-composition" id="toc-analyzing-racial-composition" class="nav-link" data-scroll-target="#analyzing-racial-composition">Analyzing Racial Composition</a></li>
   </ul></li>
   <li><a href="#key-findings" id="toc-key-findings" class="nav-link" data-scroll-target="#key-findings">Key Findings</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
@@ -321,7 +321,7 @@ div.csl-indent {
 <li><strong>False color visualization</strong> using <code>xarray</code> and <code>rioxarray</code> to process Landsat 8 SWIR/NIR/Red bands for burn scar identification</li>
 <li><strong>Multi-dataset integration</strong> with <code>geopandas</code> combining satellite raster imagery with vector fire perimeter and census tract data</li>
 <li><strong>CRS management and reprojection</strong> using <code>rio.write_crs()</code> and <code>to_crs()</code> to ensure spatial alignment across different data sources</li>
-<li><strong>Environmental justice analysis</strong> with spatial joins (<code>gpd.sjoin()</code>) and clipping to examine socioeconomic vulnerability in fire-affected areas</li>
+<li><strong>Environmental justice analysis</strong> with spatial joins (<code>gpd.sjoin()</code>) and clipping to examine racial demographics in fire-affected areas</li>
 </ul>
 </section>
 <section id="data" class="level2">
@@ -336,7 +336,7 @@ div.csl-indent {
 </section>
 <section id="environmental-justice-index-eji-data" class="level3">
 <h3 class="anchored" data-anchor-id="environmental-justice-index-eji-data">Environmental Justice Index (EJI) Data</h3>
-<p>The CDC/ATSDR Environmental Justice Index <span class="citation" data-cites="cdc_eji">(<a href="#ref-cdc_eji" role="doc-biblioref">Centers for Disease Control and Prevention and Agency for Toxic Substances and Disease Registry 2024</a>)</span> provides census tract-level data on environmental and socioeconomic factors. This analysis uses the 2024 California EJI dataset, which includes demographic information, poverty statistics, and environmental burden indicators for communities across the state.</p>
+<p>The CDC/ATSDR Environmental Justice Index <span class="citation" data-cites="cdc_eji">(<a href="#ref-cdc_eji" role="doc-biblioref">Centers for Disease Control and Prevention and Agency for Toxic Substances and Disease Registry 2024</a>)</span> provides census tract-level demographic and socioeconomic data. This analysis uses the 2024 California EJI dataset to examine the racial composition of fire-affected communities through minority population percentile rankings.</p>
 <hr>
 </section>
 </section>
@@ -769,9 +769,9 @@ div.csl-indent {
 <hr>
 </section>
 </section>
-<section id="analysis-2-environmental-justice-dimensions" class="level2">
-<h2 class="anchored" data-anchor-id="analysis-2-environmental-justice-dimensions">Analysis 2: Environmental Justice Dimensions</h2>
-<p>Wildfires don’t impact all communities equally. This analysis examines the socioeconomic characteristics of census tracts affected by the fires to understand the environmental justice implications.</p>
+<section id="analysis-2-demographic-dimensions" class="level2">
+<h2 class="anchored" data-anchor-id="analysis-2-demographic-dimensions">Analysis 2: Demographic Dimensions</h2>
+<p>Wildfires don’t impact all communities equally. This analysis examines the racial composition of census tracts affected by the fires to understand environmental justice implications.</p>
 <section id="data-preparation" class="level3">
 <h3 class="anchored" data-anchor-id="data-preparation">Data Preparation</h3>
 <blockquote class="blockquote">
@@ -782,10 +782,10 @@ div.csl-indent {
 <h3 class="anchored" data-anchor-id="identifying-affected-communities">Identifying Affected Communities</h3>
 <p>To understand which communities were directly impacted by the fires, we use spatial intersection operations to identify census tracts that overlap with the fire perimeters. We then clip these tracts to the exact fire boundaries, ensuring our analysis focuses only on the areas that experienced direct fire impacts rather than nearby unaffected regions.</p>
 </section>
-<section id="analyzing-socioeconomic-vulnerability" class="level3">
-<h3 class="anchored" data-anchor-id="analyzing-socioeconomic-vulnerability">Analyzing Socioeconomic Vulnerability</h3>
-<p>The Environmental Justice Index includes percentile rankings for various vulnerability indicators. Here we examine <code>EPL_POV200</code>, which represents the percentile rank of persons living below 200% of the federal poverty level—a measure of economic vulnerability.</p>
-<div id="cell-eji-vulnerability-map" class="cell" data-fig-height="9" data-fig-width="18" data-execution_count="13">
+<section id="analyzing-racial-composition" class="level3">
+<h3 class="anchored" data-anchor-id="analyzing-racial-composition">Analyzing Racial Composition</h3>
+<p>The Environmental Justice Index includes percentile rankings for demographic characteristics. Here we examine <code>EPL_MINRTY</code>, which represents the percentile rank of minority population (persons of color)—a measure of racial and ethnic composition relative to other California communities.</p>
+<div id="cell-eji-racial-map" class="cell" data-fig-height="9" data-fig-width="18" data-execution_count="13">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize <span class="op">=</span> (<span class="dv">18</span>, <span class="dv">9</span>))</span>
@@ -842,16 +842,16 @@ div.csl-indent {
 <span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a>cbar_ax <span class="op">=</span> fig.add_axes([<span class="fl">0.25</span>, <span class="fl">0.12</span>, <span class="fl">0.5</span>, <span class="fl">0.03</span>])</span>
 <span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a>cbar <span class="op">=</span> fig.colorbar(sm, cax <span class="op">=</span> cbar_ax, orientation <span class="op">=</span> <span class="st">'horizontal'</span>)</span>
-<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a>cbar.set_label(<span class="st">'Percentile Rank (0-100)'</span>, fontsize <span class="op">=</span> <span class="dv">14</span>)</span>
+<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a>cbar.set_label(<span class="st">'Percentile Rank (0-100)'</span>, fontsize <span class="op">=</span> <span class="dv">18</span>)</span>
 <span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
 <span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="eji-vulnerability-map" class="quarto-figure quarto-figure-center anchored">
+<div id="eji-racial-map" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="index_files/figure-html/eji-vulnerability-map-output-1.png" width="1718" height="808" class="figure-img"></p>
-<figcaption>Socioeconomic vulnerability comparison between fire areas</figcaption>
+<p><img src="index_files/figure-html/eji-racial-map-output-1.png" width="1718" height="813" class="figure-img"></p>
+<figcaption>Racial demographic comparison between fire areas</figcaption>
 </figure>
 </div>
 </div>
@@ -860,31 +860,16 @@ div.csl-indent {
 </section>
 <section id="key-findings" class="level2">
 <h2 class="anchored" data-anchor-id="key-findings">Key Findings</h2>
-<p>This analysis reveals stark racial and ethnic disparities in wildfire impacts between the two fire areas. The maps show <strong>percentile rankings</strong> of minority population (persons of color) within fire-affected census tracts, where higher percentile values indicate greater representation of minority residents relative to other California communities.</p>
-<p><strong>Palisades Fire Area:</strong></p>
-<blockquote class="blockquote">
-<p>The affected census tracts show predominantly low percentile rankings (pale yellow colors, roughly 0th-30th percentiles). The Palisades fire primarily impacted areas with <strong>very low proportions of minority residents</strong>—reflecting the area’s demographics as a predominantly white, affluent coastal community.</p>
-</blockquote>
-<p><strong>Eaton Fire Area:</strong></p>
-<blockquote class="blockquote">
-<p>The burn area shows dramatically higher percentile rankings, with vast portions in the 70th-100th percentiles (dark red). Nearly the entire Eaton fire footprint, particularly around Altadena, shows the highest minority population rankings in the state. The Eaton fire overwhelmingly affected <strong>communities of color</strong>.</p>
-</blockquote>
-<p><strong>Environmental Justice Implications:</strong></p>
-<p>This stark geographic pattern reveals that wildfire impacts are deeply tied to historical patterns of segregation and structural inequality. Communities of color—who already face compounded environmental burdens, reduced access to resources, and barriers to recovery—bore the brunt of the Eaton fire’s destruction. This disparity is critical for:</p>
-<blockquote class="blockquote">
-<ul>
-<li><strong>Emergency response</strong> - ensuring equitable resource distribution during active disasters</li>
-<li><strong>Recovery assistance</strong> - directing aid to communities facing systemic barriers to rebuilding</li>
-<li><strong>Long-term planning</strong> - addressing how climate disasters compound existing racial inequities</li>
-</ul>
-</blockquote>
+<p>The demographic analysis reveals stark differences in the racial composition of communities affected by the two fires. The maps show percentile rankings of minority population, where higher values indicate greater representation of people of color relative to other California census tracts.</p>
+<p><strong>Palisades Fire Area:</strong> Predominantly low percentile rankings (0th-30th percentiles, pale yellow). The fire primarily impacted areas with very low proportions of minority residents—a predominantly white, affluent coastal community.</p>
+<p><strong>Eaton Fire Area:</strong> Dramatically high percentile rankings (70th-100th percentiles, dark red). Nearly the entire burn area shows the highest minority population concentrations in the state. The Eaton fire overwhelmingly affected communities of color, particularly in Altadena.</p>
+<p><strong>Implications for Recovery:</strong></p>
+<p>Research on disaster recovery consistently shows that communities of color face systemic barriers including reduced insurance coverage, limited financial reserves, and difficulties navigating aid bureaucracies. Identifying the demographic composition of affected areas is a critical first step for targeting recovery resources and monitoring for equitable outcomes. Future analysis should examine differential resource allocation, damage assessments, and recovery timelines to assess whether these fires followed historical patterns of inequitable disaster response.</p>
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<p>This analysis demonstrates the power of integrating remote sensing techniques with environmental justice data to understand wildfire impacts through both physical and social lenses. The false color analysis using Landsat 8 imagery reveals the spatial extent and severity of burn scars across the landscape, while the environmental justice analysis uncovers critical disparities in who bears the burden of these disasters.</p>
-<p>The stark contrast between the two fires—with Eaton disproportionately affecting economically vulnerable communities in the Altadena area while Palisades primarily impacted wealthier coastal neighborhoods—underscores the unequal distribution of climate disaster impacts. Communities with higher percentile rankings of low-income residents face compounded challenges: limited financial reserves for evacuation and temporary housing, reduced access to insurance, barriers to navigating recovery bureaucracy, and fewer resources for long-term rebuilding.</p>
-<p>The combination of <code>xarray</code>, <code>rioxarray</code>, and <code>geopandas</code> provides a robust Python-based workflow for this critical multi-dataset geospatial analysis. By processing satellite imagery alongside census-based vulnerability data, we can identify not just where fires burned, but whose communities bore the burden—information essential for equitable resource allocation and recovery planning.</p>
-<p>As climate change drives increased wildfire frequency and intensity across California and the Western United States, these integrated analytical approaches become indispensable tools for disaster response, recovery planning, and climate justice advocacy. Making both the physical and social dimensions of wildfire impacts visible empowers decision-makers to support vulnerable communities more effectively and challenges us to address the structural inequities that make some populations disproportionately vulnerable to environmental disasters.</p>
+<p>This analysis shows that proximity doesn’t mean equal impact. Though geographically close, the Eaton and Palisades fires had profoundly different social consequences. The Palisades fire affected wealthy, predominantly white neighborhoods. The Eaton fire devastated communities of color already facing systemic barriers to recovery.</p>
+<p>The combination of <code>xarray</code>, <code>rioxarray</code>, and <code>geopandas</code> transforms wildfire analysis from purely physical assessment to social justice documentation. Satellite data shows where fires burned; census data reveals whose communities bore the burden. As climate change intensifies California wildfires, these integrated approaches become essential for equity-centered disaster response and recovery planning that addresses the structural inequalities behind disparate climate impacts.</p>
 </section>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>

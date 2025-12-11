@@ -234,7 +234,13 @@ div.csl-indent {
   <li><a href="#why-this-matters-beyond-one-heat-wave" id="toc-why-this-matters-beyond-one-heat-wave" class="nav-link" data-scroll-target="#why-this-matters-beyond-one-heat-wave">Why This Matters Beyond One Heat Wave</a></li>
   </ul></li>
   <li><a href="#connections-to-eds-242-course-concepts" id="toc-connections-to-eds-242-course-concepts" class="nav-link" data-scroll-target="#connections-to-eds-242-course-concepts">Connections to EDS 242 Course Concepts</a></li>
-  <li><a href="#the-technical-challenge" id="toc-the-technical-challenge" class="nav-link" data-scroll-target="#the-technical-challenge">The Technical Challenge</a></li>
+  <li><a href="#the-technical-challenge" id="toc-the-technical-challenge" class="nav-link" data-scroll-target="#the-technical-challenge">The Technical Challenge</a>
+  <ul class="collapse">
+  <li><a href="#the-problem" id="toc-the-problem" class="nav-link" data-scroll-target="#the-problem">The Problem</a></li>
+  <li><a href="#downscaling" id="toc-downscaling" class="nav-link" data-scroll-target="#downscaling">Downscaling</a></li>
+  <li><a href="#bias-correction" id="toc-bias-correction" class="nav-link" data-scroll-target="#bias-correction">Bias Correction</a></li>
+  <li><a href="#broader-pattern" id="toc-broader-pattern" class="nav-link" data-scroll-target="#broader-pattern">Broader Pattern</a></li>
+  </ul></li>
   <li><a href="#what-we-can-do" id="toc-what-we-can-do" class="nav-link" data-scroll-target="#what-we-can-do">What We Can Do</a></li>
   <li><a href="#why-i-think-about-this" id="toc-why-i-think-about-this" class="nav-link" data-scroll-target="#why-i-think-about-this">Why I Think About This</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
@@ -368,27 +374,28 @@ Marine layer dynamics at &lt;10 km<br>
 <section id="the-technical-challenge" class="level2">
 <h2 class="anchored" data-anchor-id="the-technical-challenge">The Technical Challenge</h2>
 <p>Climate modelers know about these biases. Marine boundary layer clouds remain one of the largest sources of uncertainty in climate models <span class="citation" data-cites="klein2017">(<a href="#ref-klein2017" role="doc-biblioref">Klein et al. 2017</a>)</span>. Understanding different types of bias is crucial for interpreting these limitations <span class="citation" data-cites="konno2024bias">(<a href="#ref-konno2024bias" role="doc-biblioref">Konno et al. 2024</a>)</span>.</p>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">The Problem</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Downscaling</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">Bias Correction</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false" href="">Broader Pattern</a></li></ul>
-<div class="tab-content">
-<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p>#::: {.panel-tabset}</p>
+<section id="the-problem" class="level3">
+<h3 class="anchored" data-anchor-id="the-problem">The Problem</h3>
 <p>Marine layer physics operates at scales GCMs can’t resolve. Coastal fog and low stratus depend on boundary layer processes, cloud microphysics, and topographic features at sub-grid scales <span class="citation" data-cites="klein2017">(<a href="#ref-klein2017" role="doc-biblioref">Klein et al. 2017</a>)</span>.</p>
-</div>
-<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+</section>
+<section id="downscaling" class="level3">
+<h3 class="anchored" data-anchor-id="downscaling">Downscaling</h3>
 <p><strong>Statistical downscaling (LOCA):</strong> Uses historical relationships but assumes future will match past patterns—questionable under climate change <span class="citation" data-cites="ekstrom2015appraisal">(<a href="#ref-ekstrom2015appraisal" role="doc-biblioref">Ekström, Grose, and Whetton 2015</a>)</span>.</p>
 <p><strong>Dynamical downscaling (WRF):</strong> Simulates physics at finer scale but inherits GCM biases.</p>
 <p><strong>California’s approach (LOCA2):</strong> Combines both methods <span class="citation" data-cites="pierce2024downscaling">(<a href="#ref-pierce2024downscaling" role="doc-biblioref">Pierce et al. 2024</a>)</span>. A 2024 technical report notes improvements but still recommends changing planning assumptions to account for limitations.</p>
-</div>
-<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+</section>
+<section id="bias-correction" class="level3">
+<h3 class="anchored" data-anchor-id="bias-correction">Bias Correction</h3>
 <p>Different bias correction methods can change answers significantly <span class="citation" data-cites="maraun2016bias">(<a href="#ref-maraun2016bias" role="doc-biblioref">Maraun 2016</a>)</span>. The choice of method can shift your projection as much as the climate signal itself <span class="citation" data-cites="ekstrom2015appraisal">(<a href="#ref-ekstrom2015appraisal" role="doc-biblioref">Ekström, Grose, and Whetton 2015</a>)</span>.</p>
 <p>Common approaches: quantile mapping (assumes stationary bias), delta methods (assumes correct trends), deep learning (overfitting risk), and ensemble averaging (masks uncertainties).</p>
-</div>
-<div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
+</section>
+<section id="broader-pattern" class="level3">
+<h3 class="anchored" data-anchor-id="broader-pattern">Broader Pattern</h3>
 <p>This pattern shows up across environmental data science—flood risk, crop yields, hydropower, fire risk. Model biases propagate through decision chains <span class="citation" data-cites="olteanu2019social">(<a href="#ref-olteanu2019social" role="doc-biblioref">Olteanu et al. 2019</a>)</span>. The projections look authoritative, but limitations don’t make it into summary documents as often as needed.</p>
-</div>
-</div>
-</div>
+<p>#:::</p>
 <hr>
+</section>
 </section>
 <section id="what-we-can-do" class="level2">
 <h2 class="anchored" data-anchor-id="what-we-can-do">What We Can Do</h2>

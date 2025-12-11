@@ -146,7 +146,7 @@ The bias propagates through what Olteanu et al. call "decision chains," compound
 
 Climate modelers know about these biases. Marine boundary layer clouds remain one of the largest sources of uncertainty in climate models [@klein2017]. Understanding different types of bias is crucial for interpreting these limitations [@konno2024bias].
 
-::: {.panel-tabset}
+#::: {.panel-tabset}
 
 ### The Problem
 
@@ -170,7 +170,7 @@ Common approaches: quantile mapping (assumes stationary bias), delta methods (as
 
 This pattern shows up across environmental data science—flood risk, crop yields, hydropower, fire risk. Model biases propagate through decision chains [@olteanu2019social]. The projections look authoritative, but limitations don't make it into summary documents as often as needed.
 
-:::
+#:::
 
 ------------------------------------------------------------------------
 

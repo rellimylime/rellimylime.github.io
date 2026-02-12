@@ -10,7 +10,7 @@ citation:
 bibliography: references.bib
 jupyter: eds220-env
 execute:
-  eval: true
+  eval: false
   echo: true
   warning: false
   message: false
@@ -209,9 +209,11 @@ Before creating specialized visualizations, we can verify our data by creating a
 #| fig-cap: "True color composite (RGB) of the fire-affected area"
 
 # Create true color composite with robust scaling
-landsat[['red', 'green', 'blue']].to_array().plot.imshow(robust=True)
+# Coarsen by factor of 4 to reduce memory usage
+landsat_viz = landsat[['red', 'green', 'blue']].coarsen(x=4, y=4, boundary='trim').mean()
+landsat_viz.to_array().plot.imshow(robust=True)
 plt.title('True Color Image - Landsat 8')
-plt.show()
+plt.tight_layout()
 ```
 
 > The `robust=True` parameter clips extreme outlier values to improve visualization, preventing a few bright pixels from washing out the entire image.
@@ -226,9 +228,11 @@ False color composites use non-visible wavelengths to reveal features invisible 
 #| fig-cap: "False color composite (SWIR/NIR/Red) highlighting burn scars"
 
 # Create false color composite (SWIR/NIR/Red)
-landsat[['swir22', 'nir08', 'red']].to_array().plot.imshow(robust=True)
+# Coarsen by factor of 4 to reduce memory usage
+landsat_false = landsat[['swir22', 'nir08', 'red']].coarsen(x=4, y=4, boundary='trim').mean()
+landsat_false.to_array().plot.imshow(robust=True)
 plt.title('False Color Composite (SWIR/NIR/Red)')
-plt.show()
+plt.tight_layout()
 ```
 
 **Why this band combination?**
@@ -255,8 +259,9 @@ palisades = palisades.to_crs(landsat.rio.crs)
 # Create comprehensive map
 fig, ax = plt.subplots(figsize = (12, 12))
 
-# Plot false color composite
-landsat[['swir22', 'nir08', 'red']].to_array().plot.imshow(
+# Plot false color composite (downsampled for memory efficiency)
+landsat_map = landsat[['swir22', 'nir08', 'red']].coarsen(x=4, y=4, boundary='trim').mean()
+landsat_map.to_array().plot.imshow(
     ax = ax,
     robust = True,
     add_colorbar = False

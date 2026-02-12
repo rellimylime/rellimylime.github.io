@@ -1,0 +1,160 @@
+---
+title: "40 Spam Emails and a Garmin: A Calendar Sync Love Story"
+description: "I built a Python script to copy Google Calendar events when my Garmin refused to sync subscribed calendars. I also accidentally mass-emailed everyone in the process, which makes for a fun story."
+date: 2026-01-28
+categories: [Python, MEDS, Personal]
+image: garmin-calendar.jpg
+citation:
+  url: https://rellimylime.github.io/posts/garmin-calendar-sync/
+---
+
+[*Full code and setup instructions on GitHub*](https://github.com/rellimylime/google-calendar-copy)
+
+## The Problem
+
+My Garmin watch tracks my heart rate, sleep, stress levels, and approximately 47 other metrics I didn't ask for. But there's one thing it won't do: sync Google Calendars I'm subscribed to. Only calendars I own.
+
+The MEDS program schedule lives on a shared Google Calendar. I'm subscribed to it. My Garmin pretends it doesn't exist.
+
+It's 2026. This feels like something that should have a built-in fix. If there is one, I still haven't found it.
+
+The calendar is fairly static—class schedules don't change weekly—so I figured I'd just copy the events to my own calendar. My Garmin syncs that one fine.
+
+I could do this manually, which sounds like a delightful way to spend several afternoons, or I could put in even more time to automate it.
+
+Decision made: build a script.
+
+## What I Built
+
+A Python script that copies events from any Google Calendar you have access to (shared calendars, subscribed calendars, whatever) into your primary calendar. Run it once, events show up on your Garmin. Problem solved.
+
+Here's what makes it actually useful:
+
+### It Only Copies What You Need
+
+``` python
+new_event = {
+    'summary': event.get('summary', ''),
+    'description': build_description(event),
+    'start': event.get('start'),
+    'end': event.get('end'),
+}
+
+# Notice what's NOT here: attendees
+```
+
+The script strips out attendee information by default. If you need to know who was on the original event, it extracts that as plain text and puts it in the description. Information preserved, nobody gets accidentally emailed.
+
+(More on why that matters in a second.)
+
+### Safety Features That Turned Out to Be Essential
+
+**Test before you commit**: You can copy a single event first to make sure everything works.
+
+``` bash
+# Preview what would happen
+python copy_calendar.py copy --dry-run
+
+# Copy just one event to test
+python copy_calendar.py copy --test
+
+# Actually do it
+python copy_calendar.py copy
+```
+
+**Easy cleanup**: Every copied event gets `[copied_from_external]` prepended to its description. If something goes wrong, you can delete all copied events with one command:
+
+``` bash
+python copy_calendar.py delete
+```
+
+**No duplicates**: Run it twice by accident? The script checks existing events and skips ones that are already there.
+
+**Smart filtering**: Only copies future events (365 days forward by default). No point syncing stuff that already happened.
+
+## The Fun Side Story: Why These Features Exist
+
+You might be wondering why I'm so paranoid about testing and safety features.
+
+My first version of this script was much simpler:
+
+``` python
+# The version that seemed so clever at the time
+events = source_calendar.list_events()
+for event in events:
+    primary_calendar.insert(event)
+```
+
+I ran it. Events appeared in my calendar. Perfect!
+
+Then my phone started buzzing. Email notification. Then another. And another.
+
+Then Cat messaged: "Whats going on?"
+
+I checked my inbox and felt my stomach drop.
+
+I'd just triggered email invitations to every attendee on every event I copied. Staff, alumni, people I'd never met, conference room booking systems. The MEDS calendar has years of historical events. Apparently I'd just invited approximately 40 people to events that already happened.
+
+Here's what I learned: calendar attendees aren't just metadata. When you create an event with attendees, Google Calendar sends them invitations. The attendees field is an action trigger, not a note.
+
+> "All models are wrong, but some are useful." — George Box
+>
+> Some API calls are catastrophically wrong. — Me, learning this the hard way
+
+So I rewrote the script. Stripped out attendees. Added `sendNotifications=False` as a backup. Built in test mode so you can try one event first. Added the copy tag so you can easily undo everything if needed.
+
+Every safety feature exists because I learned—spectacularly—why it was necessary.
+
+## Using It
+
+Basic workflow:
+
+``` bash
+# Preview what would happen
+python copy_calendar.py copy --dry-run
+
+# Copy just one event to test
+python copy_calendar.py copy --test
+
+# Actually copy everything
+python copy_calendar.py copy
+
+# Delete all copied events if needed
+python copy_calendar.py delete
+```
+
+The [GitHub repo](https://github.com/rellimylime/google-calendar-copy) has detailed setup instructions including Google Cloud OAuth setup, finding your calendar ID, and all the boring-but-necessary configuration steps.
+
+## What This Is Good For (And What It's Not)
+
+This creates copies, not live subscriptions. If the original calendar updates, you'll have stale data until you run the script again.
+
+**Good for:** - Static calendars that don't change much (class schedules, semester plans, recurring meetings) - Device sync issues where your watch/fitness tracker only sees calendars you own - One-way sync where you don't need updates to flow back
+
+**Not good for:** - Calendars that change constantly - Situations where you need real-time updates - If you can't remember to run a script periodically
+
+I run it every few weeks. Takes 30 seconds. Events show up on my Garmin. Nobody gets spammed. Problem solved.
+
+Sometimes the practical answer is a Python script you run twice a month, not some elaborate real-time webhook integration.
+
+## Things I Learned
+
+-   **Test with one item before copying 600.** This should be obvious. It was not obvious to me.
+
+-   **Understand your data structure before you manipulate it.** Calendar events aren't just data—they trigger real-world actions.
+
+-   **APIs that can email people deserve extra caution.** They can embarrass you at scale.
+
+-   **Reversibility is worth the five minutes.** The copy tag saved me from hours of manual cleanup.
+
+-   **"How hard could it be?" is always famous last words.** I say this constantly. I never learn.
+
+## Wrapping Up
+
+The script lives on [GitHub](https://github.com/rellimylime/google-calendar-copy) with full setup instructions. If you've got a similar problem, Garmin, Fitbit, any device that only syncs calendars you own, this might help.
+
+For everyone else: consider this a reminder to read documentation before running scripts that can email strangers.
+
+The real calendar sync was the mistakes we made along the way.
+
+(That's a terrible closing line. But I'm keeping it.)

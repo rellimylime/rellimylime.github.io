@@ -6,11 +6,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Your Names Here">
-<meta name="dcterms.date" content="2026-03-20">
-<meta name="description" content="Replicating the treatment effect from Atristain et al.&nbsp;(2024) using a multiple before-after/control-impact design">
+<meta name="author" content="Lucian Scher &amp; Marie Tolteca">
+<meta name="dcterms.date" content="2026-03-06">
+<meta name="description" content="Assignment 4 — Replication of Atristain et al.&nbsp;(2024)">
 
-<title>Dam Decommissioning &amp; Invertebrate Recovery: A BACI Analysis Tutorial – Emily Miller</title>
+<title>Dam Decommissioning &amp; Invertebrate Recovery: mBACI Analysis – Emily Miller</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -189,10 +189,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-page-left">
-      <h1 class="title">Dam Decommissioning &amp; Invertebrate Recovery: A BACI Analysis Tutorial</h1>
+      <h1 class="title">Dam Decommissioning &amp; Invertebrate Recovery: mBACI Analysis</h1>
                   <div>
         <div class="description">
-          Replicating the treatment effect from Atristain et al.&nbsp;(2024) using a multiple before-after/control-impact design
+          Assignment 4 — Replication of Atristain et al.&nbsp;(2024)
         </div>
       </div>
                           <div class="quarto-categories">
@@ -209,14 +209,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Author</div>
       <div class="quarto-title-meta-contents">
-               <p>Your Names Here </p>
+               <p>Lucian Scher &amp; Marie Tolteca </p>
             </div>
     </div>
       
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">March 20, 2026</p>
+        <p class="date">March 6, 2026</p>
       </div>
     </div>
     
@@ -233,24 +233,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#study-overview" id="toc-study-overview" class="nav-link active" data-scroll-target="#study-overview">Study Overview</a></li>
-  <li><a href="#the-mbaci-design-as-difference-in-differences" id="toc-the-mbaci-design-as-difference-in-differences" class="nav-link" data-scroll-target="#the-mbaci-design-as-difference-in-differences">The mBACI Design as Difference-in-Differences</a></li>
-  <li><a href="#step-1-load-and-wrangle-the-data" id="toc-step-1-load-and-wrangle-the-data" class="nav-link" data-scroll-target="#step-1-load-and-wrangle-the-data">Step 1: Load and Wrangle the Data</a></li>
-  <li><a href="#step-2-explore-the-data" id="toc-step-2-explore-the-data" class="nav-link" data-scroll-target="#step-2-explore-the-data">Step 2: Explore the Data</a></li>
-  <li><a href="#step-3-fit-the-mbaci-model" id="toc-step-3-fit-the-mbaci-model" class="nav-link" data-scroll-target="#step-3-fit-the-mbaci-model">Step 3: Fit the mBACI Model</a></li>
-  <li><a href="#step-4-interpret-the-coefficients" id="toc-step-4-interpret-the-coefficients" class="nav-link" data-scroll-target="#step-4-interpret-the-coefficients">Step 4: Interpret the Coefficients</a></li>
-  <li><a href="#step-5-test-the-overall-interaction-bdaci" id="toc-step-5-test-the-overall-interaction-bdaci" class="nav-link" data-scroll-target="#step-5-test-the-overall-interaction-bdaci">Step 5: Test the Overall Interaction (BDA:CI)</a></li>
-  <li><a href="#step-6-model-diagnostics" id="toc-step-6-model-diagnostics" class="nav-link" data-scroll-target="#step-6-model-diagnostics">Step 6: Model Diagnostics</a></li>
-  <li><a href="#step-7-robustness-checks" id="toc-step-7-robustness-checks" class="nav-link" data-scroll-target="#step-7-robustness-checks">Step 7: Robustness Checks</a></li>
-  <li><a href="#step-8-effect-sizes" id="toc-step-8-effect-sizes" class="nav-link" data-scroll-target="#step-8-effect-sizes">Step 8: Effect Sizes</a></li>
-  <li><a href="#evaluation-of-causal-inference" id="toc-evaluation-of-causal-inference" class="nav-link" data-scroll-target="#evaluation-of-causal-inference">Evaluation of Causal Inference</a>
+  <li><a href="#data-loading-description" id="toc-data-loading-description" class="nav-link" data-scroll-target="#data-loading-description">Data Loading &amp; Description</a></li>
+  <li><a href="#exploratory-analysis" id="toc-exploratory-analysis" class="nav-link" data-scroll-target="#exploratory-analysis">Exploratory Analysis</a></li>
+  <li><a href="#mbaci-model" id="toc-mbaci-model" class="nav-link" data-scroll-target="#mbaci-model">mBACI Model</a></li>
+  <li><a href="#coefficient-interpretation" id="toc-coefficient-interpretation" class="nav-link" data-scroll-target="#coefficient-interpretation">Coefficient Interpretation</a></li>
+  <li><a href="#overall-interaction-test-bdaci" id="toc-overall-interaction-test-bdaci" class="nav-link" data-scroll-target="#overall-interaction-test-bdaci">Overall Interaction Test (BDA:CI)</a></li>
+  <li><a href="#model-diagnostics" id="toc-model-diagnostics" class="nav-link" data-scroll-target="#model-diagnostics">Model Diagnostics</a></li>
+  <li><a href="#robustness-multiple-outcomes" id="toc-robustness-multiple-outcomes" class="nav-link" data-scroll-target="#robustness-multiple-outcomes">Robustness: Multiple Outcomes</a></li>
+  <li><a href="#critical-evaluation" id="toc-critical-evaluation" class="nav-link" data-scroll-target="#critical-evaluation">Critical Evaluation</a>
   <ul class="collapse">
-  <li><a href="#parallel-trends" id="toc-parallel-trends" class="nav-link" data-scroll-target="#parallel-trends">1. Parallel trends</a></li>
-  <li><a href="#no-spillover-sutva" id="toc-no-spillover-sutva" class="nav-link" data-scroll-target="#no-spillover-sutva">2. No spillover (SUTVA)</a></li>
-  <li><a href="#no-time-varying-confounders" id="toc-no-time-varying-confounders" class="nav-link" data-scroll-target="#no-time-varying-confounders">3. No time-varying confounders</a></li>
-  <li><a href="#correct-model-specification" id="toc-correct-model-specification" class="nav-link" data-scroll-target="#correct-model-specification">4. Correct model specification</a></li>
-  <li><a href="#bottom-line" id="toc-bottom-line" class="nav-link" data-scroll-target="#bottom-line">Bottom line</a></li>
+  <li><a href="#causal-identification" id="toc-causal-identification" class="nav-link" data-scroll-target="#causal-identification">Causal Identification</a></li>
+  <li><a href="#statistical-assumptions" id="toc-statistical-assumptions" class="nav-link" data-scroll-target="#statistical-assumptions">Statistical Assumptions</a></li>
+  <li><a href="#sampling-external-validity" id="toc-sampling-external-validity" class="nav-link" data-scroll-target="#sampling-external-validity">Sampling &amp; External Validity</a></li>
+  <li><a href="#measurement" id="toc-measurement" class="nav-link" data-scroll-target="#measurement">Measurement</a></li>
+  <li><a href="#other-limitations" id="toc-other-limitations" class="nav-link" data-scroll-target="#other-limitations">Other Limitations</a></li>
   </ul></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
@@ -269,84 +266,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom.mixed)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <section id="study-overview" class="level2">
 <h2 class="anchored" data-anchor-id="study-overview">Study Overview</h2>
-<p>Atristain et al.&nbsp;(2024) investigated whether decommissioning a large dam (42 m tall, Enobieta Dam, northern Spain) restored downstream macroinvertebrate communities. They used a <strong>multiple Before-After/Control-Impact (mBACI) design</strong> — the ecological equivalent of a <strong>difference-in-differences (DiD)</strong> framework.</p>
-<p><strong>The causal question:</strong> Did the reservoir drawdown cause invertebrate communities at impact sites to recover to levels comparable to undammed control sites?</p>
-<p><strong>The treatment:</strong> Reservoir drawdown (initiated December 2018, completed November 2019).</p>
-<p><strong>Primary finding we’ll replicate:</strong> The effect of drawdown on <em>taxa richness</em> (S), measured by the period × reach interaction in a linear mixed-effects model.</p>
-<p>![](drawdown-diagram.jpg)</p>
+<p>Atristain et al.&nbsp;(2024) asked whether decommissioning the Enobieta Dam (42 m, northern Spain) restored downstream macroinvertebrate communities. They used a <strong>multiple Before-After/Control-Impact (mBACI) design</strong> — the ecological analogue of <strong>difference-in-differences (DiD)</strong>.</p>
+<ul>
+<li><strong>Treatment:</strong> Reservoir drawdown (Dec 2018 – Nov 2019)</li>
+<li><strong>Outcome:</strong> Macroinvertebrate community metrics (taxa richness, diversity, density, biomonitoring index)</li>
+<li><strong>Design:</strong> Compare the change over time at impact sites (downstream of dam) vs.&nbsp;control sites (undammed tributaries)</li>
+</ul>
+<p><img src="drawdown-diagram.jpg" class="img-fluid"></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Data access
+<span class="screen-reader-only">Note</span>Data Access
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The data for this analysis come from the <a href="https://doi.org/10.5061/dryad.w3r2280ws">Dryad Digital Repository</a> (Atristain et al., 2024). Download <code>Atristainetal_JAE_Data.xlsx</code> and place it in a <code>data/</code> folder in your project directory.</p>
+<p>Data are from the <a href="https://doi.org/10.5061/dryad.w3r2280ws">Dryad Digital Repository</a>. Download <code>Atristainetal_JAE_Data.xlsx</code> and place it in a <code>data/</code> subfolder.</p>
 </div>
 </div>
+<hr>
 </section>
-<section id="the-mbaci-design-as-difference-in-differences" class="level2">
-<h2 class="anchored" data-anchor-id="the-mbaci-design-as-difference-in-differences">The mBACI Design as Difference-in-Differences</h2>
-<p>The mBACI design maps directly onto the DiD framework:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 41%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>DiD Term</th>
-<th>mBACI Equivalent</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Treatment group</td>
-<td>Impact sites (I1–I4)</td>
-<td>Sites downstream of the dam</td>
-</tr>
-<tr class="even">
-<td>Control group</td>
-<td>Control sites (C1–C4)</td>
-<td>Undammed tributaries &amp; upstream site</td>
-</tr>
-<tr class="odd">
-<td>Pre-treatment</td>
-<td>Before period (B)</td>
-<td>November 2017</td>
-</tr>
-<tr class="even">
-<td>Post-treatment</td>
-<td>Drawdown (D) &amp; After (A)</td>
-<td>October 2019 &amp; November 2020</td>
-</tr>
-<tr class="odd">
-<td>Treatment effect</td>
-<td>Period × Reach interaction</td>
-<td>DiD estimator</td>
-</tr>
-</tbody>
-</table>
-<p>The key assumption — <strong>parallel trends</strong> — requires that control and impact sites would have followed the same trajectory in the absence of the drawdown. The use of <em>multiple</em> control sites in different tributaries strengthens this assumption.</p>
-</section>
-<section id="step-1-load-and-wrangle-the-data" class="level2">
-<h2 class="anchored" data-anchor-id="step-1-load-and-wrangle-the-data">Step 1: Load and Wrangle the Data</h2>
+<section id="data-loading-description" class="level2">
+<h2 class="anchored" data-anchor-id="data-loading-description">Data Loading &amp; Description</h2>
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read the invertebrates sheet from the Dryad dataset</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>invert_raw <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/Atristainetal_JAE_Data.xlsx"</span>,</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">sheet =</span> <span class="st">"Invertebrates"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>invert_raw <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/Atristainetal_JAE_Data.xlsx"</span>,</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">sheet =</span> <span class="st">"Invertebrates"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>New names:
@@ -355,41 +309,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the sheet has two columns named "Site" - rename for clarity</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># col 1 = site name (e.g., "Enobieta Up"), col 5 = site code (e.g., "C1")</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(invert_raw)[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="st">"site_name"</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(invert_raw)[<span class="dv">5</span>] <span class="ot">&lt;-</span> <span class="st">"site_code"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># two columns named "Site" — rename for clarity</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(invert_raw)[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="st">"site_name"</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(invert_raw)[<span class="dv">5</span>] <span class="ot">&lt;-</span> <span class="st">"site_code"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>invert <span class="ot">&lt;-</span> invert_raw <span class="sc">|&gt;</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># select only the columns we need for the BACI analysis</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(site_name, Replicate, Period, Reach, site_code, S, <span class="st">`</span><span class="at">H´</span><span class="st">`</span>, TD, IASPT) <span class="sc">|&gt;</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">richness =</span> S,</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">shannon =</span> <span class="st">`</span><span class="at">H´</span><span class="st">`</span>,</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">density =</span> TD</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># create a binary reach type variable: control (C) vs impact (I)</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># this collapses I1-I4 into one "impact" group for the DiD</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">reach_type =</span> <span class="fu">case_when</span>(</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>      Reach <span class="sc">==</span> <span class="st">"C"</span> <span class="sc">~</span> <span class="st">"C"</span>,</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>      Reach <span class="sc">==</span> <span class="st">"R"</span> <span class="sc">~</span> <span class="st">"R"</span>,</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"I"</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># set factor levels so "before" and "control" are the reference</span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">period =</span> <span class="fu">factor</span>(Period, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"B"</span>, <span class="st">"D"</span>, <span class="st">"A"</span>),</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>                    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Before"</span>, <span class="st">"Drawdown"</span>, <span class="st">"After"</span>)),</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">reach_type =</span> <span class="fu">factor</span>(reach_type, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"C"</span>, <span class="st">"I"</span>, <span class="st">"R"</span>))</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(invert)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(site_name, Replicate, Period, Reach, site_code, S, <span class="st">`</span><span class="at">H´</span><span class="st">`</span>, TD, IASPT) <span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">richness =</span> S, <span class="at">shannon =</span> <span class="st">`</span><span class="at">H´</span><span class="st">`</span>, <span class="at">density =</span> TD) <span class="sc">|&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">reach_type =</span> <span class="fu">case_when</span>(</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>      Reach <span class="sc">==</span> <span class="st">"C"</span> <span class="sc">~</span> <span class="st">"C"</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>      Reach <span class="sc">==</span> <span class="st">"R"</span> <span class="sc">~</span> <span class="st">"R"</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"I"</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">period =</span> <span class="fu">factor</span>(Period, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"B"</span>, <span class="st">"D"</span>, <span class="st">"A"</span>),</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>                    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Before"</span>, <span class="st">"Drawdown"</span>, <span class="st">"After"</span>)),</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">reach_type =</span> <span class="fu">factor</span>(reach_type, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"C"</span>, <span class="st">"I"</span>, <span class="st">"R"</span>))</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co"># filter to control + impact only (reservoir sites only sampled post-drawdown)</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>invert_baci <span class="ot">&lt;-</span> invert <span class="sc">|&gt;</span> <span class="fu">filter</span>(reach_type <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"C"</span>, <span class="st">"I"</span>))</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(invert_baci)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Rows: 135
+<pre><code>Rows: 120
 Columns: 11
 $ site_name  &lt;chr&gt; "Enobieta Up", "Enobieta Up", "Enobieta Up", "Enobieta Up",…
 $ Replicate  &lt;dbl&gt; 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5,…
@@ -404,41 +352,35 @@ $ reach_type &lt;fct&gt; C, C, C, C, C, I, I, I, I, I, C, C, C, C, C, I, I, I, I
 $ period     &lt;fct&gt; Before, Before, Before, Before, Before, Before, Before, Bef…</code></pre>
 </div>
 </div>
-<p>For the main mBACI model, we exclude the reservoir sites (R) — they were only sampled in the “After” period, so they can’t be part of the before-after comparison.</p>
-<div class="cell">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filter to just control and impact sites for the BACI analysis</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>invert_baci <span class="ot">&lt;-</span> invert <span class="sc">|&gt;</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(reach_type <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"C"</span>, <span class="st">"I"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-<p><strong>Sample sizes:</strong> 40 samples before, 40 during drawdown, and 40 after — split evenly between control and impact sites (5 Surber net replicates × 4 sites per group × 3 periods = 120 total).</p>
+<p><strong>Data Description:</strong></p>
+<ul>
+<li><strong>Unit of observation:</strong> One Surber net sample (a standardized benthic invertebrate sample) from one site on one sampling occasion</li>
+<li><strong>Key variables:</strong>
+<ul>
+<li><em>Outcome:</em> <code>richness</code> (S, taxa richness), <code>shannon</code> (H’, Shannon diversity), <code>density</code> (TD, total invertebrate density), <code>IASPT</code> (pollution sensitivity index)</li>
+<li><em>Treatment:</em> <code>reach_type</code> — Impact (I1–I4, downstream of dam) vs.&nbsp;Control (C1–C4, undammed tributaries + upstream)</li>
+<li><em>Time:</em> <code>period</code> — Before (Nov 2017), Drawdown (Oct 2019), After (Nov 2020)</li>
+</ul></li>
+<li><strong>Cleaning decisions:</strong> Reservoir sites (R) excluded — they were only sampled in the After period and cannot contribute to the before-after comparison</li>
+<li><strong>Sample:</strong> 120 samples total — 5 Surber net replicates × 4 sites per group × 3 periods; Artikutza protected catchment, northern Spain, 2017–2020</li>
+</ul>
+<hr>
 </section>
-<section id="step-2-explore-the-data" class="level2">
-<h2 class="anchored" data-anchor-id="step-2-explore-the-data">Step 2: Explore the Data</h2>
-<p>Before modeling, let’s see what the data look like. This replicates the pattern shown in Figure 3 of the paper.</p>
+<section id="exploratory-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="exploratory-analysis">Exploratory Analysis</h2>
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>invert_baci <span class="sc">|&gt;</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> site_code, <span class="at">y =</span> richness, <span class="at">fill =</span> reach_type)) <span class="sc">+</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">outlier.size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>period, <span class="at">ncol =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"C"</span> <span class="ot">=</span> <span class="st">"#4393C3"</span>, <span class="st">"I"</span> <span class="ot">=</span> <span class="st">"#D6604D"</span>),</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Control"</span>, <span class="st">"Impact"</span>)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Site"</span>,</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Taxa richness (S)"</span>,</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"Reach type"</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">13</span>) <span class="sc">+</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>),</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.border =</span> <span class="fu">element_rect</span>(<span class="at">color =</span> <span class="st">"grey70"</span>, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>)</span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>invert_baci <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> site_code, <span class="at">y =</span> richness, <span class="at">fill =</span> reach_type)) <span class="sc">+</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">outlier.size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>period, <span class="at">ncol =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"C"</span> <span class="ot">=</span> <span class="st">"#4393C3"</span>, <span class="st">"I"</span> <span class="ot">=</span> <span class="st">"#D6604D"</span>),</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Control"</span>, <span class="st">"Impact"</span>)) <span class="sc">+</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Site"</span>, <span class="at">y =</span> <span class="st">"Taxa richness (S)"</span>, <span class="at">fill =</span> <span class="st">"Reach type"</span>) <span class="sc">+</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">13</span>) <span class="sc">+</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>),</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.border =</span> <span class="fu">element_rect</span>(<span class="at">color =</span> <span class="st">"grey70"</span>, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-richness" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -447,100 +389,31 @@ $ period     &lt;fct&gt; Before, Before, Before, Before, Before, Before, Before,
 <img src="index_files/figure-html/fig-richness-1.png" class="img-fluid figure-img" width="864">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-richness-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Taxa richness across periods and reach types. Before drawdown, impact sites had notably lower richness than controls — especially I1 (closest to the dam). After drawdown, impact sites recovered to match controls.
+Figure&nbsp;1: Taxa richness by site and period. Impact sites (red) had notably lower richness before drawdown; they approach control levels (blue) by the After period.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>The visual pattern tells the story: before drawdown, impact sites (especially I1 and I2, closest to the dam) had substantially fewer taxa. By the “After” period, they look indistinguishable from controls. That convergence is the treatment effect we want to estimate formally.</p>
-<p>Let’s also compute group means to see the DiD structure:</p>
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>did_means <span class="ot">&lt;-</span> invert_baci <span class="sc">|&gt;</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(period, reach_type) <span class="sc">|&gt;</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_richness =</span> <span class="fu">mean</span>(richness),</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">se =</span> <span class="fu">sd</span>(richness) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">n</span>()),</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>did_means <span class="sc">|&gt;</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">1</span>, <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Period"</span>, <span class="st">"Reach"</span>, <span class="st">"Mean S"</span>, <span class="st">"SE"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th style="text-align: left;">Period</th>
-<th style="text-align: left;">Reach</th>
-<th style="text-align: right;">Mean S</th>
-<th style="text-align: right;">SE</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Before</td>
-<td style="text-align: left;">C</td>
-<td style="text-align: right;">22.0</td>
-<td style="text-align: right;">1.3</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Before</td>
-<td style="text-align: left;">I</td>
-<td style="text-align: right;">13.2</td>
-<td style="text-align: right;">1.7</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Drawdown</td>
-<td style="text-align: left;">C</td>
-<td style="text-align: right;">20.8</td>
-<td style="text-align: right;">0.7</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Drawdown</td>
-<td style="text-align: left;">I</td>
-<td style="text-align: right;">18.0</td>
-<td style="text-align: right;">1.4</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">After</td>
-<td style="text-align: left;">C</td>
-<td style="text-align: right;">20.0</td>
-<td style="text-align: right;">0.9</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">After</td>
-<td style="text-align: left;">I</td>
-<td style="text-align: right;">18.4</td>
-<td style="text-align: right;">1.0</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="cell">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>did_means <span class="sc">|&gt;</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> period, <span class="at">y =</span> mean_richness,</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> reach_type, <span class="at">group =</span> reach_type)) <span class="sc">+</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> mean_richness <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> se,</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>                    <span class="at">ymax =</span> mean_richness <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> se),</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"C"</span> <span class="ot">=</span> <span class="st">"#4393C3"</span>, <span class="st">"I"</span> <span class="ot">=</span> <span class="st">"#D6604D"</span>),</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Control"</span>, <span class="st">"Impact"</span>)</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Period"</span>,</span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Mean taxa richness (S)"</span>,</span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"Reach type"</span></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>did_means <span class="ot">&lt;-</span> invert_baci <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(period, reach_type) <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_richness =</span> <span class="fu">mean</span>(richness),</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">se =</span> <span class="fu">sd</span>(richness) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">n</span>()),</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(did_means, <span class="fu">aes</span>(<span class="at">x =</span> period, <span class="at">y =</span> mean_richness,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>                      <span class="at">color =</span> reach_type, <span class="at">group =</span> reach_type)) <span class="sc">+</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> mean_richness <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> se,</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>                    <span class="at">ymax =</span> mean_richness <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> se), <span class="at">width =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"C"</span> <span class="ot">=</span> <span class="st">"#4393C3"</span>, <span class="st">"I"</span> <span class="ot">=</span> <span class="st">"#D6604D"</span>),</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Control"</span>, <span class="st">"Impact"</span>)) <span class="sc">+</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Period"</span>, <span class="at">y =</span> <span class="st">"Mean taxa richness (S)"</span>, <span class="at">color =</span> <span class="st">"Reach type"</span>) <span class="sc">+</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-did" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -549,34 +422,64 @@ Figure&nbsp;1: Taxa richness across periods and reach types. Before drawdown, im
 <img src="index_files/figure-html/fig-did-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-did-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Mean taxa richness by period and reach type — the classic DiD visualization. The gap between control and impact narrows over time, indicating recovery.
+Figure&nbsp;2: Mean taxa richness by period and reach type — the DiD visualization. Convergence of impact toward control over time is the visual signature of recovery.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>This is the visual signature of a successful restoration: the impact group converges toward the control group over time. In a standard DiD, this convergence is the treatment effect.</p>
-</section>
-<section id="step-3-fit-the-mbaci-model" class="level2">
-<h2 class="anchored" data-anchor-id="step-3-fit-the-mbaci-model">Step 3: Fit the mBACI Model</h2>
-<p>The paper uses a linear mixed-effects (LME) model with:</p>
+<p><strong>Annotation:</strong></p>
 <ul>
-<li><strong>Fixed effects:</strong> <code>period</code>, <code>reach_type</code>, and their interaction (<code>period:reach_type</code>)</li>
-<li><strong>Random effect:</strong> <code>site_code</code> (to account for repeated measures at the same site across replicates)</li>
+<li><strong>What this does:</strong> Visualizes the raw data and group means across periods to show the DiD pattern before modeling</li>
+<li><strong>Identification approach:</strong> DiD / mBACI — we’re looking for a <em>differential change over time</em>: did impact sites change more than control sites?</li>
+<li><strong>Key assumption (parallel trends):</strong> For the DiD estimator to be valid, control and impact sites must have been on the same trajectory <em>before</em> the drawdown. The pre-treatment period shows impact sites already below controls, which is expected (dam effect), but we only have <strong>one pre-treatment time point</strong> — so we cannot formally test whether the trends were parallel before treatment</li>
+<li><strong>Evidence:</strong> The convergence from Before → After is visible and consistent with the causal claim; the pattern is stronger closer to the dam (I1, I2)</li>
 </ul>
-<p>The interaction term <code>period:reach_type</code> is the <strong>DiD estimator</strong> — it captures whether the <em>change over time</em> differed between control and impact sites.</p>
+<hr>
+</section>
+<section id="mbaci-model" class="level2">
+<h2 class="anchored" data-anchor-id="mbaci-model">mBACI Model</h2>
+<p>The mBACI design maps onto DiD as follows:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>DiD Term</th>
+<th>mBACI Equivalent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Treatment group</td>
+<td>Impact sites (I1–I4)</td>
+</tr>
+<tr class="even">
+<td>Control group</td>
+<td>Control sites (C1–C4)</td>
+</tr>
+<tr class="odd">
+<td>Pre-treatment</td>
+<td>Before period (B)</td>
+</tr>
+<tr class="even">
+<td>Post-treatment</td>
+<td>Drawdown (D) &amp; After (A)</td>
+</tr>
+<tr class="odd">
+<td>Treatment effect</td>
+<td><code>period × reach_type</code> interaction</td>
+</tr>
+</tbody>
+</table>
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fit the mBACI linear mixed-effects model</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># this is the exact specification from the paper (Section 2.5)</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>mod_richness <span class="ot">&lt;-</span> <span class="fu">lmer</span>(</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  richness <span class="sc">~</span> period <span class="sc">*</span> reach_type <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> site_code),</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> invert_baci,</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">REML =</span> <span class="cn">TRUE</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod_richness)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>mod_richness <span class="ot">&lt;-</span> <span class="fu">lmer</span>(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  richness <span class="sc">~</span> period <span class="sc">*</span> reach_type <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> site_code),</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> invert_baci,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">REML =</span> <span class="cn">TRUE</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod_richness)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Linear mixed model fit by REML ['lmerMod']
@@ -613,17 +516,30 @@ prdDrwdw:_I  0.289 -0.707 -0.354 -0.408
 prdAftr:r_I  0.289 -0.354 -0.707 -0.408  0.500</code></pre>
 </div>
 </div>
+<p><strong>Annotation:</strong></p>
+<ul>
+<li><strong>What this does:</strong> Fits a linear mixed-effects model (LME) with fixed effects for period, reach type, and their interaction, and a random intercept for site to account for repeated measurements within sites</li>
+<li><strong>Identification approach:</strong> mBACI / DiD — the <code>period:reach_type</code> interaction is the DiD estimator; it measures whether the <em>change over time</em> differed between control and impact sites</li>
+<li><strong>Assumptions required for causal validity:</strong>
+<ol type="1">
+<li><strong>Parallel trends:</strong> Without treatment, impact and control sites would have changed at the same rate over time</li>
+<li><strong>No spillover (SUTVA):</strong> Drawdown at impact sites did not affect control site outcomes</li>
+<li><strong>No time-varying confounders:</strong> Nothing else changed between periods that affected impact vs.&nbsp;control sites differentially</li>
+<li><strong>Model specification:</strong> Random intercept structure captures the data’s dependence structure; residuals approximately normal with constant variance</li>
+</ol></li>
+<li><strong>Evidence from output:</strong> The <code>period:reach_type</code> interaction terms are the key; we’ll test them formally below</li>
+</ul>
+<hr>
 </section>
-<section id="step-4-interpret-the-coefficients" class="level2">
-<h2 class="anchored" data-anchor-id="step-4-interpret-the-coefficients">Step 4: Interpret the Coefficients</h2>
-<p>Let’s extract the fixed effects and interpret them in the DiD framework:</p>
+<section id="coefficient-interpretation" class="level2">
+<h2 class="anchored" data-anchor-id="coefficient-interpretation">Coefficient Interpretation</h2>
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(mod_richness, <span class="at">effects =</span> <span class="st">"fixed"</span>, <span class="at">conf.int =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>,</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Effect"</span>, <span class="st">"Term"</span>, <span class="st">"Estimate"</span>, <span class="st">"SE"</span>,</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"Statistic"</span>, <span class="st">"CI Lower"</span>, <span class="st">"CI Upper"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(mod_richness, <span class="at">effects =</span> <span class="st">"fixed"</span>, <span class="at">conf.int =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Effect"</span>, <span class="st">"Term"</span>, <span class="st">"Estimate"</span>, <span class="st">"SE"</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"Statistic"</span>, <span class="st">"CI Lower"</span>, <span class="st">"CI Upper"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -706,56 +622,26 @@ prdAftr:r_I  0.289 -0.354 -0.707 -0.408  0.500</code></pre>
 </table>
 </div>
 </div>
-<p>Here’s how to read each coefficient:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 47%">
-<col style="width: 52%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Coefficient</th>
-<th>Interpretation</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>(Intercept)</code></td>
-<td>Mean richness for control sites in the Before period</td>
-</tr>
-<tr class="even">
-<td><code>reach_typeI</code></td>
-<td>Baseline difference: impact minus control in the Before period (<strong>BCI</strong> in the paper)</td>
-</tr>
-<tr class="odd">
-<td><code>periodDrawdown</code></td>
-<td>Change in control sites from Before to Drawdown</td>
-</tr>
-<tr class="even">
-<td><code>periodAfter</code></td>
-<td>Change in control sites from Before to After</td>
-</tr>
-<tr class="odd">
-<td><code>periodDrawdown:reach_typeI</code></td>
-<td><strong>DiD estimator (BD:CI)</strong>: Did impact sites change <em>differently</em> than controls from Before → Drawdown?</td>
-</tr>
-<tr class="even">
-<td><code>periodAfter:reach_typeI</code></td>
-<td><strong>DiD estimator (BA:CI)</strong>: Did impact sites change <em>differently</em> than controls from Before → After?</td>
-</tr>
-</tbody>
-</table>
-<p>The two interaction terms are the key treatment effects. A positive <code>periodAfter:reach_typeI</code> means impact sites gained more richness than controls between the Before and After periods — i.e., they recovered.</p>
+<p><strong>Annotation:</strong></p>
+<ul>
+<li><strong>What this does:</strong> Extracts fixed-effect estimates with confidence intervals; these are the DiD coefficients</li>
+<li>Key terms:
+<ul>
+<li><code>(Intercept)</code> — mean richness for control sites in the Before period (baseline)</li>
+<li><code>reach_typeI</code> — impact vs.&nbsp;control gap in the Before period (pre-existing dam effect)</li>
+<li><code>periodDrawdown:reach_typeI</code> — <strong>DiD estimate for Drawdown period</strong>: did impact sites change differently than controls from Before → Drawdown?</li>
+<li><code>periodAfter:reach_typeI</code> — <strong>DiD estimate for After period</strong>: the main recovery effect</li>
+</ul></li>
+<li>A positive <code>periodAfter:reach_typeI</code> estimate means impact sites gained more richness than controls between Before and After — i.e., recovery attributable to drawdown</li>
+</ul>
+<hr>
 </section>
-<section id="step-5-test-the-overall-interaction-bdaci" class="level2">
-<h2 class="anchored" data-anchor-id="step-5-test-the-overall-interaction-bdaci">Step 5: Test the Overall Interaction (BDA:CI)</h2>
-<p>The paper also reports a global test of whether the interaction matters at all (Type III test of the <code>period:reach_type</code> interaction). We can get this with <code>anova()</code>:</p>
+<section id="overall-interaction-test-bdaci" class="level2">
+<h2 class="anchored" data-anchor-id="overall-interaction-test-bdaci">Overall Interaction Test (BDA:CI)</h2>
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># test the overall period x reach_type interaction</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"># this corresponds to the BDA:CI test in the paper</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod_richness)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod_richness)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
@@ -765,42 +651,36 @@ reach_type           1  81.605  81.605  3.6717
 period:reach_type    2 294.817 147.408  6.6325</code></pre>
 </div>
 </div>
-<p>The significant interaction (<code>period:reach_type</code>) tells us that the trajectory of taxa richness over time <em>depended on</em> whether a site was downstream of the dam or not. In other words, the drawdown had a causal effect on invertebrate richness at impact sites.</p>
+<p><strong>Annotation:</strong></p>
+<ul>
+<li><strong>What this does:</strong> Type III F-test of the <code>period:reach_type</code> interaction — tests whether trajectories over time differed <em>at all</em> between impact and control sites</li>
+<li><strong>Identification approach:</strong> Same DiD logic — a significant interaction means the treatment (being downstream of the dam) changed how outcomes evolved over time</li>
+<li><strong>Assumption check:</strong> This is a joint test across both post-treatment periods; it’s more conservative than individual coefficients and less sensitive to which specific period shows the effect</li>
+<li>A significant p-value here replicates the paper’s main Table 2 result for taxa richness</li>
+</ul>
+<hr>
 </section>
-<section id="step-6-model-diagnostics" class="level2">
-<h2 class="anchored" data-anchor-id="step-6-model-diagnostics">Step 6: Model Diagnostics</h2>
-<p>Before trusting the model output, we need to verify that the LME assumptions hold. The key assumptions for a linear mixed-effects model are: (1) residuals are approximately normally distributed and (2) residuals have constant variance (homoscedasticity). If these fail, our p-values and confidence intervals could be unreliable.</p>
+<section id="model-diagnostics" class="level2">
+<h2 class="anchored" data-anchor-id="model-diagnostics">Model Diagnostics</h2>
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract residuals and fitted values</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>diag_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">fitted =</span> <span class="fu">fitted</span>(mod_richness),</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">resid =</span> <span class="fu">residuals</span>(mod_richness)</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(diag_df, <span class="fu">aes</span>(<span class="at">x =</span> fitted, <span class="at">y =</span> resid)) <span class="sc">+</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Fitted values"</span>, <span class="at">y =</span> <span class="st">"Residuals"</span>,</span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Residuals vs. Fitted"</span>) <span class="sc">+</span></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(diag_df, <span class="fu">aes</span>(<span class="at">sample =</span> resid)) <span class="sc">+</span></span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>(<span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Theoretical quantiles"</span>, <span class="at">y =</span> <span class="st">"Sample quantiles"</span>,</span>
-<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Normal QQ Plot"</span>) <span class="sc">+</span></span>
-<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span>
-<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'patchwork' was built under R version 4.5.2</code></pre>
-</div>
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> p2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>diag_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">fitted =</span> <span class="fu">fitted</span>(mod_richness),</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">resid  =</span> <span class="fu">residuals</span>(mod_richness))</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(diag_df, <span class="fu">aes</span>(<span class="at">x =</span> fitted, <span class="at">y =</span> resid)) <span class="sc">+</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Fitted values"</span>, <span class="at">y =</span> <span class="st">"Residuals"</span>, <span class="at">title =</span> <span class="st">"Residuals vs. Fitted"</span>) <span class="sc">+</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(diag_df, <span class="fu">aes</span>(<span class="at">sample =</span> resid)) <span class="sc">+</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> <span class="fu">stat_qq_line</span>(<span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Theoretical quantiles"</span>, <span class="at">y =</span> <span class="st">"Sample quantiles"</span>,</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Normal QQ Plot"</span>) <span class="sc">+</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> p2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-diagnostics" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -809,67 +689,60 @@ period:reach_type    2 294.817 147.408  6.6325</code></pre>
 <img src="index_files/figure-html/fig-diagnostics-1.png" class="img-fluid figure-img" width="864">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-diagnostics-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Residual diagnostics for the taxa richness mBACI model. Left: residuals vs.&nbsp;fitted values to check for heteroscedasticity. Right: QQ plot to check normality of residuals.
+Figure&nbsp;3: Residual diagnostics. Left: residuals vs.&nbsp;fitted (checks homoscedasticity). Right: QQ plot (checks normality).
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>We’re looking for: no obvious fan shape or pattern in the residuals vs.&nbsp;fitted plot (homoscedasticity), and points falling roughly along the red line in the QQ plot (normality). Some deviation in the tails is normal with ecological count data — the LME is reasonably robust to mild departures from normality, especially with this sample size.</p>
+<p><strong>Annotation:</strong></p>
+<ul>
+<li><strong>What this does:</strong> Checks two core LME assumptions — homoscedasticity (constant residual variance) and approximate normality of residuals</li>
+<li><strong>What to look for:</strong>
+<ul>
+<li><em>Residuals vs.&nbsp;fitted:</em> No systematic fan shape or curve — residuals should scatter randomly around zero</li>
+<li><em>QQ plot:</em> Points should fall along the red line; heavy tails indicate non-normality</li>
+</ul></li>
+<li><strong>If violated:</strong> Inference (p-values, CIs) may be unreliable; could consider log-transforming richness or using a Poisson/negative binomial GLMM</li>
+<li><strong>Evidence:</strong> Ecological count data often show mild non-normality in tails; the LME is moderately robust to this, especially with n = 120</li>
+</ul>
+<hr>
 </section>
-<section id="step-7-robustness-checks" class="level2">
-<h2 class="anchored" data-anchor-id="step-7-robustness-checks">Step 7: Robustness Checks</h2>
-<p>A single model on one response variable isn’t enough to make a convincing causal argument. The paper tests the same mBACI specification across multiple community metrics. If the drawdown truly caused ecological recovery, we’d expect the same pattern — a significant <code>period:reach_type</code> interaction — to show up across different measures of community health, not just taxa richness.</p>
-<p>We’ll run the same model on three additional response variables: <strong>Shannon diversity</strong> (H’), <strong>total invertebrate density</strong>, and the <strong>IASPT biomonitoring index</strong> (a pollution sensitivity score).</p>
+<section id="robustness-multiple-outcomes" class="level2">
+<h2 class="anchored" data-anchor-id="robustness-multiple-outcomes">Robustness: Multiple Outcomes</h2>
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Shannon diversity</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>mod_shannon <span class="ot">&lt;-</span> <span class="fu">lmer</span>(</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  shannon <span class="sc">~</span> period <span class="sc">*</span> reach_type <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> site_code),</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> invert_baci,</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">REML =</span> <span class="cn">TRUE</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co"># total density (log-transformed, as in the paper)</span></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>mod_density <span class="ot">&lt;-</span> <span class="fu">lmer</span>(</span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">log</span>(density) <span class="sc">~</span> period <span class="sc">*</span> reach_type <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> site_code),</span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> invert_baci,</span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">REML =</span> <span class="cn">TRUE</span></span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="co"># IASPT biomonitoring index</span></span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>mod_iaspt <span class="ot">&lt;-</span> <span class="fu">lmer</span>(</span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>  IASPT <span class="sc">~</span> period <span class="sc">*</span> reach_type <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> site_code),</span>
-<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> invert_baci,</span>
-<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">REML =</span> <span class="cn">TRUE</span></span>
-<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>mod_shannon <span class="ot">&lt;-</span> <span class="fu">lmer</span>(shannon <span class="sc">~</span> period <span class="sc">*</span> reach_type <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> site_code),</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> invert_baci, <span class="at">REML =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>mod_density <span class="ot">&lt;-</span> <span class="fu">lmer</span>(<span class="fu">log</span>(density) <span class="sc">~</span> period <span class="sc">*</span> reach_type <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> site_code),</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> invert_baci, <span class="at">REML =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>mod_iaspt   <span class="ot">&lt;-</span> <span class="fu">lmer</span>(IASPT <span class="sc">~</span> period <span class="sc">*</span> reach_type <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> site_code),</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> invert_baci, <span class="at">REML =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>Now we’ll compare the overall interaction test (<code>BDA:CI</code>) across all four models:</p>
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract the period:reach_type interaction row from each anova</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>extract_interaction <span class="ot">&lt;-</span> <span class="cf">function</span>(model, response_name) {</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  aov <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">anova</span>(model))</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  row <span class="ot">&lt;-</span> aov[<span class="st">"period:reach_type"</span>, ]</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Response =</span> response_name,</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">F value</span><span class="st">`</span> <span class="ot">=</span> row[[<span class="st">"F value"</span>]],</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Num DF</span><span class="st">`</span> <span class="ot">=</span> row[[<span class="st">"NumDF"</span>]],</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Den DF</span><span class="st">`</span> <span class="ot">=</span> row[[<span class="st">"DenDF"</span>]],</span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">p value</span><span class="st">`</span> <span class="ot">=</span> row[[<span class="st">"Pr(&gt;F)"</span>]]</span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_interaction</span>(mod_richness, <span class="st">"Taxa richness (S)"</span>),</span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_interaction</span>(mod_shannon, <span class="st">"Shannon diversity (H')"</span>),</span>
-<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_interaction</span>(mod_density, <span class="st">"log(Total density)"</span>),</span>
-<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_interaction</span>(mod_iaspt, <span class="st">"IASPT"</span>)</span>
-<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">4</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>extract_interaction <span class="ot">&lt;-</span> <span class="cf">function</span>(model, label) {</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  aov <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">anova</span>(model))</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  row <span class="ot">&lt;-</span> aov[<span class="st">"period:reach_type"</span>, ]</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">Response =</span> label,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">F value</span><span class="st">`</span> <span class="ot">=</span> row[[<span class="st">"F value"</span>]],</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">Num DF</span><span class="st">`</span>  <span class="ot">=</span> row[[<span class="st">"NumDF"</span>]],</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">Den DF</span><span class="st">`</span>  <span class="ot">=</span> row[[<span class="st">"DenDF"</span>]],</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">p value</span><span class="st">`</span> <span class="ot">=</span> row[[<span class="st">"Pr(&gt;F)"</span>]])</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_interaction</span>(mod_richness, <span class="st">"Taxa richness (S)"</span>),</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_interaction</span>(mod_shannon,  <span class="st">"Shannon diversity (H')"</span>),</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_interaction</span>(mod_density,  <span class="st">"log(Total density)"</span>),</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_interaction</span>(mod_iaspt,    <span class="st">"IASPT"</span>)</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">4</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -900,41 +773,29 @@ Figure&nbsp;3: Residual diagnostics for the taxa richness mBACI model. Left: res
 </table>
 </div>
 </div>
-<p>If the recovery pattern is real, we expect significant (or near-significant) interactions across multiple response variables. This is more convincing than a single test because it guards against the possibility that one metric happened to show a spurious result.</p>
-<p>Let’s also visually confirm the pattern holds for each metric:</p>
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute group means for all four response variables</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>robust_means <span class="ot">&lt;-</span> invert_baci <span class="sc">|&gt;</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(period, reach_type) <span class="sc">|&gt;</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Taxa richness</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">mean</span>(richness),</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Shannon diversity</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">mean</span>(shannon),</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">log(Density)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">mean</span>(<span class="fu">log</span>(density)),</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">IASPT =</span> <span class="fu">mean</span>(IASPT),</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">`</span><span class="at">Taxa richness</span><span class="st">`</span>, <span class="st">`</span><span class="at">Shannon diversity</span><span class="st">`</span>, <span class="st">`</span><span class="at">log(Density)</span><span class="st">`</span>, IASPT),</span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"metric"</span>,</span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"mean_value"</span></span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(robust_means, <span class="fu">aes</span>(<span class="at">x =</span> period, <span class="at">y =</span> mean_value,</span>
-<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>                          <span class="at">color =</span> reach_type, <span class="at">group =</span> reach_type)) <span class="sc">+</span></span>
-<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">2.5</span>) <span class="sc">+</span></span>
-<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>metric, <span class="at">scales =</span> <span class="st">"free_y"</span>, <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(</span>
-<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"C"</span> <span class="ot">=</span> <span class="st">"#4393C3"</span>, <span class="st">"I"</span> <span class="ot">=</span> <span class="st">"#D6604D"</span>),</span>
-<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Control"</span>, <span class="st">"Impact"</span>)</span>
-<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Period"</span>, <span class="at">y =</span> <span class="st">"Mean value"</span>, <span class="at">color =</span> <span class="st">"Reach type"</span>) <span class="sc">+</span></span>
-<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
-<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.border =</span> <span class="fu">element_rect</span>(<span class="at">color =</span> <span class="st">"grey70"</span>, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>)</span>
-<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>invert_baci <span class="sc">|&gt;</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(period, reach_type) <span class="sc">|&gt;</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">`</span><span class="at">Taxa richness</span><span class="st">`</span>    <span class="ot">=</span> <span class="fu">mean</span>(richness),</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>            <span class="st">`</span><span class="at">Shannon diversity</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">mean</span>(shannon),</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>            <span class="st">`</span><span class="at">log(Density)</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">mean</span>(<span class="fu">log</span>(density)),</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">IASPT              =</span> <span class="fu">mean</span>(IASPT),</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(<span class="st">`</span><span class="at">Taxa richness</span><span class="st">`</span>, <span class="st">`</span><span class="at">Shannon diversity</span><span class="st">`</span>,</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>                        <span class="st">`</span><span class="at">log(Density)</span><span class="st">`</span>, IASPT),</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"metric"</span>, <span class="at">values_to =</span> <span class="st">"mean_value"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> period, <span class="at">y =</span> mean_value,</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> reach_type, <span class="at">group =</span> reach_type)) <span class="sc">+</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">2.5</span>) <span class="sc">+</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>metric, <span class="at">scales =</span> <span class="st">"free_y"</span>, <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"C"</span> <span class="ot">=</span> <span class="st">"#4393C3"</span>, <span class="st">"I"</span> <span class="ot">=</span> <span class="st">"#D6604D"</span>),</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Control"</span>, <span class="st">"Impact"</span>)) <span class="sc">+</span></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Period"</span>, <span class="at">y =</span> <span class="st">"Mean value"</span>, <span class="at">color =</span> <span class="st">"Reach type"</span>) <span class="sc">+</span></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.border =</span> <span class="fu">element_rect</span>(<span class="at">color =</span> <span class="st">"grey70"</span>, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-robustness" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -943,175 +804,72 @@ Figure&nbsp;3: Residual diagnostics for the taxa richness mBACI model. Left: res
 <img src="index_files/figure-html/fig-robustness-1.png" class="img-fluid figure-img" width="960">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-robustness-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: DiD patterns across all four community metrics. Convergence of impact toward control values over time supports the recovery finding.
+Figure&nbsp;4: DiD pattern across all four community metrics. Convergence of impact toward control values is visible across metrics.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>The convergence pattern is visible across all four metrics: impact sites start lower than controls and approach control values by the After period. This consistency across independent measures of community health makes the causal argument substantially stronger.</p>
+<p><strong>Annotation:</strong></p>
+<ul>
+<li><strong>What this does:</strong> Runs the same mBACI/DiD model specification on three additional community metrics to test whether the recovery signal is consistent across independent measures</li>
+<li><strong>Identification approach:</strong> Same DiD/mBACI logic — if the drawdown caused recovery, the <code>period:reach_type</code> interaction should be significant (or at least directionally consistent) across metrics, not just one</li>
+<li><strong>Assumption check:</strong> Consistency across metrics guards against the concern that taxa richness alone showed a spurious result; all four metrics pointing the same direction is harder to explain without a real treatment effect</li>
+<li><strong>Evidence:</strong> Look for significant or near-significant p-values across all four outcomes; the figure shows whether the visual DiD pattern holds</li>
+</ul>
+<hr>
 </section>
-<section id="step-8-effect-sizes" class="level2">
-<h2 class="anchored" data-anchor-id="step-8-effect-sizes">Step 8: Effect Sizes</h2>
-<p>To match the paper’s approach, we compute log-ratio effect sizes for each impact site relative to the control mean. This shows how the dam’s effect decreased with distance downstream.</p>
-<div class="cell">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>effect_sizes <span class="ot">&lt;-</span> invert_baci <span class="sc">|&gt;</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(period, site_code, reach_type) <span class="sc">|&gt;</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_richness =</span> <span class="fu">mean</span>(richness), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># get the control mean for each period</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(period) <span class="sc">|&gt;</span></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">control_mean =</span> <span class="fu">mean</span>(mean_richness[reach_type <span class="sc">==</span> <span class="st">"C"</span>])) <span class="sc">|&gt;</span></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># compute ln-ratio for impact sites only</span></span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(reach_type <span class="sc">==</span> <span class="st">"I"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">effect_size =</span> <span class="fu">log</span>(mean_richness <span class="sc">/</span> control_mean))</span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>effect_sizes <span class="sc">|&gt;</span></span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(period, site_code, mean_richness, control_mean, effect_size) <span class="sc">|&gt;</span></span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>,</span>
-<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Period"</span>, <span class="st">"Site"</span>, <span class="st">"Mean S"</span>, <span class="st">"Control Mean"</span>, <span class="st">"Ln-ratio"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th style="text-align: left;">Period</th>
-<th style="text-align: left;">Site</th>
-<th style="text-align: right;">Mean S</th>
-<th style="text-align: right;">Control Mean</th>
-<th style="text-align: right;">Ln-ratio</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Before</td>
-<td style="text-align: left;">I1</td>
-<td style="text-align: right;">3.6</td>
-<td style="text-align: right;">21.95</td>
-<td style="text-align: right;">-1.81</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Before</td>
-<td style="text-align: left;">I2</td>
-<td style="text-align: right;">11.8</td>
-<td style="text-align: right;">21.95</td>
-<td style="text-align: right;">-0.62</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Before</td>
-<td style="text-align: left;">I3</td>
-<td style="text-align: right;">19.4</td>
-<td style="text-align: right;">21.95</td>
-<td style="text-align: right;">-0.12</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Before</td>
-<td style="text-align: left;">I4</td>
-<td style="text-align: right;">18.0</td>
-<td style="text-align: right;">21.95</td>
-<td style="text-align: right;">-0.20</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Drawdown</td>
-<td style="text-align: left;">I1</td>
-<td style="text-align: right;">10.6</td>
-<td style="text-align: right;">20.80</td>
-<td style="text-align: right;">-0.67</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Drawdown</td>
-<td style="text-align: left;">I2</td>
-<td style="text-align: right;">18.2</td>
-<td style="text-align: right;">20.80</td>
-<td style="text-align: right;">-0.13</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Drawdown</td>
-<td style="text-align: left;">I3</td>
-<td style="text-align: right;">22.2</td>
-<td style="text-align: right;">20.80</td>
-<td style="text-align: right;">0.07</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Drawdown</td>
-<td style="text-align: left;">I4</td>
-<td style="text-align: right;">21.2</td>
-<td style="text-align: right;">20.80</td>
-<td style="text-align: right;">0.02</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">After</td>
-<td style="text-align: left;">I1</td>
-<td style="text-align: right;">18.4</td>
-<td style="text-align: right;">20.00</td>
-<td style="text-align: right;">-0.08</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">After</td>
-<td style="text-align: left;">I2</td>
-<td style="text-align: right;">17.2</td>
-<td style="text-align: right;">20.00</td>
-<td style="text-align: right;">-0.15</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">After</td>
-<td style="text-align: left;">I3</td>
-<td style="text-align: right;">16.8</td>
-<td style="text-align: right;">20.00</td>
-<td style="text-align: right;">-0.17</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">After</td>
-<td style="text-align: left;">I4</td>
-<td style="text-align: right;">21.2</td>
-<td style="text-align: right;">20.00</td>
-<td style="text-align: right;">0.06</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p>Negative values mean the impact site had lower richness than controls. In the Before period, I1 (closest to the dam) had the largest negative effect. By the After period, effect sizes are near zero — recovery.</p>
+<section id="critical-evaluation" class="level2">
+<h2 class="anchored" data-anchor-id="critical-evaluation">Critical Evaluation</h2>
+<section id="causal-identification" class="level3">
+<h3 class="anchored" data-anchor-id="causal-identification">Causal Identification</h3>
+<ul>
+<li>The mBACI/DiD design is credible <em>given</em> the study setting — a protected watershed with no competing interventions during the study period</li>
+<li>For estimates to be causal, the <strong>counterfactual must hold</strong>: control sites must represent what impact sites <em>would have looked like</em> without the drawdown</li>
+<li>The use of four independent control sites across separate tributaries strengthens this claim relative to a single control; if one control behaved anomalously, the others would not</li>
+<li>Main credibility concern: impact sites were already degraded before treatment (dam effect), so the “parallel trends” baseline is harder to establish</li>
+</ul>
 </section>
-<section id="evaluation-of-causal-inference" class="level2">
-<h2 class="anchored" data-anchor-id="evaluation-of-causal-inference">Evaluation of Causal Inference</h2>
-<p>The mBACI/DiD framework makes a causal claim: the drawdown <em>caused</em> the recovery. That claim rests on specific assumptions. Let’s evaluate each one against the evidence.</p>
-<section id="parallel-trends" class="level3">
-<h3 class="anchored" data-anchor-id="parallel-trends">1. Parallel trends</h3>
-<p><strong>The assumption:</strong> In the absence of drawdown, control and impact sites would have followed the same trajectory over time. This is the foundational assumption of any DiD design — if violated, the “treatment effect” could just be pre-existing divergence.</p>
-<p><strong>How well is it met?</strong> This is the biggest weakness. There is only <strong>one pre-treatment time point</strong> (November 2017), so we literally cannot test whether control and impact sites were trending in parallel before the drawdown. The paper partially addresses this by using four independent control sites across different tributaries, which reduces the chance that a single anomalous control drives the result. But it doesn’t eliminate the concern. If, for example, natural recolonization was already underway before the drawdown began, the model would incorrectly attribute that trend to the treatment.</p>
+<section id="statistical-assumptions" class="level3">
+<h3 class="anchored" data-anchor-id="statistical-assumptions">Statistical Assumptions</h3>
+<ul>
+<li><strong>Parallel trends:</strong> The most vulnerable assumption — there is only <strong>one pre-treatment time point (November 2017)</strong>, so the trend assumption cannot be formally tested. We cannot distinguish between “impact sites recovered because of the drawdown” vs.&nbsp;“impact sites were already recovering for other reasons before 2018”</li>
+<li><strong>Normality &amp; homoscedasticity:</strong> Check diagnostic plots; mild departures are expected with ecological count data. If problematic, a log-transform or GLMM would be more appropriate</li>
+<li><strong>Random effects structure:</strong> With only 4 sites per group, the random intercept variance is estimated from few clusters, which can lead to anti-conservative p-values. This is a known limitation of small-cluster LME</li>
+<li><strong>SUTVA (no spillover):</strong> Well-supported — C2–C4 are in separate tributaries physically isolated from the drawdown reach; C1 is upstream of the dam</li>
+</ul>
 </section>
-<section id="no-spillover-sutva" class="level3">
-<h3 class="anchored" data-anchor-id="no-spillover-sutva">2. No spillover (SUTVA)</h3>
-<p><strong>The assumption:</strong> The drawdown at impact sites didn’t affect the control sites. Each unit’s outcome depends only on its own treatment status.</p>
-<p><strong>How well is it met?</strong> Reasonably well. Three of the four control sites (C2–C4) are in entirely separate tributaries, so sediment mobilization and water quality changes from the drawdown wouldn’t reach them. C1 is upstream of the dam in the same stream, so it’s also physically isolated from downstream effects. The spatial separation of controls makes SUTVA plausible here.</p>
+<section id="sampling-external-validity" class="level3">
+<h3 class="anchored" data-anchor-id="sampling-external-validity">Sampling &amp; External Validity</h3>
+<ul>
+<li><strong>Sample:</strong> 8 stream sites in a single protected headwater catchment in Basque Country, Spain; 5 Surber net samples per site per period</li>
+<li><strong>Generalizability is limited:</strong> Results apply most directly to similar Atlantic headwater streams with forested catchments and comparable dam morphologies (large reservoir, concrete dam); dam removal in urban, agricultural, or arid-region streams may show different recovery dynamics</li>
+<li><strong>Time horizon:</strong> Recovery assessed after only ~1 year post-drawdown. The paper’s conclusion of “rapid recovery” may not hold for all taxa — sensitive taxa or rare species may require longer</li>
+</ul>
 </section>
-<section id="no-time-varying-confounders" class="level3">
-<h3 class="anchored" data-anchor-id="no-time-varying-confounders">3. No time-varying confounders</h3>
-<p><strong>The assumption:</strong> Nothing else changed between the Before and After periods that differentially affected impact vs.&nbsp;control sites.</p>
-<p><strong>How well is it met?</strong> The Artikutza catchment is a protected, forested headwater basin with no other major land use changes during the study period. There were no other restoration actions, no new pollution sources, and no major hydrological changes besides the drawdown itself. This is about as clean a natural experiment setting as you’ll find in ecology. The main risk would be something like an unusually wet or dry year affecting impact and control sites differently, but the paper doesn’t flag any such events.</p>
+<section id="measurement" class="level3">
+<h3 class="anchored" data-anchor-id="measurement">Measurement</h3>
+<ul>
+<li><strong>Taxa richness</strong> is a coarse measure — it counts taxa present but treats a single mayfly the same as 1,000. Shannon diversity (H’) partially corrects for this by weighting by abundance</li>
+<li><strong>Surber nets</strong> sample only a fixed area of benthos (0.09 m²) and may undersample mobile or large-bodied invertebrates; standardized across sites, so systematic bias is consistent but not absent</li>
+<li><strong>IASPT</strong> (a biotic index) depends on accurate taxonomic identification to family level; misidentification error would attenuate the signal rather than inflate it</li>
+<li><strong>Treatment timing:</strong> The “Drawdown” sampling (Oct 2019) occurred while the reservoir was still being emptied — not strictly “after treatment” — which may underestimate the full recovery effect</li>
+</ul>
 </section>
-<section id="correct-model-specification" class="level3">
-<h3 class="anchored" data-anchor-id="correct-model-specification">4. Correct model specification</h3>
-<p><strong>The assumption:</strong> The linear mixed-effects model with site-level random intercepts adequately captures the data structure.</p>
-<p><strong>How well is it met?</strong> The random intercept for <code>site_code</code> accounts for the fact that five Surber net samples at the same site are not independent — they share site-level characteristics. The residual diagnostics (Step 6) tell us whether the normality and homoscedasticity assumptions hold. One potential concern is that with only 4 sites per group, the random effect variance is estimated from very few clusters, which can lead to anti-conservative p-values. The paper uses REML estimation, which partially corrects for this, but it’s worth noting as a limitation.</p>
+<section id="other-limitations" class="level3">
+<h3 class="anchored" data-anchor-id="other-limitations">Other Limitations</h3>
+<ul>
+<li><strong>Pseudoreplication concern:</strong> Five Surber net samples within a single site on one date are not truly independent — they share hydrological and substrate conditions. The random intercept for site partially addresses this but doesn’t fully resolve within-site spatial autocorrelation</li>
+<li><strong>No measurement of intervening mechanisms:</strong> The paper shows invertebrate recovery but does not directly measure the pathway (sediment transport, habitat substrate change, water temperature) — so we know the outcome changed but not exactly why</li>
+<li><strong>No power analysis reported:</strong> With 4 sites per group and 3 time points, the study may be underpowered to detect moderate-sized effects for some metrics (e.g., IASPT), which is consistent with the weaker p-values observed for those outcomes</li>
+</ul>
+<hr>
 </section>
-<section id="bottom-line" class="level3">
-<h3 class="anchored" data-anchor-id="bottom-line">Bottom line</h3>
-<p>The strongest parts of the causal argument are the clean study setting (no confounders) and the spatial separation of controls (SUTVA). The weakest part is the inability to test parallel pre-trends with only one pre-treatment observation. The robustness of the finding across multiple response variables (Step 7) and the spatial gradient in effect sizes (larger effects closer to the dam, as expected) both add indirect support, but they don’t directly address the parallel trends concern.</p>
-</section>
-</section>
-<section id="summary" class="level2">
-<h2 class="anchored" data-anchor-id="summary">Summary</h2>
-<p>We replicated the primary finding from Atristain et al.&nbsp;(2024): the reservoir drawdown caused a significant recovery in invertebrate taxa richness at impact sites. The mBACI design, which is functionally a difference-in-differences estimator with mixed effects, identified this treatment effect by comparing the <em>change over time</em> between impacted and control reaches. Robustness checks across multiple community metrics (Shannon diversity, density, IASPT) all showed the same convergence pattern, strengthening the causal claim. One year after drawdown, impact sites were indistinguishable from controls, suggesting rapid ecological recovery — though the single pre-treatment time point limits our ability to fully rule out pre-existing trends.</p>
 </section>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>
-<p>Atristain,&nbsp;M.,&nbsp;Solagaistua,&nbsp;L.,&nbsp;Larrañaga,&nbsp;A.,&nbsp;von Schiller,&nbsp;D., &amp;&nbsp;Elosegi,&nbsp;A.&nbsp;(2024).&nbsp;Slow drawdown, fast recovery: Stream macroinvertebrate communities improve quickly after large dam decommissioning.&nbsp;<em>Journal of Applied Ecology</em>,&nbsp;61,&nbsp;1481–1491.&nbsp;<a href="https://doi.org/10.1111/1365-2664.14656"><strong>https://doi.org/10.1111/1365-2664.14656</strong></a></p>
+<p>Atristain, M., Solagaistua, L., Larrañaga, A., von Schiller, D., &amp; Elosegi, A. (2024). Slow drawdown, fast recovery: Stream macroinvertebrate communities improve quickly after large dam decommissioning. <em>Journal of Applied Ecology</em>, 61, 1481–1491. <a href="https://doi.org/10.1111/1365-2664.14656" class="uri">https://doi.org/10.1111/1365-2664.14656</a></p>
 <p>Bates, D., Mächler, M., Bolker, B., &amp; Walker, S. (2015). Fitting linear mixed-effects models using lme4. <em>Journal of Statistical Software</em>, 67, 1–48.</p>
-<p>Underwood, A. J. (1994). On beyond BACI: Sampling designs that might reliably detect environmental disturbances. <em>Ecological Applications</em>, 4(1), 4–15.</p>
 
 
 </section>

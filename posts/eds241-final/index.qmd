@@ -1,11 +1,11 @@
 ---
-title: "Dam Decommissioning & Invertebrate Recovery: A BACI Analysis Tutorial"
-description: "Replicating the treatment effect from Atristain et al. (2024) using a multiple before-after/control-impact design"
-author: "Your Names Here"
-date: 2026-03-20
+title: "Dam Decommissioning & Invertebrate Recovery: mBACI Analysis"
+description: "Assignment 4 — Replication of Atristain et al. (2024)"
+author: "Lucian Scher & Marie Tolteca"
+date: 2026-03-06
 categories: [R, Statistics, MEDS]
 image: "reservoir-1030292_1280.jpg"
-image-alt: "https://appliedecologistsblog.com/2024/06/06/paving-the-way-for-the-restoration-of-the-enobieta-stream/"
+image-alt: "Enobieta reservoir during drawdown"
 format:
   html:
     code-fold: show
@@ -21,52 +21,36 @@ library(tidyverse)
 library(readxl)
 library(lme4)
 library(broom.mixed)
+library(patchwork)
 library(knitr)
 ```
 
 ## Study Overview
 
-Atristain et al. (2024) investigated whether decommissioning a large dam (42 m tall, Enobieta Dam, northern Spain) restored downstream macroinvertebrate communities. They used a **multiple Before-After/Control-Impact (mBACI) design** — the ecological equivalent of a **difference-in-differences (DiD)** framework.
+Atristain et al. (2024) asked whether decommissioning the Enobieta Dam (42 m, northern Spain) restored downstream macroinvertebrate communities. They used a **multiple Before-After/Control-Impact (mBACI) design** — the ecological analogue of **difference-in-differences (DiD)**.
 
-**The causal question:** Did the reservoir drawdown cause invertebrate communities at impact sites to recover to levels comparable to undammed control sites?
+- **Treatment:** Reservoir drawdown (Dec 2018 – Nov 2019)
+- **Outcome:** Macroinvertebrate community metrics (taxa richness, diversity, density, biomonitoring index)
+- **Design:** Compare the change over time at impact sites (downstream of dam) vs. control sites (undammed tributaries)
 
-**The treatment:** Reservoir drawdown (initiated December 2018, completed November 2019).
-
-**Primary finding we'll replicate:** The effect of drawdown on *taxa richness* (S), measured by the period × reach interaction in a linear mixed-effects model.
-
-\![\](drawdown-diagram.jpg)
+![](drawdown-diagram.jpg)
 
 ::: callout-note
-## Data access
-
-The data for this analysis come from the [Dryad Digital Repository](https://doi.org/10.5061/dryad.w3r2280ws) (Atristain et al., 2024). Download `Atristainetal_JAE_Data.xlsx` and place it in a `data/` folder in your project directory.
+## Data Access
+Data are from the [Dryad Digital Repository](https://doi.org/10.5061/dryad.w3r2280ws). Download `Atristainetal_JAE_Data.xlsx` and place it in a `data/` subfolder.
 :::
 
-## The mBACI Design as Difference-in-Differences
+---
 
-The mBACI design maps directly onto the DiD framework:
-
-| DiD Term | mBACI Equivalent | Description |
-|------------------|------------------------------|------------------------|
-| Treatment group | Impact sites (I1–I4) | Sites downstream of the dam |
-| Control group | Control sites (C1–C4) | Undammed tributaries & upstream site |
-| Pre-treatment | Before period (B) | November 2017 |
-| Post-treatment | Drawdown (D) & After (A) | October 2019 & November 2020 |
-| Treatment effect | Period × Reach interaction | DiD estimator |
-
-The key assumption — **parallel trends** — requires that control and impact sites would have followed the same trajectory in the absence of the drawdown. The use of *multiple* control sites in different tributaries strengthens this assumption.
-
-## Step 1: Load and Wrangle the Data
+## Data Loading & Description
 
 ```{r}
 #| label: load-data
 
-# read the invertebrates sheet from the Dryad dataset
 invert_raw <- read_excel("data/Atristainetal_JAE_Data.xlsx",
                          sheet = "Invertebrates")
 
-# the sheet has two columns named "Site" - rename for clarity
-# col 1 = site name (e.g., "Enobieta Up"), col 5 = site code (e.g., "C1")
+# two columns named "Site" — rename for clarity
 colnames(invert_raw)[1] <- "site_name"
 colnames(invert_raw)[5] <- "site_code"
 ```
@@ -75,49 +59,42 @@ colnames(invert_raw)[5] <- "site_code"
 #| label: wrangle
 
 invert <- invert_raw |>
-  # select only the columns we need for the BACI analysis
   select(site_name, Replicate, Period, Reach, site_code, S, `H´`, TD, IASPT) |>
-  rename(
-    richness = S,
-    shannon = `H´`,
-    density = TD
-  ) |>
-  # create a binary reach type variable: control (C) vs impact (I)
-  # this collapses I1-I4 into one "impact" group for the DiD
+  rename(richness = S, shannon = `H´`, density = TD) |>
   mutate(
     reach_type = case_when(
       Reach == "C" ~ "C",
       Reach == "R" ~ "R",
       TRUE ~ "I"
     ),
-    # set factor levels so "before" and "control" are the reference
     period = factor(Period, levels = c("B", "D", "A"),
                     labels = c("Before", "Drawdown", "After")),
     reach_type = factor(reach_type, levels = c("C", "I", "R"))
   )
 
-glimpse(invert)
+# filter to control + impact only (reservoir sites only sampled post-drawdown)
+invert_baci <- invert |> filter(reach_type %in% c("C", "I"))
+
+glimpse(invert_baci)
 ```
 
-For the main mBACI model, we exclude the reservoir sites (R) — they were only sampled in the "After" period, so they can't be part of the before-after comparison.
+**Data Description:**
 
-```{r}
-#| label: filter-baci
+- **Unit of observation:** One Surber net sample (a standardized benthic invertebrate sample) from one site on one sampling occasion
+- **Key variables:**
+  - *Outcome:* `richness` (S, taxa richness), `shannon` (H', Shannon diversity), `density` (TD, total invertebrate density), `IASPT` (pollution sensitivity index)
+  - *Treatment:* `reach_type` — Impact (I1–I4, downstream of dam) vs. Control (C1–C4, undammed tributaries + upstream)
+  - *Time:* `period` — Before (Nov 2017), Drawdown (Oct 2019), After (Nov 2020)
+- **Cleaning decisions:** Reservoir sites (R) excluded — they were only sampled in the After period and cannot contribute to the before-after comparison
+- **Sample:** `r nrow(invert_baci)` samples total — 5 Surber net replicates × 4 sites per group × 3 periods; Artikutza protected catchment, northern Spain, 2017–2020
 
-# filter to just control and impact sites for the BACI analysis
-invert_baci <- invert |>
-  filter(reach_type %in% c("C", "I"))
-```
+---
 
-**Sample sizes:** `r nrow(filter(invert_baci, period == "Before"))` samples before, `r nrow(filter(invert_baci, period == "Drawdown"))` during drawdown, and `r nrow(filter(invert_baci, period == "After"))` after — split evenly between control and impact sites (5 Surber net replicates × 4 sites per group × 3 periods = 120 total).
-
-## Step 2: Explore the Data
-
-Before modeling, let's see what the data look like. This replicates the pattern shown in Figure 3 of the paper.
+## Exploratory Analysis
 
 ```{r}
 #| label: fig-richness
-#| fig-cap: "Taxa richness across periods and reach types. Before drawdown, impact sites had notably lower richness than controls — especially I1 (closest to the dam). After drawdown, impact sites recovered to match controls."
+#| fig-cap: "Taxa richness by site and period. Impact sites (red) had notably lower richness before drawdown; they approach control levels (blue) by the After period."
 #| fig-width: 9
 #| fig-height: 5
 
@@ -125,83 +102,62 @@ invert_baci |>
   ggplot(aes(x = site_code, y = richness, fill = reach_type)) +
   geom_boxplot(alpha = 0.7, outlier.size = 1) +
   facet_wrap(~period, ncol = 3) +
-  scale_fill_manual(
-    values = c("C" = "#4393C3", "I" = "#D6604D"),
-    labels = c("Control", "Impact")
-  ) +
-  labs(
-    x = "Site",
-    y = "Taxa richness (S)",
-    fill = "Reach type"
-  ) +
+  scale_fill_manual(values = c("C" = "#4393C3", "I" = "#D6604D"),
+                    labels = c("Control", "Impact")) +
+  labs(x = "Site", y = "Taxa richness (S)", fill = "Reach type") +
   theme_minimal(base_size = 13) +
-  theme(
-    axis.text.x = element_text(angle = 45, hjust = 1),
-    panel.border = element_rect(color = "grey70", fill = NA, linewidth = 0.5)
-  )
-```
-
-The visual pattern tells the story: before drawdown, impact sites (especially I1 and I2, closest to the dam) had substantially fewer taxa. By the "After" period, they look indistinguishable from controls. That convergence is the treatment effect we want to estimate formally.
-
-Let's also compute group means to see the DiD structure:
-
-```{r}
-#| label: did-table
-
-did_means <- invert_baci |>
-  group_by(period, reach_type) |>
-  summarise(
-    mean_richness = mean(richness),
-    se = sd(richness) / sqrt(n()),
-    .groups = "drop"
-  )
-
-did_means |>
-  kable(digits = 1, col.names = c("Period", "Reach", "Mean S", "SE"))
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        panel.border = element_rect(color = "grey70", fill = NA, linewidth = 0.5))
 ```
 
 ```{r}
 #| label: fig-did
-#| fig-cap: "Mean taxa richness by period and reach type — the classic DiD visualization. The gap between control and impact narrows over time, indicating recovery."
+#| fig-cap: "Mean taxa richness by period and reach type — the DiD visualization. Convergence of impact toward control over time is the visual signature of recovery."
 #| fig-width: 7
 #| fig-height: 4.5
 
-did_means |>
-  ggplot(aes(x = period, y = mean_richness,
-             color = reach_type, group = reach_type)) +
+did_means <- invert_baci |>
+  group_by(period, reach_type) |>
+  summarise(mean_richness = mean(richness),
+            se = sd(richness) / sqrt(n()),
+            .groups = "drop")
+
+ggplot(did_means, aes(x = period, y = mean_richness,
+                      color = reach_type, group = reach_type)) +
   geom_point(size = 3) +
   geom_line(linewidth = 1) +
   geom_errorbar(aes(ymin = mean_richness - 1.96 * se,
-                    ymax = mean_richness + 1.96 * se),
-                width = 0.1) +
-  scale_color_manual(
-    values = c("C" = "#4393C3", "I" = "#D6604D"),
-    labels = c("Control", "Impact")
-  ) +
-  labs(
-    x = "Period",
-    y = "Mean taxa richness (S)",
-    color = "Reach type"
-  ) +
+                    ymax = mean_richness + 1.96 * se), width = 0.1) +
+  scale_color_manual(values = c("C" = "#4393C3", "I" = "#D6604D"),
+                     labels = c("Control", "Impact")) +
+  labs(x = "Period", y = "Mean taxa richness (S)", color = "Reach type") +
   theme_minimal(base_size = 13)
 ```
 
-This is the visual signature of a successful restoration: the impact group converges toward the control group over time. In a standard DiD, this convergence is the treatment effect.
+**Annotation:**
 
-## Step 3: Fit the mBACI Model
+- **What this does:** Visualizes the raw data and group means across periods to show the DiD pattern before modeling
+- **Identification approach:** DiD / mBACI — we're looking for a *differential change over time*: did impact sites change more than control sites?
+- **Key assumption (parallel trends):** For the DiD estimator to be valid, control and impact sites must have been on the same trajectory *before* the drawdown. The pre-treatment period shows impact sites already below controls, which is expected (dam effect), but we only have **one pre-treatment time point** — so we cannot formally test whether the trends were parallel before treatment
+- **Evidence:** The convergence from Before → After is visible and consistent with the causal claim; the pattern is stronger closer to the dam (I1, I2)
 
-The paper uses a linear mixed-effects (LME) model with:
+---
 
--   **Fixed effects:** `period`, `reach_type`, and their interaction (`period:reach_type`)
--   **Random effect:** `site_code` (to account for repeated measures at the same site across replicates)
+## mBACI Model
 
-The interaction term `period:reach_type` is the **DiD estimator** — it captures whether the *change over time* differed between control and impact sites.
+The mBACI design maps onto DiD as follows:
+
+| DiD Term | mBACI Equivalent |
+|---|---|
+| Treatment group | Impact sites (I1–I4) |
+| Control group | Control sites (C1–C4) |
+| Pre-treatment | Before period (B) |
+| Post-treatment | Drawdown (D) & After (A) |
+| Treatment effect | `period × reach_type` interaction |
 
 ```{r}
 #| label: fit-model
 
-# fit the mBACI linear mixed-effects model
-# this is the exact specification from the paper (Section 2.5)
 mod_richness <- lmer(
   richness ~ period * reach_type + (1 | site_code),
   data = invert_baci,
@@ -211,9 +167,20 @@ mod_richness <- lmer(
 summary(mod_richness)
 ```
 
-## Step 4: Interpret the Coefficients
+**Annotation:**
 
-Let's extract the fixed effects and interpret them in the DiD framework:
+- **What this does:** Fits a linear mixed-effects model (LME) with fixed effects for period, reach type, and their interaction, and a random intercept for site to account for repeated measurements within sites
+- **Identification approach:** mBACI / DiD — the `period:reach_type` interaction is the DiD estimator; it measures whether the *change over time* differed between control and impact sites
+- **Assumptions required for causal validity:**
+  1. **Parallel trends:** Without treatment, impact and control sites would have changed at the same rate over time
+  2. **No spillover (SUTVA):** Drawdown at impact sites did not affect control site outcomes
+  3. **No time-varying confounders:** Nothing else changed between periods that affected impact vs. control sites differentially
+  4. **Model specification:** Random intercept structure captures the data's dependence structure; residuals approximately normal with constant variance
+- **Evidence from output:** The `period:reach_type` interaction terms are the key; we'll test them formally below
+
+---
+
+## Coefficient Interpretation
 
 ```{r}
 #| label: tidy-model
@@ -221,240 +188,188 @@ Let's extract the fixed effects and interpret them in the DiD framework:
 tidy(mod_richness, effects = "fixed", conf.int = TRUE) |>
   kable(digits = 3,
         col.names = c("Effect", "Term", "Estimate", "SE",
-                       "Statistic", "CI Lower", "CI Upper"))
+                      "Statistic", "CI Lower", "CI Upper"))
 ```
 
-Here's how to read each coefficient:
+**Annotation:**
 
-| Coefficient | Interpretation |
-|----------------------------------|--------------------------------------|
-| `(Intercept)` | Mean richness for control sites in the Before period |
-| `reach_typeI` | Baseline difference: impact minus control in the Before period (**BCI** in the paper) |
-| `periodDrawdown` | Change in control sites from Before to Drawdown |
-| `periodAfter` | Change in control sites from Before to After |
-| `periodDrawdown:reach_typeI` | **DiD estimator (BD:CI)**: Did impact sites change *differently* than controls from Before → Drawdown? |
-| `periodAfter:reach_typeI` | **DiD estimator (BA:CI)**: Did impact sites change *differently* than controls from Before → After? |
+- **What this does:** Extracts fixed-effect estimates with confidence intervals; these are the DiD coefficients
+- Key terms:
+  - `(Intercept)` — mean richness for control sites in the Before period (baseline)
+  - `reach_typeI` — impact vs. control gap in the Before period (pre-existing dam effect)
+  - `periodDrawdown:reach_typeI` — **DiD estimate for Drawdown period**: did impact sites change differently than controls from Before → Drawdown?
+  - `periodAfter:reach_typeI` — **DiD estimate for After period**: the main recovery effect
+- A positive `periodAfter:reach_typeI` estimate means impact sites gained more richness than controls between Before and After — i.e., recovery attributable to drawdown
 
-The two interaction terms are the key treatment effects. A positive `periodAfter:reach_typeI` means impact sites gained more richness than controls between the Before and After periods — i.e., they recovered.
+---
 
-## Step 5: Test the Overall Interaction (BDA:CI)
-
-The paper also reports a global test of whether the interaction matters at all (Type III test of the `period:reach_type` interaction). We can get this with `anova()`:
+## Overall Interaction Test (BDA:CI)
 
 ```{r}
 #| label: anova
 
-# test the overall period x reach_type interaction
-# this corresponds to the BDA:CI test in the paper
 anova(mod_richness)
 ```
 
-The significant interaction (`period:reach_type`) tells us that the trajectory of taxa richness over time *depended on* whether a site was downstream of the dam or not. In other words, the drawdown had a causal effect on invertebrate richness at impact sites.
+**Annotation:**
 
-## Step 6: Model Diagnostics
+- **What this does:** Type III F-test of the `period:reach_type` interaction — tests whether trajectories over time differed *at all* between impact and control sites
+- **Identification approach:** Same DiD logic — a significant interaction means the treatment (being downstream of the dam) changed how outcomes evolved over time
+- **Assumption check:** This is a joint test across both post-treatment periods; it's more conservative than individual coefficients and less sensitive to which specific period shows the effect
+- A significant p-value here replicates the paper's main Table 2 result for taxa richness
 
-Before trusting the model output, we need to verify that the LME assumptions hold. The key assumptions for a linear mixed-effects model are: (1) residuals are approximately normally distributed and (2) residuals have constant variance (homoscedasticity). If these fail, our p-values and confidence intervals could be unreliable.
+---
+
+## Model Diagnostics
 
 ```{r}
 #| label: fig-diagnostics
-#| fig-cap: "Residual diagnostics for the taxa richness mBACI model. Left: residuals vs. fitted values to check for heteroscedasticity. Right: QQ plot to check normality of residuals."
+#| fig-cap: "Residual diagnostics. Left: residuals vs. fitted (checks homoscedasticity). Right: QQ plot (checks normality)."
 #| fig-width: 9
 #| fig-height: 4
 
-# extract residuals and fitted values
-diag_df <- data.frame(
-  fitted = fitted(mod_richness),
-  resid = residuals(mod_richness)
-)
+diag_df <- data.frame(fitted = fitted(mod_richness),
+                      resid  = residuals(mod_richness))
 
 p1 <- ggplot(diag_df, aes(x = fitted, y = resid)) +
   geom_point(alpha = 0.5) +
   geom_hline(yintercept = 0, linetype = "dashed", color = "red") +
-  labs(x = "Fitted values", y = "Residuals",
-       title = "Residuals vs. Fitted") +
+  labs(x = "Fitted values", y = "Residuals", title = "Residuals vs. Fitted") +
   theme_minimal(base_size = 12)
 
 p2 <- ggplot(diag_df, aes(sample = resid)) +
-  stat_qq(alpha = 0.5) +
-  stat_qq_line(color = "red") +
+  stat_qq(alpha = 0.5) + stat_qq_line(color = "red") +
   labs(x = "Theoretical quantiles", y = "Sample quantiles",
        title = "Normal QQ Plot") +
   theme_minimal(base_size = 12)
 
-library(patchwork)
 p1 + p2
 ```
 
-We're looking for: no obvious fan shape or pattern in the residuals vs. fitted plot (homoscedasticity), and points falling roughly along the red line in the QQ plot (normality). Some deviation in the tails is normal with ecological count data — the LME is reasonably robust to mild departures from normality, especially with this sample size.
+**Annotation:**
 
-## Step 7: Robustness Checks
+- **What this does:** Checks two core LME assumptions — homoscedasticity (constant residual variance) and approximate normality of residuals
+- **What to look for:**
+  - *Residuals vs. fitted:* No systematic fan shape or curve — residuals should scatter randomly around zero
+  - *QQ plot:* Points should fall along the red line; heavy tails indicate non-normality
+- **If violated:** Inference (p-values, CIs) may be unreliable; could consider log-transforming richness or using a Poisson/negative binomial GLMM
+- **Evidence:** Ecological count data often show mild non-normality in tails; the LME is moderately robust to this, especially with n = 120
 
-A single model on one response variable isn't enough to make a convincing causal argument. The paper tests the same mBACI specification across multiple community metrics. If the drawdown truly caused ecological recovery, we'd expect the same pattern — a significant `period:reach_type` interaction — to show up across different measures of community health, not just taxa richness.
+---
 
-We'll run the same model on three additional response variables: **Shannon diversity** (H'), **total invertebrate density**, and the **IASPT biomonitoring index** (a pollution sensitivity score).
+## Robustness: Multiple Outcomes
 
 ```{r}
 #| label: robustness-models
 
-# Shannon diversity
-mod_shannon <- lmer(
-  shannon ~ period * reach_type + (1 | site_code),
-  data = invert_baci,
-  REML = TRUE
-)
+mod_shannon <- lmer(shannon ~ period * reach_type + (1 | site_code),
+                    data = invert_baci, REML = TRUE)
 
-# total density (log-transformed, as in the paper)
-mod_density <- lmer(
-  log(density) ~ period * reach_type + (1 | site_code),
-  data = invert_baci,
-  REML = TRUE
-)
+mod_density <- lmer(log(density) ~ period * reach_type + (1 | site_code),
+                    data = invert_baci, REML = TRUE)
 
-# IASPT biomonitoring index
-mod_iaspt <- lmer(
-  IASPT ~ period * reach_type + (1 | site_code),
-  data = invert_baci,
-  REML = TRUE
-)
+mod_iaspt   <- lmer(IASPT ~ period * reach_type + (1 | site_code),
+                    data = invert_baci, REML = TRUE)
 ```
-
-Now we'll compare the overall interaction test (`BDA:CI`) across all four models:
 
 ```{r}
 #| label: robustness-table
 
-# extract the period:reach_type interaction row from each anova
-extract_interaction <- function(model, response_name) {
+extract_interaction <- function(model, label) {
   aov <- as.data.frame(anova(model))
   row <- aov["period:reach_type", ]
-  tibble(
-    Response = response_name,
-    `F value` = row[["F value"]],
-    `Num DF` = row[["NumDF"]],
-    `Den DF` = row[["DenDF"]],
-    `p value` = row[["Pr(>F)"]]
-  )
+  tibble(Response = label,
+         `F value` = row[["F value"]],
+         `Num DF`  = row[["NumDF"]],
+         `Den DF`  = row[["DenDF"]],
+         `p value` = row[["Pr(>F)"]])
 }
 
 bind_rows(
   extract_interaction(mod_richness, "Taxa richness (S)"),
-  extract_interaction(mod_shannon, "Shannon diversity (H')"),
-  extract_interaction(mod_density, "log(Total density)"),
-  extract_interaction(mod_iaspt, "IASPT")
+  extract_interaction(mod_shannon,  "Shannon diversity (H')"),
+  extract_interaction(mod_density,  "log(Total density)"),
+  extract_interaction(mod_iaspt,    "IASPT")
 ) |>
   kable(digits = c(0, 2, 0, 1, 4))
 ```
 
-If the recovery pattern is real, we expect significant (or near-significant) interactions across multiple response variables. This is more convincing than a single test because it guards against the possibility that one metric happened to show a spurious result.
-
-Let's also visually confirm the pattern holds for each metric:
-
 ```{r}
 #| label: fig-robustness
-#| fig-cap: "DiD patterns across all four community metrics. Convergence of impact toward control values over time supports the recovery finding."
+#| fig-cap: "DiD pattern across all four community metrics. Convergence of impact toward control values is visible across metrics."
 #| fig-width: 10
 #| fig-height: 8
 
-# compute group means for all four response variables
-robust_means <- invert_baci |>
+invert_baci |>
   group_by(period, reach_type) |>
-  summarise(
-    `Taxa richness` = mean(richness),
-    `Shannon diversity` = mean(shannon),
-    `log(Density)` = mean(log(density)),
-    IASPT = mean(IASPT),
-    .groups = "drop"
-  ) |>
-  pivot_longer(
-    cols = c(`Taxa richness`, `Shannon diversity`, `log(Density)`, IASPT),
-    names_to = "metric",
-    values_to = "mean_value"
-  )
-
-ggplot(robust_means, aes(x = period, y = mean_value,
-                          color = reach_type, group = reach_type)) +
+  summarise(`Taxa richness`    = mean(richness),
+            `Shannon diversity` = mean(shannon),
+            `log(Density)`     = mean(log(density)),
+            IASPT              = mean(IASPT),
+            .groups = "drop") |>
+  pivot_longer(cols = c(`Taxa richness`, `Shannon diversity`,
+                        `log(Density)`, IASPT),
+               names_to = "metric", values_to = "mean_value") |>
+  ggplot(aes(x = period, y = mean_value,
+             color = reach_type, group = reach_type)) +
   geom_point(size = 2.5) +
   geom_line(linewidth = 0.8) +
   facet_wrap(~metric, scales = "free_y", ncol = 2) +
-  scale_color_manual(
-    values = c("C" = "#4393C3", "I" = "#D6604D"),
-    labels = c("Control", "Impact")
-  ) +
+  scale_color_manual(values = c("C" = "#4393C3", "I" = "#D6604D"),
+                     labels = c("Control", "Impact")) +
   labs(x = "Period", y = "Mean value", color = "Reach type") +
   theme_minimal(base_size = 12) +
-  theme(
-    panel.border = element_rect(color = "grey70", fill = NA, linewidth = 0.5)
-  )
+  theme(panel.border = element_rect(color = "grey70", fill = NA, linewidth = 0.5))
 ```
 
-The convergence pattern is visible across all four metrics: impact sites start lower than controls and approach control values by the After period. This consistency across independent measures of community health makes the causal argument substantially stronger.
+**Annotation:**
 
-## Step 8: Effect Sizes
+- **What this does:** Runs the same mBACI/DiD model specification on three additional community metrics to test whether the recovery signal is consistent across independent measures
+- **Identification approach:** Same DiD/mBACI logic — if the drawdown caused recovery, the `period:reach_type` interaction should be significant (or at least directionally consistent) across metrics, not just one
+- **Assumption check:** Consistency across metrics guards against the concern that taxa richness alone showed a spurious result; all four metrics pointing the same direction is harder to explain without a real treatment effect
+- **Evidence:** Look for significant or near-significant p-values across all four outcomes; the figure shows whether the visual DiD pattern holds
 
-To match the paper's approach, we compute log-ratio effect sizes for each impact site relative to the control mean. This shows how the dam's effect decreased with distance downstream.
+---
 
-```{r}
-#| label: effect-sizes
+## Critical Evaluation
 
-effect_sizes <- invert_baci |>
-  group_by(period, site_code, reach_type) |>
-  summarise(mean_richness = mean(richness), .groups = "drop") |>
-  # get the control mean for each period
-  group_by(period) |>
-  mutate(control_mean = mean(mean_richness[reach_type == "C"])) |>
-  ungroup() |>
-  # compute ln-ratio for impact sites only
-  filter(reach_type == "I") |>
-  mutate(effect_size = log(mean_richness / control_mean))
+### Causal Identification
 
-effect_sizes |>
-  select(period, site_code, mean_richness, control_mean, effect_size) |>
-  kable(digits = 2,
-        col.names = c("Period", "Site", "Mean S", "Control Mean", "Ln-ratio"))
-```
+- The mBACI/DiD design is credible *given* the study setting — a protected watershed with no competing interventions during the study period
+- For estimates to be causal, the **counterfactual must hold**: control sites must represent what impact sites *would have looked like* without the drawdown
+- The use of four independent control sites across separate tributaries strengthens this claim relative to a single control; if one control behaved anomalously, the others would not
+- Main credibility concern: impact sites were already degraded before treatment (dam effect), so the "parallel trends" baseline is harder to establish
 
-Negative values mean the impact site had lower richness than controls. In the Before period, I1 (closest to the dam) had the largest negative effect. By the After period, effect sizes are near zero — recovery.
+### Statistical Assumptions
 
-## Evaluation of Causal Inference
+- **Parallel trends:** The most vulnerable assumption — there is only **one pre-treatment time point (November 2017)**, so the trend assumption cannot be formally tested. We cannot distinguish between "impact sites recovered because of the drawdown" vs. "impact sites were already recovering for other reasons before 2018"
+- **Normality & homoscedasticity:** Check diagnostic plots; mild departures are expected with ecological count data. If problematic, a log-transform or GLMM would be more appropriate
+- **Random effects structure:** With only 4 sites per group, the random intercept variance is estimated from few clusters, which can lead to anti-conservative p-values. This is a known limitation of small-cluster LME
+- **SUTVA (no spillover):** Well-supported — C2–C4 are in separate tributaries physically isolated from the drawdown reach; C1 is upstream of the dam
 
-The mBACI/DiD framework makes a causal claim: the drawdown *caused* the recovery. That claim rests on specific assumptions. Let's evaluate each one against the evidence.
+### Sampling & External Validity
 
-### 1. Parallel trends
+- **Sample:** 8 stream sites in a single protected headwater catchment in Basque Country, Spain; 5 Surber net samples per site per period
+- **Generalizability is limited:** Results apply most directly to similar Atlantic headwater streams with forested catchments and comparable dam morphologies (large reservoir, concrete dam); dam removal in urban, agricultural, or arid-region streams may show different recovery dynamics
+- **Time horizon:** Recovery assessed after only ~1 year post-drawdown. The paper's conclusion of "rapid recovery" may not hold for all taxa — sensitive taxa or rare species may require longer
 
-**The assumption:** In the absence of drawdown, control and impact sites would have followed the same trajectory over time. This is the foundational assumption of any DiD design — if violated, the "treatment effect" could just be pre-existing divergence.
+### Measurement
 
-**How well is it met?** This is the biggest weakness. There is only **one pre-treatment time point** (November 2017), so we literally cannot test whether control and impact sites were trending in parallel before the drawdown. The paper partially addresses this by using four independent control sites across different tributaries, which reduces the chance that a single anomalous control drives the result. But it doesn't eliminate the concern. If, for example, natural recolonization was already underway before the drawdown began, the model would incorrectly attribute that trend to the treatment.
+- **Taxa richness** is a coarse measure — it counts taxa present but treats a single mayfly the same as 1,000. Shannon diversity (H') partially corrects for this by weighting by abundance
+- **Surber nets** sample only a fixed area of benthos (0.09 m²) and may undersample mobile or large-bodied invertebrates; standardized across sites, so systematic bias is consistent but not absent
+- **IASPT** (a biotic index) depends on accurate taxonomic identification to family level; misidentification error would attenuate the signal rather than inflate it
+- **Treatment timing:** The "Drawdown" sampling (Oct 2019) occurred while the reservoir was still being emptied — not strictly "after treatment" — which may underestimate the full recovery effect
 
-### 2. No spillover (SUTVA)
+### Other Limitations
 
-**The assumption:** The drawdown at impact sites didn't affect the control sites. Each unit's outcome depends only on its own treatment status.
+- **Pseudoreplication concern:** Five Surber net samples within a single site on one date are not truly independent — they share hydrological and substrate conditions. The random intercept for site partially addresses this but doesn't fully resolve within-site spatial autocorrelation
+- **No measurement of intervening mechanisms:** The paper shows invertebrate recovery but does not directly measure the pathway (sediment transport, habitat substrate change, water temperature) — so we know the outcome changed but not exactly why
+- **No power analysis reported:** With 4 sites per group and 3 time points, the study may be underpowered to detect moderate-sized effects for some metrics (e.g., IASPT), which is consistent with the weaker p-values observed for those outcomes
 
-**How well is it met?** Reasonably well. Three of the four control sites (C2–C4) are in entirely separate tributaries, so sediment mobilization and water quality changes from the drawdown wouldn't reach them. C1 is upstream of the dam in the same stream, so it's also physically isolated from downstream effects. The spatial separation of controls makes SUTVA plausible here.
-
-### 3. No time-varying confounders
-
-**The assumption:** Nothing else changed between the Before and After periods that differentially affected impact vs. control sites.
-
-**How well is it met?** The Artikutza catchment is a protected, forested headwater basin with no other major land use changes during the study period. There were no other restoration actions, no new pollution sources, and no major hydrological changes besides the drawdown itself. This is about as clean a natural experiment setting as you'll find in ecology. The main risk would be something like an unusually wet or dry year affecting impact and control sites differently, but the paper doesn't flag any such events.
-
-### 4. Correct model specification
-
-**The assumption:** The linear mixed-effects model with site-level random intercepts adequately captures the data structure.
-
-**How well is it met?** The random intercept for `site_code` accounts for the fact that five Surber net samples at the same site are not independent — they share site-level characteristics. The residual diagnostics (Step 6) tell us whether the normality and homoscedasticity assumptions hold. One potential concern is that with only 4 sites per group, the random effect variance is estimated from very few clusters, which can lead to anti-conservative p-values. The paper uses REML estimation, which partially corrects for this, but it's worth noting as a limitation.
-
-### Bottom line
-
-The strongest parts of the causal argument are the clean study setting (no confounders) and the spatial separation of controls (SUTVA). The weakest part is the inability to test parallel pre-trends with only one pre-treatment observation. The robustness of the finding across multiple response variables (Step 7) and the spatial gradient in effect sizes (larger effects closer to the dam, as expected) both add indirect support, but they don't directly address the parallel trends concern.
-
-## Summary
-
-We replicated the primary finding from Atristain et al. (2024): the reservoir drawdown caused a significant recovery in invertebrate taxa richness at impact sites. The mBACI design, which is functionally a difference-in-differences estimator with mixed effects, identified this treatment effect by comparing the *change over time* between impacted and control reaches. Robustness checks across multiple community metrics (Shannon diversity, density, IASPT) all showed the same convergence pattern, strengthening the causal claim. One year after drawdown, impact sites were indistinguishable from controls, suggesting rapid ecological recovery — though the single pre-treatment time point limits our ability to fully rule out pre-existing trends.
+---
 
 ## References
 
-Atristain, M., Solagaistua, L., Larrañaga, A., von Schiller, D., & Elosegi, A. (2024). Slow drawdown, fast recovery: Stream macroinvertebrate communities improve quickly after large dam decommissioning. *Journal of Applied Ecology*, 61, 1481–1491. [**https://doi.org/10.1111/1365-2664.14656**](https://doi.org/10.1111/1365-2664.14656)
+Atristain, M., Solagaistua, L., Larrañaga, A., von Schiller, D., & Elosegi, A. (2024). Slow drawdown, fast recovery: Stream macroinvertebrate communities improve quickly after large dam decommissioning. *Journal of Applied Ecology*, 61, 1481–1491. <https://doi.org/10.1111/1365-2664.14656>
 
 Bates, D., Mächler, M., Bolker, B., & Walker, S. (2015). Fitting linear mixed-effects models using lme4. *Journal of Statistical Software*, 67, 1–48.
-
-Underwood, A. J. (1994). On beyond BACI: Sampling designs that might reliably detect environmental disturbances. *Ecological Applications*, 4(1), 4–15.

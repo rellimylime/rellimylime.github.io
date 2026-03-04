@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(quarto render:*)"
+      "Bash(quarto render:*)",
+      "WebFetch(domain:garberadamc.github.io)"
     ]
   }
 }

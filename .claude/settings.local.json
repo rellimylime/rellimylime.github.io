@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(quarto render:*)",
-      "WebFetch(domain:garberadamc.github.io)"
+      "WebFetch(domain:garberadamc.github.io)",
+      "Bash(git -C \"c:/Users/ermil/Documents/MEDS/rellimylime.github.io\" ls-files docs/)"
     ]
   }
 }

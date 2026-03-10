@@ -383,3 +383,5 @@ invert_baci |>
 Atristain, M., Solagaistua, L., Larrañaga, A., von Schiller, D., & Elosegi, A. (2024). Slow drawdown, fast recovery: Stream macroinvertebrate communities improve quickly after large dam decommissioning. *Journal of Applied Ecology*, 61, 1481–1491. <https://doi.org/10.1111/1365-2664.14656>
 
 Bates, D., Mächler, M., Bolker, B., & Walker, S. (2015). Fitting linear mixed-effects models using lme4. *Journal of Statistical Software*, 67, 1–48.
+
+\[blog post\](

@@ -19,8 +19,16 @@ Thumbs.db
 .quarto/
 /.quarto/
 **/*.quarto_ipynb
-_files/
+*_files/
+**/*_files/
 _freeze/
+
+# LaTeX / PDF render artifacts
+**/*.tex
+**/*.log
+**/*.aux
+**/*.toc
+posts/**/*.pdf
 
 # Source map files
 *.css.map
@@ -43,4 +51,5 @@ posts/eds220-final/data/*
 posts/eds222-final/data/*
 posts/eds223-final/data/*
 posts/eds223-final2/data/*
+posts/eds240-final/data/*
 

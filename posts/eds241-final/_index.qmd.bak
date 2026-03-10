@@ -10,6 +10,7 @@ format:
   html:
     code-fold: show
     toc: true
+draft: true
 ---
 
 ```{r}

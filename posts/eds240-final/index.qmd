@@ -75,9 +75,9 @@ dashboard_theme <- theme_void() +
 
 Here's a statistic: sober drivers cause 88% of all crashes in California. Alarming, right? You might want to reconsider that designated driver situation.
 
-That statistic is real. It comes from the California Highway Patrol's SWITRS database: tens of thousands of reported crashes from 2024, cleaned, filtered to at-fault drivers, and summarized honestly. It is also completely misleading, and I built an entire infographic to prove it.
+That statistic is real. It comes from the California Highway Patrol's SWITRS database: tens of thousands of reported crashes from 2024, cleaned, filtered to at-fault drivers, summarized honestly and completely misleading.
 
-*Crash Course in Bad Statistics* is a deadpan parody of the kind of scary public health PSA you've probably scrolled past, with dark backgrounds,, bold claims, authoritative-looking charts. Every number in it is technically accurate. Every conclusion it nudges you toward is wrong. The goal isn't to convince you that drunk driving is fine (it isn't). The goal is to show how easy it is to weaponize real data through selective framing, and to make you a little more suspicious the next time a statistic sounds exactly as alarming as someone needs it to.
+*Crash Course in Bad Statistics* is a deadpan parody of the kind of scary public health PSA you've probably scrolled past, with dark backgrounds, bold shocking claims, authoritative(-looking) charts. Every number in it is *technically* accurate. Every conclusion it nudges you toward is wrong. The goal isn't to convince you that drunk driving is fine (it isn't). The goal is to show how easy it is to weaponize real data through selective framing, and to make you a little more suspicious the next time a statistic sounds exactly as alarming as someone needs it to.
 
 ------------------------------------------------------------------------
 
@@ -91,15 +91,15 @@ That statistic is real. It comes from the California Highway Patrol's SWITRS dat
 
 ### 1. Graphic Form
 
-Each of the three panels uses a conventional chart type: horizontal bar, polar clock, column bar, chosen specifically because they look trustworthy. The horizontal bar for Myth 1 is the starkest way to display the 7:1 raw count ratio; there's no visual complexity to distract from the number. The polar clocks for Myth 2 lean into the car dashboard aesthetic of the overall infographic design while also being a genuinely useful format for 24-hour temporal data. The key manipulation there is subtle: the right clock's y-axis is expanded to 2.2x, which compresses the alcohol bars to fill only about 45% of the clock face, making the late-night peak look minor rather than concentrated. The column bar for Myth 3 is intentionally conventional; the absurdity of the "sober men are deadlier" conclusion lands harder when the chart looks completely normal. All three chart types read as authoritative. That's the point.
+Each of the three panels uses a conventional chart type: horizontal bar, polar clock (radial bar graph), column bar, chosen specifically because they look trustworthy. The horizontal bar for Myth 1 is the starkest way to display the 7:1 raw count ratio; there's no visual complexity to distract from the number. The polar clocks for Myth 2 lean into the car dashboard aesthetic of the overall infographic design while also being a genuinely useful format for 24-hour temporal data. The key manipulation there is subtle: the right clock's y-axis is expanded to 2.2x, which compresses the alcohol bars to fill only about 45% of the clock face, making the late-night peak look minor rather than concentrated. The column bar for Myth 3 is intentionally conventional; the absurdity of the "sober men are deadlier" conclusion lands harder when the chart looks completely normal. All three chart types read as authoritative. That's the point.
 
 ------------------------------------------------------------------------
 
 ### 2. Text (Titles, Labels, Annotations)
 
-All titles are all-caps, which registers as alarm or warning, the visual register of a PSA. "SOBER DRIVERS CAUSE MORE CRASHES" is designed to read like a headline before the viewer processes that it's a chart title. The Myth 3 title uses `ggtext::element_markdown()` to render "DEADLIER" in red inline, making an absurd claim feel like breaking news. Subtitles carry the technically-true framing without fabricating anything: "Raw crash counts · CA SWITRS 2024" is accurate and sounds responsible.
+All titles are all-caps, which registers as alarm or warning, the visual register of a PSA. "SOBER DRIVERS CAUSE MORE CRASHES" is designed to read like a headline before the viewer processes that it's a chart title. The Myth 3 title uses `ggtext::element_markdown()` to render "DEADLIER" in red inline, making an absurd claim feel like breaking news. Subtitles carry the technically-true framing without fabricating anything.
 
-The Myth 2 patchwork annotation, "IF DRUNK DRIVING CAUSED THE DANGER, THE PEAKS WOULD ALIGN," does the most rhetorical work of any text in the infographic. It states the misleading logical argument explicitly so the viewer doesn't have to make the inferential leap themselves, which makes the deception more persuasive, not less. The Myth 3 dashed reference line is annotated with the cumulative drunk-driver death count so the viewer can immediately make the sober-men-vs-all-drunk comparison without doing math.
+The Myth 2 patchwork annotation, "IF DRUNK DRIVING CAUSED THE DANGER, THE PEAKS WOULD ALIGN," does the most rhetorical work of any text in the infographic. It states the misleading logical argument explicitly so the viewer doesn't have to make the inferential leap themselves. Presenting the conclusion we want the viewer to draw up front also keeps them from doing too much of their own interpreting and thinking about how the data is represented and what it could mean. Similarly, the Myth 3 dashed reference line is annotated with the cumulative drunk-driver death count so the viewer can immediately make the sober-men-vs-all-drunk comparison without doing math.
 
 ------------------------------------------------------------------------
 
@@ -117,7 +117,7 @@ The palette uses two data accents: `#FF3333` (red) for alcohol-impaired and `#4D
 
 ### 5. Typography
 
-Rajdhani (loaded via `sysfonts` and `showtext`) is geometric, condensed, and slightly techno-adjacent; it reads like an instrument panel readout, which fits the dashboard framing. The weight hierarchy is straightforward: bold 35pt titles, 20pt subtitles, 14–25pt axis labels depending on the chart. The larger axis sizes on the polar clocks (25pt) are necessary because the labels orbit the chart face rather than sitting on a flat axis, so they need more visual weight to be legible. `showtext_auto()` ensures consistent rendering across both PDF and HTML outputs, which matters since the charts were exported to PDF for Affinity assembly before being embedded here.
+Rajdhani (loaded via `sysfonts` and `showtext`) is geometric, condensed, and slightly techno-adjacent; it reads like an instrument panel readout, which fits the dashboard framing. The weight hierarchy is straightforward: bold 35pt titles, 20pt subtitles, 14–25pt axis labels depending on the chart. The larger axis sizes on the polar clocks (25pt) are necessary because the labels orbit the chart face rather than sitting on a flat axis, so they need more visual weight to be legible. `showtext_auto()` ensures consistent rendering across both PDF and HTML outputs, which matters since the charts were exported to PDF for Affinity assembly before being embedded here. In Affinity, Shatterboxx font was used for "CRASH" and Skyline for "COURSE". I used blacked out letters from Skyline to continue the pattern across the horizon.
 
 ------------------------------------------------------------------------
 

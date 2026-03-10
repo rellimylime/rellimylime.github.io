@@ -11,7 +11,7 @@ toc: false
 
 ## 🌟 What I Bring to the Table
 
-I'm not just a data scientist — I'm a creative problem-solver who believes that the best solutions come from combining technical rigor with human empathy. Whether you need help with environmental data analysis, creative data visualization, or just want to learn how to make sense of your data, I'm here to help.
+I'm not just a data scientist - I'm a creative problem-solver who believes that the best solutions come from combining technical rigor with human empathy. Whether you need help with environmental data analysis, creative data visualization, or just want to learn how to make sense of your data, I'm here to help.
 
 > *"The best data science happens when we combine technical excellence with creative storytelling and genuine care for the communities we serve."*
 

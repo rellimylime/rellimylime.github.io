@@ -1,10 +1,11 @@
 ---
 title: "Building a Navigator for the World's Largest Forest Database"
-description: "The USDA's Forest Inventory and Analysis database is one of the most comprehensive forest monitoring datasets in the world — and one of the hardest to work with. I built a Streamlit app to make it navigable, then used it to compile a research dataset from scratch."
+description: "The USDA's Forest Inventory and Analysis database is one of the most comprehensive forest monitoring datasets in the world - and one of the hardest to work with. I built a Streamlit app to make it navigable, then used it to compile a research dataset from scratch."
 date: 2026-03-04
 categories: [Python, R, Geospatial Analysis, Forest Ecology, Data Science]
 citation:
   url: https://rellimylime.github.io/posts/forest-data-compilation/
+image: fia-thumbnail.jpeg
 execute:
   eval: false
   echo: true
@@ -24,15 +25,15 @@ Researchers who work on forest disturbance, thermophilization, fire ecology, car
 
 ## Why FIA Is Hard to Work With
 
-The national FIA database (FIADB v9.4) is distributed as either a 70 GB SQLite file or per-state CSV downloads. Either way, before you can analyze anything, you need to understand the structure — and the user guide is 600+ pages.
+The national FIA database (FIADB v9.4) is distributed as either a 70 GB SQLite file or per-state CSV downloads. Either way, before you can analyze anything, you need to understand the structure - and the user guide is 600+ pages.
 
 The complexity is real, not just documentation overhead. A few things that catch new users:
 
-**FIA samples all US land**, not just forests. About 59% of plot-year rows in the raw data have `pct_forested == 0`. They're fields, parking lots, lawns. The first filter for any forest analysis is just: *is this actually a forest plot?* This isn't documented anywhere obvious — you discover it when your species diversity numbers look completely wrong.
+**FIA samples all US land**, not just forests. About 59% of plot-year rows in the raw data have `pct_forested == 0`. They're fields, parking lots, lawns. The first filter for any forest analysis is just: *is this actually a forest plot?* This isn't documented anywhere obvious - you discover it when your species diversity numbers look completely wrong.
 
-**Code fields are everywhere.** STATUSCD, CCLCD, AGENTCD, COND_STATUS_CD, DSTRBCD, TRTCD — each has its own set of integer codes with specific meanings buried in appendix tables. The wrong code filter doesn't error. It silently returns the wrong answer.
+**Code fields are everywhere.** STATUSCD, CCLCD, AGENTCD, COND_STATUS_CD, DSTRBCD, TRTCD - each has its own set of integer codes with specific meanings buried in appendix tables. The wrong code filter doesn't error. It silently returns the wrong answer.
 
-**Table relationships aren't always intuitive.** TREE_GRM_COMPONENT, which holds between-measurement mortality data, links back to TREE via `TRE_CN` — not to PLOT directly. That means you need a TREE join to get `INVYR` and `SPCD` even when you're only analyzing mortality. The first time you encounter this, it's genuinely confusing.
+**Table relationships aren't always intuitive.** TREE_GRM_COMPONENT, which holds between-measurement mortality data, links back to TREE via `TRE_CN` - not to PLOT directly. That means you need a TREE join to get `INVYR` and `SPCD` even when you're only analyzing mortality. The first time you encounter this, it's genuinely confusing.
 
 **50+ tables**, and some names don't telegraph their content. Which table has seedling counts? (SEEDLING.) Okay, but how does it relate to SUBPLOT? What about SUBP_COND? None of this is unfixable, but it slows down the first few weeks considerably.
 
@@ -40,7 +41,7 @@ The complexity is real, not just documentation overhead. A few things that catch
 
 The FIA Database Schema Navigator is a Streamlit app for exploring FIADB v9.4 structure without loading the database into memory. The core design constraint: the full SQLite file is 70 GB, so all schema navigation runs off SQLite's `PRAGMA table_info()`. Instant, even on the full database.
 
-The app runs in **metadata-only mode** when no database is connected — the relationship diagram, field codebook, table browser, and SQL templates are all hardcoded from the User Guide and work without the SQLite file. You can explore it live here:
+The app runs in **metadata-only mode** when no database is connected - the relationship diagram, field codebook, table browser, and SQL templates are all hardcoded from the User Guide and work without the SQLite file. You can explore it live here:
 
 ```{=html}
 <iframe
@@ -54,7 +55,7 @@ The app runs in **metadata-only mode** when no database is connected — the rel
 
 [Open the FIA Database Schema Navigator](https://fiadb-dashboard.streamlit.app/)
 
-```python
+``` python
 import sqlite3
 import streamlit as st
 
@@ -77,13 +78,13 @@ def get_table_schema(db_path: str, table_name: str) -> list[dict]:
         conn.close()
 ```
 
-Row previews are available but opt-in — you request them explicitly. The app doesn't load anything by default.
+Row previews are available but opt-in - you request them explicitly. The app doesn't load anything by default.
 
 ### Table Browser
 
-The 50+ FIADB tables are organized into categories pulled from the user guide — Location Level, Tree Level, Invasive/Understory Vegetation, Down Woody Material, Population, Reference — rather than alphabetically. Alphabetical is how a database shows you tables. Categorical is how a researcher looks for them.
+The 50+ FIADB tables are organized into categories pulled from the user guide - Location Level, Tree Level, Invasive/Understory Vegetation, Down Woody Material, Population, Reference - rather than alphabetically. Alphabetical is how a database shows you tables. Categorical is how a researcher looks for them.
 
-```python
+``` python
 TABLE_CATEGORIES: dict[str, list[str]] = {
     "Location Level": [
         "SURVEY", "PROJECT", "COUNTY", "PLOT", "COND",
@@ -103,35 +104,35 @@ TABLE_CATEGORIES: dict[str, list[str]] = {
 }
 ```
 
-Select a table, and the sidebar shows column names, types, and which are primary keys — no rows loaded.
+Select a table, and the sidebar shows column names, types, and which are primary keys - no rows loaded.
 
 ### Field Codebook
 
 A hardcoded reference for the code columns that come up constantly:
 
-| Code | Column | Meaning |
-|---|---|---|
-| 1 | STATUSCD | Live tree |
-| 2 | STATUSCD | Standing dead tree |
-| 1 | COND_STATUS_CD | Forested — keep for most analyses |
-| 5 | COND_STATUS_CD | Non-forest land with trees (deforested) |
-| 10 | DSTRBCD | Insect damage (general) |
-| 30 | DSTRBCD | Fire (general) |
-| 32 | DSTRBCD | Crown fire |
-| 80 | DSTRBCD | Human-induced disturbance |
-| 10 | TRTCD | Cutting / harvest |
-| 2 | CCLCD | Dominant |
-| 3 | CCLCD | Codominant |
-| 4 | CCLCD | Intermediate |
-| 5 | CCLCD | Overtopped |
+| Code | Column         | Meaning                                 |
+|------|----------------|-----------------------------------------|
+| 1    | STATUSCD       | Live tree                               |
+| 2    | STATUSCD       | Standing dead tree                      |
+| 1    | COND_STATUS_CD | Forested - keep for most analyses       |
+| 5    | COND_STATUS_CD | Non-forest land with trees (deforested) |
+| 10   | DSTRBCD        | Insect damage (general)                 |
+| 30   | DSTRBCD        | Fire (general)                          |
+| 32   | DSTRBCD        | Crown fire                              |
+| 80   | DSTRBCD        | Human-induced disturbance               |
+| 10   | TRTCD          | Cutting / harvest                       |
+| 2    | CCLCD          | Dominant                                |
+| 3    | CCLCD          | Codominant                              |
+| 4    | CCLCD          | Intermediate                            |
+| 5    | CCLCD          | Overtopped                              |
 
 Having these in one place saves reopening the user guide every 20 minutes.
 
 ### Relationship Diagram
 
-The feature I wish had existed when I started. The interactive graph shows foreign key relationships between tables, rendered with PyVis — hover over an edge to see exactly which columns link which tables. If PyVis isn't available, it falls back to a static Graphviz diagram.
+The feature I wish had existed when I started. The interactive graph shows foreign key relationships between tables, rendered with PyVis - hover over an edge to see exactly which columns link which tables. If PyVis isn't available, it falls back to a static Graphviz diagram.
 
-```python
+``` python
 from pyvis.network import Network
 
 def build_relationship_graph(fk_info: dict) -> str:
@@ -153,9 +154,9 @@ Understanding that TREE_GRM_COMPONENT → TREE via `TRE_CN`, for example, would 
 
 ### SQL Templates
 
-Pre-built query patterns for common analyses — basal area by species over time, mortality by cause code, seedling counts, forest type composition. The TREE_GRM_COMPONENT → TREE join in the mortality template is the kind of thing that's easy to miss from the user guide alone.
+Pre-built query patterns for common analyses - basal area by species over time, mortality by cause code, seedling counts, forest type composition. The TREE_GRM_COMPONENT → TREE join in the mortality template is the kind of thing that's easy to miss from the user guide alone.
 
-```python
+``` python
 SQL_TEMPLATES = {
     "Basal area by species over time": """
 SELECT
@@ -183,16 +184,6 @@ GROUP BY t.INVYR, t.AGENTCD, t.SPCD;
 }
 ```
 
-Running it locally:
-
-```bash
-cd path/to/forest-data-compilation
-pip install streamlit pandas pyvis
-streamlit run 05_fia/docs/dashboard/fiadb_dashboard.py
-```
-
-These commands are for the separate `forest-data-compilation` repository (not this website repo). Point it at your local FIADB SQLite file in the sidebar. Set `FIADB_DB_PATH` as an environment variable on a server and the path input disappears from the UI.
-
 ## Things I Learned About FIA Along the Way
 
 Some things I got wrong before I got them right:
@@ -201,49 +192,15 @@ Some things I got wrong before I got them right:
 
 **TPA_UNADJ is already on the TREE record.** You don't need to compute per-acre expansion factors from subplot geometry. `sum(TPA_UNADJ * 0.005454 * DIA^2)` gives per-acre basal area directly.
 
-**CCLCD has a lot of NAs**, particularly in older periodic plots and for woodland species. A reasonable fallback: DIA >= 5 inches → overstory, below → understory.
+**CCLCD has a lot of NAs**, particularly in older periodic plots and for woodland species. A reasonable fallback: DIA \>= 5 inches → overstory, below → understory.
 
 **TREE_GRM_COMPONENT does not carry INVYR.** It records measurement intervals, not calendar years. To get the inventory year for a mortality event, join back to TREE on `TRE_CN` and use `TREE.INVYR`.
 
 **The three disturbance slots (DSTRBCD1/2/3) are ranked by importance**, not by year. DSTRBCD1 is the most ecologically significant disturbance recorded, not the most recent one.
 
-## Taking It Further: From Schema Navigation to Research Data
+## Taking It Further: Two More Dashboards
 
-The schema navigator was built as a tool for getting oriented — but I built it in the context of an actual research project. An assistant professor reached out looking for someone to help compile and link a suite of forest disturbance datasets, and FIA was one of the core pieces.
-
-Once I'd gotten comfortable enough with FIADB's structure to work in it efficiently, the next step was building the actual data pipeline: downloading all 50 states via `rFIA`, extracting tree records, computing basal area and size-class stratification, pulling disturbance and treatment history, and assembling plot-level summaries ready for analysis. Six R scripts, eight national parquet files.
-
-```r
-# Basal area and canopy stratification — the core of the FIA extraction
-trees[, ba_sqft_tree := 0.005454 * DIA^2]
-trees[, size_class := fcase(
-  DIA < 5.0,  "sapling",
-  DIA < 12.0, "intermediate",
-  default =   "mature"
-)]
-trees[, canopy_layer := fcase(
-  CCLCD %in% 1:3, "overstory",
-  CCLCD %in% 4:5, "understory",
-  is.na(CCLCD) & DIA >= 5.0, "overstory",   # fallback for missing CCLCD
-  default = "understory"
-)]
-trees[, ba_per_acre := TPA_UNADJ * ba_sqft_tree]
-```
-
-One piece of that pipeline I'm particularly glad I built: a pre-computed set of exclusion flags for filtering plots by disturbance history. FIA covers all US land, so any analysis needs to strip out non-forested plots, deforested plots, harvested plots, and human-disturbed plots before looking at anything else. Building those as a single joinable parquet — rather than re-deriving the filters in every analysis script — keeps the logic consistent and auditable.
-
-```r
-flags   <- read_parquet("plot_exclusion_flags.parquet")
-metrics <- read_parquet("plot_tree_metrics.parquet")
-
-# Standard clean-plot filter
-clean        <- flags |> filter(pct_forested >= 0.5, !exclude_any)
-metrics_clean <- metrics |> inner_join(clean, by = c("PLT_CN", "INVYR"))
-
-# Or: select only plots that burned
-metrics_fire <- metrics |>
-  inner_join(flags |> filter(has_fire), by = c("PLT_CN", "INVYR"))
-```
+I built the schema navigator first, but the project kept growing. Once I had a full FIA extraction workflow, I ended up building two more dashboards that sit downstream of the same pipeline.
 
 ### Visualizing the Compiled Data
 
@@ -260,9 +217,7 @@ metrics_fire <- metrics |>
 
 [Open the FIA Compiled Data Explorer](https://fia-data-compilation.streamlit.app/)
 
-With the pipeline outputs in hand, I built a second dashboard — the FIA Compiled Data Explorer — specifically for exploring those eight parquet files. Where the schema navigator is for understanding the raw database, this one is for understanding what was actually extracted: plot locations mapped nationally, disturbance event breakdowns by category and year, damage agent heatmaps by state, mortality by agent code, seedling regeneration by functional group.
-
-The two tools are complementary. The schema navigator is for orientation and query development; the compiled data explorer is for QC, exploration, and getting a feel for what the data actually looks like before analysis.
+The FIA Compiled Data Explorer is for checking and exploring processed outputs, not raw schema. It reads the compiled FIA summaries produced in the `forest-data-compilation.Rproj` workflow, then surfaces them in map and chart views for QA and exploratory analysis.
 
 ### The Full Project
 
@@ -279,17 +234,19 @@ The two tools are complementary. The schema navigator is for orientation and que
 
 [Open the Full Forest Data Compilation Dashboard](https://forest-data-compilation.streamlit.app/)
 
-Dashboard links:
+The full project dashboard pulls the same idea one level up, combining FIA outputs with IDS and climate products in one place.
 
-- [FIA Database Schema Navigator](https://fiadb-dashboard.streamlit.app/)
-- [FIA Compiled Data Explorer](https://fia-data-compilation.streamlit.app/)
-- [Full Forest Data Compilation Dashboard](https://forest-data-compilation.streamlit.app/)
-- [GitHub repository](https://github.com/rellimylime/forest-data-compilation)
+## Where to Find Workflow Details
 
-The FIA data was one component of a larger compilation effort that also included USDA aerial insect and disease survey polygons (4.4 million damage areas, 1997–2024) and three gridded climate datasets — TerraClimate, PRISM, and WorldClim — extracted and linked to each survey polygon through a shared pixel decomposition pipeline. Everything came together in a unified project dashboard covering all data sources, the extraction architecture, and a full data catalog with schema documentation and load code for each output.
+This post is about building the FIA schema navigator. If you want the full data workflow, setup details, and run instructions for `forest-data-compilation.Rproj`, they are documented in the project repo:
 
-That's probably its own post. But the FIA schema navigator is where the FIA piece of it started — as a tool built out of necessity, to get oriented in a database that doesn't make orientation easy.
+-   [FIA Database Schema Navigator](https://fiadb-dashboard.streamlit.app/)
+-   [FIA Compiled Data Explorer](https://fia-data-compilation.streamlit.app/)
+-   [Full Forest Data Compilation Dashboard](https://forest-data-compilation.streamlit.app/)
+-   [Repository README](https://github.com/rellimylime/forest-data-compilation/blob/main/README.md)
+-   [Setup Guide](https://github.com/rellimylime/forest-data-compilation/blob/main/scripts/SETUP.md)
+-   [FIA Workflow Notes](https://github.com/rellimylime/forest-data-compilation/blob/main/05_fia/WORKFLOW.md)
 
----
+------------------------------------------------------------------------
 
-*The schema navigator code is in the [forest-data-compilation repository](https://github.com/rellimylime/forest-data-compilation) under `05_fia/docs/dashboard/fiadb_dashboard.py`. It requires a local copy of the FIADB SQLite file, available from the [FIA DataMart](https://apps.fs.usda.gov/fia/datamart/).*
+*The schema navigator code lives in the [forest-data-compilation repository](https://github.com/rellimylime/forest-data-compilation), under `05_fia/docs/dashboard/fiadb_dashboard.py`.*

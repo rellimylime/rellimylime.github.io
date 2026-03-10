@@ -49,13 +49,13 @@ This analysis combines VIIRS night lights data with OpenStreetMap building footp
 
 This analysis integrates four primary datasets:
 
-**VIIRS Night Lights Data** — NASA's VIIRS instrument provides daily measurements of nighttime light intensity. I used two dates of imagery: February 7, 2021 (before the storm) and February 16, 2021 (during the height of the blackouts). The data is measured in nanowatts per square centimeter per steradian (nW cm⁻²sr⁻¹) [@nasa2021].
+**VIIRS Night Lights Data** - NASA's VIIRS instrument provides daily measurements of nighttime light intensity. I used two dates of imagery: February 7, 2021 (before the storm) and February 16, 2021 (during the height of the blackouts). The data is measured in nanowatts per square centimeter per steradian (nW cm⁻²sr⁻¹) [@nasa2021].
 
-**OpenStreetMap Building Footprints** — Residential building polygons for the Houston metropolitan area, including houses, apartments, and other residential structures [@openstreetmap2021].
+**OpenStreetMap Building Footprints** - Residential building polygons for the Houston metropolitan area, including houses, apartments, and other residential structures [@openstreetmap2021].
 
-**OpenStreetMap Road Network** — Highway and major road data used to filter out areas where reduced light may be due to decreased traffic rather than power outages [@openstreetmap2021].
+**OpenStreetMap Road Network** - Highway and major road data used to filter out areas where reduced light may be due to decreased traffic rather than power outages [@openstreetmap2021].
 
-**U.S. Census American Community Survey** — 2015-2019 five-year estimates at the census tract level, including median household income data [@census2019].
+**U.S. Census American Community Survey** - 2015-2019 five-year estimates at the census tract level, including median household income data [@census2019].
 
 ### Analytical Approach
 
@@ -78,12 +78,12 @@ library(kableExtra)     # Table formatting
 
 The analysis follows these steps:
 
-1.  **Load and prepare spatial data** — Read VIIRS night lights tiles, building footprints, road networks, and census data
-2.  **Calculate light intensity changes** — Compare pre- and post-storm imagery to identify areas with significant light reduction
-3.  **Define blackout threshold** — Classify areas with light intensity drops \>200 nW cm⁻²sr⁻¹ as experiencing blackouts
-4.  **Filter highway corridors** — Exclude areas within 200m of major highways to avoid misidentifying reduced traffic as power outages
-5.  **Identify impacted buildings** — Intersect blackout areas with residential building footprints
-6.  **Analyze socioeconomic patterns** — Compare median household income distributions between census tracts with and without blackouts
+1.  **Load and prepare spatial data** - Read VIIRS night lights tiles, building footprints, road networks, and census data
+2.  **Calculate light intensity changes** - Compare pre- and post-storm imagery to identify areas with significant light reduction
+3.  **Define blackout threshold** - Classify areas with light intensity drops \>200 nW cm⁻²sr⁻¹ as experiencing blackouts
+4.  **Filter highway corridors** - Exclude areas within 200m of major highways to avoid misidentifying reduced traffic as power outages
+5.  **Identify impacted buildings** - Intersect blackout areas with residential building footprints
+6.  **Analyze socioeconomic patterns** - Compare median household income distributions between census tracts with and without blackouts
 
 ### Loading and Preparing the Data
 
@@ -524,9 +524,9 @@ kable(income_stats,
 
 ### Main Findings
 
-This analysis identified approximately **`r format(n_blackout_homes, big.mark = ",")`** residential buildings (`r pct_impacted`% of the study area) that lost power during the February 2021 storms. Unlike typical climate disasters, blackout exposure showed minimal income-based disparities—tracts with and without blackouts had median incomes differing by only \~\$3,000 (5%). This likely reflects the systemic nature of the grid failure: when the entire system collapsed, infrastructure vulnerabilities crossed neighborhood boundaries.
+This analysis identified approximately **`r format(n_blackout_homes, big.mark = ",")`** residential buildings (`r pct_impacted`% of the study area) that lost power during the February 2021 storms. Unlike typical climate disasters, blackout exposure showed minimal income-based disparities-tracts with and without blackouts had median incomes differing by only \~\$3,000 (5%). This likely reflects the systemic nature of the grid failure: when the entire system collapsed, infrastructure vulnerabilities crossed neighborhood boundaries.
 
-However, *exposure* differs from *impact*. Low-income communities faced greater difficulty evacuating, accessing backup heating, and recovering—even when blackout rates were similar [@gronlund2022].
+However, *exposure* differs from *impact*. Low-income communities faced greater difficulty evacuating, accessing backup heating, and recovering-even when blackout rates were similar [@gronlund2022].
 
 ### Limitations
 
@@ -546,15 +546,15 @@ The widespread blackouts indicate systemic vulnerabilities requiring comprehensi
 
 ## Conclusion
 
-The February 2021 blackouts revealed catastrophic infrastructure vulnerabilities affecting millions. This analysis demonstrates how satellite remote sensing combined with socioeconomic data enables rapid disaster assessment. While blackouts affected Houston relatively uniformly across income levels—likely due to systemic grid failure—this doesn't mean impacts were equitable. Understanding both exposure patterns and underlying vulnerabilities remains essential for building resilient, just infrastructure as climate change intensifies extreme weather events.
+The February 2021 blackouts revealed catastrophic infrastructure vulnerabilities affecting millions. This analysis demonstrates how satellite remote sensing combined with socioeconomic data enables rapid disaster assessment. While blackouts affected Houston relatively uniformly across income levels-likely due to systemic grid failure-this doesn't mean impacts were equitable. Understanding both exposure patterns and underlying vulnerabilities remains essential for building resilient, just infrastructure as climate change intensifies extreme weather events.
 
 ## Data Sources and Acknowledgments
 
-**VIIRS Night Lights Data (VNP46A1)** — NASA's Visible Infrared Imaging Radiometer Suite, Suomi NPP satellite, tiles h08v05 and h08v06. Accessed via NASA Earthdata: <https://worldview.earthdata.nasa.gov/>
+**VIIRS Night Lights Data (VNP46A1)** - NASA's Visible Infrared Imaging Radiometer Suite, Suomi NPP satellite, tiles h08v05 and h08v06. Accessed via NASA Earthdata: <https://worldview.earthdata.nasa.gov/>
 
-**OpenStreetMap** — Road network and building footprint data. Accessed via Geofabrik: <https://download.geofabrik.de/>
+**OpenStreetMap** - Road network and building footprint data. Accessed via Geofabrik: <https://download.geofabrik.de/>
 
-**U.S. Census Bureau** — American Community Survey 5-Year Estimates (2015-2019), Texas census tracts. Accessed via: <https://www.census.gov/programs-surveys/acs>
+**U.S. Census Bureau** - American Community Survey 5-Year Estimates (2015-2019), Texas census tracts. Accessed via: <https://www.census.gov/programs-surveys/acs>
 
 ## References
 

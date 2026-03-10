@@ -18,7 +18,7 @@ The MEDS program schedule lives on a shared Google Calendar. I'm subscribed to i
 
 It's 2026. This feels like something that should have a built-in fix. If there is one, I still haven't found it.
 
-The calendar is fairly static—class schedules don't change weekly—so I figured I'd just copy the events to my own calendar. My Garmin syncs that one fine.
+The calendar is fairly static-class schedules don't change weekly-so I figured I'd just copy the events to my own calendar. My Garmin syncs that one fine.
 
 I could do this manually, which sounds like a delightful way to spend several afternoons, or I could put in even more time to automate it.
 
@@ -97,13 +97,13 @@ I'd just triggered email invitations to every attendee on every event I copied. 
 
 Here's what I learned: calendar attendees aren't just metadata. When you create an event with attendees, Google Calendar sends them invitations. The attendees field is an action trigger, not a note.
 
-> "All models are wrong, but some are useful." — George Box
+> "All models are wrong, but some are useful." - George Box
 >
-> Some API calls are catastrophically wrong. — Me, learning this the hard way
+> Some API calls are catastrophically wrong. - Me, learning this the hard way
 
 So I rewrote the script. Stripped out attendees. Added `sendNotifications=False` as a backup. Built in test mode so you can try one event first. Added the copy tag so you can easily undo everything if needed.
 
-Every safety feature exists because I learned—spectacularly—why it was necessary.
+Every safety feature exists because I learned-spectacularly-why it was necessary.
 
 ## Using It
 
@@ -141,7 +141,7 @@ Sometimes the practical answer is a Python script you run twice a month, not som
 
 -   **Test with one item before copying 600.** This should be obvious. It was not obvious to me.
 
--   **Understand your data structure before you manipulate it.** Calendar events aren't just data—they trigger real-world actions.
+-   **Understand your data structure before you manipulate it.** Calendar events aren't just data-they trigger real-world actions.
 
 -   **APIs that can email people deserve extra caution.** They can embarrass you at scale.
 
@@ -158,3 +158,4 @@ For everyone else: consider this a reminder to read documentation before running
 The real calendar sync was the mistakes we made along the way.
 
 (That's a terrible closing line. But I'm keeping it.)
+

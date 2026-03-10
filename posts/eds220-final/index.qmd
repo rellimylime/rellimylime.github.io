@@ -20,7 +20,7 @@ execute:
 
 In January 2025, the Eaton and Palisades fires swept through Los Angeles County, leaving lasting impacts on both the landscape and the communities within their paths. The Palisades Fire, which started on January 7, became one of the most destructive wildfires in California history, burning through the scenic Pacific Palisades neighborhood and nearby communities. Meanwhile, the Eaton Fire ignited in the foothills near Altadena and Pasadena, threatening densely populated areas and critical infrastructure.
 
-Understanding wildfire impacts requires more than just mapping burned areas—it requires examining both the physical changes to the landscape and the social dimensions of who is affected. This analysis combines **remote sensing techniques** with **environmental justice data** to provide a comprehensive view of these devastating fires.
+Understanding wildfire impacts requires more than just mapping burned areas-it requires examining both the physical changes to the landscape and the social dimensions of who is affected. This analysis combines **remote sensing techniques** with **environmental justice data** to provide a comprehensive view of these devastating fires.
 
 **Repository:** <https://github.com/rellimylime/eaton-palisades-fires-analysis> *For complete analysis notebooks with additional data exploration and detailed outputs, visit the GitHub repository.*
 
@@ -201,7 +201,7 @@ All five spectral bands contain NaN values at the edges of the scene or in cloud
 
 ### True Color Visualization
 
-Before creating specialized visualizations, we can verify our data by creating a true color image using the red, green, and blue bands—similar to how a standard camera would capture the scene.
+Before creating specialized visualizations, we can verify our data by creating a true color image using the red, green, and blue bands-similar to how a standard camera would capture the scene.
 
 ```{python}
 #| label: true-color-composite
@@ -355,7 +355,7 @@ eji_clip_eaton = gpd.clip(eji_eaton, eaton_perimeters)
 
 ### Analyzing Racial Composition
 
-The Environmental Justice Index includes percentile rankings for demographic characteristics. Here we examine `EPL_MINRTY`, which represents the percentile rank of minority population (persons of color)—a measure of racial and ethnic composition relative to other California communities.
+The Environmental Justice Index includes percentile rankings for demographic characteristics. Here we examine `EPL_MINRTY`, which represents the percentile rank of minority population (persons of color)-a measure of racial and ethnic composition relative to other California communities.
 
 ```{python}
 #| label: eji-racial-map
@@ -429,7 +429,7 @@ plt.show()
 
 The demographic analysis reveals stark differences in the racial composition of communities affected by the two fires. The maps show percentile rankings of minority population, where higher values indicate greater representation of people of color relative to other California census tracts.
 
-**Palisades Fire Area:** Predominantly low percentile rankings (0th-30th percentiles, pale yellow). The fire primarily impacted areas with very low proportions of minority residents—a predominantly white, affluent coastal community.
+**Palisades Fire Area:** Predominantly low percentile rankings (0th-30th percentiles, pale yellow). The fire primarily impacted areas with very low proportions of minority residents-a predominantly white, affluent coastal community.
 
 **Eaton Fire Area:** Dramatically high percentile rankings (70th-100th percentiles, dark red). Nearly the entire burn area shows the highest minority population concentrations in the state. The Eaton fire overwhelmingly affected communities of color, particularly in Altadena.
 
@@ -447,3 +447,4 @@ The combination of `xarray`, `rioxarray`, and `geopandas` transforms wildfire an
 
 ::: {#refs}
 :::
+

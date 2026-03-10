@@ -8,7 +8,7 @@
 
 <meta name="author" content="Emily Miller">
 <meta name="dcterms.date" content="2026-03-04">
-<meta name="description" content="The USDA’s Forest Inventory and Analysis database is one of the most comprehensive forest monitoring datasets in the world — and one of the hardest to work with. I built a Streamlit app to make it navigable, then used it to compile a research dataset from scratch.">
+<meta name="description" content="The USDA’s Forest Inventory and Analysis database is one of the most comprehensive forest monitoring datasets in the world - and one of the hardest to work with. I built a Streamlit app to make it navigable, then used it to compile a research dataset from scratch.">
 
 <title>Building a Navigator for the World’s Largest Forest Database – Emily Miller</title>
 <style>
@@ -192,7 +192,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <h1 class="title">Building a Navigator for the World’s Largest Forest Database</h1>
                   <div>
         <div class="description">
-          The USDA’s Forest Inventory and Analysis database is one of the most comprehensive forest monitoring datasets in the world — and one of the hardest to work with. I built a Streamlit app to make it navigable, then used it to compile a research dataset from scratch.
+          The USDA’s Forest Inventory and Analysis database is one of the most comprehensive forest monitoring datasets in the world - and one of the hardest to work with. I built a Streamlit app to make it navigable, then used it to compile a research dataset from scratch.
         </div>
       </div>
                           <div class="quarto-categories">
@@ -253,11 +253,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#sql-templates" id="toc-sql-templates" class="nav-link" data-scroll-target="#sql-templates">SQL Templates</a></li>
   </ul></li>
   <li><a href="#things-i-learned-about-fia-along-the-way" id="toc-things-i-learned-about-fia-along-the-way" class="nav-link" data-scroll-target="#things-i-learned-about-fia-along-the-way">Things I Learned About FIA Along the Way</a></li>
-  <li><a href="#taking-it-further-from-schema-navigation-to-research-data" id="toc-taking-it-further-from-schema-navigation-to-research-data" class="nav-link" data-scroll-target="#taking-it-further-from-schema-navigation-to-research-data">Taking It Further: From Schema Navigation to Research Data</a>
+  <li><a href="#taking-it-further-two-more-dashboards" id="toc-taking-it-further-two-more-dashboards" class="nav-link" data-scroll-target="#taking-it-further-two-more-dashboards">Taking It Further: Two More Dashboards</a>
   <ul class="collapse">
   <li><a href="#visualizing-the-compiled-data" id="toc-visualizing-the-compiled-data" class="nav-link" data-scroll-target="#visualizing-the-compiled-data">Visualizing the Compiled Data</a></li>
   <li><a href="#the-full-project" id="toc-the-full-project" class="nav-link" data-scroll-target="#the-full-project">The Full Project</a></li>
   </ul></li>
+  <li><a href="#where-to-find-workflow-details" id="toc-where-to-find-workflow-details" class="nav-link" data-scroll-target="#where-to-find-workflow-details">Where to Find Workflow Details</a></li>
   </ul>
 </nav>
     </div>
@@ -275,17 +276,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="why-fia-is-hard-to-work-with" class="level2">
 <h2 class="anchored" data-anchor-id="why-fia-is-hard-to-work-with">Why FIA Is Hard to Work With</h2>
-<p>The national FIA database (FIADB v9.4) is distributed as either a 70 GB SQLite file or per-state CSV downloads. Either way, before you can analyze anything, you need to understand the structure — and the user guide is 600+ pages.</p>
+<p>The national FIA database (FIADB v9.4) is distributed as either a 70 GB SQLite file or per-state CSV downloads. Either way, before you can analyze anything, you need to understand the structure - and the user guide is 600+ pages.</p>
 <p>The complexity is real, not just documentation overhead. A few things that catch new users:</p>
-<p><strong>FIA samples all US land</strong>, not just forests. About 59% of plot-year rows in the raw data have <code>pct_forested == 0</code>. They’re fields, parking lots, lawns. The first filter for any forest analysis is just: <em>is this actually a forest plot?</em> This isn’t documented anywhere obvious — you discover it when your species diversity numbers look completely wrong.</p>
-<p><strong>Code fields are everywhere.</strong> STATUSCD, CCLCD, AGENTCD, COND_STATUS_CD, DSTRBCD, TRTCD — each has its own set of integer codes with specific meanings buried in appendix tables. The wrong code filter doesn’t error. It silently returns the wrong answer.</p>
-<p><strong>Table relationships aren’t always intuitive.</strong> TREE_GRM_COMPONENT, which holds between-measurement mortality data, links back to TREE via <code>TRE_CN</code> — not to PLOT directly. That means you need a TREE join to get <code>INVYR</code> and <code>SPCD</code> even when you’re only analyzing mortality. The first time you encounter this, it’s genuinely confusing.</p>
+<p><strong>FIA samples all US land</strong>, not just forests. About 59% of plot-year rows in the raw data have <code>pct_forested == 0</code>. They’re fields, parking lots, lawns. The first filter for any forest analysis is just: <em>is this actually a forest plot?</em> This isn’t documented anywhere obvious - you discover it when your species diversity numbers look completely wrong.</p>
+<p><strong>Code fields are everywhere.</strong> STATUSCD, CCLCD, AGENTCD, COND_STATUS_CD, DSTRBCD, TRTCD - each has its own set of integer codes with specific meanings buried in appendix tables. The wrong code filter doesn’t error. It silently returns the wrong answer.</p>
+<p><strong>Table relationships aren’t always intuitive.</strong> TREE_GRM_COMPONENT, which holds between-measurement mortality data, links back to TREE via <code>TRE_CN</code> - not to PLOT directly. That means you need a TREE join to get <code>INVYR</code> and <code>SPCD</code> even when you’re only analyzing mortality. The first time you encounter this, it’s genuinely confusing.</p>
 <p><strong>50+ tables</strong>, and some names don’t telegraph their content. Which table has seedling counts? (SEEDLING.) Okay, but how does it relate to SUBPLOT? What about SUBP_COND? None of this is unfixable, but it slows down the first few weeks considerably.</p>
 </section>
 <section id="the-dashboard" class="level2">
 <h2 class="anchored" data-anchor-id="the-dashboard">The Dashboard</h2>
 <p>The FIA Database Schema Navigator is a Streamlit app for exploring FIADB v9.4 structure without loading the database into memory. The core design constraint: the full SQLite file is 70 GB, so all schema navigation runs off SQLite’s <code>PRAGMA table_info()</code>. Instant, even on the full database.</p>
-<p>The app runs in <strong>metadata-only mode</strong> when no database is connected — the relationship diagram, field codebook, table browser, and SQL templates are all hardcoded from the User Guide and work without the SQLite file. You can explore it live here:</p>
+<p>The app runs in <strong>metadata-only mode</strong> when no database is connected - the relationship diagram, field codebook, table browser, and SQL templates are all hardcoded from the User Guide and work without the SQLite file. You can explore it live here:</p>
 <iframe src="https://fiadb-dashboard.streamlit.app?embed=true" width="100%" height="700px" frameborder="0" style="border-radius:8px;"></iframe>
 <p><a href="https://fiadb-dashboard.streamlit.app/">Open the FIA Database Schema Navigator</a></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sqlite3</span>
@@ -308,10 +309,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        ]</span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">finally</span>:</span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>        conn.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Row previews are available but opt-in — you request them explicitly. The app doesn’t load anything by default.</p>
+<p>Row previews are available but opt-in - you request them explicitly. The app doesn’t load anything by default.</p>
 <section id="table-browser" class="level3">
 <h3 class="anchored" data-anchor-id="table-browser">Table Browser</h3>
-<p>The 50+ FIADB tables are organized into categories pulled from the user guide — Location Level, Tree Level, Invasive/Understory Vegetation, Down Woody Material, Population, Reference — rather than alphabetically. Alphabetical is how a database shows you tables. Categorical is how a researcher looks for them.</p>
+<p>The 50+ FIADB tables are organized into categories pulled from the user guide - Location Level, Tree Level, Invasive/Understory Vegetation, Down Woody Material, Population, Reference - rather than alphabetically. Alphabetical is how a database shows you tables. Categorical is how a researcher looks for them.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>TABLE_CATEGORIES: <span class="bu">dict</span>[<span class="bu">str</span>, <span class="bu">list</span>[<span class="bu">str</span>]] <span class="op">=</span> {</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Location Level"</span>: [</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">"SURVEY"</span>, <span class="st">"PROJECT"</span>, <span class="st">"COUNTY"</span>, <span class="st">"PLOT"</span>, <span class="st">"COND"</span>,</span>
@@ -329,7 +330,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    ],</span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ...</span></span>
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Select a table, and the sidebar shows column names, types, and which are primary keys — no rows loaded.</p>
+<p>Select a table, and the sidebar shows column names, types, and which are primary keys - no rows loaded.</p>
 </section>
 <section id="field-codebook" class="level3">
 <h3 class="anchored" data-anchor-id="field-codebook">Field Codebook</h3>
@@ -356,7 +357,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td>1</td>
 <td>COND_STATUS_CD</td>
-<td>Forested — keep for most analyses</td>
+<td>Forested - keep for most analyses</td>
 </tr>
 <tr class="even">
 <td>5</td>
@@ -414,7 +415,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="relationship-diagram" class="level3">
 <h3 class="anchored" data-anchor-id="relationship-diagram">Relationship Diagram</h3>
-<p>The feature I wish had existed when I started. The interactive graph shows foreign key relationships between tables, rendered with PyVis — hover over an edge to see exactly which columns link which tables. If PyVis isn’t available, it falls back to a static Graphviz diagram.</p>
+<p>The feature I wish had existed when I started. The interactive graph shows foreign key relationships between tables, rendered with PyVis - hover over an edge to see exactly which columns link which tables. If PyVis isn’t available, it falls back to a static Graphviz diagram.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyvis.network <span class="im">import</span> Network</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> build_relationship_graph(fk_info: <span class="bu">dict</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
@@ -434,7 +435,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="sql-templates" class="level3">
 <h3 class="anchored" data-anchor-id="sql-templates">SQL Templates</h3>
-<p>Pre-built query patterns for common analyses — basal area by species over time, mortality by cause code, seedling counts, forest type composition. The TREE_GRM_COMPONENT → TREE join in the mortality template is the kind of thing that’s easy to miss from the user guide alone.</p>
+<p>Pre-built query patterns for common analyses - basal area by species over time, mortality by cause code, seedling counts, forest type composition. The TREE_GRM_COMPONENT → TREE join in the mortality template is the kind of thing that’s easy to miss from the user guide alone.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>SQL_TEMPLATES <span class="op">=</span> {</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Basal area by species over time"</span>: <span class="st">"""</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT</span></span>
@@ -460,11 +461,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="st">GROUP BY t.INVYR, t.AGENTCD, t.SPCD;</span></span>
 <span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>,</span>
 <span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Running it locally:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> path/to/forest-data-compilation</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install streamlit pandas pyvis</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">streamlit</span> run 05_fia/docs/dashboard/fiadb_dashboard.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>These commands are for the separate <code>forest-data-compilation</code> repository (not this website repo). Point it at your local FIADB SQLite file in the sidebar. Set <code>FIADB_DB_PATH</code> as an environment variable on a server and the path input disappears from the UI.</p>
 </section>
 </section>
 <section id="things-i-learned-about-fia-along-the-way" class="level2">
@@ -476,60 +472,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>TREE_GRM_COMPONENT does not carry INVYR.</strong> It records measurement intervals, not calendar years. To get the inventory year for a mortality event, join back to TREE on <code>TRE_CN</code> and use <code>TREE.INVYR</code>.</p>
 <p><strong>The three disturbance slots (DSTRBCD1/2/3) are ranked by importance</strong>, not by year. DSTRBCD1 is the most ecologically significant disturbance recorded, not the most recent one.</p>
 </section>
-<section id="taking-it-further-from-schema-navigation-to-research-data" class="level2">
-<h2 class="anchored" data-anchor-id="taking-it-further-from-schema-navigation-to-research-data">Taking It Further: From Schema Navigation to Research Data</h2>
-<p>The schema navigator was built as a tool for getting oriented — but I built it in the context of an actual research project. An assistant professor reached out looking for someone to help compile and link a suite of forest disturbance datasets, and FIA was one of the core pieces.</p>
-<p>Once I’d gotten comfortable enough with FIADB’s structure to work in it efficiently, the next step was building the actual data pipeline: downloading all 50 states via <code>rFIA</code>, extracting tree records, computing basal area and size-class stratification, pulling disturbance and treatment history, and assembling plot-level summaries ready for analysis. Six R scripts, eight national parquet files.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Basal area and canopy stratification — the core of the FIA extraction</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>trees[, ba_sqft_tree <span class="sc">:</span><span class="er">=</span> <span class="fl">0.005454</span> <span class="sc">*</span> DIA<span class="sc">^</span><span class="dv">2</span>]</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>trees[, size_class <span class="sc">:</span><span class="er">=</span> <span class="fu">fcase</span>(</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  DIA <span class="sc">&lt;</span> <span class="fl">5.0</span>,  <span class="st">"sapling"</span>,</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  DIA <span class="sc">&lt;</span> <span class="fl">12.0</span>, <span class="st">"intermediate"</span>,</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">default =</span>   <span class="st">"mature"</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>)]</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>trees[, canopy_layer <span class="sc">:</span><span class="er">=</span> <span class="fu">fcase</span>(</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  CCLCD <span class="sc">%in%</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="st">"overstory"</span>,</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  CCLCD <span class="sc">%in%</span> <span class="dv">4</span><span class="sc">:</span><span class="dv">5</span>, <span class="st">"understory"</span>,</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">is.na</span>(CCLCD) <span class="sc">&amp;</span> DIA <span class="sc">&gt;=</span> <span class="fl">5.0</span>, <span class="st">"overstory"</span>,   <span class="co"># fallback for missing CCLCD</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">default =</span> <span class="st">"understory"</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>)]</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>trees[, ba_per_acre <span class="sc">:</span><span class="er">=</span> TPA_UNADJ <span class="sc">*</span> ba_sqft_tree]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>One piece of that pipeline I’m particularly glad I built: a pre-computed set of exclusion flags for filtering plots by disturbance history. FIA covers all US land, so any analysis needs to strip out non-forested plots, deforested plots, harvested plots, and human-disturbed plots before looking at anything else. Building those as a single joinable parquet — rather than re-deriving the filters in every analysis script — keeps the logic consistent and auditable.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>flags   <span class="ot">&lt;-</span> <span class="fu">read_parquet</span>(<span class="st">"plot_exclusion_flags.parquet"</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>metrics <span class="ot">&lt;-</span> <span class="fu">read_parquet</span>(<span class="st">"plot_tree_metrics.parquet"</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Standard clean-plot filter</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>clean        <span class="ot">&lt;-</span> flags <span class="sc">|&gt;</span> <span class="fu">filter</span>(pct_forested <span class="sc">&gt;=</span> <span class="fl">0.5</span>, <span class="sc">!</span>exclude_any)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>metrics_clean <span class="ot">&lt;-</span> metrics <span class="sc">|&gt;</span> <span class="fu">inner_join</span>(clean, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"PLT_CN"</span>, <span class="st">"INVYR"</span>))</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Or: select only plots that burned</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>metrics_fire <span class="ot">&lt;-</span> metrics <span class="sc">|&gt;</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(flags <span class="sc">|&gt;</span> <span class="fu">filter</span>(has_fire), <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"PLT_CN"</span>, <span class="st">"INVYR"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="taking-it-further-two-more-dashboards" class="level2">
+<h2 class="anchored" data-anchor-id="taking-it-further-two-more-dashboards">Taking It Further: Two More Dashboards</h2>
+<p>I built the schema navigator first, but the project kept growing. Once I had a full FIA extraction workflow, I ended up building two more dashboards that sit downstream of the same pipeline.</p>
 <section id="visualizing-the-compiled-data" class="level3">
 <h3 class="anchored" data-anchor-id="visualizing-the-compiled-data">Visualizing the Compiled Data</h3>
 <iframe src="https://fia-data-compilation.streamlit.app?embed=true" width="100%" height="700px" frameborder="0" loading="lazy" style="border-radius:8px;"></iframe>
 <p><a href="https://fia-data-compilation.streamlit.app/">Open the FIA Compiled Data Explorer</a></p>
-<p>With the pipeline outputs in hand, I built a second dashboard — the FIA Compiled Data Explorer — specifically for exploring those eight parquet files. Where the schema navigator is for understanding the raw database, this one is for understanding what was actually extracted: plot locations mapped nationally, disturbance event breakdowns by category and year, damage agent heatmaps by state, mortality by agent code, seedling regeneration by functional group.</p>
-<p>The two tools are complementary. The schema navigator is for orientation and query development; the compiled data explorer is for QC, exploration, and getting a feel for what the data actually looks like before analysis.</p>
+<p>The FIA Compiled Data Explorer is for checking and exploring processed outputs, not raw schema. It reads the compiled FIA summaries produced in the <code>forest-data-compilation.Rproj</code> workflow, then surfaces them in map and chart views for QA and exploratory analysis.</p>
 </section>
 <section id="the-full-project" class="level3">
 <h3 class="anchored" data-anchor-id="the-full-project">The Full Project</h3>
 <iframe src="https://forest-data-compilation.streamlit.app?embed=true" width="100%" height="700px" frameborder="0" loading="lazy" style="border-radius:8px;"></iframe>
 <p><a href="https://forest-data-compilation.streamlit.app/">Open the Full Forest Data Compilation Dashboard</a></p>
-<p>Dashboard links:</p>
+<p>The full project dashboard pulls the same idea one level up, combining FIA outputs with IDS and climate products in one place.</p>
+</section>
+</section>
+<section id="where-to-find-workflow-details" class="level2">
+<h2 class="anchored" data-anchor-id="where-to-find-workflow-details">Where to Find Workflow Details</h2>
+<p>This post is about building the FIA schema navigator. If you want the full data workflow, setup details, and run instructions for <code>forest-data-compilation.Rproj</code>, they are documented in the project repo:</p>
 <ul>
 <li><a href="https://fiadb-dashboard.streamlit.app/">FIA Database Schema Navigator</a></li>
 <li><a href="https://fia-data-compilation.streamlit.app/">FIA Compiled Data Explorer</a></li>
 <li><a href="https://forest-data-compilation.streamlit.app/">Full Forest Data Compilation Dashboard</a></li>
-<li><a href="https://github.com/rellimylime/forest-data-compilation">GitHub repository</a></li>
+<li><a href="https://github.com/rellimylime/forest-data-compilation/blob/main/README.md">Repository README</a></li>
+<li><a href="https://github.com/rellimylime/forest-data-compilation/blob/main/scripts/SETUP.md">Setup Guide</a></li>
+<li><a href="https://github.com/rellimylime/forest-data-compilation/blob/main/05_fia/WORKFLOW.md">FIA Workflow Notes</a></li>
 </ul>
-<p>The FIA data was one component of a larger compilation effort that also included USDA aerial insect and disease survey polygons (4.4 million damage areas, 1997–2024) and three gridded climate datasets — TerraClimate, PRISM, and WorldClim — extracted and linked to each survey polygon through a shared pixel decomposition pipeline. Everything came together in a unified project dashboard covering all data sources, the extraction architecture, and a full data catalog with schema documentation and load code for each output.</p>
-<p>That’s probably its own post. But the FIA schema navigator is where the FIA piece of it started — as a tool built out of necessity, to get oriented in a database that doesn’t make orientation easy.</p>
 <hr>
-<p><em>The schema navigator code is in the <a href="https://github.com/rellimylime/forest-data-compilation">forest-data-compilation repository</a> under <code>05_fia/docs/dashboard/fiadb_dashboard.py</code>. It requires a local copy of the FIADB SQLite file, available from the <a href="https://apps.fs.usda.gov/fia/datamart/">FIA DataMart</a>.</em></p>
+<p><em>The schema navigator code lives in the <a href="https://github.com/rellimylime/forest-data-compilation">forest-data-compilation repository</a>, under <code>05_fia/docs/dashboard/fiadb_dashboard.py</code>.</em></p>
 
 
-</section>
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{miller2026,

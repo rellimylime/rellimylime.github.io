@@ -268,7 +268,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>My Garmin watch tracks my heart rate, sleep, stress levels, and approximately 47 other metrics I didn’t ask for. But there’s one thing it won’t do: sync Google Calendars I’m subscribed to. Only calendars I own.</p>
 <p>The MEDS program schedule lives on a shared Google Calendar. I’m subscribed to it. My Garmin pretends it doesn’t exist.</p>
 <p>It’s 2026. This feels like something that should have a built-in fix. If there is one, I still haven’t found it.</p>
-<p>The calendar is fairly static—class schedules don’t change weekly—so I figured I’d just copy the events to my own calendar. My Garmin syncs that one fine.</p>
+<p>The calendar is fairly static-class schedules don’t change weekly-so I figured I’d just copy the events to my own calendar. My Garmin syncs that one fine.</p>
 <p>I could do this manually, which sounds like a delightful way to spend several afternoons, or I could put in even more time to automate it.</p>
 <p>Decision made: build a script.</p>
 </section>
@@ -321,11 +321,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>I’d just triggered email invitations to every attendee on every event I copied. Staff, alumni, people I’d never met, conference room booking systems. The MEDS calendar has years of historical events. Apparently I’d just invited approximately 40 people to events that already happened.</p>
 <p>Here’s what I learned: calendar attendees aren’t just metadata. When you create an event with attendees, Google Calendar sends them invitations. The attendees field is an action trigger, not a note.</p>
 <blockquote class="blockquote">
-<p>“All models are wrong, but some are useful.” — George Box</p>
-<p>Some API calls are catastrophically wrong. — Me, learning this the hard way</p>
+<p>“All models are wrong, but some are useful.” - George Box</p>
+<p>Some API calls are catastrophically wrong. - Me, learning this the hard way</p>
 </blockquote>
 <p>So I rewrote the script. Stripped out attendees. Added <code>sendNotifications=False</code> as a backup. Built in test mode so you can try one event first. Added the copy tag so you can easily undo everything if needed.</p>
-<p>Every safety feature exists because I learned—spectacularly—why it was necessary.</p>
+<p>Every safety feature exists because I learned-spectacularly-why it was necessary.</p>
 </section>
 <section id="using-it" class="level2">
 <h2 class="anchored" data-anchor-id="using-it">Using It</h2>
@@ -355,7 +355,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="things-i-learned">Things I Learned</h2>
 <ul>
 <li><p><strong>Test with one item before copying 600.</strong> This should be obvious. It was not obvious to me.</p></li>
-<li><p><strong>Understand your data structure before you manipulate it.</strong> Calendar events aren’t just data—they trigger real-world actions.</p></li>
+<li><p><strong>Understand your data structure before you manipulate it.</strong> Calendar events aren’t just data-they trigger real-world actions.</p></li>
 <li><p><strong>APIs that can email people deserve extra caution.</strong> They can embarrass you at scale.</p></li>
 <li><p><strong>Reversibility is worth the five minutes.</strong> The copy tag saved me from hours of manual cleanup.</p></li>
 <li><p><strong>“How hard could it be?” is always famous last words.</strong> I say this constantly. I never learn.</p></li>

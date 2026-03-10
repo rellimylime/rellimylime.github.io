@@ -41,11 +41,11 @@ By developing a generalizable workflow, this analysis can be applied to assess a
 
 This analysis uses several R packages for geospatial data processing and visualization:
 
--   `tidyverse` — Data manipulation and visualization
--   `sf` — Spatial vector data handling
--   `terra` — Raster data processing
--   `tmap` — Thematic mapping
--   `kableExtra` — Table formatting
+-   `tidyverse` - Data manipulation and visualization
+-   `sf` - Spatial vector data handling
+-   `terra` - Raster data processing
+-   `tmap` - Thematic mapping
+-   `kableExtra` - Table formatting
 
 ```{r setup}
 #| message: false
@@ -497,7 +497,7 @@ kable(abalone_results,
   kable_styling(bootstrap_options = c("striped", "hover"))
 ```
 
-**Key Finding:** Black abalone has dramatically less suitable habitat than oysters—only 199.88 km² total across the entire West Coast. Central California accounts for 76% (152.37 km²) of all suitable habitat, while Oregon and Northern California have essentially no suitable areas.
+**Key Finding:** Black abalone has dramatically less suitable habitat than oysters-only 199.88 km² total across the entire West Coast. Central California accounts for 76% (152.37 km²) of all suitable habitat, while Oregon and Northern California have essentially no suitable areas.
 
 ```{r test-species-area}
 #| code-fold: true
@@ -550,9 +550,9 @@ The analysis workflow developed for oysters and black abalone can be generalized
 
 The function takes five parameters:
 
--   `min_temp`, `max_temp` — Temperature range in degrees Celsius
--   `min_depth`, `max_depth` — Depth range in meters (negative values below sea level)
--   `species_name` — Species name for labeling outputs
+-   `min_temp`, `max_temp` - Temperature range in degrees Celsius
+-   `min_depth`, `max_depth` - Depth range in meters (negative values below sea level)
+-   `species_name` - Species name for labeling outputs
 
 ```{r create-function}
 #| code-fold: true
@@ -712,21 +712,21 @@ The function also correctly identifies black abalone's highly restricted suitabl
 
 Oysters demonstrate substantial aquaculture potential across the US West Coast, with over **11,000 km²** of suitable habitat identified across all five EEZ regions:
 
--   **Central California**: 4,069.88 km² — Leads the West Coast with the largest suitable area
--   **Southern California**: 3,757.28 km² — Second highest potential
--   **Washington**: 2,378.31 km² — Significant northern habitat
--   **Oregon**: 1,074.27 km² — Moderate potential
+-   **Central California**: 4,069.88 km² - Leads the West Coast with the largest suitable area
+-   **Southern California**: 3,757.28 km² - Second highest potential
+-   **Washington**: 2,378.31 km² - Significant northern habitat
+-   **Oregon**: 1,074.27 km² - Moderate potential
 -   **Northern California**: Minimal suitable area
 
 These three top regions (Central CA, Southern CA, and Washington) together account for **over 90%** of all suitable oyster habitat on the West Coast. The broad temperature tolerance (11-30°C) and moderate depth range (0-70m) enable oysters to thrive across diverse coastal environments.
 
 ### Black Abalone Aquaculture Potential
 
-Black abalone presents a stark contrast, with only **199.88 km²** of suitable habitat total—approximately **50 times less** than oysters:
+Black abalone presents a stark contrast, with only **199.88 km²** of suitable habitat total-approximately **50 times less** than oysters:
 
--   **Central California**: 152.37 km² — Dominates with 76% of all suitable habitat
--   **Washington**: 26.65 km² — Limited northern habitat
--   **Southern California**: 20.86 km² — Small suitable area
+-   **Central California**: 152.37 km² - Dominates with 76% of all suitable habitat
+-   **Washington**: 26.65 km² - Limited northern habitat
+-   **Southern California**: 20.86 km² - Small suitable area
 -   **Oregon & Northern California**: Essentially no suitable habitat (0 km²)
 
 This dramatic restriction reflects black abalone's narrow thermal tolerance (12.2-18.6°C) and very shallow depth requirement (0-6m below sea level). The species is geographically constrained to cool, shallow coastal waters predominantly found in Central California.
@@ -777,3 +777,4 @@ This analysis was completed for **EDS 223: Geospatial Analysis and Remote Sensin
 
 ::: {#refs}
 :::
+

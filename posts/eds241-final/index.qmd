@@ -1,6 +1,6 @@
 ---
 title: "Dam Decommissioning & Invertebrate Recovery: mBACI Analysis"
-description: "Assignment 4 — Replication of Atristain et al. (2024)"
+description: "Assignment 4 - Replication of Atristain et al. (2024)"
 author: "Lucian Scher & Marie Tolteca"
 date: 2026-03-06
 categories: [R, Statistics, MEDS]
@@ -115,7 +115,7 @@ invert_baci |>
 
 ```{r}
 #| label: fig-did
-#| fig-cap: "Mean taxa richness by period and reach type — the DiD visualization. Convergence of impact toward control over time is the visual signature of recovery."
+#| fig-cap: "Mean taxa richness by period and reach type - the DiD visualization. Convergence of impact toward control over time is the visual signature of recovery."
 #| fig-width: 7
 #| fig-height: 4.5
 

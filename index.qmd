@@ -19,133 +19,133 @@ Data scientist, environmental systems thinker, and compulsive fixer of things.
 ::: slick-slide
 **"Without data, you're just another person with an opinion."**
 
-— W. Edwards Deming
+- W. Edwards Deming
 :::
 
 ::: slick-slide
 **"All models are wrong, but some are useful."**
 
-— George E. P. Box
+- George E. P. Box
 :::
 
 ::: slick-slide
-**"I have no fear of losing my life—if I have to save a koala or a crocodile or a kangaroo or a snake, mate, I will save it."**
+**"I have no fear of losing my life-if I have to save a koala or a crocodile or a kangaroo or a snake, mate, I will save it."**
 
-— Steve Irwin
+- Steve Irwin
 :::
 
 ::: slick-slide
 **"An expert is a person who has made all the mistakes that can be made in a very narrow field."**
 
-— Niels Bohr
+- Niels Bohr
 :::
 
 ::: slick-slide
 **"The cure for boredom is curiosity. There is no cure for curiosity."**
 
-— Dorothy Parker
+- Dorothy Parker
 :::
 
 ::: slick-slide
 **"If you don't know where you are going, any road will get you there."**
 
-— Lewis Carroll
+- Lewis Carroll
 :::
 
 ::: slick-slide
 **"I would give my right arm for the simplicity on the far side of complexity."**
 
-— Oliver Wendell Holmes
+- Oliver Wendell Holmes
 :::
 
 ::: slick-slide
 **"The climate has always changed. The difference now is that we are the cause."**
 
-— Kate Marvel, Climate Scientist
+- Kate Marvel, Climate Scientist
 :::
 
 ::: slick-slide
 **"What you do makes a difference. You have to decide what kind of difference you want to make."**
 
-— Jane Goodall
+- Jane Goodall
 :::
 
 ::: slick-slide
 **"It's not what you look at that matters, it's what you see."**
 
-— Henry David Thoreau
+- Henry David Thoreau
 :::
 
 ::: slick-slide
 **"Let yourself be silently drawn by the strange pull of what you really love."**
 
-— Rumi
+- Rumi
 :::
 
 ::: slick-slide
 **"Tell me, what is it you plan to do with your one wild and precious life?"**
 
-— Mary Oliver, Wild Geese
+- Mary Oliver, Wild Geese
 :::
 
 ::: slick-slide
 **"Nothing in life is to be feared, it is only to be understood."**
 
-— Marie Curie
+- Marie Curie
 :::
 
 ::: slick-slide
 **"A ship in port is safe, but that's not what ships are built for."**
 
-— Grace Hopper
+- Grace Hopper
 :::
 
 ::: slick-slide
 **"Change happens by listening and then starting a dialogue with the people who are doing something you don't believe is right."**
 
-— Jane Goodall
+- Jane Goodall
 :::
 
 ::: slick-slide
 **"Study as if you were going to live forever; live as if you were going to die tomorrow."**
 
-— Maria Mitchell
+- Maria Mitchell
 :::
 
 ::: slick-slide
 **"We are drowning in information, while starving for wisdom. The world henceforth will be run by synthesizers, people able to put together the right information at the right time, think critically about it, and make important choices wisely."**
 
-— E. O. Wilson
+- E. O. Wilson
 :::
 
 ::: slick-slide
 **"If you don't know where you are going, any road will get you there."**
 
-— Lewis Carroll
+- Lewis Carroll
 :::
 
 ::: slick-slide
 **"It’s easy to lie with statistics. It’s hard to tell the truth without statistics."**
 
-— Andrejs Dunkels
+- Andrejs Dunkels
 :::
 
 ::: slick-slide
 **"If you can’t explain it simply, you don’t understand it well enough."**
 
-— Albert Einstein
+- Albert Einstein
 :::
 
 ::: slick-slide
 **"When a measure becomes a target, it ceases to be a good measure"**
 
-— Charles Goodhart
+- Charles Goodhart
 :::
 
 ::: slick-slide
 **"It is my experience that proofs involving matrices can be shortened by 50% if one throws the matrices out."** 
 
-— Emil Artin
+- Emil Artin
 :::
 
 :::::::::::::::::::::
@@ -242,3 +242,4 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 ```
+

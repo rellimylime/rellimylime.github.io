@@ -1284,7 +1284,7 @@ p_sim1 + p_sim2 +
   )
 ```
 
-**Key Takeaway**: The simulation proves our modeling framework works—when we feed the hurdle model data generated from known parameters, it successfully recovers those parameters.
+**Key Takeaway**: The simulation proves our modeling framework works-when we feed the hurdle model data generated from known parameters, it successfully recovers those parameters.
 
 ------------------------------------------------------------------------
 
@@ -1898,7 +1898,7 @@ knitr::kable(summary_table, caption = "Hypothesis Test Results (+ positive effec
 
 **What this means:**
 - **WHERE roadkill happens** (occurrence) is highly predictable from landscape and infrastructure features
-- **HOW MUCH roadkill happens** (intensity) is largely unexplained by our model—suggesting it's driven by unmeasured factors like wildlife population dynamics, seasonal movements, or driver behavior
+- **HOW MUCH roadkill happens** (intensity) is largely unexplained by our model-suggesting it's driven by unmeasured factors like wildlife population dynamics, seasonal movements, or driver behavior
 
 ### Policy Implications
 
@@ -1947,3 +1947,4 @@ The hurdle model approach extends beyond roadkill to any ecological phenomenon w
 
 ::: {#refs}
 :::
+

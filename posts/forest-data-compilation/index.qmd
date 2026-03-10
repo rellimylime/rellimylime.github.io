@@ -6,6 +6,9 @@ categories: [Python, R, Geospatial Analysis, Forest Ecology, Data Science]
 citation:
   url: https://rellimylime.github.io/posts/forest-data-compilation/
 image: fia-thumbnail.jpeg
+image-alt: "FIA dashboard preview thumbnail"
+resources:
+  - fia-thumbnail.jpeg
 execute:
   eval: false
   echo: true

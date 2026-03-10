@@ -10,7 +10,7 @@
 <meta name="dcterms.date" content="2024-12-06">
 <meta name="description" content="How climate model biases in California’s marine layer contributed to the 2020 blackouts">
 
-<title>The Fog the Models Missed – Emily Miller</title>
+<title>index – Emily Miller</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -27,7 +27,6 @@ ul.task-list li input[type="checkbox"] {
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -180,13 +179,7 @@ div.csl-indent {
           How climate model biases in California’s marine layer contributed to the 2020 blackouts
         </div>
       </div>
-                          <div class="quarto-categories">
-                <div class="quarto-category">MEDS</div>
-                <div class="quarto-category">Climate Science</div>
-                <div class="quarto-category">Data Science</div>
-                <div class="quarto-category">Ethics</div>
-              </div>
-                  </div>
+                </div>
   </div>
     
   <div class="quarto-title-meta-author column-page-left">
@@ -263,19 +256,19 @@ Part of the blackout problem came from decisions made years earlier, based on cl
 <hr>
 <section id="following-the-thread" class="level2">
 <h2 class="anchored" data-anchor-id="following-the-thread">Following the Thread</h2>
-<p>The California Independent System Operator’s root cause analysis <span class="citation" data-cites="caiso2021root">(<a href="#ref-caiso2021root" role="doc-biblioref">California Independent System Operator (CAISO), California Public Utilities Commission (CPUC), and California Energy Commission (CEC) 2021</a>)</span> pointed to unprecedented heat, inadequate planning for evening “net peak” demand, and market forecasting errors. But embedded in those findings: resource planning hadn’t kept pace with California’s changing energy mix.</p>
+<p>The California Independent System Operator’s root cause analysis <span class="citation" data-cites="caiso2021root">[@caiso2021root]</span> pointed to unprecedented heat, inadequate planning for evening “net peak” demand, and market forecasting errors. But embedded in those findings: resource planning hadn’t kept pace with California’s changing energy mix.</p>
 <p>In the 2010s, California made massive investments in solar infrastructure based on downscaled CMIP5 climate model projections. The problem? The models systematically overestimated solar generation in regions influenced by California’s coastal meteorology.</p>
 </section>
 <section id="the-marine-layer-problem" class="level2">
 <h2 class="anchored" data-anchor-id="the-marine-layer-problem">The Marine Layer Problem</h2>
-<p>California’s coast has a distinctive climate feature: the marine layer. Cold Pacific waters create a stable layer of cool, moist air trapped under warmer air above. That marine layer produces fog and low stratus clouds that <strong>cut incoming solar radiation by 30–50%</strong> <span class="citation" data-cites="iacobellis2013variability">(<a href="#ref-iacobellis2013variability" role="doc-biblioref">Iacobellis and Cayan 2013</a>)</span>.</p>
+<p>California’s coast has a distinctive climate feature: the marine layer. Cold Pacific waters create a stable layer of cool, moist air trapped under warmer air above. That marine layer produces fog and low stratus clouds that <strong>cut incoming solar radiation by 30–50%</strong> <span class="citation" data-cites="iacobellis2013variability">[@iacobellis2013variability]</span>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="marin-fog.webp" class="img-fluid figure-img"></p>
 <figcaption>Source: https://patch.com/california/millvalley/fog-rolls-over-hills-marin-county-photo-day</figcaption>
 </figure>
 </div>
-<p>These clouds often push inland through gaps like the Golden Gate and shape microclimates, like in the redwood forests of northern California, that climate models struggle to resolve <span class="citation" data-cites="johnstone2010fog">(<a href="#ref-johnstone2010fog" role="doc-biblioref">Johnstone and Dawson 2010</a>)</span>.</p>
+<p>These clouds often push inland through gaps like the Golden Gate and shape microclimates, like in the redwood forests of northern California, that climate models struggle to resolve <span class="citation" data-cites="johnstone2010fog">[@johnstone2010fog]</span>.</p>
 <div class="columns">
 <div class="column" style="width:48%;">
 <p><strong>What the Models See</strong><br>
@@ -289,7 +282,7 @@ Marine layer dynamics at &lt;10 km<br>
 </div>
 <p>Global Climate Models (GCMs) in CMIP5 operate at coarse resolution-typically 100-200km grid cells. Marine layer dynamics happen at much finer scales, driven by sea surface gradients, topographic channeling, diurnal cycles, and upwelling.</p>
 <p>Even “downscaled” versions refined to 10-20km resolution struggle to capture marine layer formation, persistence, and inland penetration.</p>
-<p>A 2024 CEC report <span class="citation" data-cites="pierce2024downscaling">(<a href="#ref-pierce2024downscaling" role="doc-biblioref">Pierce et al. 2024</a>)</span> states: &gt; “Coastal Low Clouds… are a persistent, seasonal feature… Accounting for these clouds improves solar energy forecasting.”</p>
+<p>A 2024 CEC report <span class="citation" data-cites="pierce2024downscaling">[@pierce2024downscaling]</span> states: &gt; “Coastal Low Clouds… are a persistent, seasonal feature… Accounting for these clouds improves solar energy forecasting.”</p>
 <p>CMIP5-era models systematically underestimated marine layer frequency, inland fog extent, and afternoon/evening cloud cover. The Result?: Solar irradiance projections that were too optimistic, especially for afternoon/evening hours-exactly when California’s “net peak” demand occurs.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -341,7 +334,7 @@ Marine layer dynamics at &lt;10 km<br>
   color: #333;
 }
 </style>
-<p>CAISO’s root cause analysis <span class="citation" data-cites="caiso2021root">(<a href="#ref-caiso2021root" role="doc-biblioref">California Independent System Operator (CAISO), California Public Utilities Commission (CPUC), and California Energy Commission (CEC) 2021</a>)</span> states:</p>
+<p>CAISO’s root cause analysis <span class="citation" data-cites="caiso2021root">[@caiso2021root]</span> states:</p>
 <blockquote class="blockquote">
 <p>“Resource planning targets have not kept pace with the evolving power mix, wherein demand during peak hours outpaces the supply of solar-produced power.”</p>
 </blockquote>
@@ -367,24 +360,24 @@ Marine layer dynamics at &lt;10 km<br>
 </section>
 <section id="the-technical-challenge" class="level2">
 <h2 class="anchored" data-anchor-id="the-technical-challenge">The Technical Challenge</h2>
-<p>Climate modelers know about these biases. Marine boundary layer clouds remain one of the largest sources of uncertainty in climate models <span class="citation" data-cites="klein2017">(<a href="#ref-klein2017" role="doc-biblioref">Klein et al. 2017</a>)</span>. Understanding different types of bias is crucial for interpreting these limitations <span class="citation" data-cites="konno2024bias">(<a href="#ref-konno2024bias" role="doc-biblioref">Konno et al. 2024</a>)</span>.</p>
+<p>Climate modelers know about these biases. Marine boundary layer clouds remain one of the largest sources of uncertainty in climate models <span class="citation" data-cites="klein2017">[@klein2017]</span>. Understanding different types of bias is crucial for interpreting these limitations <span class="citation" data-cites="konno2024bias">[@konno2024bias]</span>.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">The Problem</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Downscaling</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">Bias Correction</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false" href="">Broader Pattern</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<p>Marine layer physics operates at scales GCMs can’t resolve. Coastal fog and low stratus depend on boundary layer processes, cloud microphysics, and topographic features at sub-grid scales <span class="citation" data-cites="klein2017">(<a href="#ref-klein2017" role="doc-biblioref">Klein et al. 2017</a>)</span>.</p>
+<p>Marine layer physics operates at scales GCMs can’t resolve. Coastal fog and low stratus depend on boundary layer processes, cloud microphysics, and topographic features at sub-grid scales <span class="citation" data-cites="klein2017">[@klein2017]</span>.</p>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<p><strong>Statistical downscaling (LOCA):</strong> Uses historical relationships but assumes future will match past patterns-questionable under climate change <span class="citation" data-cites="ekstrom2015appraisal">(<a href="#ref-ekstrom2015appraisal" role="doc-biblioref">Ekström, Grose, and Whetton 2015</a>)</span>.</p>
+<p><strong>Statistical downscaling (LOCA):</strong> Uses historical relationships but assumes future will match past patterns-questionable under climate change <span class="citation" data-cites="ekstrom2015appraisal">[@ekstrom2015appraisal]</span>.</p>
 <p><strong>Dynamical downscaling (WRF):</strong> Simulates physics at finer scale but inherits GCM biases.</p>
-<p><strong>California’s approach (LOCA2):</strong> Combines both methods <span class="citation" data-cites="pierce2024downscaling">(<a href="#ref-pierce2024downscaling" role="doc-biblioref">Pierce et al. 2024</a>)</span>. A 2024 technical report notes improvements but still recommends changing planning assumptions to account for limitations.</p>
+<p><strong>California’s approach (LOCA2):</strong> Combines both methods <span class="citation" data-cites="pierce2024downscaling">[@pierce2024downscaling]</span>. A 2024 technical report notes improvements but still recommends changing planning assumptions to account for limitations.</p>
 </div>
 <div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
-<p>Different bias correction methods can change answers significantly <span class="citation" data-cites="maraun2016bias">(<a href="#ref-maraun2016bias" role="doc-biblioref">Maraun 2016</a>)</span>. The choice of method can shift your projection as much as the climate signal itself <span class="citation" data-cites="ekstrom2015appraisal">(<a href="#ref-ekstrom2015appraisal" role="doc-biblioref">Ekström, Grose, and Whetton 2015</a>)</span>.</p>
+<p>Different bias correction methods can change answers significantly <span class="citation" data-cites="maraun2016bias">[@maraun2016bias]</span>. The choice of method can shift your projection as much as the climate signal itself <span class="citation" data-cites="ekstrom2015appraisal">[@ekstrom2015appraisal]</span>.</p>
 <p>Common approaches: quantile mapping (assumes stationary bias), delta methods (assumes correct trends), deep learning (overfitting risk), and ensemble averaging (masks uncertainties).</p>
 </div>
 <div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
-<p>This pattern shows up across environmental data science-flood risk, crop yields, hydropower, fire risk. Model biases propagate through decision chains <span class="citation" data-cites="olteanu2019social">(<a href="#ref-olteanu2019social" role="doc-biblioref">Olteanu et al. 2019</a>)</span>. The projections look authoritative, but limitations don’t make it into summary documents as often as needed.</p>
+<p>This pattern shows up across environmental data science-flood risk, crop yields, hydropower, fire risk. Model biases propagate through decision chains <span class="citation" data-cites="olteanu2019social">[@olteanu2019social]</span>. The projections look authoritative, but limitations don’t make it into summary documents as often as needed.</p>
 </div>
 </div>
 </div>
@@ -423,65 +416,23 @@ Marine layer dynamics at &lt;10 km<br>
 <section id="why-i-think-about-this" class="level2">
 <h2 class="anchored" data-anchor-id="why-i-think-about-this">Why I Think About This</h2>
 <p>For my family, the 2020 blackouts were uncomfortable but manageable. For others-people dependent on medical equipment, elderly folks without AC-the stakes were higher.</p>
-<p>California’s grid planning documents still show tight supply margins during evening peaks. The marine layer isn’t going anywhere, though research suggests California coastal fog has declined 33% since 1950 <span class="citation" data-cites="johnstone2010fog">(<a href="#ref-johnstone2010fog" role="doc-biblioref">Johnstone and Dawson 2010</a>)</span>, with uncertain causes and future trajectory <span class="citation" data-cites="torregrosa2014fog">(<a href="#ref-torregrosa2014fog" role="doc-biblioref">Torregrosa, O’Brien, and Faloona 2014</a>)</span>.</p>
+<p>California’s grid planning documents still show tight supply margins during evening peaks. The marine layer isn’t going anywhere, though research suggests California coastal fog has declined 33% since 1950 <span class="citation" data-cites="johnstone2010fog">[@johnstone2010fog]</span>, with uncertain causes and future trajectory <span class="citation" data-cites="torregrosa2014fog">[@torregrosa2014fog]</span>.</p>
 <p>What stays with me is how easily biases slip through. Smart people, rigorous methods, peer-reviewed projections, and still, systematic errors propagate until systems fail under stress.</p>
 <p>I see this pattern everywhere in environmental data science. Models of crop yields, water availability, species distributions, fire risk-all rest on climate projections with known limitations. Those limitations exist, they’re documented in technical reports, but they don’t always make it into decision documents.</p>
-<p>We can build better decision processes, ones that explicitly account for uncertainty, validate projections against reality, and adapt when mismatches appear. That starts with recognizing that environmental data always carries the fingerprints of choices and assumptions baked into its creation <span class="citation" data-cites="walker2018practicing">(<a href="#ref-walker2018practicing" role="doc-biblioref">Walker et al. 2018</a>)</span>.</p>
+<p>We can build better decision processes, ones that explicitly account for uncertainty, validate projections against reality, and adapt when mismatches appear. That starts with recognizing that environmental data always carries the fingerprints of choices and assumptions baked into its creation <span class="citation" data-cites="walker2018practicing">[@walker2018practicing]</span>.</p>
 <p>The point isn’t to chase perfect models. It’s to build systems that don’t fall apart when the models miss something.</p>
 <hr>
 </section>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-caiso2021root" class="csl-entry" role="listitem">
-California Independent System Operator (CAISO), California Public Utilities Commission (CPUC), and California Energy Commission (CEC). 2021. <span>“Root Cause Analysis: Mid-August 2020 Extreme Heat Wave.”</span> California ISO. <a href="http://www.caiso.com/Documents/Final-Root-Cause-Analysis-Mid-August-2020-Extreme-Heat-Wave.pdf">http://www.caiso.com/Documents/Final-Root-Cause-Analysis-Mid-August-2020-Extreme-Heat-Wave.pdf</a>.
-</div>
-<div id="ref-ekstrom2015appraisal" class="csl-entry" role="listitem">
-Ekström, M., M. R. Grose, and P. H. Whetton. 2015. <span>“An Appraisal of Downscaling Methods Used in Climate Change Research.”</span> <em>Wiley Interdisciplinary Reviews: Climate Change</em> 6 (3): 301–19. <a href="https://doi.org/10.1002/wcc.339">https://doi.org/10.1002/wcc.339</a>.
-</div>
-<div id="ref-iacobellis2013variability" class="csl-entry" role="listitem">
-Iacobellis, S. F., and D. R. Cayan. 2013. <span>“The Variability of California Summertime Marine Stratus: Impacts on Surface Air Temperatures.”</span> <em>Journal of Geophysical Research: Atmospheres</em> 118 (17): 9105–22. <a href="https://doi.org/10.1002/jgrd.50652">https://doi.org/10.1002/jgrd.50652</a>.
-</div>
-<div id="ref-johnstone2010fog" class="csl-entry" role="listitem">
-Johnstone, J. A., and T. E. Dawson. 2010. <span>“Climatic Context and Ecological Implications of Summer Fog Decline in the Coast Redwood Region.”</span> <em>Proceedings of the National Academy of Sciences</em> 107 (10): 4533–38. <a href="https://doi.org/10.1073/pnas.0915062107">https://doi.org/10.1073/pnas.0915062107</a>.
-</div>
-<div id="ref-klein2017" class="csl-entry" role="listitem">
-Klein, Stephen A., Alex Hall, Joel R. Norris, and Robert Pincus. 2017. <span>“Low-Cloud Feedbacks from Cloud-Controlling Factors: A Review.”</span> <em>Surveys in Geophysics</em> 38 (6): 1307–29. <a href="https://doi.org/10.1007/s10712-017-9433-3">https://doi.org/10.1007/s10712-017-9433-3</a>.
-</div>
-<div id="ref-konno2024bias" class="csl-entry" role="listitem">
-Konno, K., J. Gibbons, R. Lewis, and A. S. Pullin. 2024. <span>“Potential Types of Bias When Estimating Causal Effects in Environmental Research and How to Interpret Them.”</span> <em>Environmental Evidence</em> 13 (1): 1. <a href="https://doi.org/10.1186/s13750-023-00323-3">https://doi.org/10.1186/s13750-023-00323-3</a>.
-</div>
-<div id="ref-maraun2016bias" class="csl-entry" role="listitem">
-Maraun, D. 2016. <span>“Bias Correcting Climate Change Simulations - a Critical Review.”</span> <em>Current Climate Change Reports</em> 2 (4): 211–20. <a href="https://doi.org/10.1007/s40641-016-0050-x">https://doi.org/10.1007/s40641-016-0050-x</a>.
-</div>
-<div id="ref-olteanu2019social" class="csl-entry" role="listitem">
-Olteanu, Alexandra, Carlos Castillo, Fernando Diaz, and Emre Kıcıman. 2019. <span>“Social Data: Biases, Methodological Pitfalls, and Ethical Boundaries.”</span> <em>Frontiers in Big Data</em> 2: 13. <a href="https://doi.org/10.3389/fdata.2019.00013">https://doi.org/10.3389/fdata.2019.00013</a>.
-</div>
-<div id="ref-pierce2024downscaling" class="csl-entry" role="listitem">
-Pierce, D. W., D. R. Cayan, D. R. Feldman, and J. Kalansky. 2024. <span>“Advanced Statistical-Dynamical Downscaling Methods and Applying Them to California.”</span> CEC-500-2024-012. California Energy Commission. <a href="https://www.energy.ca.gov/sites/default/files/2024-02/CEC-500-2024-012.pdf">https://www.energy.ca.gov/sites/default/files/2024-02/CEC-500-2024-012.pdf</a>.
-</div>
-<div id="ref-torregrosa2014fog" class="csl-entry" role="listitem">
-Torregrosa, A., T. A. O’Brien, and I. C. Faloona. 2014. <span>“Coastal Fog, Climate Change, and the Environment.”</span> <em>Eos</em> 95 (50): 473–74. <a href="https://doi.org/10.1002/2014EO500001">https://doi.org/10.1002/2014EO500001</a>.
-</div>
-<div id="ref-walker2018practicing" class="csl-entry" role="listitem">
-Walker, Dawn, Eric Nost, Aaron Lemelin, Rebecca Lave, and Lindsey Dillon. 2018. <span>“Practicing Environmental Data Justice: From DataRescue to Data Together.”</span> <em>Geo: Geography and Environment</em> 5 (2): e00061. <a href="https://doi.org/10.1002/geo2.61">https://doi.org/10.1002/geo2.61</a>.
-</div>
+<div id="refs" role="list">
+
 </div>
 
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{miller2024,
-  author = {Miller, Emily},
-  title = {The {Fog} the {Models} {Missed}},
-  date = {2024-12-06},
-  url = {https://rellimylime.github.io/posts/eds242-final/},
-  langid = {en}
-}
-</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-miller2024" class="csl-entry quarto-appendix-citeas" role="listitem">
-Miller, Emily. 2024. <span>“The Fog the Models Missed.”</span> December
-6, 2024. <a href="https://rellimylime.github.io/posts/eds242-final/">https://rellimylime.github.io/posts/eds242-final/</a>.
-</div></div></section></div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

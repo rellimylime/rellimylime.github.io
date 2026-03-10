@@ -6,6 +6,8 @@ categories: [Python, MEDS, Personal]
 image: garmin-calendar.jpg
 citation:
   url: https://rellimylime.github.io/posts/garmin-calendar-sync/
+execute:
+  freeze: auto
 ---
 
 [*Full code and setup instructions on GitHub*](https://github.com/rellimylime/google-calendar-copy)

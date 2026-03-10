@@ -8,6 +8,8 @@ image: eds242-final-cover2.jpeg
 citation:
   url: https://rellimylime.github.io/posts/eds242-final/
 bibliography: references.bib
+execute:
+  freeze: auto
 ---
 
 Opening the door at 3pm in August 2020 felt like opening an oven.\

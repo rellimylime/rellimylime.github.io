@@ -11,6 +11,7 @@ output:
   html_document:
     code_download: true
 execute:
+  freeze: auto
   eval: true
   echo: true
   warning: false

@@ -10,6 +10,7 @@ citation:
 bibliography: references.bib
 jupyter: eds220-env
 execute:
+  freeze: auto
   eval: false
   echo: true
   warning: false

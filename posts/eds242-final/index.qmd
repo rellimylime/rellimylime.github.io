@@ -1,4 +1,4 @@
----
+﻿---
 title: "The Fog the Models Missed"
 description: "How climate model biases in California's marine layer contributed to the 2020 blackouts"
 date: 2024-12-06
@@ -10,15 +10,15 @@ citation:
 bibliography: references.bib
 ---
 
-Opening the door at 3pm in August 2020 felt like opening an oven.  
-My family rationed AC before the heat peaked, then toughed it out through the evening.  
+Opening the door at 3pm in August 2020 felt like opening an oven.\
+My family rationed AC before the heat peaked, then toughed it out through the evening.\
 The message from our utility was clear: cut power or expect blackouts.
 
 ![https://www.kqed.org/news/11878348/during-rolling-blackouts-last-summer-california-kept-exporting-power-out-of-state-theres-still-no-permanent-fix](rolling-blackout.jpg)
 
 I thought I understood why: heat wave → too many AC units → overloaded grid.
 
-But while researching for my EDS 242 Ethics and Bias class, I found something different.  
+But while researching for my EDS 242 Ethics and Bias class, I found something different.\
 Part of the blackout problem came from decisions made years earlier, based on climate models that **overestimated how much solar power California would have on hot summer evenings**.
 
 ------------------------------------------------------------------------
@@ -31,35 +31,33 @@ In the 2010s, California made massive investments in solar infrastructure based 
 
 ## The Marine Layer Problem
 
-California's coast has a distinctive climate feature: the marine layer. Cold Pacific waters create a stable layer of cool, moist air trapped under warmer air above. 
-That marine layer produces fog and low stratus clouds that **cut incoming solar radiation by 30–50%** [@iacobellis2013variability].
+California's coast has a distinctive climate feature: the marine layer. Cold Pacific waters create a stable layer of cool, moist air trapped under warmer air above. That marine layer produces fog and low stratus clouds that **cut incoming solar radiation by 30–50%** [@iacobellis2013variability].
 
 ![Source: https://patch.com/california/millvalley/fog-rolls-over-hills-marin-county-photo-day](marin-fog.webp)
 
 These clouds often push inland through gaps like the Golden Gate and shape microclimates, like in the redwood forests of northern California, that climate models struggle to resolve [@johnstone2010fog].
 
-::: {.columns}
+::::: columns
 ::: {.column width="48%"}
-**What the Models See**  
-100-200 km grid cells  
+**What the Models See**\
+100-200 km grid cells\
 (size of SF Bay Area)
 :::
+
 ::: {.column width="48%"}
-**What Actually Matters**  
-Marine layer dynamics at <10 km  
+**What Actually Matters**\
+Marine layer dynamics at \<10 km\
 (Golden Gate, coastal valleys)
 :::
-:::
+:::::
 
 Global Climate Models (GCMs) in CMIP5 operate at coarse resolution-typically 100-200km grid cells. Marine layer dynamics happen at much finer scales, driven by sea surface gradients, topographic channeling, diurnal cycles, and upwelling.
 
 Even "downscaled" versions refined to 10-20km resolution struggle to capture marine layer formation, persistence, and inland penetration.
 
-A 2024 CEC report [@pierce2024downscaling] states:
-> "Coastal Low Clouds... are a persistent, seasonal feature... Accounting for these clouds improves solar energy forecasting."
+A 2024 CEC report [@pierce2024downscaling] states: \> "Coastal Low Clouds... are a persistent, seasonal feature... Accounting for these clouds improves solar energy forecasting."
 
-CMIP5-era models systematically underestimated marine layer frequency, inland fog extent, and afternoon/evening cloud cover. 
-The Result?: Solar irradiance projections that were too optimistic, especially for afternoon/evening hours-exactly when California's "net peak" demand occurs.
+CMIP5-era models systematically underestimated marine layer frequency, inland fog extent, and afternoon/evening cloud cover. The Result?: Solar irradiance projections that were too optimistic, especially for afternoon/evening hours-exactly when California's "net peak" demand occurs.
 
 ![https://www.usgs.gov/media/images/landsat-image-shows-marine-stratus-and-stratocumulus-cloud-layer-san-francisco-bay](fog-detail.jpg)
 
@@ -67,35 +65,35 @@ The Result?: Solar irradiance projections that were too optimistic, especially f
 
 ## The Path From Models to Blackouts
 
-So how does a bias in cloud cover modeling contribute to blackouts years later? 
+So how does a bias in cloud cover modeling contribute to blackouts years later?
 
 The timeline might have looked something like this:
 
-::: {.timeline}
+::: timeline
 **2010–2015**: Overoptimistic generation forecasts
 
-- Solar developers use downscaled CMIP5 projections. Models underestimate afternoon cloud cover → projected generation 10-15% higher than reality.
+-   Solar developers use downscaled CMIP5 projections. Models underestimate afternoon cloud cover → projected generation 10-15% higher than reality.
 
-**2012–2018**: Investment decisions 
+**2012–2018**: Investment decisions
 
-- CAISO plans for solar providing increasing power, assuming generation levels matching the overoptimistic projections.
+-   CAISO plans for solar providing increasing power, assuming generation levels matching the overoptimistic projections.
 
-**2015–2020**: Grid planning  
+**2015–2020**: Grid planning
 
-- CAISO plans for solar providing increasing power, assuming generation levels matching the overoptimistic projections.
+-   CAISO plans for solar providing increasing power, assuming generation levels matching the overoptimistic projections.
 
 **2016-2020**: The "net peak" emerges
 
-- Managing the evening "ramp" becomes critical. CAISO assumes more solar during the 5-8pm window than materializes.
+-   Managing the evening "ramp" becomes critical. CAISO assumes more solar during the 5-8pm window than materializes.
 
-**August 2020**: Heat Wave 
+**August 2020**: Heat Wave
 
-- Historic heat wave hits California → Evening demand spikes.  
-- Solar drops faster than expected → rolling blackouts.
-- Solar performs well mid-day but drops off earlier and faster than expected, partly due to cloud patterns the models hadn't captured.
-
+-   Historic heat wave hits California → Evening demand spikes.\
+-   Solar drops faster than expected → rolling blackouts.
+-   Solar performs well mid-day but drops off earlier and faster than expected, partly due to cloud patterns the models hadn't captured.
 :::
 
+```{=html}
 <style>
 .timeline {
   border-left: 2px solid #999;
@@ -109,8 +107,9 @@ The timeline might have looked something like this:
   color: #333;
 }
 </style>
+```
 
-CAISO's root cause analysis [@caiso2021root] states: 
+CAISO's root cause analysis [@caiso2021root] states:
 
 > "Resource planning targets have not kept pace with the evolving power mix, wherein demand during peak hours outpaces the supply of solar-produced power."
 
@@ -122,8 +121,7 @@ Translation:
 
 ### Why This Matters Beyond One Heat Wave
 
-The marine layer bias wasn't the *primary* cause of California's blackouts-CAISO's analysis shows it was a perfect storm. But the model bias was one link in a chain of assumptions that created vulnerability.
-It also shows how invisible these assumptions become once they leave the modeling world.
+The marine layer bias wasn't the *primary* cause of California's blackouts-CAISO's analysis shows it was a perfect storm. But the model bias was one link in a chain of assumptions that created vulnerability. It also shows how invisible these assumptions become once they leave the modeling world.
 
 ## Connections to EDS 242 Course Concepts
 
@@ -135,8 +133,7 @@ This case demonstrates several types of bias we studied:
 
 **Reporting bias** model limitations were documented in technical reports but didn't get reported in the summary documents that informed billion-dollar decisions. This is what Cori Lopazanski called the "problem of too much information" in her guest lecture-scientists have caveats, but those get lost in translation to policy.(Lecture 2, Cori Lopazanski guest lecturer)
 
-**Data invisibility** By 2020, the connection back to 2015 cloud modeling choices was completely invisible to everyone affected. As we learned in Lecture 9, these are "known unknowns" that become "unknown unknowns" as they propagate through decision systems.
-(Lecture 1, Barrowman reading)
+**Data invisibility** By 2020, the connection back to 2015 cloud modeling choices was completely invisible to everyone affected. As we learned in Lecture 9, these are "known unknowns" that become "unknown unknowns" as they propagate through decision systems. (Lecture 1, Barrowman reading)
 
 The bias propagates through what Olteanu et al. call "decision chains," compounding at each step. This connects to **Environmental Data Justice** themes from Lecture 8-who gets hurt when data systems fail? Not the modelers or grid planners, but families who lost groceries, elderly folks without AC, people on medical equipment.
 
@@ -146,15 +143,14 @@ The bias propagates through what Olteanu et al. call "decision chains," compound
 
 Climate modelers know about these biases. Marine boundary layer clouds remain one of the largest sources of uncertainty in climate models [@klein2017]. Understanding different types of bias is crucial for interpreting these limitations [@konno2024bias].
 
-::: {.panel-tabset}
-
+::: panel-tabset
 ### The Problem
 
 Marine layer physics operates at scales GCMs can't resolve. Coastal fog and low stratus depend on boundary layer processes, cloud microphysics, and topographic features at sub-grid scales [@klein2017].
 
 ### Downscaling
 
-**Statistical downscaling (LOCA):** Uses historical relationships but assumes future will match past patterns-questionable under climate change [@ekstrom2015appraisal]. 
+**Statistical downscaling (LOCA):** Uses historical relationships but assumes future will match past patterns-questionable under climate change [@ekstrom2015appraisal].
 
 **Dynamical downscaling (WRF):** Simulates physics at finer scale but inherits GCM biases.
 
@@ -169,7 +165,6 @@ Common approaches: quantile mapping (assumes stationary bias), delta methods (as
 ### Broader Pattern
 
 This pattern shows up across environmental data science-flood risk, crop yields, hydropower, fire risk. Model biases propagate through decision chains [@olteanu2019social]. The projections look authoritative, but limitations don't make it into summary documents as often as needed.
-
 :::
 
 ------------------------------------------------------------------------
@@ -184,10 +179,10 @@ Design systems that adapt if reality diverges. For California's grid: maintain f
 
 #### 2. Cross-Validate With Multiple Methods
 
-- Historical records (past heat wave outcomes)
-- Empirical relationships (actual solar vs. weather)
-- Expert opinions (grid operator observations)
-- Stress testing (20% lower generation scenarios)
+-   Historical records (past heat wave outcomes)
+-   Empirical relationships (actual solar vs. weather)
+-   Expert opinions (grid operator observations)
+-   Stress testing (20% lower generation scenarios)
 
 #### 3. Create Feedback Loops
 
@@ -223,4 +218,3 @@ The point isn’t to chase perfect models. It’s to build systems that don’t 
 
 ::: {#refs}
 :::
-

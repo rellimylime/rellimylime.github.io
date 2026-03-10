@@ -287,6 +287,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The FIA Database Schema Navigator is a Streamlit app for exploring FIADB v9.4 structure without loading the database into memory. The core design constraint: the full SQLite file is 70 GB, so all schema navigation runs off SQLite’s <code>PRAGMA table_info()</code>. Instant, even on the full database.</p>
 <p>The app runs in <strong>metadata-only mode</strong> when no database is connected — the relationship diagram, field codebook, table browser, and SQL templates are all hardcoded from the User Guide and work without the SQLite file. You can explore it live here:</p>
 <iframe src="https://fiadb-dashboard.streamlit.app?embed=true" width="100%" height="700px" frameborder="0" style="border-radius:8px;"></iframe>
+<p><a href="https://fiadb-dashboard.streamlit.app/">Open the FIA Database Schema Navigator</a></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sqlite3</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> streamlit <span class="im">as</span> st</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -460,9 +461,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>,</span>
 <span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Running it locally:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install streamlit pandas pyvis</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">streamlit</span> run fiadb_dashboard.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Point it at your local FIADB SQLite file in the sidebar. Set <code>FIADB_DB_PATH</code> as an environment variable on a server and the path input disappears from the UI.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> path/to/forest-data-compilation</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install streamlit pandas pyvis</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">streamlit</span> run 05_fia/docs/dashboard/fiadb_dashboard.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>These commands are for the separate <code>forest-data-compilation</code> repository (not this website repo). Point it at your local FIADB SQLite file in the sidebar. Set <code>FIADB_DB_PATH</code> as an environment variable on a server and the path input disappears from the UI.</p>
 </section>
 </section>
 <section id="things-i-learned-about-fia-along-the-way" class="level2">
@@ -505,13 +507,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(flags <span class="sc">|&gt;</span> <span class="fu">filter</span>(has_fire), <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"PLT_CN"</span>, <span class="st">"INVYR"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <section id="visualizing-the-compiled-data" class="level3">
 <h3 class="anchored" data-anchor-id="visualizing-the-compiled-data">Visualizing the Compiled Data</h3>
-<iframe src="YOUR_FIA_DATA_EXPLORER_URL?embed=true" width="100%" height="700px" frameborder="0" style="border-radius:8px;"></iframe>
+<iframe src="https://fia-data-compilation.streamlit.app?embed=true" width="100%" height="700px" frameborder="0" loading="lazy" style="border-radius:8px;"></iframe>
+<p><a href="https://fia-data-compilation.streamlit.app/">Open the FIA Compiled Data Explorer</a></p>
 <p>With the pipeline outputs in hand, I built a second dashboard — the FIA Compiled Data Explorer — specifically for exploring those eight parquet files. Where the schema navigator is for understanding the raw database, this one is for understanding what was actually extracted: plot locations mapped nationally, disturbance event breakdowns by category and year, damage agent heatmaps by state, mortality by agent code, seedling regeneration by functional group.</p>
 <p>The two tools are complementary. The schema navigator is for orientation and query development; the compiled data explorer is for QC, exploration, and getting a feel for what the data actually looks like before analysis.</p>
 </section>
 <section id="the-full-project" class="level3">
 <h3 class="anchored" data-anchor-id="the-full-project">The Full Project</h3>
-<iframe src="YOUR_UNIFIED_DASHBOARD_URL?embed=true" width="100%" height="700px" frameborder="0" style="border-radius:8px;"></iframe>
+<iframe src="https://forest-data-compilation.streamlit.app?embed=true" width="100%" height="700px" frameborder="0" loading="lazy" style="border-radius:8px;"></iframe>
+<p><a href="https://forest-data-compilation.streamlit.app/">Open the Full Forest Data Compilation Dashboard</a></p>
+<p>Dashboard links:</p>
+<ul>
+<li><a href="https://fiadb-dashboard.streamlit.app/">FIA Database Schema Navigator</a></li>
+<li><a href="https://fia-data-compilation.streamlit.app/">FIA Compiled Data Explorer</a></li>
+<li><a href="https://forest-data-compilation.streamlit.app/">Full Forest Data Compilation Dashboard</a></li>
+<li><a href="https://github.com/rellimylime/forest-data-compilation">GitHub repository</a></li>
+</ul>
 <p>The FIA data was one component of a larger compilation effort that also included USDA aerial insect and disease survey polygons (4.4 million damage areas, 1997–2024) and three gridded climate datasets — TerraClimate, PRISM, and WorldClim — extracted and linked to each survey polygon through a shared pixel decomposition pipeline. Everything came together in a unified project dashboard covering all data sources, the extraction architecture, and a full data catalog with schema documentation and load code for each output.</p>
 <p>That’s probably its own post. But the FIA schema navigator is where the FIA piece of it started — as a tool built out of necessity, to get oriented in a database that doesn’t make orientation easy.</p>
 <hr>

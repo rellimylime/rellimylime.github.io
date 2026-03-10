@@ -52,6 +52,8 @@ The app runs in **metadata-only mode** when no database is connected — the rel
 ></iframe>
 ```
 
+[Open the FIA Database Schema Navigator](https://fiadb-dashboard.streamlit.app/)
+
 ```python
 import sqlite3
 import streamlit as st
@@ -184,11 +186,12 @@ GROUP BY t.INVYR, t.AGENTCD, t.SPCD;
 Running it locally:
 
 ```bash
+cd path/to/forest-data-compilation
 pip install streamlit pandas pyvis
-streamlit run fiadb_dashboard.py
+streamlit run 05_fia/docs/dashboard/fiadb_dashboard.py
 ```
 
-Point it at your local FIADB SQLite file in the sidebar. Set `FIADB_DB_PATH` as an environment variable on a server and the path input disappears from the UI.
+These commands are for the separate `forest-data-compilation` repository (not this website repo). Point it at your local FIADB SQLite file in the sidebar. Set `FIADB_DB_PATH` as an environment variable on a server and the path input disappears from the UI.
 
 ## Things I Learned About FIA Along the Way
 
@@ -246,13 +249,16 @@ metrics_fire <- metrics |>
 
 ```{=html}
 <iframe
-  src="YOUR_FIA_DATA_EXPLORER_URL?embed=true"
+  src="https://fia-data-compilation.streamlit.app?embed=true"
   width="100%"
   height="700px"
   frameborder="0"
+  loading="lazy"
   style="border-radius:8px;"
 ></iframe>
 ```
+
+[Open the FIA Compiled Data Explorer](https://fia-data-compilation.streamlit.app/)
 
 With the pipeline outputs in hand, I built a second dashboard — the FIA Compiled Data Explorer — specifically for exploring those eight parquet files. Where the schema navigator is for understanding the raw database, this one is for understanding what was actually extracted: plot locations mapped nationally, disturbance event breakdowns by category and year, damage agent heatmaps by state, mortality by agent code, seedling regeneration by functional group.
 
@@ -262,13 +268,23 @@ The two tools are complementary. The schema navigator is for orientation and que
 
 ```{=html}
 <iframe
-  src="YOUR_UNIFIED_DASHBOARD_URL?embed=true"
+  src="https://forest-data-compilation.streamlit.app?embed=true"
   width="100%"
   height="700px"
   frameborder="0"
+  loading="lazy"
   style="border-radius:8px;"
 ></iframe>
 ```
+
+[Open the Full Forest Data Compilation Dashboard](https://forest-data-compilation.streamlit.app/)
+
+Dashboard links:
+
+- [FIA Database Schema Navigator](https://fiadb-dashboard.streamlit.app/)
+- [FIA Compiled Data Explorer](https://fia-data-compilation.streamlit.app/)
+- [Full Forest Data Compilation Dashboard](https://forest-data-compilation.streamlit.app/)
+- [GitHub repository](https://github.com/rellimylime/forest-data-compilation)
 
 The FIA data was one component of a larger compilation effort that also included USDA aerial insect and disease survey polygons (4.4 million damage areas, 1997–2024) and three gridded climate datasets — TerraClimate, PRISM, and WorldClim — extracted and linked to each survey polygon through a shared pixel decomposition pipeline. Everything came together in a unified project dashboard covering all data sources, the extraction architecture, and a full data catalog with schema documentation and load code for each output.
 

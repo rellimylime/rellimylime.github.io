@@ -102,12 +102,12 @@ format:
 
 .sticky-card img.course-visual {
   width: 100%;
-  max-height: 340px;
+  max-height: clamp(360px, 54vh, 620px);
   object-fit: contain;
+  object-position: center top;
   border-radius: 10px;
-  border: 1px solid rgba(112, 146, 194, 0.25);
-  background: #ffffff;
-  padding: 4px;
+  border: 1px solid rgba(112, 146, 194, 0.18);
+  background: transparent;
   margin-bottom: 0.8rem;
 }
 </style>
@@ -425,7 +425,7 @@ environmental datasets are powerful only when data quality, provenance, and soci
 :::{#cr-ch5-title .body-text-xl .dark-text style="padding: 50px 40px; margin-top: 60px; text-align: right;"}
 [Fall Quarter 2025]{.chapter-label .teal-text}
 
-**EDS 223 + EDS 242: Geospatial Analysis and Ethics**
+**EDS 223 and EDS 242: Geospatial Analysis and Ethics**
 :::
 
 ::::
@@ -433,7 +433,7 @@ environmental datasets are powerful only when data quality, provenance, and soci
 
 ::::{.cr-section cr-layout="sidebar-left"}
 
-:::{focus-on="cr-eds223-242" style="height: 66vh;"}
+:::{focus-on="cr-eds223-card" style="height: 66vh;"}
 :::{.body-text-m style="margin-right: 40px;"}
 [EDS 223: Geospatial Analysis and Remote Sensing]{.teal-text .body-text-s}
 
@@ -441,7 +441,7 @@ EDS 223 was where geospatial workflow finally clicked for me: raster plus vector
 :::
 :::
 
-:::{focus-on="cr-eds223-242" style="height: 66vh;"}
+:::{focus-on="cr-eds242-card" style="height: 66vh;"}
 :::{.body-text-m style="margin-right: 40px;"}
 [EDS 242: Ethics and Bias in Environmental Data Science]{.teal-text .body-text-s}
 
@@ -449,19 +449,22 @@ Running EDS 242 at the same time made the framing explicit: methods are never ne
 :::
 :::
 
-:::{#cr-eds223-242 .sticky-card style="padding: 36px; margin-top: 40px;"}
-![EDS 223 before-and-after Houston night lights](../eds223-final/before-after-fig.png){.course-visual}
+:::{#cr-eds223-card .sticky-card style="padding: 36px; margin-top: 40px;"}
+![EDS 223 census-tract impact map](../eds223-final/index_files/figure-html/fig_tract_impacts-1.png){.course-visual}
 
 [**EDS 223 Big Idea**]{.teal-text .body-text-s}  
 geospatial methods connect physical signals (night lights, fire extent, land cover) to community-level outcomes.
 
-![EDS 242 marine layer visual](../eds242-final/fog-detail.jpg){.course-visual}
+[Read the EDS 223 final post](../eds223-final/){.body-text-s}
+:::
+
+:::{#cr-eds242-card .sticky-card style="padding: 36px; margin-top: 40px;"}
+![EDS 242 marine layer visual](../eds242-final/marin-fog.webp){.course-visual}
 
 [**EDS 242 Big Idea**]{.teal-text .body-text-s}  
 ethical blind spots in data and modeling can become planning failures with real human costs.
 
-[Read the EDS 223 final post](../eds223-final/)  
-[Read the EDS 242 final post](../eds242-final/)
+[Read the EDS 242 final post](../eds242-final/){.body-text-s}
 :::
 
 ::::
@@ -525,7 +528,7 @@ visualization literacy is critical: design choices can reveal insight or manufac
 :::{#cr-ch7-title .body-text-xl .dark-text style="padding: 50px 40px; margin-top: 60px;"}
 [Winter Quarter 2026]{.chapter-label .teal-text}
 
-**EDS 241 + EDS 230: Causal Inference and Modeling**
+**EDS 241 and EDS 230: Causal Inference and Modeling**
 :::
 
 ::::
@@ -533,7 +536,7 @@ visualization literacy is critical: design choices can reveal insight or manufac
 
 ::::{.cr-section cr-layout="sidebar-right"}
 
-:::{focus-on="cr-eds241-230" style="height: 66vh;"}
+:::{focus-on="cr-eds241-card" style="height: 66vh;"}
 :::{.body-text-m style="margin-left: 40px;"}
 [EDS 241: Policy Evaluation and Causal Inference]{.teal-text .body-text-s}
 
@@ -541,22 +544,28 @@ EDS 241 turned policy questions into identification strategy questions. We used 
 :::
 :::
 
-:::{focus-on="cr-eds241-230" style="height: 66vh;"}
+:::{focus-on="cr-eds230-card" style="height: 66vh;"}
 :::{.body-text-m style="margin-left: 40px;"}
 EDS 230 stayed in winter and complemented this perfectly: conceptual and dynamic modeling, sensitivity analysis, calibration, and scenario design. EDS 241 asked "what changed because of policy?" while EDS 230 asked "how does the system behave over time?"
 :::
 :::
 
-:::{#cr-eds241-230 .sticky-card style="padding: 36px; margin-top: 40px;"}
+:::{#cr-eds241-card .sticky-card style="padding: 36px; margin-top: 40px;"}
 ![EDS 241 difference-in-differences figure](../eds241-final/index_files/figure-html/fig-did-1.png){.course-visual}
 
 [**EDS 241 Big Idea**]{.teal-text .body-text-s}  
 credible policy claims depend on research design, not just model output.
 
+[Read the EDS 241 final post](../eds241-final/){.body-text-s}
+:::
+
+:::{#cr-eds230-card .sticky-card style="padding: 36px; margin-top: 40px;"}
+![EDS 230 conceptual modeling workflow](assets/eds230-conceptual-model.png){.course-visual}
+
 [**EDS 230 Big Idea**]{.teal-text .body-text-s}  
 mechanistic models and sensitivity analysis help test system behavior under realistic scenarios.
 
-[Read the EDS 241 final post](../eds241-final/){.body-text-s}
+[View the EDS 230 course repository](https://github.com/rellimylime/EDS-230-ESM-232-W26/tree/main){.body-text-s}
 :::
 
 ::::

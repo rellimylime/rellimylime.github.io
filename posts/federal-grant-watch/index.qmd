@@ -428,21 +428,7 @@ ggplotly(
     layout(legend = list(orientation = "h", x = 0, y = 1.08))
 ```
 
-The blue line is DOGE's figure. The red dashed line is the USAspending-derived estimate — total obligation minus total outlay, for grants where we could find a match. The gap between them is large and persistent throughout the year.
-
-### The Discrepancy
-
-```{r discrepancy-plot}
-#| echo: false
-#| fig-cap: "Monthly discrepancy between DOGE-claimed savings and the USAspending remaining obligation estimate. Positive values = DOGE claims exceed what the grant database shows as remaining."
-ggplotly(
-    plot_academic_discrepancy(tar_read(academic_monthly_totals), tar_read(policy_events)),
-    tooltip = "text"
-) |>
-    layout(legend = list(orientation = "v", x = 1.01, y = 1))
-```
-
-This discrepancy is why cross-referencing sources matters. DOGE reports termination values; USAspending records actual obligations. For multi-year grants, DOGE may count future-year funding that was never guaranteed. The independent comparison is only possible because we pulled both sources.
+The blue line is DOGE's figure. The red dashed line is the USAspending-derived estimate — total obligation minus total outlay, for grants where we could find a match. The gap is large and persistent. DOGE reports termination values; USAspending records actual obligations. For multi-year grants, DOGE may count future-year funding that was never guaranteed. That independent cross-reference is only possible because we pulled both sources.
 
 ### What Fields Are Being Cut?
 

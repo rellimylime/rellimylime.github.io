@@ -50,9 +50,9 @@ plot_academic_cumulative <- function(academic_monthly_totals, policy_events) {
         ) +
         geom_vline(
             data = event_data,
-            aes(xintercept = event_date, color = event_group),
-            linetype = "dashed", linewidth = 0.5, alpha = 0.7,
-            show.legend = FALSE
+            aes(xintercept = event_date),
+            color = "gray60",
+            linetype = "dashed", linewidth = 0.5, alpha = 0.7
         ) +
         geom_rect(
             data = event_data,
@@ -61,18 +61,11 @@ plot_academic_cumulative <- function(academic_monthly_totals, policy_events) {
             alpha = 0.01, fill = "gray",
             inherit.aes = FALSE
         ) +
-        scale_y_continuous(labels = dollar_format(scale = 1e-9, suffix = "B")) +
+        scale_y_continuous(labels = label_dollar(scale = 1e-9, suffix = "B", accuracy = 1)) +
         scale_color_manual(
             values = c(
                 "DOGE claimed savings"                   = "#4E79A7",
-                "Verified remaining (USAspending proxy)" = "#E15759",
-                "White House" = "#F28E2B", "OMB" = "#76B7B2",
-                "Education"   = "#59A14F", "Courts" = "#B07AA1",
-                "State/USAID" = "#9C755F", "NEH/IMLS" = "#BAB0AC"
-            ),
-            breaks = c(
-                "DOGE claimed savings",
-                "Verified remaining (USAspending proxy)"
+                "Verified remaining (USAspending proxy)" = "#E15759"
             )
         ) +
         labs(
@@ -85,7 +78,7 @@ plot_academic_cumulative <- function(academic_monthly_totals, policy_events) {
         theme_minimal(base_size = 12) +
         theme(
             legend.position = "top",
-            plot.margin     = margin(t = 10, r = 10, b = 10, l = 10)
+            plot.margin     = margin(t = 20, r = 30, b = 20, l = 20)
         )
 }
 
@@ -162,7 +155,7 @@ plot_academic_monthly_bars <- function(academic_monthly_by_domain,
             inherit.aes = FALSE
         ) +
         scale_fill_manual(values = domain_colors) +
-        scale_y_continuous(labels = dollar) +
+        scale_y_continuous(labels = label_dollar(scale = 1e-9, suffix = "B", accuracy = 1)) +
         labs(
             title    = "Monthly Academic Grant Cuts by Research Domain",
             subtitle = "Stacked bars by domain; black line = total monthly claimed savings",
@@ -173,7 +166,7 @@ plot_academic_monthly_bars <- function(academic_monthly_by_domain,
         theme_minimal(base_size = 12) +
         theme(
             legend.position = "right",
-            plot.margin     = margin(t = 10, r = 10, b = 10, l = 10)
+            plot.margin     = margin(t = 20, r = 20, b = 30, l = 20)
         )
 }
 
@@ -282,7 +275,7 @@ plot_academic_domain_comparison <- function(academic_domain_summary) {
                 "Other academic domains"  = "#BAB0AC"
             )
         ) +
-        scale_y_continuous(labels = dollar_format(scale = 1e-9, suffix = "B")) +
+        scale_y_continuous(labels = label_dollar(scale = 1e-9, suffix = "B", accuracy = 1)) +
         labs(
             title    = "DOGE Grant Cuts by Academic Research Domain",
             subtitle = "Red = fields targeted in executive orders / agency communications. Hover for grant counts.",
@@ -293,6 +286,6 @@ plot_academic_domain_comparison <- function(academic_domain_summary) {
         theme_minimal(base_size = 12) +
         theme(
             legend.position = "bottom",
-            plot.margin     = margin(t = 10, r = 10, b = 10, l = 10)
+            plot.margin     = margin(t = 20, r = 30, b = 20, l = 20)
         )
 }

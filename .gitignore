@@ -48,10 +48,17 @@ yarn-error.log
 *.swo
 *~
 
+# Render artifacts left in source post directories
+*.knit.md
+tmp-*.html
+tmp_*.html
+
 # Blog Data
 posts/eds220-final/data/*
 posts/eds222-final/data/*
 posts/eds223-final/data/*
 posts/eds223-final2/data/*
 posts/eds240-final/data/*
+posts/eds241-final/data/*
+posts/federal-grant-watch/data/*
 

@@ -1,0 +1,505 @@
+---
+title: "Getting Data That Doesn't Come in a CSV"
+description: "A beginner's walkthrough of three web scraping and API techniques — REST APIs, ID-based enrichment, and HTML scraping — using the DOGE federal grant termination list as a real-world example."
+author: "Emily Miller"
+date: "2026-03-12"
+categories: [federal policy, data analysis, DOGE, R, web scraping, tutorial]
+image: figures/academic_domain_comparison_plot.png
+format:
+  html:
+    theme: ../../styles.scss
+    code-fold: true
+    code-summary: "Show code"
+    toc: false
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+```{r setup}
+#| echo: false
+library(targets)
+library(ggplot2)
+library(plotly)
+library(dplyr)
+library(scales)
+library(RColorBrewer)
+library(forcats)
+tar_source("R/")
+```
+
+A lot of interesting public data doesn't come as a downloadable spreadsheet. It lives on a website, behind an API, or scattered across dozens of pages. If you want to analyze it, you have to collect it yourself — and that process is called **web scraping** (or, when the data comes from a structured interface, **API data collection**).
+
+This post is a walkthrough of three techniques I used for the first time building this project: fetching paginated API data, enriching that data using a second API, and scraping HTML from a news site. I'll use a real and timely example throughout: the DOGE federal grant termination list.
+
+Since January 20, 2025, DOGE has published a public list of terminated federal grants. By the time I pulled it, it had over 15,000 entries. That's too many to copy by hand and too important to ignore. Here's how I got it, enriched it, and what it showed.
+
+---
+
+## The Problem: Data That Lives on a Website
+
+Go to [doge.gov](https://doge.gov) and you'll see a table of terminated grants — agency, recipient, claimed savings. You can scroll through it, but you can't download it as a file. And if you want to filter, join, or visualize it, you need it in a format your analysis tool can read.
+
+This situation comes up constantly in data work. Government databases, financial filings, research registries, news archives — they publish the data, just not in a form you can directly use.
+
+The three approaches in this project are a good starting point for learning to handle it:
+
+| Technique | When to use it | Tools |
+|---|---|---|
+| REST API (paginated) | Structured data with a public endpoint | `httr2` |
+| API enrichment | You have IDs from one source; another API has more info | `httr2` + `purrr` |
+| HTML scraping | No API exists; data is in the page itself | `rvest` |
+
+---
+
+## Technique 1: Fetching a Paginated REST API
+
+### What is an API?
+
+An **API** (Application Programming Interface) is a structured way for programs to talk to each other. A **REST API** lets you request data over the web by constructing a URL, the same way your browser requests a page — except instead of HTML, you get back data, usually in **JSON** format.
+
+The DOGE grant list is available at `https://api.doge.gov/savings/grants`. If you paste that into a browser, you'll see something like this:
+
+```json
+{
+  "meta": { "pages": 127 },
+  "result": {
+    "grants": [
+      { "agency": "Department of Education", "recipient": "...", "savings": 3200000, ... },
+      ...
+    ]
+  }
+}
+```
+
+That's the structure we'll be working with in R.
+
+### The challenge: pagination
+
+APIs rarely return everything in one shot. The DOGE API returns 100 records per request ("page"), and there are 127 pages. To get all 12,000+ grants, you need to loop through each page and stack the results.
+
+Here's the function I wrote to do that:
+
+```{r fetch-doge, eval=FALSE}
+fetch_doge_grants <- function(per_page = 100, max_pages = NULL, pause_seconds = 0.5) {
+    library(httr2)
+    library(dplyr)
+    library(lubridate)
+
+    base_url <- "https://api.doge.gov/savings/grants"
+
+    # Step 1: Fetch page 1 to learn how many pages exist
+    first_body <- request(base_url) |>
+        req_url_query(page = 1, per_page = per_page) |>
+        req_perform() |>
+        resp_body_json()
+
+    total_pages <- as.integer(first_body$meta$pages)
+    pages_to_fetch <- if (is.null(max_pages)) total_pages else min(max_pages, total_pages)
+
+    all_results <- vector("list", pages_to_fetch)
+    all_results[[1]] <- bind_rows(first_body$result$grants)
+
+    # Step 2: Loop through the remaining pages
+    if (pages_to_fetch > 1) {
+        for (page in 2:pages_to_fetch) {
+            message("Fetching page ", page, " of ", pages_to_fetch, "...")
+            body <- request(base_url) |>
+                req_url_query(page = page, per_page = per_page) |>
+                req_perform() |>
+                resp_body_json()
+
+            grants <- body$result$grants
+            if (length(grants) == 0L) break
+
+            all_results[[page]] <- bind_rows(grants)
+            Sys.sleep(pause_seconds)  # be polite: don't hammer the server
+        }
+    }
+
+    bind_rows(all_results) |>
+        mutate(
+            date = mdy(date),
+            value = suppressWarnings(as.numeric(value)),
+            savings = suppressWarnings(as.numeric(savings))
+        )
+}
+```
+
+A few things worth noting for beginners:
+
+**`request() |> req_url_query() |> req_perform() |> resp_body_json()`** — this is the `httr2` pipeline for making an API request. Think of `request()` as addressing an envelope, `req_url_query()` as adding query parameters (like `?page=1&per_page=100`), `req_perform()` as mailing it, and `resp_body_json()` as reading the reply.
+
+**Fetch page 1 first, then loop.** The first request tells you how many total pages exist — so you don't have to guess.
+
+**`Sys.sleep(pause_seconds)`** — this is important. If you loop 127 times without pausing, you're making 127 requests in a few seconds. That can look like a denial-of-service attack to the server. A half-second pause is polite and usually enough.
+
+---
+
+## Technique 2: Enriching Data Using a Second API
+
+### The problem with self-reported numbers
+
+The DOGE grant list includes a "savings" column — the claimed value of each termination. But this is a self-reported figure from DOGE. Is there an independent way to check it?
+
+It turns out, yes. Many entries in the DOGE list include a link to **USAspending.gov**, the federal government's official grant tracking database. That link contains an award ID, and USAspending has its own API where you can look up each award and get the government's own numbers: total obligation, total outlay, and recipient name.
+
+### Extracting IDs and looking them up
+
+Here's what the process looks like:
+
+1. Parse the USAspending award ID out of the DOGE `link` field using a regex
+2. For each ID, hit the USAspending API and pull back the award details
+3. Join the results back to the original DOGE data
+
+```{r fetch-usaspending, eval=FALSE}
+fetch_usaspending_awards <- function(doge_grants, max_ids = 200, pause_seconds = 0.15) {
+    library(dplyr)
+    library(stringr)
+    library(httr2)
+    library(purrr)
+    library(tibble)
+
+    # Step 1: Extract award IDs from the DOGE link field
+    ids <- doge_grants |>
+        mutate(
+            usaspending_award_id = str_match(link, "usaspending\\.gov/award/([^/?#]+)")[, 2]
+        ) |>
+        filter(!is.na(usaspending_award_id)) |>
+        distinct(usaspending_award_id) |>
+        slice_head(n = max_ids) |>
+        pull(usaspending_award_id)
+
+    # Step 2: Look up each ID in the USAspending API
+    map_dfr(ids, function(id) {
+        Sys.sleep(pause_seconds)
+        b <- tryCatch(
+            request(paste0("https://api.usaspending.gov/api/v2/awards/", id, "/")) |>
+                req_perform() |>
+                resp_body_json(simplifyVector = TRUE),
+            error = function(e) NULL  # if a lookup fails, return nothing
+        )
+
+        tibble(
+            usaspending_award_id        = id,
+            usaspending_total_obligation = if (is.null(b)) NA_real_ else b$total_obligation,
+            usaspending_total_outlay     = if (is.null(b)) NA_real_ else b$total_outlay,
+            usaspending_recipient        = if (is.null(b)) NA_character_ else b$recipient$recipient_name
+        )
+    })
+}
+```
+
+**`str_match()` with a regex** — the DOGE `link` field contains URLs like `https://www.usaspending.gov/award/GRANT-12345/`. The regex `usaspending\.gov/award/([^/?#]+)` captures everything between `/award/` and the next `/`, `?`, or `#`. That's the ID we want.
+
+**`map_dfr()`** — this applies a function to every element of a vector and stacks the results into a single dataframe. It's the `purrr` equivalent of a for loop that collects results.
+
+**`tryCatch()`** — some award IDs in the DOGE list are invalid, retired, or return errors. Wrapping the API call in `tryCatch()` means a single failed lookup won't crash the whole loop. If an ID fails, we return a row of `NA` values and move on.
+
+---
+
+## Technique 3: Searching a Government API by Keyword
+
+### The Federal Register
+
+Not every useful API gives you a list to paginate through. Some let you *search* — you send a query and get back matching documents. The [Federal Register API](https://www.federalregister.gov/developers/documentation/api/v1) is a good example: it's the official public record of executive orders, agency rules, and federal notices, and it supports full keyword search with date and document-type filters.
+
+For this project, we can use it to find presidential documents and agency notices related to DOGE and grant policy — giving us a reproducible, auto-updating policy event source instead of a manually maintained list.
+
+The key difference from the DOGE API: instead of paginating through a fixed list, we run multiple searches (one per search term) and deduplicate the results.
+
+```{r fetch-federal-register, eval=FALSE}
+fetch_federal_register_events <- function(
+    start_date    = as.Date("2025-01-20"),
+    search_terms  = c("DOGE", "Department of Government Efficiency", "grant freeze"),
+    doc_types     = c("PRESDOCU", "NOTICE", "RULE"),
+    per_page      = 20,
+    max_pages     = 5,
+    pause_seconds = 0.3
+) {
+    library(httr2)
+    library(dplyr)
+    library(purrr)
+    library(lubridate)
+
+    base_url <- "https://www.federalregister.gov/api/v1/documents.json"
+
+    fetch_one_term <- function(term) {
+        results <- list()
+        for (page in seq_len(max_pages)) {
+            req <- request(base_url) |>
+                req_url_query(
+                    `conditions[term]`                  = term,
+                    `conditions[publication_date][gte]` = format(start_date, "%Y-%m-%d"),
+                    `conditions[type][]`                = doc_types,
+                    `fields[]` = c("title", "publication_date", "document_number",
+                                   "type", "abstract", "html_url"),
+                    per_page = per_page,
+                    page     = page,
+                    order    = "oldest",
+                    .multi   = "explode"
+                )
+            body <- tryCatch(
+                req |> req_perform() |> resp_body_json(simplifyVector = FALSE),
+                error = function(e) NULL
+            )
+            if (is.null(body) || length(body$results) == 0L) break
+
+            results[[page]] <- map_dfr(body$results, function(r) {
+                tibble(
+                    publication_date = as.Date(r$publication_date),
+                    title            = r$title %||% NA_character_,
+                    document_number  = r$document_number %||% NA_character_,
+                    type             = r$type %||% NA_character_,
+                    abstract         = r$abstract %||% NA_character_,
+                    html_url         = r$html_url %||% NA_character_
+                )
+            })
+            Sys.sleep(pause_seconds)
+            if (page >= body$total_pages) break
+        }
+        bind_rows(results)
+    }
+
+    # Run one search per term, then deduplicate by document number
+    map_dfr(search_terms, fetch_one_term) |>
+        filter(!is.na(document_number)) |>
+        distinct(document_number, .keep_all = TRUE) |>
+        filter(publication_date >= start_date) |>
+        arrange(publication_date)
+}
+```
+
+A few things worth noting:
+
+**Multiple search terms, one pass.** Searching `"DOGE"` returns presidential documents; `"grant freeze"` catches OMB-adjacent notices. Running both and deduplicating on `document_number` gets more complete coverage than any single query.
+
+**`conditions[type][]` as a vector.** To filter by multiple document types, the Federal Register API expects the same parameter repeated (e.g., `?conditions[type][]=PRESDOCU&conditions[type][]=NOTICE`). Passing a character vector with `.multi = "explode"` does this automatically — one instance of the parameter per value.
+
+**Early exit.** `if (page >= body$total_pages) break` stops pagination once we've consumed all available pages for a given search term, even if `max_pages` is higher.
+
+Here's a sample of what the Federal Register target returns when the pipeline runs:
+
+| publication_date | type | title |
+|---|---|---|
+| 2025-01-20 | Presidential Document | Establishing and Implementing the President's "Department of Government Efficiency" |
+| 2025-01-20 | Presidential Document | Reevaluating and Realigning United States Foreign Aid |
+| 2025-01-30 | Presidential Document | Expanding Educational Freedom and Opportunity for Families |
+| 2025-02-19 | Presidential Document | Implementing the President's "Department of Government Efficiency" Workforce Optimization Initiative |
+| 2025-02-26 | Presidential Document | Implementing the President's "Department of Government Efficiency" Cost Efficiency Initiative |
+| 2025-03-14 | Notice | Termination of Federal Assistance Awards |
+| 2025-04-02 | Notice | National Endowment for the Humanities: Termination of Grants |
+
+This is the same data available to any researcher who runs `tar_make()` — no manual curation required, and it stays current as new documents are published.
+
+---
+
+## Technique 4: Scraping HTML When There's No API
+
+### When you can't just ask for the data
+
+For the first three techniques, we were talking to APIs that returned structured JSON. But sometimes data only exists as HTML on a web page — readable in a browser, but not downloadable as a file.
+
+For this project I wanted a news timeline: which days had major DOGE announcements, and what happened? [GovExec](https://www.govexec.com) covers federal government closely and timestamps every article. There's no API for it. So I scraped it.
+
+Every web page is built from HTML — a tree of nested elements. The steps below walk through how to read it with `rvest`, using the GovExec article list as an example.
+
+```r
+page <- read_html("https://www.govexec.com/topic/doge/more/?page=1")
+```
+
+**Step 1: Find the article titles with a CSS selector**
+
+**CSS selectors** are patterns that describe which elements you want. You find them by right-clicking any element in your browser → "Inspect" → reading the class names in the Elements panel. Here's what a single article looks like in GovExec's HTML:
+
+```html
+<article class="river-item">
+
+  <a class="river-item-hed-link"
+     href="/management/2025/02/doge-cuts-350m">
+    DOGE Cuts $350M in Education Grants
+  </a>
+
+  <ul class="story-meta">
+    <li class="story-meta-date">
+      <time datetime="2025-02-13T12:00:00Z">
+        February 13, 2025
+      </time>
+    </li>
+  </ul>
+
+</article>
+```
+
+The article headlines are inside `<a>` tags with the class `river-item-hed-link`. The selector `a.river-item-hed-link` means: *all link elements with that class*. `html_text2()` extracts the visible text — the headline you'd read on screen, with whitespace cleaned up.
+
+```r
+titles <- page |>
+  html_elements("a.river-item-hed-link") |>
+  html_text2() |>
+  str_squish()
+```
+
+**Step 2: Get the dates from a hidden attribute**
+
+The human-readable date ("February 13, 2025") is unreliable to parse. But HTML `<time>` tags carry a `datetime` attribute — a machine-readable ISO timestamp that's much easier to work with. The selector `li.story-meta-date time` navigates down: *find `<li>` tags with class `story-meta-date`, then get the `<time>` inside*.
+
+```r
+datetimes <- page |>
+  html_elements("li.story-meta-date time") |>
+  html_attr("datetime")
+```
+
+`html_attr("datetime")` extracts the *attribute value*, not the visible text. This is the difference between `html_text2()` and `html_attr()` — and knowing which to use requires reading the HTML.
+
+**Step 3: Put it together in a reusable function**
+
+The function below wraps all three steps — building the URL, applying the selectors, and assembling the result. It takes a `page_num` argument so it can be looped across multiple pages. The safety checks (lines 9–10) guard against empty or mismatched results when the page structure changes.
+
+```r
+scrape_one_govexec_page <- function(page_num = 1) {
+    url  <- paste0("https://www.govexec.com/topic/doge/more/?page=", page_num)
+    page <- read_html(url)
+
+    titles    <- page |> html_elements("a.river-item-hed-link") |> html_text2() |> str_squish()
+    datetimes <- page |> html_elements("li.story-meta-date time") |> html_attr("datetime")
+    links     <- page |> html_elements("a.river-item-hed-link") |> html_attr("href")
+
+    if (length(titles) == 0L || length(datetimes) == 0L) return(tibble())
+    n <- min(length(titles), length(datetimes), length(links))
+
+    tibble(
+        title = titles[seq_len(n)],
+        date  = ymd_hms(datetimes[seq_len(n)]),
+        url   = ifelse(
+            str_starts(links[seq_len(n)], "http"),
+            links[seq_len(n)],
+            paste0("https://www.govexec.com", links[seq_len(n)])
+        )
+    )
+}
+```
+
+**One important caveat:** scrapers break when websites redesign. The class names `river-item-hed-link` and `story-meta-date` are specific to GovExec's current template. If they change, this function returns nothing — checking your scrapers periodically is part of maintaining a data pipeline.
+
+---
+
+## Putting It Together
+
+Once we have data from all three sources, we combine them into a single, enriched dataset:
+
+- DOGE records provide the termination date, agency, recipient, and claimed savings
+- USAspending adds verified obligation and outlay figures where a match is found
+- The news scrape provides the policy event dates used to annotate the charts
+
+The `{targets}` package manages the whole pipeline. Each step is a "target" — a named computation. `{targets}` checks which steps are outdated and re-runs only what's necessary, which matters a lot when one step (fetching 12,000 USAspending records) takes 20 minutes.
+
+```r
+# _targets.R (abbreviated)
+list(
+    tar_target(doge_grants,        fetch_doge_grants()),
+    tar_target(usaspending_awards, fetch_usaspending_awards(doge_grants)),
+    tar_target(news_articles,      scrape_grant_news()),
+    tar_target(combined,           combine_sources(doge_grants, news_articles, usaspending_awards)),
+    ...
+)
+```
+
+Running `tar_make()` executes every step in the right order. Running it again only re-fetches if the upstream code changed.
+
+---
+
+## What the Data Shows
+
+With the combined dataset in hand, we can ask questions that weren't possible from any single source.
+
+The most useful cross-reference: where DOGE's claimed savings figure diverges from USAspending's record of what was actually obligated. That gap is what motivates the first chart.
+
+### The Cumulative Picture
+
+```{r cumulative-plot}
+#| echo: false
+#| fig-cap: "Cumulative claimed savings from terminated academic grants (DOGE) vs. verified remaining obligation (USAspending). Hover over the dashed vertical lines for policy event descriptions."
+ggplotly(
+    plot_academic_cumulative(tar_read(academic_monthly_totals), tar_read(policy_events)),
+    tooltip = "text"
+) |>
+    layout(legend = list(orientation = "h", x = 0, y = 1.08))
+```
+
+The blue line is DOGE's figure. The red dashed line is the USAspending-derived estimate — total obligation minus total outlay, for grants where we could find a match. The gap between them is large and persistent throughout the year.
+
+### The Discrepancy
+
+```{r discrepancy-plot}
+#| echo: false
+#| fig-cap: "Monthly discrepancy between DOGE-claimed savings and the USAspending remaining obligation estimate. Positive values = DOGE claims exceed what the grant database shows as remaining."
+ggplotly(
+    plot_academic_discrepancy(tar_read(academic_monthly_totals), tar_read(policy_events)),
+    tooltip = "text"
+) |>
+    layout(legend = list(orientation = "v", x = 1.01, y = 1))
+```
+
+This discrepancy is why cross-referencing sources matters. DOGE reports termination values; USAspending records actual obligations. For multi-year grants, DOGE may count future-year funding that was never guaranteed. The independent comparison is only possible because we pulled both sources.
+
+### What Fields Are Being Cut?
+
+```{r monthly-bars}
+#| echo: false
+#| fig-cap: "Monthly DOGE claimed savings from academic grants, by research domain. Hover the vertical event lines for descriptions."
+ggplotly(
+    plot_academic_monthly_bars(tar_read(academic_monthly_by_domain), tar_read(policy_events)),
+    tooltip = "text"
+) |>
+    layout(legend = list(orientation = "v", x = 1.01, y = 1))
+```
+
+```{r domain-comparison}
+#| echo: false
+#| fig-cap: "Total claimed savings by academic research domain. Domain is assigned by keyword matching on grant descriptions."
+ggplotly(
+    plot_academic_domain_comparison(tar_read(academic_domain_summary)),
+    tooltip = "text"
+) |>
+    layout(legend = list(orientation = "h", x = 0, y = -0.15))
+```
+
+Domain classification here is keyword-based — a `case_when()` applied to lowercased grant descriptions. It's imperfect, and the "Other Academic" category is large because many grant descriptions use generic language. But the directional signal is consistent: DEI, environmental science, and conservation grants appear concentrated in the waves that follow specific policy events, not distributed evenly across the year.
+
+---
+
+## Caveats and Limitations
+
+**DOGE's data has quality issues.** Grants have been added, removed, and modified on the DOGE website without announcement. This analysis uses a snapshot pulled on March 10, 2026.
+
+**USAspending match coverage is partial.** Only grants with a traceable award ID in the DOGE link field could be matched. Match rates vary by agency.
+
+**"Savings" is not "money returned."** When a multi-year grant is terminated, DOGE records the full remaining authorized value. If future-year funding was never obligated, it was never going to be spent regardless.
+
+**Domain classification is approximate.** A grant about "biodiversity in coastal ecosystems" might land in Environmental Science or Biological Sciences depending on which keywords hit first. Treat the domain column as directionally informative, not precise.
+
+---
+
+## Getting Started Yourself
+
+If this is your first time scraping or using APIs in R, here's the minimum you need:
+
+```r
+install.packages(c("httr2", "rvest", "purrr", "dplyr", "targets"))
+```
+
+The full code for this project — `_targets.R` and all the `R/` functions — is in the [federal-grant-watch repository](https://github.com/rellimylime/federal-grant-watch).
+
+The best way to learn this stuff is to pick a dataset you actually care about and try to get it. Every scraping project teaches you something different.
+
+---
+
+## Data & Methods
+
+Data pulled from the [DOGE public grants API](https://api.doge.gov/savings/grants) (snapshot: March 10, 2026) and enriched with award-level data from [USAspending.gov](https://api.usaspending.gov/). Policy event news scraped from [GovExec](https://www.govexec.com/topic/doge/).
+
+Academic scope defined using recipient name matching (university, college, research institute) plus keyword signals in agency and description fields. Domain classification used a keyword-priority `case_when()` on lowercased grant text, with DEI keywords checked first to prevent false positives from terms like "biodiversity."
+
+Analysis in R. Key packages: `targets`, `httr2`, `rvest`, `purrr`, `dplyr`, `ggplot2`, `plotly`.

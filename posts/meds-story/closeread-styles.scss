@@ -1,0 +1,423 @@
+/* ─────────────────────────────────────────────────────
+   My MEDS Story — Closeread Stylesheet
+   Color palette mirrors rellimylime.github.io/styles.scss
+   ───────────────────────────────────────────────────── */
+
+/*-- scss:defaults --*/
+
+/*-- scss:rules --*/
+
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ── Root Variables ─────────────────────────────────────── */
+:root {
+  --forest-teal:  #2A9D8F;
+  --warm-coral:   #E76F51;
+  --golden-sun:   #F4A261;
+  --deep-purple:  #6A4C93;
+  --sage-green:   #8AB17D;
+  --sky-blue:     #4ECDC4;
+  --warm-white:   #FFFEF9;
+  --warm-cream:   #FFF7F0;
+  --deep-navy:    #2B2D42;
+  --mid-gray:     #6B7280;
+  --light-gray:   #E5E7EB;
+}
+
+/* ── Base Body ──────────────────────────────────────────── */
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  background-color: var(--warm-white);
+  color: var(--deep-navy);
+  line-height: 1.7;
+}
+
+/* This post uses a custom hero, so hide the default Quarto title block. */
+#quarto-content main#quarto-document-content .quarto-title-block {
+  display: none;
+}
+
+#quarto-content main#quarto-document-content {
+  padding-top: 0;
+  margin-top: 0;
+}
+
+/* ── Section Background ─────────────────────────────────── */
+.cr-section.cr-column-screen {
+  background-color: var(--warm-cream);
+}
+
+/* ── Overlay sections: dark immersive background ────────── */
+.cr-section.cr-column-screen.overlay-center,
+.cr-section.cr-column-screen.overlay-left,
+.cr-section.cr-column-screen.overlay-right {
+  position: relative;
+  background:
+    radial-gradient(circle at 18% 18%, rgba(42, 157, 143, 0.28) 0%, rgba(42, 157, 143, 0) 40%),
+    radial-gradient(circle at 82% 12%, rgba(106, 76, 147, 0.3) 0%, rgba(106, 76, 147, 0) 42%),
+    linear-gradient(165deg, #1d3557 0%, #2f4f79 40%, #4f5d8a 72%, #6a4c93 100%);
+}
+
+.cr-section.cr-column-screen.overlay-center > .narrative-col,
+.cr-section.cr-column-screen.overlay-left > .narrative-col,
+.cr-section.cr-column-screen.overlay-right > .narrative-col,
+.cr-section.cr-column-screen.overlay-center > .sticky-col,
+.cr-section.cr-column-screen.overlay-left > .sticky-col,
+.cr-section.cr-column-screen.overlay-right > .sticky-col {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Sticky Container: transparent by default ───────────── */
+/* Use !important to override closeread's own stylesheet       */
+.sticky-col-stack {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+}
+
+/* ── Sidebar sticky card look (applied via .sticky-card class) */
+.sticky-card {
+  background: linear-gradient(180deg, #fffefb 0%, #f3f7ff 100%) !important;
+  border-radius: 12px !important;
+  padding: 2rem !important;
+  box-shadow:
+    0 8px 28px rgba(10, 16, 31, 0.1),
+    0 0 0 1px rgba(255, 225, 140, 0.14) !important;
+  border: 1px solid rgba(112, 146, 194, 0.25) !important;
+}
+
+/* ── Narrative Column ───────────────────────────────────── */
+.cr-section.sidebar-left .narrative-col,
+.cr-section.sidebar-right .narrative-col {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(246, 250, 255, 0.9) 100%);
+  padding: 1.5rem 2rem;
+  border-radius: 10px;
+  max-width: 520px;
+  border: 1px solid rgba(112, 146, 194, 0.22);
+  box-shadow: 0 10px 26px rgba(12, 20, 38, 0.1);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+/* ─────────────────────────────────────────────────────────
+   TYPOGRAPHY
+   ───────────────────────────────────────────────────────── */
+
+h1, h2, h3 {
+  font-family: 'Libre Baskerville', serif;
+}
+
+code, pre, .sourceCode {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ── Body Text Scale ────────────────────────────────────── */
+.body-text-xl  { font-size: 2.2rem;  line-height: 1.3; }
+.body-text-l   { font-size: 1.5rem;  line-height: 1.5; }
+.body-text-m   { font-size: 1.15rem; line-height: 1.7; }
+.body-text-s   { font-size: 0.9rem;  line-height: 1.65; }
+.body-text-xs  { font-size: 0.78rem; line-height: 1.55; }
+
+/* ── Special Text Treatments ────────────────────────────── */
+.giant-title {
+  font-family: 'Libre Baskerville', serif;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  display: block;
+}
+
+.subtitle-text {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(1rem, 2.5vw, 1.6rem);
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  display: block;
+  margin-top: 0.75rem;
+}
+
+.meta-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  display: block;
+  margin-top: 1.25rem;
+  opacity: 0.65;
+  letter-spacing: 0.06em;
+}
+
+.chapter-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  opacity: 0.55;
+  display: block;
+  margin-bottom: 0.6rem;
+}
+
+.chapter-label.teal-text {
+  color: var(--forest-teal) !important;
+  text-shadow: none;
+}
+
+/* ─────────────────────────────────────────────────────────
+   COLOR UTILITIES
+   ───────────────────────────────────────────────────────── */
+
+.teal-text     { color: var(--forest-teal); }
+.coral-text    { color: var(--warm-coral); }
+.gold-text     { color: var(--golden-sun); }
+.purple-text   { color: var(--deep-purple); }
+.sage-text     { color: var(--sage-green); }
+.dark-text     { color: var(--deep-navy); }
+.white-text    { color: #ffffff; }
+.gray-text     { color: var(--mid-gray); }
+
+/* ─────────────────────────────────────────────────────────
+   CARD & CONTAINER COMPONENTS
+   ───────────────────────────────────────────────────────── */
+
+/* Full-screen hero sticky card */
+.hero-card {
+  width: 100%;
+  height: 100%;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 80px 60px;
+  background: linear-gradient(
+    160deg,
+    #2A9D8F 0%,
+    #6A4C93 55%,
+    #E76F51 100%
+  );
+  color: white;
+  border-radius: 0;
+}
+
+.cr-section.hero-scroll-x .hero-card {
+  background: transparent;
+  will-change: opacity, transform;
+}
+
+.cr-section.hero-scroll-x .hero-stage-home {
+  transform: none;
+}
+
+.cr-section.hero-scroll-x .hero-stage-home.cr-active {
+  transform: none;
+}
+
+.hero-crawl-stage {
+  justify-content: center;
+  padding-top: clamp(8vh, 12vh, 16vh);
+  padding-bottom: clamp(10vh, 16vh, 20vh);
+  transform: none;
+}
+
+.hero-crawl-stage.cr-active {
+  transform: none;
+}
+
+.hero-crawl-text {
+  max-width: min(900px, 90vw);
+  margin: 0 auto;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(1.2rem, 2.4vw, 1.9rem);
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  color: #f5f8ff;
+  text-shadow: 0 2px 12px rgba(16, 28, 54, 0.32);
+  transform: none;
+  opacity: 0.96;
+  transition: opacity 260ms ease;
+}
+
+.hero-crawl-stage.cr-active .hero-crawl-text {
+  transform: none;
+  opacity: 1;
+}
+
+/* Hero uses empty focus triggers; hide their narrative boxes */
+.cr-section.hero-scroll-x .narrative-col {
+  max-width: 100% !important;
+  min-width: 0 !important;
+  width: 100% !important;
+}
+
+.cr-section.hero-scroll-x .narrative-col .trigger {
+  padding-block: 0 !important;
+  padding-inline: 0 !important;
+}
+
+.cr-section.hero-scroll-x .narrative-col .trigger .narrative {
+  display: none !important;
+}
+
+.cr-section.hero-scroll-x .sticky-col .sticky-col-stack .sticky {
+  transition: opacity 140ms ease !important;
+  will-change: opacity, transform;
+}
+
+@media (max-width: 900px) {
+  .hero-crawl-text {
+    font-size: clamp(1rem, 3.7vw, 1.25rem);
+    letter-spacing: 0.01em;
+    transform: none;
+  }
+
+  .hero-crawl-stage.cr-active .hero-crawl-text {
+    transform: none;
+  }
+}
+
+/* Chapter title card (used in overlay sections) */
+.chapter-card {
+  padding: 80px 60px;
+  text-align: center;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.chapter-card .giant-title {
+  color: #ffffff;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  text-shadow: 0 8px 24px rgba(14, 20, 34, 0.28);
+}
+
+.chapter-card .subtitle-text {
+  color: #e7efff;
+  letter-spacing: 0.04em;
+  text-transform: none;
+}
+
+/* Teal-bordered info card */
+.info-card {
+  border-left: 5px solid var(--forest-teal);
+  padding: 24px 30px;
+  background-color: rgba(42, 157, 143, 0.05);
+  border-radius: 0 10px 10px 0;
+  margin: 1rem 0;
+}
+
+/* Coral-bordered callout card */
+.coral-card {
+  border-left: 5px solid var(--warm-coral);
+  padding: 24px 30px;
+  background-color: rgba(231, 111, 81, 0.05);
+  border-radius: 0 10px 10px 0;
+  margin: 1rem 0;
+}
+
+/* Purple-bordered callout card */
+.purple-card {
+  border-left: 5px solid var(--deep-purple);
+  padding: 24px 30px;
+  background-color: rgba(106, 76, 147, 0.05);
+  border-radius: 0 10px 10px 0;
+  margin: 1rem 0;
+}
+
+/* Small pill tag */
+.tag {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  padding: 4px 14px;
+  border-radius: 20px;
+  margin: 3px 4px;
+  font-weight: 500;
+}
+
+.teal-tag   { background: var(--forest-teal);  color: white; }
+.coral-tag  { background: var(--warm-coral);   color: white; }
+.purple-tag { background: var(--deep-purple);  color: white; }
+.gold-tag   { background: var(--golden-sun);   color: var(--deep-navy); }
+.sage-tag   { background: var(--sage-green);   color: white; }
+
+/* Gradient horizontal rule */
+.gradient-rule {
+  border: none;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--forest-teal),
+    var(--warm-coral),
+    var(--golden-sun)
+  );
+  border-radius: 2px;
+  margin: 1.5rem 0;
+  opacity: 0.6;
+}
+
+/* ─────────────────────────────────────────────────────────
+   SKILL LIST (for closing section)
+   ───────────────────────────────────────────────────────── */
+
+.skill-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.skill-item {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  padding: 8px 14px;
+  border-radius: 6px;
+  background: rgba(42, 157, 143, 0.08);
+  border: 1px solid rgba(42, 157, 143, 0.2);
+  color: var(--deep-navy);
+}
+
+/* ─────────────────────────────────────────────────────────
+   NARRATIVE OVERLAY TEXT ADJUSTMENTS
+   ───────────────────────────────────────────────────────── */
+
+/* In overlay layouts, ensure narrative text is readable */
+.cr-section.overlay-center .narrative-col,
+.cr-section.overlay-left  .narrative-col,
+.cr-section.overlay-right .narrative-col {
+  background: transparent;
+  padding: 0;
+  border: 0;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.cr-section.overlay-center .narrative-col .narrative,
+.cr-section.overlay-left  .narrative-col .narrative,
+.cr-section.overlay-right .narrative-col .narrative {
+  background-color: rgba(10, 22, 44, 0.56);
+  color: #f6f8ff;
+  border-left: 3px solid rgba(78, 205, 196, 0.85);
+  border-radius: 10px;
+}
+
+.cr-section.overlay-center .narrative-col .trigger[style*="height"] .narrative,
+.cr-section.overlay-left  .narrative-col .trigger[style*="height"] .narrative,
+.cr-section.overlay-right .narrative-col .trigger[style*="height"] .narrative {
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+
+.cr-section.overlay-center .narrative-col .narrative p,
+.cr-section.overlay-left  .narrative-col .narrative p,
+.cr-section.overlay-right .narrative-col .narrative p {
+  color: #f6f8ff;
+}

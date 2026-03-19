@@ -60,6 +60,9 @@ python copy_calendar.py copy --dry-run
 # Copy just one event to test
 python copy_calendar.py copy --test
 
+# Copy only through a specific date (inclusive)
+python copy_calendar.py copy --until 2026-06-30
+
 # Actually do it
 python copy_calendar.py copy
 ```
@@ -72,7 +75,7 @@ python copy_calendar.py delete
 
 **No duplicates**: Run it twice by accident? The script checks existing events and skips ones that are already there.
 
-**Smart filtering**: Only copies future events (365 days forward by default). No point syncing stuff that already happened.
+**Smart filtering**: Only copies future events (365 days forward by default), and you can cap runs with `--until YYYY-MM-DD` when you want a shorter window.
 
 ## The Fun Side Story: Why These Features Exist
 
@@ -118,7 +121,10 @@ python copy_calendar.py copy --dry-run
 # Copy just one event to test
 python copy_calendar.py copy --test
 
-# Actually copy everything
+# Copy through a specific date if you want to limit scope
+python copy_calendar.py copy --until 2026-06-30
+
+# Actually copy everything in the default window
 python copy_calendar.py copy
 
 # Delete all copied events if needed

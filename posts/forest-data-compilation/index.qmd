@@ -1,6 +1,6 @@
 ---
 title: "Building a Navigator for the World's Largest Forest Database"
-description: "The USDA's Forest Inventory and Analysis database is one of the most comprehensive forest monitoring datasets in the world - and one of the hardest to work with. I built a Streamlit app to make it navigable, then used it to compile a research dataset from scratch."
+description: "How I built a Streamlit schema navigator for FIA and used it to launch a national forest data workflow."
 date: 2026-03-04
 categories: [Python, R, Geospatial Analysis, Forest Ecology, Data Science]
 citation:

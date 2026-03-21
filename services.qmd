@@ -1,188 +1,58 @@
 ---
-title: "Hire Me"
+title: "Collaborate"
 toc: false
 ---
 
-# 💼 Hire Me
+# Collaborate
 
-*Let's turn your data into insights and your ideas into impact*
+*I occasionally take on scoped projects, research support, tutoring, and workshops when the fit is good.*
 
-------------------------------------------------------------------------
+This page exists mostly so I have somewhere to point people when they ask whether I do this for other humans too. The answer is: sometimes, yes.
 
-## 🌟 What I Bring to the Table
+I am most useful when the problem is real, the scope is clear, and the data are messy in an interesting way rather than a cursed way.
 
-I'm not just a data scientist - I'm a creative problem-solver who believes that the best solutions come from combining technical rigor with human empathy. Whether you need help with environmental data analysis, creative data visualization, or just want to learn how to make sense of your data, I'm here to help.
+## Ways I Can Help
 
-> *"The best data science happens when we combine technical excellence with creative storytelling and genuine care for the communities we serve."*
+### Environmental data and remote sensing
 
-**Why Work With Me?** - **Interdisciplinary Expertise:** I bring together mathematics, environmental science, and creative thinking - **Community-Centered Approach:** All my work prioritizes real-world impact and community benefit - **Clear Communication:** I make complex data accessible and actionable for any audience - **Creative Problem-Solving:** I approach challenges with both analytical rigor and creative innovation
+Short-term help with spatial analysis, satellite imagery workflows, data wrangling, reproducible pipelines, and exploratory dashboards.
 
-------------------------------------------------------------------------
+### Research support
 
-## 🛠️ Services I Offer
+Method advice, workflow design, code cleanup, visualization, and turning a half-finished analysis into something another person can actually follow.
 
-### 📊 Data Analysis & Visualization
+### Tutoring and mentoring
 
-Transform your raw data into beautiful, actionable insights. I specialize in environmental data, but I love working with any dataset that tells a meaningful story. - Statistical analysis and modeling - Custom data visualizations - Interactive dashboards - Data storytelling and reporting **Starting at:** \$150/hour
+Python, R, data visualization, reproducible research, remote sensing basics, and general "why is this script doing that" troubleshooting.
 
-### 🌍 Environmental Data Science
+### Talks and workshops
 
-Specialized expertise in remote sensing, satellite imagery analysis, and environmental monitoring. Perfect for conservation organizations, research institutions, and environmental consultants. - Satellite imagery analysis - Machine learning for environmental monitoring - GIS and spatial analysis - Environmental impact assessments **Starting at:** \$200/hour
+Practical sessions on environmental data work, Quarto, mapping, reproducibility, or communicating technical results clearly.
 
-### 🎓 Data Science Tutoring
+## Good Fit
 
-One-on-one tutoring for students, professionals, or anyone who wants to learn data science. I adapt my teaching style to your learning preferences and goals. - Python and R programming - Machine learning fundamentals - Statistical analysis - Data visualization best practices **Starting at:** \$100/hour
+-   Mission-driven research, public-interest projects, and environmental work
+-   Scoped collaborations, advising, tutoring, or short workshops
+-   People who want honest communication, clean handoffs, and less theater
 
-### 🎨 Creative Data Visualization
+## Probably Not A Good Fit
 
-Transform your data into compelling visual stories that engage and inspire. Perfect for presentations, reports, websites, and social media. - Custom infographics - Interactive web visualizations - Data-driven art and illustrations - Presentation design **Starting at:** \$125/hour
+-   Miracle timelines
+-   Vague "can you AI this?" requests
+-   Projects that really need a full agency or a full-time hire
+-   Work that wants polish but not substance
 
-### 📝 Research Consulting
+## Logistics
 
-Expert guidance on research design, methodology, and analysis. I help researchers, students, and organizations design robust studies and interpret their results. - Research design and methodology - Statistical analysis planning - Literature review and synthesis - Grant writing and proposal development **Starting at:** \$175/hour
+I am a MEDS candidate at UCSB, so my availability is limited and changes with the quarter. If you reach out, it helps to include:
 
-### 🗣️ Workshops & Training
+-   what you are working on
+-   what kind of help you want
+-   timeline
+-   whether you already have data, code, or materials
 
-Custom workshops for teams, organizations, or conferences. I design interactive sessions that combine technical skills with creative thinking and real-world applications. - Data science fundamentals - Environmental data analysis - Data visualization design - Science communication **Starting at:** \$500/day
+## Contact
 
-------------------------------------------------------------------------
+If it sounds like a fit, I can usually tell you quickly whether I have capacity.
 
-## 🎯 Specialized Expertise
-
-### 🛰️ Remote Sensing
-
--   Sentinel-1/2, Landsat, Planet imagery
--   Google Earth Engine
--   Machine learning for image classification
--   Time series analysis
-
-### 🤖 Machine Learning
-
--   Deep learning (PyTorch, TensorFlow)
--   Computer vision applications
--   Time series forecasting
--   Model deployment and optimization
-
-### 💻 Programming
-
--   Python (pandas, numpy, scikit-learn)
--   R (tidyverse, spatial packages)
--   JavaScript (D3.js, web development)
--   SQL and database management
-
-### 📊 Visualization
-
--   Matplotlib, Seaborn, Plotly
--   Tableau, PowerBI
--   Custom web visualizations
--   Infographic design
-
-------------------------------------------------------------------------
-
-## 💼 Project Examples
-
-### Conservation Organization Data Dashboard
-
-**Client:** Local Environmental NGO\
-**Duration:** 3 months
-
-**Challenge:** A conservation organization had years of wildlife monitoring data but no way to visualize or analyze it effectively.
-
-**Solution:** I created a custom web dashboard that combines their field data with satellite imagery to track habitat changes over time. The dashboard includes interactive maps, trend analysis, and automated reporting features.
-
-**Impact:** The organization used the dashboard to secure \$50,000 in additional funding and identify three new priority conservation areas.
-
-------------------------------------------------------------------------
-
-### Graduate Student Research Support
-
-**Client:** PhD Student in Environmental Science\
-**Duration:** 6 months
-
-**Challenge:** A PhD student needed help with statistical analysis and data visualization for their dissertation on climate change impacts.
-
-**Solution:** I provided tutoring in R programming, helped design robust statistical models, and created publication-quality visualizations. I also helped with literature review and methodology development.
-
-**Impact:** The student successfully defended their dissertation and published two peer-reviewed papers based on our collaborative work.
-
-------------------------------------------------------------------------
-
-### Corporate Sustainability Reporting
-
-**Client:** Tech Company\
-**Duration:** 2 months
-
-**Challenge:** A tech company needed to create compelling visualizations for their annual sustainability report.
-
-**Solution:** I analyzed their environmental data, created custom infographics, and designed an interactive web visualization that made their sustainability efforts engaging and accessible to stakeholders.
-
-**Impact:** The report received positive feedback from investors and helped the company improve their ESG ratings.
-
-------------------------------------------------------------------------
-
-## 📅 Availability & Process
-
-### ⏰ Current Availability
-
--   **Hours per week:** 10-15 hours available
--   **Project timeline:** 2-6 months typical
--   **Response time:** Within 24 hours
-
-### 🔄 My Process
-
-1.  **Discovery Call:** Understand your needs and goals
-2.  **Proposal:** Detailed project plan and timeline
-3.  **Collaboration:** Regular check-ins and feedback
-4.  **Delivery:** Final deliverables and documentation
-
-------------------------------------------------------------------------
-
-## 💰 Pricing & Packages
-
-I believe in transparent, fair pricing that reflects the value of the work and the impact it creates. Here's how I structure my pricing:
-
-**Hourly Rate:** \$100-200/hour\
-Depending on project complexity and expertise required
-
-**Project-Based:** \$1,000-10,000\
-Fixed price for complete projects with defined scope
-
-**Retainer:** \$2,000/month\
-Ongoing support and consultation for regular clients
-
-#### 💡 Pricing Factors
-
--   **Project Complexity:** More complex analyses and custom solutions cost more
--   **Timeline:** Rush projects may incur additional fees
--   **Data Requirements:** Projects requiring data collection or cleaning cost more
--   **Deliverables:** Custom visualizations and reports are priced accordingly
-
-------------------------------------------------------------------------
-
-## 🎯 Ideal Clients
-
-I work best with clients who share my values and are committed to creating positive impact. Here's who I love working with:
-
--   🌍 **Environmental Organizations:** NGOs, conservation groups, and environmental consultants working on meaningful projects
--   🎓 **Students & Researchers:** Graduate students, postdocs, and researchers who need expert guidance on data analysis
--   🏢 **Mission-Driven Companies:** Companies committed to sustainability and social impact who want to measure and communicate their progress
--   🎨 **Creative Professionals:** Artists, designers, and communicators who want to incorporate data into their creative work
-
-------------------------------------------------------------------------
-
-## 📞 Let's Get Started
-
-Ready to turn your data into insights? Here's how to get started:
-
-1.  **Send me an email** describing your project, timeline, and budget
-2.  **Schedule a discovery call** to discuss your needs in detail
-3.  **Receive a detailed proposal** with timeline, deliverables, and pricing
-4.  **Sign a simple contract** and get started on your project
-
-[Start Your Project](mailto:ermiller@ucsb.edu?subject=Project%20Inquiry)
-
-# Let's Create Something Amazing Together! ✨
-
-Whether you need help with data analysis, want to learn new skills, or have a creative project in mind, I'd love to hear from you. Let's turn your data into insights and your ideas into impact!
-
-[Get In Touch](mailto:ermiller@ucsb.edu)
+[Email Me](mailto:ermiller@ucsb.edu?subject=Collaboration%20Inquiry)

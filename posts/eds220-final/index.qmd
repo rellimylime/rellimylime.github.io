@@ -2,7 +2,7 @@
 title: "Analyzing the 2025 Los Angeles Wildfires: Remote Sensing and Environmental Justice"
 description: "Combining satellite imagery and socioeconomic data to understand wildfire impacts"
 date: 2025-11-29
-categories: [MEDS, Python, Geospatial Analysis, Environmental Justice]
+categories: [MEDS, Python, Geospatial Analysis, Remote Sensing, Environmental Justice]
 image: LA-Wildfires-crop.jpg
 # https://www.downtoearth.org.in/natural-disasters/january-2025-los-angeles-wildfires-a-wake-up-call-report
 citation:

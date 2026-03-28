@@ -2,7 +2,7 @@
 title: "A Year in Data: My Story Through MEDS"
 description: "From first Git commits to an NCEAS capstone, a chronological scrollytelling journey through the Master of Environmental Data Science program at UC Santa Barbara's Bren School."
 date: 2026-03-12
-categories: [MEDS, Personal, Data Science, Reflection, Environmental Science]
+categories: [Personal, MEDS, Reflection]
 title-block-banner: false
 draft: true
 format:

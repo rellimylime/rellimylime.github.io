@@ -2,7 +2,7 @@
 title: "The Fog the Models Missed"
 description: "How climate model biases in California's marine layer contributed to the 2020 blackouts"
 date: 2024-12-06
-categories: [MEDS, Climate Science, Data Science, Ethics]
+categories: [MEDS, Climate Science, Data Science]
 format: html
 image: eds242-final-cover2.jpeg
 citation:

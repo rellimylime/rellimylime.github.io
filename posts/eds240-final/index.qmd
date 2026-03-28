@@ -3,7 +3,7 @@ title: "Driving Under the Influence... of Statistics"
 description: "How the same California crash data can be framed to 'prove' almost anything, and what that reveals about data literacy."
 author: "Emily Miller"
 date: 2026-03-09
-categories: [R, Data Visualization, MEDS, EDS 240]
+categories: [MEDS, R, Data Visualization]
 image: "draft2-crop.png"
 image-alt: "A dark, PSA-style infographic set inside a car interior illustration. The rearview mirror shows a bar chart of crash counts by sobriety, the dashboard gauges show polar clock charts of crash timing, and a roadside billboard shows estimated deaths by gender and sobriety."
 format:

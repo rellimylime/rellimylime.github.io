@@ -2,7 +2,7 @@
 title: "Building a Navigator for the World's Largest Forest Database"
 description: "How I built a Streamlit schema navigator for FIA and used it to launch a national forest data workflow."
 date: 2026-03-04
-categories: [Python, R, Geospatial Analysis, Forest Ecology, Data Science]
+categories: [Personal, Python, R, Geospatial Analysis, Forest Ecology, Data Science]
 citation:
   url: https://rellimylime.github.io/posts/forest-data-compilation/
 image: fia-thumbnail.jpeg

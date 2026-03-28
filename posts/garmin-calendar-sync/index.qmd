@@ -2,7 +2,7 @@
 title: "40 Spam Emails and a Garmin: A Calendar Sync Love Story"
 description: "I built a Python script to copy Google Calendar events when my Garmin refused to sync subscribed calendars. I also accidentally mass-emailed everyone in the process, which makes for a fun story."
 date: 2026-01-28
-categories: [Python, MEDS, Personal]
+categories: [Personal, Python, Tutorial]
 image: garmin-calendar.jpg
 citation:
   url: https://rellimylime.github.io/posts/garmin-calendar-sync/

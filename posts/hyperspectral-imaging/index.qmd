@@ -1,0 +1,532 @@
+---
+jupyter: eds220-env
+title: "Beyond Color: Decomposing a Hyperspectral Scene into Its Materials"
+description: "How PCA, linear spectral unmixing, and NMF each isolate different signals from a 210-band hyperspectral image cube — and what each decomposition actually means physically."
+date: 2026-03-28
+categories: [Python, Remote Sensing, Linear Algebra, Data Science]
+image: cover.png
+image-alt: "False-color composite of the HYDICE Urban hyperspectral scene showing roads, grass, and rooftops in distinct spectral colors"
+citation:
+  url: https://rellimylime.github.io/posts/hyperspectral-imaging
+bibliography: references.bib
+execute:
+  echo: true
+  eval: true
+  warning: false
+  message: false
+---
+
+```{python}
+#| label: setup
+#| echo: false
+
+import zipfile
+import tempfile
+import numpy as np
+import matplotlib.pyplot as plt
+from pathlib import Path
+from sklearn.decomposition import PCA, NMF
+from scipy.optimize import nnls
+
+DATA_DIR = Path("data/HYDICE_Urban/")  # expects Urban.zip here
+FIG_DIR = Path("figures/")
+FIG_DIR.mkdir(exist_ok=True)
+
+plt.rcParams.update({
+    "figure.dpi": 150,
+    "axes.spines.top": False,
+    "axes.spines.right": False,
+    "font.family": "sans-serif",
+})
+```
+
+## The question
+
+An RGB photograph of a city block tells you what color things are. Roads are gray, grass green, rooftops some shade of beige or metal. That's three numbers per pixel — red, green, blue — sampled from a signal that spans the entire electromagnetic spectrum.
+
+A hyperspectral sensor records that signal properly: not three bands, but hundreds of contiguous wavelength channels from the visible through the shortwave infrared. Every pixel in the image carries a full spectrum — about 210 values in the dataset we'll use here. That spectrum is to materials what a fingerprint is to a person: a unique signature shaped by chemistry and physical structure. Chlorophyll absorbs strongly in the red and blue but reflects in the near-infrared. Asphalt absorbs broadly with a flat, low reflectance. Metal rooftops can have sharp spectral features depending on the alloy.
+
+The question this post is really answering: **given those spectra, can we separate a scene into its constituent materials without labels?** Road from grass from rooftop, using nothing but the spectral data itself.
+
+Three approaches, each with a different set of assumptions:
+
+1.  **PCA / SVD** — What are the dominant directions of variance in spectral space? This is the compression view: how few components do you need to reconstruct the scene, and where does the subspace break down?
+2.  **Linear spectral unmixing** — If you know the spectrum of each pure material, how much of each is present in each pixel? This is the physical view: solve for fractional abundances under nonnegativity and sum-to-one constraints.
+3.  **NMF** — What nonnegative spectral factors explain the data? This is the parts-based view: no subtraction allowed, which tends to produce spectra that look like real materials even without endmember supervision.
+
+## The data
+
+We'll use **HYDICE Urban** [@erdc_hypercube], a commonly-used hyperspectral benchmark from the U.S. Army Engineer Research and Development Center. It's a 307 × 307 pixel scene with 210 bands spanning roughly 400–2500 nm, collected at about 2 m spatial resolution over an urban area. The urban setting is ideal for this demo: roads, lawns, rooftops, and trees produce spectrally distinct signatures that are easy to motivate visually.
+
+::: callout-note
+**Getting the data.** Download the URBAN sample ZIP from the [ERDC HyperCube page](https://www.erdc.usace.army.mil/Media/Fact-Sheets/Fact-Sheet-Article-View/Article/610433/hypercube/). Leave it zipped and place it at `data/HYDICE_Urban/Urban.zip` relative to this post — the loading code extracts it to a temporary directory automatically.
+
+To run the code cells yourself, change `eval: false` to `eval: true` in the document YAML. All figures in this post were pre-generated and committed.
+:::
+
+The canonical imaging-spectroscopy benchmark this work draws from is AVIRIS Moffett Field [@aviris_moffett] — a 224-band scene over a mixed water/vegetation/urban area near Mountain View, CA. Everything here ports directly; you'd change only the file path and optionally mask the water-absorption bands around 1400 nm and 1900 nm.
+
+### Loading the cube
+
+ENVI format is a raw binary file paired with a plain-text `.hdr` header that records shape, interleave, data type, and wavelength metadata. GDAL supports reading directly from ZIP archives via the `/vsizip/` virtual filesystem prefix — no extraction needed. The `.wvl` wavelength file is plain text, so we pull it from the ZIP using Python's `zipfile` module:
+
+```{python}
+#| label: load-data
+
+ZIP_PATH = DATA_DIR / "Urban.zip"
+
+# Parse wavelengths from the .wvl file (tab-separated, \r line endings, col 1 = nm)
+with zipfile.ZipFile(ZIP_PATH) as zf:
+    wvl_name = next(n for n in zf.namelist() if n.endswith(".wvl"))
+    with zf.open(wvl_name) as f:
+        lines = f.read().decode("ascii").replace("\r", "\n").splitlines()
+        wavelengths = np.array([float(l.split("\t")[1]) for l in lines if l.strip()])
+
+# The .hdr is a custom HyperCube format, not standard ENVI — read the binary directly.
+# Header specifies: big-endian int16, BIL interleave, 307 samples × 307 lines × 210 bands.
+with zipfile.ZipFile(ZIP_PATH) as zf:
+    data_name = next(n for n in zf.namelist() if not n.endswith(("/", ".hdr", ".wvl")))
+    with zf.open(data_name) as f:
+        raw = np.frombuffer(f.read(), dtype=np.dtype(">i2"))
+
+H, W, B = 307, 307, 210
+cube = raw.reshape(H, B, W).transpose(1, 0, 2)  # BIL: lines×bands×samples -> B×H×W
+
+print(f"Cube shape:       {cube.shape}")
+print(f"Wavelength range: {wavelengths[0]:.0f} – {wavelengths[-1]:.0f} nm")
+print(f"Dtype: {cube.dtype}, Min: {cube.min()}, Max: {cube.max()}")
+```
+
+The cube shape `(B, H, W)` puts bands first — consistent with how rasterio and most array-based hyperspectral tools expect data. We'll reshape as needed throughout.
+
+### A note on radiance vs. reflectance
+
+This dataset stores **radiance**: the power per unit area per steradian per wavelength measured at the sensor. It is not surface reflectance.
+
+The relationship between the two is approximately:
+
+$$\rho \approx \frac{\pi \, L \, d^2}{E_0 \cos(\theta_{SZ})}$$
+
+where $L$ is at-sensor radiance, $E_0$ is the solar irradiance at the top of atmosphere for that band, $d$ is the Earth–Sun distance in AU, and $\theta_{SZ}$ is the solar zenith angle [@nasa_seadas]. Atmospheric correction (e.g., ATCOR, 6S) goes further, removing path radiance to yield *surface* reflectance that is stable across dates and sensors.
+
+For this demo we work with radiance directly. The decompositions are mathematically identical either way; what changes is physical interpretability. Radiance mixes material signal with illumination geometry and atmospheric contributions. For cross-scene comparison or spectral library matching, surface reflectance is the right input.
+
+### RGB composite
+
+To visualize the scene, we pick three bands by wavelength rather than by index — a small habit that keeps code readable across datasets:
+
+```{python}
+#| label: rgb-composite
+#| code-fold: true
+
+def nearest_band(wavelengths: np.ndarray, target_nm: float) -> int:
+    """Return the band index closest to target_nm."""
+    return int(np.argmin(np.abs(wavelengths - target_nm)))
+
+R     = nearest_band(wavelengths, 650)  # red
+G     = nearest_band(wavelengths, 550)  # green
+B_idx = nearest_band(wavelengths, 470)  # blue
+
+rgb = cube[[R, G, B_idx], :, :].astype(np.float32).transpose(1, 2, 0)
+lo, hi = np.percentile(rgb, [2, 98])
+rgb = np.clip((rgb - lo) / (hi - lo), 0, 1)
+
+fig, ax = plt.subplots(figsize=(6, 6))
+ax.imshow(rgb)
+ax.set_title("HYDICE Urban — RGB composite (650 / 550 / 470 nm)", fontsize=11)
+ax.axis("off")
+plt.tight_layout()
+plt.savefig(FIG_DIR / "rgb_composite.png", bbox_inches="tight")
+plt.show()
+```
+
+![RGB composite of the HYDICE Urban scene.](figures/rgb_composite.png){fig-align="center" width="70%"}
+
+### Pixel spectra
+
+The whole premise of hyperspectral analysis is that each pixel's spectrum encodes its material. Here are four hand-picked examples — approximate pixel locations for identifiable surfaces visible in the RGB composite:
+
+```{python}
+#| label: pixel-spectra
+#| code-fold: true
+
+pixels = {
+    "Asphalt road":  (200, 120),
+    "Grass lawn":    (80,  200),
+    "Metal rooftop": (150,  50),
+    "Treed area":    (50,  150),
+}
+
+fig, ax = plt.subplots(figsize=(8, 4))
+for label, (row, col) in pixels.items():
+    spectrum = cube[:, row, col].astype(float)
+    ax.plot(wavelengths, spectrum, label=label, linewidth=1.5)
+
+ax.set_xlabel("Wavelength (nm)")
+ax.set_ylabel("Radiance (DN)")
+ax.set_title("Example pixel spectra — HYDICE Urban")
+ax.legend(frameon=False, fontsize=9)
+plt.tight_layout()
+plt.savefig(FIG_DIR / "pixel_spectra.png", bbox_inches="tight")
+plt.show()
+```
+
+![Spectra from four hand-picked pixels. Even in raw radiance, each material type has a recognizably distinct shape across wavelength.](figures/pixel_spectra.png){fig-align="center" width="85%"}
+
+Even without atmospheric correction, the signatures are distinct. Grass shows the classic vegetation red edge — low reflectance in the red, sharp jump into the near-infrared around 700 nm. Asphalt has a flat, relatively featureless spectrum. Metal rooftops often have a higher and less structured signature. These spectral differences are what the decompositions below will try to exploit.
+
+## From cube to matrix
+
+All three decompositions operate on a 2D matrix, not the 3D cube. The standard reshape is:
+
+$$X \in \mathbb{R}^{N \times B}, \quad N = H \cdot W$$
+
+where row $x_n \in \mathbb{R}^B$ is the spectrum at pixel $n$. This is the standard "observations × features" convention: each pixel is an observation, each wavelength band is a feature.
+
+```{python}
+#| label: reshape
+
+X = cube.astype(np.float64).reshape(B, H * W).T  # shape: (N, B)
+N = X.shape[0]
+
+print(f"Pixel matrix X: {X.shape}")  # (94249, 210)
+```
+
+This reshape is not just bookkeeping. It means PCA will find directions in *spectral space* — the 210-dimensional space of wavelength bands — and each component will have both a spatial image (how much of it is at each pixel) and a spectral signature (what it looks like as a function of wavelength).
+
+## PCA / SVD
+
+### Derivation
+
+PCA is SVD applied to the mean-centered data. Center the matrix by subtracting the mean spectrum:
+
+$$X_c = X - \mathbf{1}\mu^T, \quad \mu = \frac{1}{N}\sum_{n=1}^{N} x_n$$
+
+Then apply the economy SVD:
+
+$$X_c = U \Sigma V^T$$
+
+The three factors have clear geometric meanings:
+
+-   $V \in \mathbb{R}^{B \times K}$: columns are **spectral patterns** — directions in wavelength space that capture the most variance. These are the principal components.
+-   $\Sigma \in \mathbb{R}^{K \times K}$: diagonal matrix of singular values. $\sigma_k^2 / \sum_j \sigma_j^2$ is the fraction of total variance explained by component $k$.
+-   $U \in \mathbb{R}^{N \times K}$: columns are **pixel scores** — how much each pixel projects onto each component. Reshape column $k$ into $H \times W$ to get an **eigenimage**.
+
+scikit-learn's `PCA` does exactly this: it centers the data and runs a randomized SVD [@sklearn_pca]. The `components_` attribute is $V^T$; `transform` returns $U\Sigma$.
+
+### Code
+
+```{python}
+#| label: pca
+#| code-fold: true
+
+K = 12  # number of components to retain
+
+pca = PCA(n_components=K, svd_solver="randomized", random_state=42)
+Z = pca.fit_transform(X)         # pixel scores, shape (N, K)
+Vt = pca.components_              # spectral patterns, shape (K, B)
+explained = pca.explained_variance_ratio_
+
+# Eigenimages: reshape each score column back to spatial dimensions
+eigenimages = Z.T.reshape(K, H, W)  # shape: (K, H, W)
+
+# Rank-K reconstruction and per-pixel L2 error
+X_hat = pca.inverse_transform(Z)
+error_map = np.linalg.norm(X - X_hat, axis=1).reshape(H, W)
+```
+
+### Scree plot and eigenimages
+
+```{python}
+#| label: scree-eigenimages
+#| code-fold: true
+
+fig, ax = plt.subplots(figsize=(6, 3.5))
+ax.bar(range(1, K + 1), explained * 100, color="#4878CF", width=0.7)
+ax.set_xlabel("Component")
+ax.set_ylabel("Variance explained (%)")
+ax.set_title("Scree plot — HYDICE Urban PCA")
+plt.tight_layout()
+plt.savefig(FIG_DIR / "scree.png", bbox_inches="tight")
+plt.show()
+
+fig2, axes2 = plt.subplots(2, 3, figsize=(12, 8))
+for i, ax in enumerate(axes2.flat):
+    img = eigenimages[i]
+    vabs = np.percentile(np.abs(img), 99)
+    ax.imshow(img, cmap="RdBu_r", vmin=-vabs, vmax=vabs)
+    ax.set_title(f"PC {i+1}  ({explained[i]*100:.1f}%)", fontsize=10)
+    ax.axis("off")
+plt.suptitle("First 6 eigenimages", fontsize=12)
+plt.tight_layout()
+plt.savefig(FIG_DIR / "eigenimages.png", bbox_inches="tight")
+plt.show()
+```
+
+![Top 6 eigenimages, rendered with a diverging colormap. PC1 captures overall scene brightness. Subsequent components capture spectral contrast between material classes.](figures/eigenimages.png){fig-align="center"}
+
+The first component absorbs most of the variance — typically overall scene brightness. The second and third often pick up vegetation (the red edge creates a strong spectral contrast) and albedo differences between roads and rooftops. High-numbered components progressively capture finer spectral distinctions and eventually noise.
+
+Note the colormap: eigenimages can go negative. A pixel with a large positive score on PC2 loads strongly in one direction; negative means it loads in the opposite direction. This isn't a problem for compression — you can reconstruct the original data perfectly with enough components — but it makes physical interpretation awkward. "Negative fraction of asphalt" doesn't mean anything. That's what the next two methods address.
+
+### Reconstruction error map
+
+```{python}
+#| label: error-map
+#| code-fold: true
+
+fig, ax = plt.subplots(figsize=(5.5, 5.5))
+im = ax.imshow(error_map, cmap="inferno")
+plt.colorbar(im, ax=ax, label="L₂ reconstruction error (DN)")
+ax.set_title(f"PCA reconstruction error (K = {K})", fontsize=11)
+ax.axis("off")
+plt.tight_layout()
+plt.savefig(FIG_DIR / "pca_error.png", bbox_inches="tight")
+plt.show()
+```
+
+![Per-pixel reconstruction error for K=12. Bright pixels are where a 12-dimensional subspace fits poorly — typically rare materials, mixed pixels at material boundaries, or sensor noise.](figures/pca_error.png){fig-align="center" width="65%"}
+
+The error map is a lightweight anomaly detector. A rank-12 subspace captures the dominant spectral patterns; pixels that don't fit that subspace are, by definition, spectrally unusual. In urban hyperspectral data this often highlights vehicles, standing water, shadows, or areas where multiple materials are mixed at a fine scale. It's worth examining these pixels before moving to unmixing — they may indicate you need additional endmembers.
+
+## Linear spectral unmixing
+
+### The linear mixing model
+
+The linear mixing model (LMM) is a physical approximation: each pixel's spectrum is a weighted sum of pure material spectra (endmembers), where the weights are fractional abundances [@plaza_2012]:
+
+$$y_n \approx \sum_{p=1}^{P} s_{np} \, m_p = M s_n$$
+
+In matrix form for all pixels: $Y \approx S M^T$, where $M \in \mathbb{R}^{B \times P}$ is the endmember matrix and $S \in \mathbb{R}^{N \times P}$ contains per-pixel abundance vectors.
+
+The model is exact when materials tile the ground perfectly at the pixel scale. At 2 m resolution, most pixels contain multiple materials — hence unmixing.
+
+Two physical constraints on the abundance vector $s_n$:
+
+-   **Abundance nonnegativity (ANC):** $s_n \geq 0$ — you can't have a negative fraction of a material
+-   **Abundance sum-to-one (ASC):** $\mathbf{1}^T s_n = 1$ — the fractions must add up
+
+Together, these constrain each $s_n$ to the probability simplex $\Delta^{P-1}$. The optimization problem per pixel is:
+
+$$s_n^* = \arg\min_{s \,\in\, \Delta^{P-1}} \|y_n - Ms\|_2^2$$
+
+This is convex when $M$ is fixed, so there's a unique solution per pixel [@heinz_chang_2001].
+
+### Endmember selection
+
+Before solving for abundances, you need to know the endmember spectra. The algorithmic approach (N-FINDR, vertex component analysis) extracts endmembers automatically by finding the simplex of maximum volume in spectral space. For a tutorial, manual selection is cleaner to explain: pick a pixel that looks like a pure representative of each material class in the RGB composite.
+
+```{python}
+#| label: endmember-selection
+
+# Hand-picked pixel coordinates (row, col) — adjust to your scene
+endmember_pixels = {
+    "Asphalt": (200, 120),
+    "Grass":   (80,  200),
+    "Rooftop": (150,  50),
+    "Trees":   (50,  150),
+}
+
+P = len(endmember_pixels)
+M = np.zeros((B, P))
+for i, (name, (r, c)) in enumerate(endmember_pixels.items()):
+    M[:, i] = cube[:, r, c].astype(float)
+
+fig, ax = plt.subplots(figsize=(8, 4))
+for i, name in enumerate(endmember_pixels):
+    ax.plot(wavelengths, M[:, i], label=name, linewidth=1.5)
+ax.set_xlabel("Wavelength (nm)")
+ax.set_ylabel("Radiance (DN)")
+ax.set_title("Endmember spectra")
+ax.legend(frameon=False, fontsize=9)
+plt.tight_layout()
+plt.savefig(FIG_DIR / "endmembers.png", bbox_inches="tight")
+plt.show()
+```
+
+![Selected endmember spectra. Each represents a pure material type: the vegetation signatures (Grass, Trees) show the characteristic red-edge feature near 700 nm.](figures/endmembers.png){fig-align="center" width="85%"}
+
+### Solving for abundances: FCLS
+
+We solve the fully constrained least squares (FCLS) problem per pixel using the augmented NNLS trick from @heinz_chang_2001: add a scaled row of ones to both $M$ and $y$ to embed the ASC constraint as part of the least-squares system, solve via `scipy.optimize.nnls`, then normalize.
+
+```{python}
+#| label: fcls
+#| code-fold: true
+
+def fcls(M: np.ndarray, y: np.ndarray, delta: float = 100.0) -> np.ndarray:
+    """Fully constrained least squares (ANC + ASC).
+
+    Embeds the sum-to-one constraint by augmenting [M; delta*1^T] @ s = [y; delta],
+    solves via NNLS (enforcing ANC), then normalizes to ensure sum(s) = 1.
+
+    Parameters
+    ----------
+    M : (B, P) endmember matrix
+    y : (B,) pixel spectrum
+    delta : scaling factor for the ASC constraint row (larger = stricter enforcement)
+    """
+    M_aug = np.vstack([M, delta * np.ones((1, M.shape[1]))])
+    y_aug = np.append(y, delta)
+    s, _ = nnls(M_aug, y_aug)
+    total = s.sum()
+    if total > 1e-10:
+        s /= total
+    return s
+
+
+# Solve per pixel
+S = np.zeros((N, P))
+for n in range(N):
+    S[n] = fcls(M, X[n])
+
+# Reshape abundance maps to (P, H, W)
+abundance_maps = S.T.reshape(P, H, W)
+
+# Per-pixel residual: ||y_n - M s_n||
+residual = np.linalg.norm(X - S @ M.T, axis=1).reshape(H, W)
+```
+
+::: callout-note
+The per-pixel loop above is straightforward to read but slow for large scenes. For HYDICE at 307×307 this takes a few minutes on a laptop. For AVIRIS-scale data (\>1M pixels), parallelize with `joblib.Parallel` or reformulate as a batched quadratic program.
+:::
+
+```{python}
+#| label: abundance-maps
+#| code-fold: true
+
+names = list(endmember_pixels.keys())
+cmaps = ["Reds", "Greens", "Oranges", "YlGn"]
+
+fig, axes = plt.subplots(1, P + 1, figsize=(16, 4))
+for i, (name, cmap) in enumerate(zip(names, cmaps)):
+    axes[i].imshow(abundance_maps[i], cmap=cmap, vmin=0, vmax=1)
+    axes[i].set_title(name, fontsize=10)
+    axes[i].axis("off")
+
+im = axes[-1].imshow(residual, cmap="inferno")
+plt.colorbar(im, ax=axes[-1], label="Residual (DN)")
+axes[-1].set_title("Residual", fontsize=10)
+axes[-1].axis("off")
+
+plt.suptitle("FCLS abundance maps + unmixing residual", fontsize=12)
+plt.tight_layout()
+plt.savefig(FIG_DIR / "abundance_maps.png", bbox_inches="tight")
+plt.show()
+```
+
+![Abundance maps for each endmember plus the per-pixel unmixing residual. Warmer colors indicate higher fractional abundance of that material. High residual highlights pixels the four-endmember model can't explain.](figures/abundance_maps.png){fig-align="center"}
+
+The residual map is interpretively useful: it tells you where your endmember library is incomplete. Bright residuals typically indicate a fifth material not represented in your endmember set — common candidates for urban scenes are shadows, standing water, or bare soil. This is the natural place to iterate: examine bright-residual pixels, add an endmember for the material you find, re-solve.
+
+Compared to PCA eigenimages, the abundance maps are easier to explain to a stakeholder. Each map answers a concrete question: "What fraction of this pixel is covered by grass?" The cost is that the answer depends on your choice of endmembers — garbage in, garbage out.
+
+## NMF
+
+NMF asks a related but distinct question: can we factor $X$ into two nonnegative matrices without prescribing what the components should be?
+
+$$X \approx WH, \quad W \in \mathbb{R}_{\geq 0}^{N \times K}, \; H \in \mathbb{R}_{\geq 0}^{K \times B}$$
+
+The objective (squared Frobenius norm) is:
+
+$$\min_{W,\, H\, \geq\, 0} \;\frac{1}{2}\|X - WH\|_F^2$$
+
+Rows of $H$ are learned spectral basis vectors; columns of $W$ are per-pixel weights for each basis. Unlike PCA, there's no centering, no orthogonality constraint, and no sum-to-one. The only constraint is nonnegativity on both factors.
+
+The key insight from @lee_seung_1999: nonnegativity forces additive combinations. PCA components can subtract from each other to explain variance (hence the bipolar colormap in the eigenimages). NMF components can only add. This tends to produce spectral components that look like real materials — parts of the scene rather than mathematical contrasts — and spatial weights that look like abundance estimates, even without explicit endmember supervision.
+
+The trade-off: NMF is non-convex. The factorization is not unique, and results depend on initialization. `nndsvda` initialization (an SVD-based deterministic start) helps stabilize results and is the recommended default [@sklearn_nmf].
+
+```{python}
+#| label: nmf
+#| code-fold: true
+
+K_nmf = 6
+
+nmf = NMF(
+    n_components=K_nmf,
+    init="nndsvda",           # deterministic SVD-based initialization
+    solver="mu",              # multiplicative updates (Lee & Seung)
+    beta_loss="frobenius",
+    random_state=42,
+    max_iter=500,
+)
+
+W_nmf = nmf.fit_transform(X)    # pixel weights, shape (N, K_nmf)
+H_nmf = nmf.components_          # component spectra, shape (K_nmf, B)
+nmf_maps = W_nmf.T.reshape(K_nmf, H, W)
+
+fig, ax = plt.subplots(figsize=(9, 4))
+for k in range(K_nmf):
+    ax.plot(wavelengths, H_nmf[k], label=f"Component {k+1}", linewidth=1.5)
+ax.set_xlabel("Wavelength (nm)")
+ax.set_ylabel("Learned basis value")
+ax.set_title("NMF component spectra")
+ax.legend(frameon=False, fontsize=9, ncol=2)
+plt.tight_layout()
+plt.savefig(FIG_DIR / "nmf_spectra.png", bbox_inches="tight")
+plt.show()
+
+fig2, axes2 = plt.subplots(2, 3, figsize=(12, 8))
+for k, ax in enumerate(axes2.flat):
+    ax.imshow(nmf_maps[k], cmap="viridis")
+    ax.set_title(f"NMF component {k+1}", fontsize=10)
+    ax.axis("off")
+plt.suptitle("NMF spatial weight maps", fontsize=12)
+plt.tight_layout()
+plt.savefig(FIG_DIR / "nmf_maps.png", bbox_inches="tight")
+plt.show()
+```
+
+![NMF component spectra (top) and spatial weight maps (bottom). Unlike PCA eigenvectors, NMF spectra are strictly nonnegative — they can be visually compared to known material spectra in a spectral library.](figures/nmf_maps.png){fig-align="center"}
+
+Where PCA's eigenimages show positive-negative contrast, NMF maps show positive-only weights. The spatial patterns typically correspond loosely to material distributions, even without the physical constraints that unmixing enforces. Whether NMF or unmixing is more useful depends on your goal: NMF is useful for exploratory analysis when you don't have a spectral library; unmixing is better when you have ground truth endmembers and need physically interpretable fractions.
+
+### Exporting products
+
+All three decompositions produce outputs with a spatial dimension worth saving for downstream use. HYDICE Urban carries no geospatial metadata (no CRS, no geotransform), so we save as `.npy` arrays. For datasets that do have georeferencing — AVIRIS products, Sentinel data — swap this out for rasterio GeoTIFF writes:
+
+```{python}
+#| label: export
+#| code-fold: true
+
+derived = Path("data/derived")
+derived.mkdir(exist_ok=True)
+
+# Save as .npy — HYDICE Urban has no CRS or geotransform, so plain arrays are more honest
+# than an empty GeoTIFF. Each array is (layers, H, W), float32.
+np.save(derived / "eigenimages.npy", eigenimages.astype(np.float32))
+np.save(derived / "abundances.npy", abundance_maps.astype(np.float32))
+np.save(derived / "nmf_maps.npy", nmf_maps.astype(np.float32))
+np.save(derived / "wavelengths.npy", wavelengths)
+
+print("Saved:", [str(p) for p in sorted(derived.glob("*.npy"))])
+```
+
+## Where this fits in a real pipeline
+
+The decompositions above live at the "algorithm layer" of a hyperspectral processing chain. In a production system, they sit downstream of several preprocessing steps:
+
+| Demo step | Production analogue | Why it matters |
+|------------------------|------------------------|------------------------|
+| Load ENVI cube, parse wavelengths | Data ingest, metadata validation | Wrong wavelength labels corrupt every downstream result |
+| Radiance discussion | Radiometric calibration, unit consistency | Decompositions are only cross-scene comparable when inputs share a radiometric convention |
+| Spatial subset / windowed read | Tiling, chunked processing, distributed compute | Windowed I/O and chunk sizing are core scaling tactics for cubes that exceed RAM |
+| PCA eigenimages + error map | QA, compression, anomaly flagging | Error maps surface model mismatch and flag rare materials |
+| FCLS abundance maps | Subpixel material estimation | ANC + ASC encode physical meaning; residuals guide endmember library iteration |
+| NMF component maps | Blind source separation, interpretable bases | Nonnegativity improves spectral factor interpretability without manual endmember selection |
+| Export derived products | `.npy` here (no geospatial metadata); GeoTIFF/COG for georeferenced datasets | Product generation, GIS integration | Georeferenced outputs connect the analysis to downstream spatial workflows |
+
+In practice, measurements are processed through radiometric calibration, geometric correction, and atmospheric compensation before the simplified linear mixing model is applied [@plaza_2012]. The demo skips those steps, which is fine for illustrating the algebra — but worth flagging before applying any of this to a new scene.
+
+## Reproducibility
+
+-   Random seeds: `random_state=42` for PCA and NMF ensures deterministic results across runs.
+-   All figures use the full 307×307 scene with no additional spatial subsetting; re-renders will match exactly.
+-   Freeze your environment: `conda env export > environment.yml` or `uv pip freeze > requirements.txt`.
+-   The dataset is freely available from ERDC [@erdc_hypercube]; record the access date and use the provided handle as a citation.
+
+## References
+
+::: {#refs}
+:::

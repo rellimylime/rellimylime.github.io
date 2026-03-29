@@ -1,6 +1,6 @@
 ---
 title: "Getting Data That Doesn't Come in a CSV"
-description: "A beginner's walkthrough of three web scraping and API techniques — REST APIs, ID-based enrichment, and HTML scraping — using the DOGE federal grant termination list as a real-world example."
+description: "A beginner's walkthrough of three web scraping and API techniques, REST APIs, ID-based enrichment, and HTML scraping, using the DOGE federal grant termination list as a real-world example."
 author: "Emily Miller"
 date: "2026-03-12"
 categories: [Personal, R, Data Science, Web Scraping, Tutorial]
@@ -35,7 +35,7 @@ This post is a walkthrough of three techniques I used for the first time buildin
 
 Since January 20, 2025, DOGE has published a public list of terminated federal grants. By the time I pulled it, it had over 15,000 entries. That's too many to copy by hand and too important to ignore. Here's how I got it, enriched it, and what it showed.
 
----
+------------------------------------------------------------------------
 
 ## The Problem: Data That Lives on a Website
 
@@ -46,12 +46,12 @@ This situation comes up constantly in data work. Government databases, financial
 The three approaches in this project are a good starting point for learning to handle it:
 
 | Technique | When to use it | Tools |
-|---|---|---|
+|------------------------|------------------------|------------------------|
 | REST API (paginated) | Structured data with a public endpoint | `httr2` |
 | API enrichment | You have IDs from one source; another API has more info | `httr2` + `purrr` |
 | HTML scraping | No API exists; data is in the page itself | `rvest` |
 
----
+------------------------------------------------------------------------
 
 ## Technique 1: Fetching a Paginated REST API
 
@@ -61,7 +61,7 @@ An **API** (Application Programming Interface) is a structured way for programs 
 
 The DOGE grant list is available at `https://api.doge.gov/savings/grants`. If you paste that into a browser, you'll see something like this:
 
-```json
+``` json
 {
   "meta": { "pages": 127 },
   "result": {
@@ -135,7 +135,7 @@ A few things worth noting for beginners:
 
 **`Sys.sleep(pause_seconds)`** — this is important. If you loop 127 times without pausing, you're making 127 requests in a few seconds. That can look like a denial-of-service attack to the server. A half-second pause is polite and usually enough.
 
----
+------------------------------------------------------------------------
 
 ## Technique 2: Enriching Data Using a Second API
 
@@ -149,9 +149,9 @@ It turns out, yes. Many entries in the DOGE list include a link to **USAspending
 
 Here's what the process looks like:
 
-1. Parse the USAspending award ID out of the DOGE `link` field using a regex
-2. For each ID, hit the USAspending API and pull back the award details
-3. Join the results back to the original DOGE data
+1.  Parse the USAspending award ID out of the DOGE `link` field using a regex
+2.  For each ID, hit the USAspending API and pull back the award details
+3.  Join the results back to the original DOGE data
 
 ```{r fetch-usaspending, eval=FALSE}
 fetch_usaspending_awards <- function(doge_grants, max_ids = 200, pause_seconds = 0.15) {
@@ -197,7 +197,7 @@ fetch_usaspending_awards <- function(doge_grants, max_ids = 200, pause_seconds =
 
 **`tryCatch()`** — some award IDs in the DOGE list are invalid, retired, or return errors. Wrapping the API call in `tryCatch()` means a single failed lookup won't crash the whole loop. If an ID fails, we return a row of `NA` values and move on.
 
----
+------------------------------------------------------------------------
 
 ## Technique 3: Searching a Government API by Keyword
 
@@ -282,7 +282,7 @@ A few things worth noting:
 Here's a sample of what the Federal Register target returns when the pipeline runs:
 
 | publication_date | type | title |
-|---|---|---|
+|------------------------|------------------------|------------------------|
 | 2025-01-20 | Presidential Document | Establishing and Implementing the President's "Department of Government Efficiency" |
 | 2025-01-20 | Presidential Document | Reevaluating and Realigning United States Foreign Aid |
 | 2025-01-30 | Presidential Document | Expanding Educational Freedom and Opportunity for Families |
@@ -293,7 +293,7 @@ Here's a sample of what the Federal Register target returns when the pipeline ru
 
 This is the same data available to any researcher who runs `tar_make()` — no manual curation required, and it stays current as new documents are published.
 
----
+------------------------------------------------------------------------
 
 ## Technique 4: Scraping HTML When There's No API
 
@@ -305,7 +305,7 @@ For this project I wanted a news timeline: which days had major DOGE announcemen
 
 Every web page is built from HTML — a tree of nested elements. The steps below walk through how to read it with `rvest`, using the GovExec article list as an example.
 
-```r
+``` r
 page <- read_html("https://www.govexec.com/topic/doge/more/?page=1")
 ```
 
@@ -313,7 +313,7 @@ page <- read_html("https://www.govexec.com/topic/doge/more/?page=1")
 
 **CSS selectors** are patterns that describe which elements you want. You find them by right-clicking any element in your browser → "Inspect" → reading the class names in the Elements panel. Here's what a single article looks like in GovExec's HTML:
 
-```html
+``` html
 <article class="river-item">
 
   <a class="river-item-hed-link"
@@ -334,7 +334,7 @@ page <- read_html("https://www.govexec.com/topic/doge/more/?page=1")
 
 The article headlines are inside `<a>` tags with the class `river-item-hed-link`. The selector `a.river-item-hed-link` means: *all link elements with that class*. `html_text2()` extracts the visible text — the headline you'd read on screen, with whitespace cleaned up.
 
-```r
+``` r
 titles <- page |>
   html_elements("a.river-item-hed-link") |>
   html_text2() |>
@@ -345,7 +345,7 @@ titles <- page |>
 
 The human-readable date ("February 13, 2025") is unreliable to parse. But HTML `<time>` tags carry a `datetime` attribute — a machine-readable ISO timestamp that's much easier to work with. The selector `li.story-meta-date time` navigates down: *find `<li>` tags with class `story-meta-date`, then get the `<time>` inside*.
 
-```r
+``` r
 datetimes <- page |>
   html_elements("li.story-meta-date time") |>
   html_attr("datetime")
@@ -357,7 +357,7 @@ datetimes <- page |>
 
 The function below wraps all three steps — building the URL, applying the selectors, and assembling the result. It takes a `page_num` argument so it can be looped across multiple pages. The safety checks (lines 9–10) guard against empty or mismatched results when the page structure changes.
 
-```r
+``` r
 scrape_one_govexec_page <- function(page_num = 1) {
     url  <- paste0("https://www.govexec.com/topic/doge/more/?page=", page_num)
     page <- read_html(url)
@@ -383,19 +383,19 @@ scrape_one_govexec_page <- function(page_num = 1) {
 
 **One important caveat:** scrapers break when websites redesign. The class names `river-item-hed-link` and `story-meta-date` are specific to GovExec's current template. If they change, this function returns nothing — checking your scrapers periodically is part of maintaining a data pipeline.
 
----
+------------------------------------------------------------------------
 
 ## Putting It Together
 
 Once we have data from all three sources, we combine them into a single, enriched dataset:
 
-- DOGE records provide the termination date, agency, recipient, and claimed savings
-- USAspending adds verified obligation and outlay figures where a match is found
-- The news scrape provides the policy event dates used to annotate the charts
+-   DOGE records provide the termination date, agency, recipient, and claimed savings
+-   USAspending adds verified obligation and outlay figures where a match is found
+-   The news scrape provides the policy event dates used to annotate the charts
 
 The `{targets}` package manages the whole pipeline. Each step is a "target" — a named computation. `{targets}` checks which steps are outdated and re-runs only what's necessary, which matters a lot when one step (fetching 12,000 USAspending records) takes 20 minutes.
 
-```r
+``` r
 # _targets.R (abbreviated)
 list(
     tar_target(doge_grants,        fetch_doge_grants()),
@@ -408,7 +408,7 @@ list(
 
 Running `tar_make()` executes every step in the right order. Running it again only re-fetches if the upstream code changed.
 
----
+------------------------------------------------------------------------
 
 ## What the Data Shows
 
@@ -454,7 +454,7 @@ ggplotly(
 
 Domain classification here is keyword-based — a `case_when()` applied to lowercased grant descriptions. It's imperfect, and the "Other Academic" category is large because many grant descriptions use generic language. But the directional signal is consistent: DEI, environmental science, and conservation grants appear concentrated in the waves that follow specific policy events, not distributed evenly across the year.
 
----
+------------------------------------------------------------------------
 
 ## Caveats and Limitations
 
@@ -466,13 +466,13 @@ Domain classification here is keyword-based — a `case_when()` applied to lower
 
 **Domain classification is approximate.** A grant about "biodiversity in coastal ecosystems" might land in Environmental Science or Biological Sciences depending on which keywords hit first. Treat the domain column as directionally informative, not precise.
 
----
+------------------------------------------------------------------------
 
 ## Getting Started Yourself
 
 If this is your first time scraping or using APIs in R, here's the minimum you need:
 
-```r
+``` r
 install.packages(c("httr2", "rvest", "purrr", "dplyr", "targets"))
 ```
 
@@ -480,7 +480,7 @@ The full code for this project — `_targets.R` and all the `R/` functions — i
 
 The best way to learn this stuff is to pick a dataset you actually care about and try to get it. Every scraping project teaches you something different.
 
----
+------------------------------------------------------------------------
 
 ## Data & Methods
 

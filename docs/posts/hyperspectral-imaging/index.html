@@ -8,7 +8,7 @@
 
 <meta name="author" content="Emily Miller">
 <meta name="dcterms.date" content="2026-03-28">
-<meta name="description" content="How PCA, linear spectral unmixing, and NMF each isolate different signals from a 210-band hyperspectral image cube — and what each decomposition actually means physically.">
+<meta name="description" content="A spring-break tutorial on PCA, linear spectral unmixing, and NMF for readers who know remote sensing but are new to hyperspectral imagery.">
 
 <title>Beyond Color: Decomposing a Hyperspectral Scene into Its Materials – Emily Miller</title>
 <style>
@@ -241,7 +241,7 @@ window.Quarto = {
       <h1 class="title">Beyond Color: Decomposing a Hyperspectral Scene into Its Materials</h1>
                   <div>
         <div class="description">
-          How PCA, linear spectral unmixing, and NMF each isolate different signals from a 210-band hyperspectral image cube — and what each decomposition actually means physically.
+          A spring-break tutorial on PCA, linear spectral unmixing, and NMF for readers who know remote sensing but are new to hyperspectral imagery.
         </div>
       </div>
                           <div class="quarto-categories">
@@ -332,19 +332,49 @@ window.Quarto = {
 
 <section id="the-question" class="level2">
 <h2 class="anchored" data-anchor-id="the-question">The question</h2>
-<p>An RGB photograph of a city block tells you what color things are. Roads are gray, grass green, rooftops some shade of beige or metal. That’s three numbers per pixel — red, green, blue — sampled from a signal that spans the entire electromagnetic spectrum.</p>
-<p>A hyperspectral sensor records that signal properly: not three bands, but hundreds of contiguous wavelength channels from the visible through the shortwave infrared. Every pixel in the image carries a full spectrum — about 210 values in the dataset we’ll use here. That spectrum is to materials what a fingerprint is to a person: a unique signature shaped by chemistry and physical structure. Chlorophyll absorbs strongly in the red and blue but reflects in the near-infrared. Asphalt absorbs broadly with a flat, low reflectance. Metal rooftops can have sharp spectral features depending on the alloy.</p>
-<p>The question this post is really answering: <strong>given those spectra, can we separate a scene into its constituent materials without labels?</strong> Road from grass from rooftop, using nothing but the spectral data itself.</p>
-<p>Three approaches, each with a different set of assumptions:</p>
+<p>This post came out of a spring-break learning project. I wanted to go from “I know remote sensing and false-color imagery” to “I can actually open a hyperspectral cube, inspect pixel spectra, and run a few standard decomposition methods.” What follows is the tutorial I wish I had at the start: not a full hyperspectral textbook, but a guided walkthrough of the ideas and code I used to teach myself the basics.</p>
+<p>If you work with remote sensing imagery, you already know the usual move: choose a few bands, stretch them well, and interpret the resulting composite. Even a false-color image, though, still compresses the scene down to a small number of broad spectral channels.</p>
+<p>Hyperspectral imagery changes that. Instead of 3 broad RGB bands, or even a modest multispectral stack, it records hundreds of narrow, contiguous wavelength channels. In the HYDICE Urban scene used here, each pixel carries a 210-value spectrum spanning the visible through the shortwave infrared.</p>
+<p>That full spectral curve is what makes hyperspectral analysis different from standard image interpretation. Vegetation, asphalt, bare ground, rooftops, and metal surfaces can overlap in brightness or color in a broad-band composite while still differing strongly in spectral shape. The question stops being only “what does this object look like in a display image?” and becomes “what spectral signature is present in this pixel, and what does that imply about materials?”</p>
+<p>So the real question in this post is: <strong>given a full spectrum at each pixel, can we separate the scene into meaningful material patterns without labels?</strong></p>
+<p>Three approaches, each with a different way of framing that problem:</p>
 <ol type="1">
-<li><strong>PCA / SVD</strong> — What are the dominant directions of variance in spectral space? This is the compression view: how few components do you need to reconstruct the scene, and where does the subspace break down?</li>
-<li><strong>Linear spectral unmixing</strong> — If you know the spectrum of each pure material, how much of each is present in each pixel? This is the physical view: solve for fractional abundances under nonnegativity and sum-to-one constraints.</li>
-<li><strong>NMF</strong> — What nonnegative spectral factors explain the data? This is the parts-based view: no subtraction allowed, which tends to produce spectra that look like real materials even without endmember supervision.</li>
+<li><strong>Principal component analysis (PCA)</strong>: What are the dominant directions of spectral variance in the scene? PCA is the compression view. It asks how much of the 210-band signal can be summarized with a small number of orthogonal patterns.</li>
+<li><strong>Linear spectral unmixing</strong>: If we already know what a few pure materials look like, what fraction of each material is present in a given pixel? This is the fraction view, closest to the classic subpixel remote-sensing problem.</li>
+<li><strong>Non-negative matrix factorization (NMF)</strong>: Can we learn additive, material-like spectral patterns directly from the data, without supplying endmembers ahead of time? This is the discovery view.</li>
 </ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Remote-sensing intuition.</strong> A false-color composite asks: which three bands should I display? Hyperspectral analysis asks a different question: what can I learn if I use the <em>entire</em> spectral curve at each pixel instead of just a few display bands?</p>
+</div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">PCA: Variance View</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Unmixing: Fraction View</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">NMF: Parts View</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p>Use PCA when you want the strongest spectral contrasts in the scene, whether or not they map cleanly onto physical materials. It is especially useful for compression, QA, dimensionality reduction, and anomaly screening.</p>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p>Use linear unmixing when you already have plausible endmembers and want outputs that read like material fractions. This is the most direct fit to the remote-sensing question of mixed pixels and subpixel composition.</p>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<p>Use NMF when you want interpretable additive components but do not yet trust a fixed endmember library. It often sits between purely mathematical compression and fully supervised unmixing.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="the-data" class="level2">
 <h2 class="anchored" data-anchor-id="the-data">The data</h2>
-<p>We’ll use <strong>HYDICE Urban</strong> <span class="citation" data-cites="erdc_hypercube">(<a href="#ref-erdc_hypercube" role="doc-biblioref">U.S. Army Engineer Research and Development Center 2004</a>)</span>, a commonly-used hyperspectral benchmark from the U.S. Army Engineer Research and Development Center. It’s a 307 × 307 pixel scene with 210 bands spanning roughly 400–2500 nm, collected at about 2 m spatial resolution over an urban area. The urban setting is ideal for this demo: roads, lawns, rooftops, and trees produce spectrally distinct signatures that are easy to motivate visually.</p>
+<p>We’ll use <strong>HYDICE Urban</strong> <span class="citation" data-cites="erdc_hypercube">(<a href="#ref-erdc_hypercube" role="doc-biblioref">U.S. Army Engineer Research and Development Center 2004</a>)</span>, a classic hyperspectral benchmark from the U.S. Army Engineer Research and Development Center. It is a 307 x 307 pixel urban scene with 210 bands spanning roughly 400-2500 nm, at about 2 m ground sampling distance.</p>
+<p>It is a useful teaching scene because it mixes vegetation, roads, rooftops, bare ground, and shadow in a compact area. If you already have intuition for urban false-color imagery, this dataset is a natural next step: the same scene elements are there, but now we can analyze their full spectral behavior rather than only a few displayed bands.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -355,14 +385,15 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Getting the data.</strong> Download the URBAN sample ZIP from the <a href="https://www.erdc.usace.army.mil/Media/Fact-Sheets/Fact-Sheet-Article-View/Article/610433/hypercube/">ERDC HyperCube page</a>. Leave it zipped and place it at <code>data/HYDICE_Urban/Urban.zip</code> relative to this post — the loading code extracts it to a temporary directory automatically.</p>
+<p><strong>Getting the data.</strong> Download the URBAN sample ZIP from the <a href="https://www.erdc.usace.army.mil/Media/Fact-Sheets/Fact-Sheet-Article-View/Article/610433/hypercube/">ERDC HyperCube page</a>. Leave it zipped and place it at <code>data/HYDICE_Urban/Urban.zip</code> relative to this post, the loading code extracts it to a temporary directory automatically.</p>
 <p>To run the code cells yourself, change <code>eval: false</code> to <code>eval: true</code> in the document YAML. All figures in this post were pre-generated and committed.</p>
 </div>
 </div>
-<p>The canonical imaging-spectroscopy benchmark this work draws from is AVIRIS Moffett Field <span class="citation" data-cites="aviris_moffett">(<a href="#ref-aviris_moffett" role="doc-biblioref">Jet Propulsion Laboratory 1992</a>)</span> — a 224-band scene over a mixed water/vegetation/urban area near Mountain View, CA. Everything here ports directly; you’d change only the file path and optionally mask the water-absorption bands around 1400 nm and 1900 nm.</p>
+<p>If you want a more widely used imaging-spectroscopy benchmark, the same ideas also apply to AVIRIS Moffett Field <span class="citation" data-cites="aviris_moffett">(<a href="#ref-aviris_moffett" role="doc-biblioref">Jet Propulsion Laboratory 1992</a>)</span>, a 224-band scene over water, vegetation, and urban land near Mountain View, California. The workflow is almost the same; you mainly change the file path and, if needed, mask a few strong water-absorption bands.</p>
 <section id="loading-the-cube" class="level3">
 <h3 class="anchored" data-anchor-id="loading-the-cube">Loading the cube</h3>
-<p>ENVI format is a raw binary file paired with a plain-text <code>.hdr</code> header that records shape, interleave, data type, and wavelength metadata. GDAL supports reading directly from ZIP archives via the <code>/vsizip/</code> virtual filesystem prefix — no extraction needed. The <code>.wvl</code> wavelength file is plain text, so we pull it from the ZIP using Python’s <code>zipfile</code> module:</p>
+<p>This is a sensor-native style product: a binary cube plus a few small metadata files. The main data file holds the radiance values, while the wavelength file tells us which wavelength corresponds to each band. If you have worked with ENVI-style remote-sensing products before, the layout will feel familiar.</p>
+<p>The <code>.wvl</code> file is plain text, so we read it directly from the ZIP archive with Python’s <code>zipfile</code> module:</p>
 <div id="load-data" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ZIP_PATH <span class="op">=</span> DATA_DIR <span class="op">/</span> <span class="st">"Urban.zip"</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -373,349 +404,326 @@ Note
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        lines <span class="op">=</span> f.read().decode(<span class="st">"ascii"</span>).replace(<span class="st">"</span><span class="ch">\r</span><span class="st">"</span>, <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>).splitlines()</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        wavelengths <span class="op">=</span> np.array([<span class="bu">float</span>(l.split(<span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)[<span class="dv">1</span>]) <span class="cf">for</span> l <span class="kw">in</span> lines <span class="cf">if</span> l.strip()])</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># The .hdr is a custom HyperCube format, not standard ENVI — read the binary directly.</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Header specifies: big-endian int16, BIL interleave, 307 samples × 307 lines × 210 bands.</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># The .hdr is a custom HyperCube format, not standard ENVI, so we read the binary directly.</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Header specifies: big-endian int16, BIL interleave, 307 samples x 307 lines x 210 bands.</span></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> zipfile.ZipFile(ZIP_PATH) <span class="im">as</span> zf:</span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    data_name <span class="op">=</span> <span class="bu">next</span>(n <span class="cf">for</span> n <span class="kw">in</span> zf.namelist() <span class="cf">if</span> <span class="kw">not</span> n.endswith((<span class="st">"/"</span>, <span class="st">".hdr"</span>, <span class="st">".wvl"</span>)))</span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> zf.<span class="bu">open</span>(data_name) <span class="im">as</span> f:</span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>        raw <span class="op">=</span> np.frombuffer(f.read(), dtype<span class="op">=</span>np.dtype(<span class="st">"&gt;i2"</span>))</span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>H, W, B <span class="op">=</span> <span class="dv">307</span>, <span class="dv">307</span>, <span class="dv">210</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>cube <span class="op">=</span> raw.reshape(H, B, W).transpose(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">2</span>)  <span class="co"># BIL: lines×bands×samples -&gt; B×H×W</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>cube <span class="op">=</span> raw.reshape(H, B, W).transpose(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">2</span>)  <span class="co"># BIL: lines x bands x samples -&gt; bands x rows x cols</span></span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Cube shape:       </span><span class="sc">{</span>cube<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Wavelength range: </span><span class="sc">{</span>wavelengths[<span class="dv">0</span>]<span class="sc">:.0f}</span><span class="ss"> – </span><span class="sc">{</span>wavelengths[<span class="op">-</span><span class="dv">1</span>]<span class="sc">:.0f}</span><span class="ss"> nm"</span>)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Wavelength range: </span><span class="sc">{</span>wavelengths[<span class="dv">0</span>]<span class="sc">:.0f}</span><span class="ss"> - </span><span class="sc">{</span>wavelengths[<span class="op">-</span><span class="dv">1</span>]<span class="sc">:.0f}</span><span class="ss"> nm"</span>)</span>
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Dtype: </span><span class="sc">{</span>cube<span class="sc">.</span>dtype<span class="sc">}</span><span class="ss">, Min: </span><span class="sc">{</span>cube<span class="sc">.</span><span class="bu">min</span>()<span class="sc">}</span><span class="ss">, Max: </span><span class="sc">{</span>cube<span class="sc">.</span><span class="bu">max</span>()<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Cube shape:       (210, 307, 307)
-Wavelength range: 399 – 2499 nm
-Dtype: &gt;i2, Min: 0, Max: 1000</code></pre>
 </div>
-</div>
-<p>The cube shape <code>(B, H, W)</code> puts bands first — consistent with how rasterio and most array-based hyperspectral tools expect data. We’ll reshape as needed throughout.</p>
+<p>The cube shape <code>(B, H, W)</code> means:</p>
+<ul>
+<li>first index = wavelength band</li>
+<li>second index = row</li>
+<li>third index = column</li>
+</ul>
+<p>That layout is convenient because it makes both views of the data easy: one band at a time as an image, or one pixel at a time as a spectrum.</p>
 </section>
 <section id="a-note-on-radiance-vs.-reflectance" class="level3">
 <h3 class="anchored" data-anchor-id="a-note-on-radiance-vs.-reflectance">A note on radiance vs.&nbsp;reflectance</h3>
-<p>This dataset stores <strong>radiance</strong>: the power per unit area per steradian per wavelength measured at the sensor. It is not surface reflectance.</p>
+<p>This dataset stores <strong>radiance</strong>, which is the light measured by the sensor. It does <strong>not</strong> store surface reflectance.</p>
+<p>That distinction matters. Reflectance is usually easier to interpret as a surface property, because it is closer to “what fraction of incoming light did the target reflect?” Radiance still contains the material signal, but it also includes illumination geometry and atmospheric effects.</p>
 <p>The relationship between the two is approximately:</p>
 <p><span class="math display">\[\rho \approx \frac{\pi \, L \, d^2}{E_0 \cos(\theta_{SZ})}\]</span></p>
-<p>where <span class="math inline">\(L\)</span> is at-sensor radiance, <span class="math inline">\(E_0\)</span> is the solar irradiance at the top of atmosphere for that band, <span class="math inline">\(d\)</span> is the Earth–Sun distance in AU, and <span class="math inline">\(\theta_{SZ}\)</span> is the solar zenith angle <span class="citation" data-cites="nasa_seadas">(<a href="#ref-nasa_seadas" role="doc-biblioref">NASA Ocean Biology Processing Group 2023</a>)</span>. Atmospheric correction (e.g., ATCOR, 6S) goes further, removing path radiance to yield <em>surface</em> reflectance that is stable across dates and sensors.</p>
-<p>For this demo we work with radiance directly. The decompositions are mathematically identical either way; what changes is physical interpretability. Radiance mixes material signal with illumination geometry and atmospheric contributions. For cross-scene comparison or spectral library matching, surface reflectance is the right input.</p>
+<p>where <span class="math inline">\(L\)</span> is at-sensor radiance, <span class="math inline">\(E_0\)</span> is top-of-atmosphere solar irradiance for that band, <span class="math inline">\(d\)</span> is the Earth-Sun distance in AU, and <span class="math inline">\(\theta_{SZ}\)</span> is the solar zenith angle <span class="citation" data-cites="nasa_seadas">(<a href="#ref-nasa_seadas" role="doc-biblioref">NASA Ocean Biology Processing Group 2023</a>)</span>. Atmospheric-correction workflows go further than this simple relation and try to remove path radiance so the result is closer to true surface reflectance.</p>
+<p>For this demo, radiance is fine. The decomposition math is the same either way. The main difference is interpretation: if you want to compare across dates, sensors, or spectral libraries, reflectance is the more physically stable quantity.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Interpretation boundary.</strong> The outputs below are still useful on radiance, but they should not be read as scene-invariant material signatures. For library matching, cross-scene comparison, or retrieval tasks, surface reflectance is the safer input.</p>
+</div>
+</div>
 </section>
 <section id="rgb-composite" class="level3">
 <h3 class="anchored" data-anchor-id="rgb-composite">RGB composite</h3>
-<p>To visualize the scene, we pick three bands by wavelength rather than by index — a small habit that keeps code readable across datasets:</p>
-<div id="cell-rgb-composite" class="cell" data-execution_count="3">
+<p>To make a normal-looking color image, we pick one band near red, one near green, and one near blue. Choosing them by wavelength instead of by hard-coded band number makes the code easier to reuse on other datasets:</p>
+<div id="rgb-composite" class="cell" data-fig-show="hide" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> nearest_band(wavelengths: np.ndarray, target_nm: <span class="bu">float</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Return the band index closest to target_nm."""</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">int</span>(np.argmin(np.<span class="bu">abs</span>(wavelengths <span class="op">-</span> target_nm)))</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>R     <span class="op">=</span> nearest_band(wavelengths, <span class="dv">650</span>)  <span class="co"># red</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>G     <span class="op">=</span> nearest_band(wavelengths, <span class="dv">550</span>)  <span class="co"># green</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>B_idx <span class="op">=</span> nearest_band(wavelengths, <span class="dv">470</span>)  <span class="co"># blue</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>rgb <span class="op">=</span> cube[[R, G, B_idx], :, :].astype(np.float32).transpose(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>)</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>lo, hi <span class="op">=</span> np.percentile(rgb, [<span class="dv">2</span>, <span class="dv">98</span>])</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>rgb <span class="op">=</span> np.clip((rgb <span class="op">-</span> lo) <span class="op">/</span> (hi <span class="op">-</span> lo), <span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">6</span>))</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>ax.imshow(rgb)</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"HYDICE Urban — RGB composite (650 / 550 / 470 nm)"</span>, fontsize<span class="op">=</span><span class="dv">11</span>)</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>ax.axis(<span class="st">"off"</span>)</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>plt.savefig(FIG_DIR <span class="op">/</span> <span class="st">"rgb_composite.png"</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> nearest_band(wavelengths: np.ndarray, target_nm: <span class="bu">float</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Return the band index closest to target_nm."""</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">int</span>(np.argmin(np.<span class="bu">abs</span>(wavelengths <span class="op">-</span> target_nm)))</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>R     <span class="op">=</span> nearest_band(wavelengths, <span class="dv">650</span>)  <span class="co"># red</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>G     <span class="op">=</span> nearest_band(wavelengths, <span class="dv">550</span>)  <span class="co"># green</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>B_idx <span class="op">=</span> nearest_band(wavelengths, <span class="dv">470</span>)  <span class="co"># blue</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>rgb <span class="op">=</span> cube[[R, G, B_idx], :, :].astype(np.float32).transpose(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>lo, hi <span class="op">=</span> np.percentile(rgb, [<span class="dv">2</span>, <span class="dv">98</span>])</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>rgb <span class="op">=</span> np.clip((rgb <span class="op">-</span> lo) <span class="op">/</span> (hi <span class="op">-</span> lo), <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">6</span>))</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>ax.imshow(rgb)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"HYDICE Urban: RGB composite (650 / 550 / 470 nm)"</span>, fontsize<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>ax.axis(<span class="st">"off"</span>)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>plt.savefig(FIG_DIR <span class="op">/</span> <span class="st">"rgb_composite.png"</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display">
-<div>
+</div>
 <figure class="figure">
-<p><img src="index_files/figure-html/rgb-composite-output-1.png" id="rgb-composite" width="854" height="884" class="figure-img"></p>
+<img src="figures/rgb_composite.png" alt="RGB composite of the HYDICE Urban scene." style="display:block; margin:0 auto; width:70%;" class="figure-img">
+<figcaption>
+RGB composite of the HYDICE Urban scene.
+</figcaption>
 </figure>
-</div>
-</div>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="figures/rgb_composite.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<figcaption>RGB composite of the HYDICE Urban scene.</figcaption>
-</figure>
-</div>
 </section>
 <section id="pixel-spectra" class="level3">
 <h3 class="anchored" data-anchor-id="pixel-spectra">Pixel spectra</h3>
-<p>The whole premise of hyperspectral analysis is that each pixel’s spectrum encodes its material. Here are four hand-picked examples — approximate pixel locations for identifiable surfaces visible in the RGB composite:</p>
-<div id="cell-pixel-spectra" class="cell" data-execution_count="4">
+<p>A pixel spectrum is the basic object in hyperspectral analysis: one pixel, plotted across wavelength. If two surfaces are made of different materials, their spectral shapes often differ even when they look similar in a composite image.</p>
+<p>Here are four hand-picked examples from recognizable surfaces in the RGB image:</p>
+<div id="pixel-spectra" class="cell" data-fig-show="hide" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pixels <span class="op">=</span> {</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Asphalt road"</span>:  (<span class="dv">200</span>, <span class="dv">120</span>),</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Grass lawn"</span>:    (<span class="dv">80</span>,  <span class="dv">200</span>),</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Metal rooftop"</span>: (<span class="dv">150</span>,  <span class="dv">50</span>),</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Treed area"</span>:    (<span class="dv">50</span>,  <span class="dv">150</span>),</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> label, (row, col) <span class="kw">in</span> pixels.items():</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    spectrum <span class="op">=</span> cube[:, row, col].astype(<span class="bu">float</span>)</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    ax.plot(wavelengths, spectrum, label<span class="op">=</span>label, linewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Wavelength (nm)"</span>)</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Radiance (DN)"</span>)</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Example pixel spectra — HYDICE Urban"</span>)</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>ax.legend(frameon<span class="op">=</span><span class="va">False</span>, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>plt.savefig(FIG_DIR <span class="op">/</span> <span class="st">"pixel_spectra.png"</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pixels <span class="op">=</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Asphalt road"</span>:  (<span class="dv">200</span>, <span class="dv">120</span>),</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Grass lawn"</span>:    (<span class="dv">80</span>,  <span class="dv">200</span>),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Metal rooftop"</span>: (<span class="dv">150</span>,  <span class="dv">50</span>),</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Treed area"</span>:    (<span class="dv">50</span>,  <span class="dv">150</span>),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> label, (row, col) <span class="kw">in</span> pixels.items():</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    spectrum <span class="op">=</span> cube[:, row, col].astype(<span class="bu">float</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    ax.plot(wavelengths, spectrum, label<span class="op">=</span>label, linewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Wavelength (nm)"</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Radiance (DN)"</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Example pixel spectra - HYDICE Urban"</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>ax.legend(frameon<span class="op">=</span><span class="va">False</span>, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>plt.savefig(FIG_DIR <span class="op">/</span> <span class="st">"pixel_spectra.png"</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display">
-<div>
+</div>
 <figure class="figure">
-<p><img src="index_files/figure-html/pixel-spectra-output-1.png" id="pixel-spectra" width="1184" height="585" class="figure-img"></p>
+<img src="figures/pixel_spectra.png" alt="Spectra from four hand-picked pixels. Even in raw radiance, each material type has a recognizably distinct shape across wavelength." style="display:block; margin:0 auto; width:85%;" class="figure-img">
+<figcaption>
+Spectra from four hand-picked pixels. Even in raw radiance, each material type has a recognizably distinct shape across wavelength.
+</figcaption>
 </figure>
-</div>
-</div>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="figures/pixel_spectra.png" class="img-fluid figure-img" style="width:85.0%"></p>
-<figcaption>Spectra from four hand-picked pixels. Even in raw radiance, each material type has a recognizably distinct shape across wavelength.</figcaption>
-</figure>
-</div>
-<p>Even without atmospheric correction, the signatures are distinct. Grass shows the classic vegetation red edge — low reflectance in the red, sharp jump into the near-infrared around 700 nm. Asphalt has a flat, relatively featureless spectrum. Metal rooftops often have a higher and less structured signature. These spectral differences are what the decompositions below will try to exploit.</p>
+<p>Even without atmospheric correction, these curves separate cleanly. Grass shows the familiar vegetation red edge, low values in the red and a strong rise into the near-infrared. Asphalt is flatter. Rooftops are brighter and less vegetation-like. Those differences are exactly the signal the decomposition methods below try to isolate.</p>
 </section>
 </section>
 <section id="from-cube-to-matrix" class="level2">
 <h2 class="anchored" data-anchor-id="from-cube-to-matrix">From cube to matrix</h2>
-<p>All three decompositions operate on a 2D matrix, not the 3D cube. The standard reshape is:</p>
+<p>All three methods below want the data in matrix form rather than cube form, so we flatten the image:</p>
 <p><span class="math display">\[X \in \mathbb{R}^{N \times B}, \quad N = H \cdot W\]</span></p>
-<p>where row <span class="math inline">\(x_n \in \mathbb{R}^B\)</span> is the spectrum at pixel <span class="math inline">\(n\)</span>. This is the standard “observations × features” convention: each pixel is an observation, each wavelength band is a feature.</p>
+<p>Each row is one pixel spectrum. Each column is one wavelength band. We have not changed the data itself, only its shape.</p>
 <div id="reshape" class="cell" data-execution_count="5">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> cube.astype(np.float64).reshape(B, H <span class="op">*</span> W).T  <span class="co"># shape: (N, B)</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> X.shape[<span class="dv">0</span>]</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Pixel matrix X: </span><span class="sc">{</span>X<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)  <span class="co"># (94249, 210)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Pixel matrix X: (94249, 210)</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> cube.astype(np.float64).reshape(B, H <span class="op">*</span> W).T  <span class="co"># shape: (N, B)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> X.shape[<span class="dv">0</span>]</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Pixel matrix X: </span><span class="sc">{</span>X<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)  <span class="co"># (94249, 210)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</div>
-<p>This reshape is not just bookkeeping. It means PCA will find directions in <em>spectral space</em> — the 210-dimensional space of wavelength bands — and each component will have both a spatial image (how much of it is at each pixel) and a spectral signature (what it looks like as a function of wavelength).</p>
+<p>This is more than bookkeeping. Once the data are in this form, each pixel becomes one point in a 210-dimensional spectral space, and the methods below look for structure in that cloud of points.</p>
 </section>
 <section id="pca-svd" class="level2">
 <h2 class="anchored" data-anchor-id="pca-svd">PCA / SVD</h2>
 <section id="derivation" class="level3">
 <h3 class="anchored" data-anchor-id="derivation">Derivation</h3>
-<p>PCA is SVD applied to the mean-centered data. Center the matrix by subtracting the mean spectrum:</p>
+<p>PCA looks for a small number of directions that explain most of the variation in the data. For a remote-sensing reader, one good way to think about it is this: if you had to summarize each 210-band spectrum with just a few spectral contrasts, which contrasts would matter most?</p>
+<p>Mathematically, PCA is SVD applied to the mean-centered data. “Mean-centered” just means we subtract the average spectrum first:</p>
 <p><span class="math display">\[X_c = X - \mathbf{1}\mu^T, \quad \mu = \frac{1}{N}\sum_{n=1}^{N} x_n\]</span></p>
 <p>Then apply the economy SVD:</p>
 <p><span class="math display">\[X_c = U \Sigma V^T\]</span></p>
-<p>The three factors have clear geometric meanings:</p>
+<p>The three factors have a useful remote-sensing interpretation:</p>
 <ul>
-<li><span class="math inline">\(V \in \mathbb{R}^{B \times K}\)</span>: columns are <strong>spectral patterns</strong> — directions in wavelength space that capture the most variance. These are the principal components.</li>
-<li><span class="math inline">\(\Sigma \in \mathbb{R}^{K \times K}\)</span>: diagonal matrix of singular values. <span class="math inline">\(\sigma_k^2 / \sum_j \sigma_j^2\)</span> is the fraction of total variance explained by component <span class="math inline">\(k\)</span>.</li>
-<li><span class="math inline">\(U \in \mathbb{R}^{N \times K}\)</span>: columns are <strong>pixel scores</strong> — how much each pixel projects onto each component. Reshape column <span class="math inline">\(k\)</span> into <span class="math inline">\(H \times W\)</span> to get an <strong>eigenimage</strong>.</li>
+<li><span class="math inline">\(V \in \mathbb{R}^{B \times K}\)</span>: spectral loading vectors, or wavelength patterns that capture strong variance</li>
+<li><span class="math inline">\(\Sigma \in \mathbb{R}^{K \times K}\)</span>: the strength of those patterns</li>
+<li><span class="math inline">\(U \in \mathbb{R}^{N \times K}\)</span>: the per-pixel scores telling us how strongly each pixel expresses each pattern</li>
 </ul>
-<p>scikit-learn’s <code>PCA</code> does exactly this: it centers the data and runs a randomized SVD <span class="citation" data-cites="sklearn_pca">(<a href="#ref-sklearn_pca" role="doc-biblioref">scikit-learn developers 2024b</a>)</span>. The <code>components_</code> attribute is <span class="math inline">\(V^T\)</span>; <code>transform</code> returns <span class="math inline">\(U\Sigma\)</span>.</p>
+<p>If you reshape one score column of <span class="math inline">\(U\)</span> back into image form, you get an <strong>eigenimage</strong>: a map showing where that spectral pattern is strong or weak. In scikit-learn, <code>components_</code> stores the spectral loadings and <code>transform</code> returns the pixel scores <span class="citation" data-cites="sklearn_pca">(<a href="#ref-sklearn_pca" role="doc-biblioref">scikit-learn developers 2024b</a>)</span>.</p>
 </section>
 <section id="code" class="level3">
 <h3 class="anchored" data-anchor-id="code">Code</h3>
 <div id="pca" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>K <span class="op">=</span> <span class="dv">12</span>  <span class="co"># number of components to retain</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>pca <span class="op">=</span> PCA(n_components<span class="op">=</span>K, svd_solver<span class="op">=</span><span class="st">"randomized"</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>Z <span class="op">=</span> pca.fit_transform(X)         <span class="co"># pixel scores, shape (N, K)</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>Vt <span class="op">=</span> pca.components_              <span class="co"># spectral patterns, shape (K, B)</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>explained <span class="op">=</span> pca.explained_variance_ratio_</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Eigenimages: reshape each score column back to spatial dimensions</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>eigenimages <span class="op">=</span> Z.T.reshape(K, H, W)  <span class="co"># shape: (K, H, W)</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Rank-K reconstruction and per-pixel L2 error</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>X_hat <span class="op">=</span> pca.inverse_transform(Z)</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>error_map <span class="op">=</span> np.linalg.norm(X <span class="op">-</span> X_hat, axis<span class="op">=</span><span class="dv">1</span>).reshape(H, W)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>K <span class="op">=</span> <span class="dv">12</span>  <span class="co"># number of components to retain</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>pca <span class="op">=</span> PCA(n_components<span class="op">=</span>K, svd_solver<span class="op">=</span><span class="st">"randomized"</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>Z <span class="op">=</span> pca.fit_transform(X)         <span class="co"># pixel scores, shape (N, K)</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>Vt <span class="op">=</span> pca.components_              <span class="co"># spectral patterns, shape (K, B)</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>explained <span class="op">=</span> pca.explained_variance_ratio_</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Eigenimages: reshape each score column back to spatial dimensions</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>eigenimages <span class="op">=</span> Z.T.reshape(K, H, W)  <span class="co"># shape: (K, H, W)</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Rank-K reconstruction and per-pixel L2 error</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>X_hat <span class="op">=</span> pca.inverse_transform(Z)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>error_map <span class="op">=</span> np.linalg.norm(X <span class="op">-</span> X_hat, axis<span class="op">=</span><span class="dv">1</span>).reshape(H, W)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
 <section id="scree-plot-and-eigenimages" class="level3">
 <h3 class="anchored" data-anchor-id="scree-plot-and-eigenimages">Scree plot and eigenimages</h3>
-<div id="scree-eigenimages" class="cell" data-execution_count="7">
+<div id="scree-eigenimages" class="cell" data-fig-show="hide" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="fl">3.5</span>))</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>ax.bar(<span class="bu">range</span>(<span class="dv">1</span>, K <span class="op">+</span> <span class="dv">1</span>), explained <span class="op">*</span> <span class="dv">100</span>, color<span class="op">=</span><span class="st">"#4878CF"</span>, width<span class="op">=</span><span class="fl">0.7</span>)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Component"</span>)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Variance explained (%)"</span>)</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Scree plot — HYDICE Urban PCA"</span>)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>plt.savefig(FIG_DIR <span class="op">/</span> <span class="st">"scree.png"</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>fig2, axes2 <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">8</span>))</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, ax <span class="kw">in</span> <span class="bu">enumerate</span>(axes2.flat):</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    img <span class="op">=</span> eigenimages[i]</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    vabs <span class="op">=</span> np.percentile(np.<span class="bu">abs</span>(img), <span class="dv">99</span>)</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    ax.imshow(img, cmap<span class="op">=</span><span class="st">"RdBu_r"</span>, vmin<span class="op">=-</span>vabs, vmax<span class="op">=</span>vabs)</span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="ss">f"PC </span><span class="sc">{</span>i<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">  (</span><span class="sc">{</span>explained[i]<span class="op">*</span><span class="dv">100</span><span class="sc">:.1f}</span><span class="ss">%)"</span>, fontsize<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    ax.axis(<span class="st">"off"</span>)</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">"First 6 eigenimages"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>plt.savefig(FIG_DIR <span class="op">/</span> <span class="st">"eigenimages.png"</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="fl">3.5</span>))</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>ax.bar(<span class="bu">range</span>(<span class="dv">1</span>, K <span class="op">+</span> <span class="dv">1</span>), explained <span class="op">*</span> <span class="dv">100</span>, color<span class="op">=</span><span class="st">"#4878CF"</span>, width<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Component"</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Variance explained (%)"</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Scree plot: HYDICE Urban PCA"</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>plt.savefig(FIG_DIR <span class="op">/</span> <span class="st">"scree.png"</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>fig2, axes2 <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">8</span>))</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, ax <span class="kw">in</span> <span class="bu">enumerate</span>(axes2.flat):</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    img <span class="op">=</span> eigenimages[i]</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    vabs <span class="op">=</span> np.percentile(np.<span class="bu">abs</span>(img), <span class="dv">99</span>)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    ax.imshow(img, cmap<span class="op">=</span><span class="st">"RdBu_r"</span>, vmin<span class="op">=-</span>vabs, vmax<span class="op">=</span>vabs)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="ss">f"PC </span><span class="sc">{</span>i<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">  (</span><span class="sc">{</span>explained[i]<span class="op">*</span><span class="dv">100</span><span class="sc">:.1f}</span><span class="ss">%)"</span>, fontsize<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    ax.axis(<span class="st">"off"</span>)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">"First 6 eigenimages"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>plt.savefig(FIG_DIR <span class="op">/</span> <span class="st">"eigenimages.png"</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display">
-<div>
+</div>
 <figure class="figure">
-<p><img src="index_files/figure-html/scree-eigenimages-output-1.png" id="scree-eigenimages-1" width="885" height="510" class="figure-img"></p>
+<img src="figures/eigenimages.png" alt="Top 6 eigenimages, rendered with a diverging colormap. PC1 captures overall scene brightness. Subsequent components capture spectral contrast between material classes." style="display:block; margin:0 auto; width:100%;" class="figure-img">
+<figcaption>
+Top 6 eigenimages, rendered with a diverging colormap. PC1 captures overall scene brightness. Subsequent components capture spectral contrast between material classes.
+</figcaption>
 </figure>
-</div>
-</div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/scree-eigenimages-output-2.png" id="scree-eigenimages-2" width="1736" height="1183" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="figures/eigenimages.png" class="img-fluid figure-img"></p>
-<figcaption>Top 6 eigenimages, rendered with a diverging colormap. PC1 captures overall scene brightness. Subsequent components capture spectral contrast between material classes.</figcaption>
-</figure>
-</div>
-<p>The first component absorbs most of the variance — typically overall scene brightness. The second and third often pick up vegetation (the red edge creates a strong spectral contrast) and albedo differences between roads and rooftops. High-numbered components progressively capture finer spectral distinctions and eventually noise.</p>
-<p>Note the colormap: eigenimages can go negative. A pixel with a large positive score on PC2 loads strongly in one direction; negative means it loads in the opposite direction. This isn’t a problem for compression — you can reconstruct the original data perfectly with enough components — but it makes physical interpretation awkward. “Negative fraction of asphalt” doesn’t mean anything. That’s what the next two methods address.</p>
+<p>The scree plot tells us how much each component matters. The eigenimages show where each component is active in space.</p>
+<p>Usually, the first component captures broad scene brightness. The next few components often pick up real material contrasts, especially vegetation versus built surfaces or bright rooftops versus darker pavement. Later components tend to capture finer structure and, eventually, noise.</p>
+<p>One important point: PCA values can be positive or negative. That is fine mathematically, but awkward physically. A negative PCA score does <strong>not</strong> mean “negative asphalt” or “negative grass.” It only means the pixel sits on one side of a mathematical axis instead of the other. That is why the next methods can be easier to interpret.</p>
 </section>
 <section id="reconstruction-error-map" class="level3">
 <h3 class="anchored" data-anchor-id="reconstruction-error-map">Reconstruction error map</h3>
-<div id="cell-error-map" class="cell" data-execution_count="8">
+<div id="error-map" class="cell" data-fig-show="hide" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="fl">5.5</span>, <span class="fl">5.5</span>))</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>im <span class="op">=</span> ax.imshow(error_map, cmap<span class="op">=</span><span class="st">"inferno"</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>plt.colorbar(im, ax<span class="op">=</span>ax, label<span class="op">=</span><span class="st">"L₂ reconstruction error (DN)"</span>)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="ss">f"PCA reconstruction error (K = </span><span class="sc">{</span>K<span class="sc">}</span><span class="ss">)"</span>, fontsize<span class="op">=</span><span class="dv">11</span>)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>ax.axis(<span class="st">"off"</span>)</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>plt.savefig(FIG_DIR <span class="op">/</span> <span class="st">"pca_error.png"</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="fl">5.5</span>, <span class="fl">5.5</span>))</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>im <span class="op">=</span> ax.imshow(error_map, cmap<span class="op">=</span><span class="st">"inferno"</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>plt.colorbar(im, ax<span class="op">=</span>ax, label<span class="op">=</span><span class="st">"L2 reconstruction error (DN)"</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="ss">f"PCA reconstruction error (K = </span><span class="sc">{</span>K<span class="sc">}</span><span class="ss">)"</span>, fontsize<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>ax.axis(<span class="st">"off"</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>plt.savefig(FIG_DIR <span class="op">/</span> <span class="st">"pca_error.png"</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display">
-<div>
+</div>
 <figure class="figure">
-<p><img src="index_files/figure-html/error-map-output-1.png" id="error-map" width="800" height="809" class="figure-img"></p>
+<img src="figures/pca_error.png" alt="Per-pixel reconstruction error for K=12. Bright pixels are where a 12-dimensional subspace fits poorly, typically rare materials, mixed pixels at material boundaries, or sensor noise." style="display:block; margin:0 auto; width:65%;" class="figure-img">
+<figcaption>
+Per-pixel reconstruction error for K=12. Bright pixels are where a 12-dimensional subspace fits poorly, typically rare materials, mixed pixels at material boundaries, or sensor noise.
+</figcaption>
 </figure>
-</div>
-</div>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="figures/pca_error.png" class="img-fluid figure-img" style="width:65.0%"></p>
-<figcaption>Per-pixel reconstruction error for K=12. Bright pixels are where a 12-dimensional subspace fits poorly — typically rare materials, mixed pixels at material boundaries, or sensor noise.</figcaption>
-</figure>
-</div>
-<p>The error map is a lightweight anomaly detector. A rank-12 subspace captures the dominant spectral patterns; pixels that don’t fit that subspace are, by definition, spectrally unusual. In urban hyperspectral data this often highlights vehicles, standing water, shadows, or areas where multiple materials are mixed at a fine scale. It’s worth examining these pixels before moving to unmixing — they may indicate you need additional endmembers.</p>
+<p>This map shows where a 12-component PCA model fits poorly. Bright areas are pixels whose spectra are unusual or hard to summarize with just 12 components.</p>
+<p>In practice, those bright spots often correspond to rare materials, shadows, standing water, vehicles, or strongly mixed pixels. That makes the error map a simple but useful anomaly detector.</p>
 </section>
 </section>
 <section id="linear-spectral-unmixing" class="level2">
 <h2 class="anchored" data-anchor-id="linear-spectral-unmixing">Linear spectral unmixing</h2>
 <section id="the-linear-mixing-model" class="level3">
 <h3 class="anchored" data-anchor-id="the-linear-mixing-model">The linear mixing model</h3>
-<p>The linear mixing model (LMM) is a physical approximation: each pixel’s spectrum is a weighted sum of pure material spectra (endmembers), where the weights are fractional abundances <span class="citation" data-cites="plaza_2012">(<a href="#ref-plaza_2012" role="doc-biblioref">Plaza et al. 2009</a>)</span>:</p>
+<p>Now switch from compression to mixing.</p>
+<p>The linear mixing model says that one pixel can be approximated as a weighted sum of a few pure material spectra, called <strong>endmembers</strong> <span class="citation" data-cites="plaza_2012">(<a href="#ref-plaza_2012" role="doc-biblioref">Plaza et al. 2009</a>)</span>. For an urban scene at 2 m resolution, that is a reasonable first model: many pixels are mixtures of vegetation, pavement, roof, and shadow rather than perfectly pure targets.</p>
 <p><span class="math display">\[y_n \approx \sum_{p=1}^{P} s_{np} \, m_p = M s_n\]</span></p>
 <p>In matrix form for all pixels: <span class="math inline">\(Y \approx S M^T\)</span>, where <span class="math inline">\(M \in \mathbb{R}^{B \times P}\)</span> is the endmember matrix and <span class="math inline">\(S \in \mathbb{R}^{N \times P}\)</span> contains per-pixel abundance vectors.</p>
-<p>The model is exact when materials tile the ground perfectly at the pixel scale. At 2 m resolution, most pixels contain multiple materials — hence unmixing.</p>
+<p>This model is only an approximation, but it is a useful one. At 2 m resolution, many pixels cover more than one surface type, so “unmixing” means estimating the fractions of those hidden ingredients.</p>
 <p>Two physical constraints on the abundance vector <span class="math inline">\(s_n\)</span>:</p>
 <ul>
-<li><strong>Abundance nonnegativity (ANC):</strong> <span class="math inline">\(s_n \geq 0\)</span> — you can’t have a negative fraction of a material</li>
-<li><strong>Abundance sum-to-one (ASC):</strong> <span class="math inline">\(\mathbf{1}^T s_n = 1\)</span> — the fractions must add up</li>
+<li><strong>Abundance nonnegativity (ANC):</strong> <span class="math inline">\(s_n \geq 0\)</span>, you can’t have a negative fraction of a material</li>
+<li><strong>Abundance sum-to-one (ASC):</strong> <span class="math inline">\(\mathbf{1}^T s_n = 1\)</span>, the fractions must add up</li>
 </ul>
-<p>Together, these constrain each <span class="math inline">\(s_n\)</span> to the probability simplex <span class="math inline">\(\Delta^{P-1}\)</span>. The optimization problem per pixel is:</p>
+<p>Together, those constraints make the weights behave like fractions. The optimization problem per pixel is:</p>
 <p><span class="math display">\[s_n^* = \arg\min_{s \,\in\, \Delta^{P-1}} \|y_n - Ms\|_2^2\]</span></p>
-<p>This is convex when <span class="math inline">\(M\)</span> is fixed, so there’s a unique solution per pixel <span class="citation" data-cites="heinz_chang_2001">(<a href="#ref-heinz_chang_2001" role="doc-biblioref">Heinz and Chang 2001</a>)</span>.</p>
+<p>Once <span class="math inline">\(M\)</span> is fixed, this is a well-behaved optimization problem with one best solution per pixel <span class="citation" data-cites="heinz_chang_2001">(<a href="#ref-heinz_chang_2001" role="doc-biblioref">Heinz and Chang 2001</a>)</span>.</p>
 </section>
 <section id="endmember-selection" class="level3">
 <h3 class="anchored" data-anchor-id="endmember-selection">Endmember selection</h3>
-<p>Before solving for abundances, you need to know the endmember spectra. The algorithmic approach (N-FINDR, vertex component analysis) extracts endmembers automatically by finding the simplex of maximum volume in spectral space. For a tutorial, manual selection is cleaner to explain: pick a pixel that looks like a pure representative of each material class in the RGB composite.</p>
-<div id="cell-endmember-selection" class="cell" data-execution_count="9">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Hand-picked pixel coordinates (row, col) — adjust to your scene</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>endmember_pixels <span class="op">=</span> {</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Asphalt"</span>: (<span class="dv">200</span>, <span class="dv">120</span>),</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Grass"</span>:   (<span class="dv">80</span>,  <span class="dv">200</span>),</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Rooftop"</span>: (<span class="dv">150</span>,  <span class="dv">50</span>),</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Trees"</span>:   (<span class="dv">50</span>,  <span class="dv">150</span>),</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> <span class="bu">len</span>(endmember_pixels)</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>M <span class="op">=</span> np.zeros((B, P))</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, (name, (r, c)) <span class="kw">in</span> <span class="bu">enumerate</span>(endmember_pixels.items()):</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    M[:, i] <span class="op">=</span> cube[:, r, c].astype(<span class="bu">float</span>)</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, name <span class="kw">in</span> <span class="bu">enumerate</span>(endmember_pixels):</span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    ax.plot(wavelengths, M[:, i], label<span class="op">=</span>name, linewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Wavelength (nm)"</span>)</span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Radiance (DN)"</span>)</span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Endmember spectra"</span>)</span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>ax.legend(frameon<span class="op">=</span><span class="va">False</span>, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>plt.savefig(FIG_DIR <span class="op">/</span> <span class="st">"endmembers.png"</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display">
-<div>
+<p>Before we can solve for fractions, we need example spectra for the pure materials.</p>
+<p>In a full remote-sensing workflow, you might estimate those endmembers automatically with algorithms such as N-FINDR or vertex component analysis. For a tutorial, hand-picking a few obvious pixels is easier to follow: choose one pixel that looks like road, one that looks like grass, one rooftop, and one tree patch.</p>
+<div id="endmember-selection" class="cell" data-fig-show="hide" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Hand-picked pixel coordinates (row, col)</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>endmember_pixels <span class="op">=</span> {</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Asphalt"</span>: (<span class="dv">200</span>, <span class="dv">120</span>),</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Grass"</span>:   (<span class="dv">80</span>,  <span class="dv">200</span>),</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Rooftop"</span>: (<span class="dv">150</span>,  <span class="dv">50</span>),</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Trees"</span>:   (<span class="dv">50</span>,  <span class="dv">150</span>),</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> <span class="bu">len</span>(endmember_pixels)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>M <span class="op">=</span> np.zeros((B, P))</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, (name, (r, c)) <span class="kw">in</span> <span class="bu">enumerate</span>(endmember_pixels.items()):</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    M[:, i] <span class="op">=</span> cube[:, r, c].astype(<span class="bu">float</span>)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, name <span class="kw">in</span> <span class="bu">enumerate</span>(endmember_pixels):</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    ax.plot(wavelengths, M[:, i], label<span class="op">=</span>name, linewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Wavelength (nm)"</span>)</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Radiance (DN)"</span>)</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Endmember spectra"</span>)</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>ax.legend(frameon<span class="op">=</span><span class="va">False</span>, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>plt.savefig(FIG_DIR <span class="op">/</span> <span class="st">"endmembers.png"</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 <figure class="figure">
-<p><img src="index_files/figure-html/endmember-selection-output-1.png" id="endmember-selection" width="1184" height="585" class="figure-img"></p>
+<img src="figures/endmembers.png" alt="Selected endmember spectra. Each represents a pure material type: the vegetation signatures (Grass, Trees) show the characteristic red-edge feature near 700 nm." style="display:block; margin:0 auto; width:85%;" class="figure-img">
+<figcaption>
+Selected endmember spectra. Each represents a pure material type: the vegetation signatures (Grass, Trees) show the characteristic red-edge feature near 700 nm.
+</figcaption>
 </figure>
-</div>
-</div>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="figures/endmembers.png" class="img-fluid figure-img" style="width:85.0%"></p>
-<figcaption>Selected endmember spectra. Each represents a pure material type: the vegetation signatures (Grass, Trees) show the characteristic red-edge feature near 700 nm.</figcaption>
-</figure>
-</div>
 </section>
 <section id="solving-for-abundances-fcls" class="level3">
 <h3 class="anchored" data-anchor-id="solving-for-abundances-fcls">Solving for abundances: FCLS</h3>
-<p>We solve the fully constrained least squares (FCLS) problem per pixel using the augmented NNLS trick from <span class="citation" data-cites="heinz_chang_2001">Heinz and Chang (<a href="#ref-heinz_chang_2001" role="doc-biblioref">2001</a>)</span>: add a scaled row of ones to both <span class="math inline">\(M\)</span> and <span class="math inline">\(y\)</span> to embed the ASC constraint as part of the least-squares system, solve via <code>scipy.optimize.nnls</code>, then normalize.</p>
+<p>Now we solve for the fractions in each pixel.</p>
+<p>We use fully constrained least squares (FCLS). The goal is to estimate the nonnegative abundance vector that best reconstructs the observed spectrum while also forcing the abundances to sum to one. The implementation below uses a common NNLS-based trick from <span class="citation" data-cites="heinz_chang_2001">Heinz and Chang (<a href="#ref-heinz_chang_2001" role="doc-biblioref">2001</a>)</span>.</p>
 <div id="fcls" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fcls(M: np.ndarray, y: np.ndarray, delta: <span class="bu">float</span> <span class="op">=</span> <span class="fl">100.0</span>) <span class="op">-&gt;</span> np.ndarray:</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Fully constrained least squares (ANC + ASC).</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Embeds the sum-to-one constraint by augmenting [M; delta*1^T] @ s = [y; delta],</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">    solves via NNLS (enforcing ANC), then normalizes to ensure sum(s) = 1.</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co">    M : (B, P) endmember matrix</span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co">    y : (B,) pixel spectrum</span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co">    delta : scaling factor for the ASC constraint row (larger = stricter enforcement)</span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    M_aug <span class="op">=</span> np.vstack([M, delta <span class="op">*</span> np.ones((<span class="dv">1</span>, M.shape[<span class="dv">1</span>]))])</span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    y_aug <span class="op">=</span> np.append(y, delta)</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    s, _ <span class="op">=</span> nnls(M_aug, y_aug)</span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    total <span class="op">=</span> s.<span class="bu">sum</span>()</span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> total <span class="op">&gt;</span> <span class="fl">1e-10</span>:</span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>        s <span class="op">/=</span> total</span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> s</span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Solve per pixel</span></span>
-<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>S <span class="op">=</span> np.zeros((N, P))</span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(N):</span>
-<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>    S[n] <span class="op">=</span> fcls(M, X[n])</span>
-<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Reshape abundance maps to (P, H, W)</span></span>
-<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>abundance_maps <span class="op">=</span> S.T.reshape(P, H, W)</span>
-<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Per-pixel residual: ||y_n - M s_n||</span></span>
-<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>residual <span class="op">=</span> np.linalg.norm(X <span class="op">-</span> S <span class="op">@</span> M.T, axis<span class="op">=</span><span class="dv">1</span>).reshape(H, W)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fcls(M: np.ndarray, y: np.ndarray, delta: <span class="bu">float</span> <span class="op">=</span> <span class="fl">100.0</span>) <span class="op">-&gt;</span> np.ndarray:</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Fully constrained least squares (ANC + ASC).</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Embeds the sum-to-one constraint by augmenting [M; delta*1^T] @ s = [y; delta],</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">    solves via NNLS (enforcing ANC), then normalizes to ensure sum(s) = 1.</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">    M : (B, P) endmember matrix</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">    y : (B,) pixel spectrum</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">    delta : scaling factor for the ASC constraint row (larger = stricter enforcement)</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    M_aug <span class="op">=</span> np.vstack([M, delta <span class="op">*</span> np.ones((<span class="dv">1</span>, M.shape[<span class="dv">1</span>]))])</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    y_aug <span class="op">=</span> np.append(y, delta)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    s, _ <span class="op">=</span> nnls(M_aug, y_aug)</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    total <span class="op">=</span> s.<span class="bu">sum</span>()</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> total <span class="op">&gt;</span> <span class="fl">1e-10</span>:</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>        s <span class="op">/=</span> total</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> s</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Solve per pixel</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>S <span class="op">=</span> np.zeros((N, P))</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(N):</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>    S[n] <span class="op">=</span> fcls(M, X[n])</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Reshape abundance maps to (P, H, W)</span></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>abundance_maps <span class="op">=</span> S.T.reshape(P, H, W)</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Per-pixel residual: ||y_n - M s_n||</span></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>residual <span class="op">=</span> np.linalg.norm(X <span class="op">-</span> S <span class="op">@</span> M.T, axis<span class="op">=</span><span class="dv">1</span>).reshape(H, W)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -728,146 +736,122 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The per-pixel loop above is straightforward to read but slow for large scenes. For HYDICE at 307×307 this takes a few minutes on a laptop. For AVIRIS-scale data (&gt;1M pixels), parallelize with <code>joblib.Parallel</code> or reformulate as a batched quadratic program.</p>
+<p>The loop above is easy to read, but not especially fast. For HYDICE at 307 x 307 pixels it is still manageable. For much larger scenes, you would usually parallelize it or move to a more specialized solver.</p>
 </div>
 </div>
-<div id="cell-abundance-maps" class="cell" data-execution_count="11">
+<div id="abundance-maps" class="cell" data-fig-show="hide" data-execution_count="11">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>names <span class="op">=</span> <span class="bu">list</span>(endmember_pixels.keys())</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>cmaps <span class="op">=</span> [<span class="st">"Reds"</span>, <span class="st">"Greens"</span>, <span class="st">"Oranges"</span>, <span class="st">"YlGn"</span>]</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, P <span class="op">+</span> <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">4</span>))</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, (name, cmap) <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="bu">zip</span>(names, cmaps)):</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    axes[i].imshow(abundance_maps[i], cmap<span class="op">=</span>cmap, vmin<span class="op">=</span><span class="dv">0</span>, vmax<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    axes[i].set_title(name, fontsize<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    axes[i].axis(<span class="st">"off"</span>)</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>im <span class="op">=</span> axes[<span class="op">-</span><span class="dv">1</span>].imshow(residual, cmap<span class="op">=</span><span class="st">"inferno"</span>)</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>plt.colorbar(im, ax<span class="op">=</span>axes[<span class="op">-</span><span class="dv">1</span>], label<span class="op">=</span><span class="st">"Residual (DN)"</span>)</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>axes[<span class="op">-</span><span class="dv">1</span>].set_title(<span class="st">"Residual"</span>, fontsize<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>axes[<span class="op">-</span><span class="dv">1</span>].axis(<span class="st">"off"</span>)</span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">"FCLS abundance maps + unmixing residual"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>plt.savefig(FIG_DIR <span class="op">/</span> <span class="st">"abundance_maps.png"</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>names <span class="op">=</span> <span class="bu">list</span>(endmember_pixels.keys())</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>cmaps <span class="op">=</span> [<span class="st">"Reds"</span>, <span class="st">"Greens"</span>, <span class="st">"Oranges"</span>, <span class="st">"YlGn"</span>]</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, P <span class="op">+</span> <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">4</span>))</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, (name, cmap) <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="bu">zip</span>(names, cmaps)):</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    axes[i].imshow(abundance_maps[i], cmap<span class="op">=</span>cmap, vmin<span class="op">=</span><span class="dv">0</span>, vmax<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    axes[i].set_title(name, fontsize<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    axes[i].axis(<span class="st">"off"</span>)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>im <span class="op">=</span> axes[<span class="op">-</span><span class="dv">1</span>].imshow(residual, cmap<span class="op">=</span><span class="st">"inferno"</span>)</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>plt.colorbar(im, ax<span class="op">=</span>axes[<span class="op">-</span><span class="dv">1</span>], label<span class="op">=</span><span class="st">"Residual (DN)"</span>)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>axes[<span class="op">-</span><span class="dv">1</span>].set_title(<span class="st">"Residual"</span>, fontsize<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>axes[<span class="op">-</span><span class="dv">1</span>].axis(<span class="st">"off"</span>)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">"FCLS abundance maps + unmixing residual"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>plt.savefig(FIG_DIR <span class="op">/</span> <span class="st">"abundance_maps.png"</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display">
-<div>
+</div>
 <figure class="figure">
-<p><img src="index_files/figure-html/abundance-maps-output-1.png" id="abundance-maps" width="2369" height="595" class="figure-img"></p>
+<img src="figures/abundance_maps.png" alt="Abundance maps for each endmember plus the per-pixel unmixing residual. Warmer colors indicate higher fractional abundance of that material. High residual highlights pixels the four-endmember model can't explain." style="display:block; margin:0 auto; width:100%;" class="figure-img">
+<figcaption>
+Abundance maps for each endmember plus the per-pixel unmixing residual. Warmer colors indicate higher fractional abundance of that material. High residual highlights pixels the four-endmember model can’t explain.
+</figcaption>
 </figure>
-</div>
-</div>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="figures/abundance_maps.png" class="img-fluid figure-img"></p>
-<figcaption>Abundance maps for each endmember plus the per-pixel unmixing residual. Warmer colors indicate higher fractional abundance of that material. High residual highlights pixels the four-endmember model can’t explain.</figcaption>
-</figure>
-</div>
-<p>The residual map is interpretively useful: it tells you where your endmember library is incomplete. Bright residuals typically indicate a fifth material not represented in your endmember set — common candidates for urban scenes are shadows, standing water, or bare soil. This is the natural place to iterate: examine bright-residual pixels, add an endmember for the material you find, re-solve.</p>
-<p>Compared to PCA eigenimages, the abundance maps are easier to explain to a stakeholder. Each map answers a concrete question: “What fraction of this pixel is covered by grass?” The cost is that the answer depends on your choice of endmembers — garbage in, garbage out.</p>
+<p>The residual map tells you where the chosen endmembers are not enough. Bright residuals often mean “there is something here that the current material library cannot explain well,” such as shadow, water, or bare soil.</p>
+<p>Compared with PCA, these abundance maps are easier to explain. Each one answers a direct question like: “Where in the scene does this material seem common?” The trade-off is that the answer depends heavily on the endmembers you chose.</p>
 </section>
 </section>
 <section id="nmf" class="level2">
 <h2 class="anchored" data-anchor-id="nmf">NMF</h2>
-<p>NMF asks a related but distinct question: can we factor <span class="math inline">\(X\)</span> into two nonnegative matrices without prescribing what the components should be?</p>
+<p>NMF asks a similar question to unmixing, but with less supervision: can we factor <span class="math inline">\(X\)</span> into two nonnegative matrices without telling the model in advance what the materials are?</p>
 <p><span class="math display">\[X \approx WH, \quad W \in \mathbb{R}_{\geq 0}^{N \times K}, \; H \in \mathbb{R}_{\geq 0}^{K \times B}\]</span></p>
 <p>The objective (squared Frobenius norm) is:</p>
 <p><span class="math display">\[\min_{W,\, H\, \geq\, 0} \;\frac{1}{2}\|X - WH\|_F^2\]</span></p>
-<p>Rows of <span class="math inline">\(H\)</span> are learned spectral basis vectors; columns of <span class="math inline">\(W\)</span> are per-pixel weights for each basis. Unlike PCA, there’s no centering, no orthogonality constraint, and no sum-to-one. The only constraint is nonnegativity on both factors.</p>
-<p>The key insight from <span class="citation" data-cites="lee_seung_1999">Lee and Seung (<a href="#ref-lee_seung_1999" role="doc-biblioref">1999</a>)</span>: nonnegativity forces additive combinations. PCA components can subtract from each other to explain variance (hence the bipolar colormap in the eigenimages). NMF components can only add. This tends to produce spectral components that look like real materials — parts of the scene rather than mathematical contrasts — and spatial weights that look like abundance estimates, even without explicit endmember supervision.</p>
-<p>The trade-off: NMF is non-convex. The factorization is not unique, and results depend on initialization. <code>nndsvda</code> initialization (an SVD-based deterministic start) helps stabilize results and is the recommended default <span class="citation" data-cites="sklearn_nmf">(<a href="#ref-sklearn_nmf" role="doc-biblioref">scikit-learn developers 2024a</a>)</span>.</p>
-<div id="nmf" class="cell" data-execution_count="12">
+<p>Rows of <span class="math inline">\(H\)</span> are learned spectral patterns. Columns of <span class="math inline">\(W\)</span> tell us how much of each pattern appears in each pixel. Unlike PCA, NMF does not allow negative values, and unlike unmixing, it does not require the weights to sum to one.</p>
+<p>The main idea from <span class="citation" data-cites="lee_seung_1999">Lee and Seung (<a href="#ref-lee_seung_1999" role="doc-biblioref">1999</a>)</span> is simple: nonnegative parts can only add, not cancel each other out. That often makes the learned components easier to read. PCA can produce positive-negative contrast patterns. NMF tends to produce parts that look more like material pieces of the scene.</p>
+<p>The downside is that NMF is not unique. Different initial guesses can lead to somewhat different answers. Using <code>nndsvda</code> gives the algorithm a stable starting point and usually leads to cleaner results <span class="citation" data-cites="sklearn_nmf">(<a href="#ref-sklearn_nmf" role="doc-biblioref">scikit-learn developers 2024a</a>)</span>.</p>
+<div id="nmf" class="cell" data-fig-show="hide" data-execution_count="12">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>K_nmf <span class="op">=</span> <span class="dv">6</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>nmf <span class="op">=</span> NMF(</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    n_components<span class="op">=</span>K_nmf,</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    init<span class="op">=</span><span class="st">"nndsvda"</span>,           <span class="co"># deterministic SVD-based initialization</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    solver<span class="op">=</span><span class="st">"mu"</span>,              <span class="co"># multiplicative updates (Lee &amp; Seung)</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    beta_loss<span class="op">=</span><span class="st">"frobenius"</span>,</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">42</span>,</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    max_iter<span class="op">=</span><span class="dv">500</span>,</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>W_nmf <span class="op">=</span> nmf.fit_transform(X)    <span class="co"># pixel weights, shape (N, K_nmf)</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>H_nmf <span class="op">=</span> nmf.components_          <span class="co"># component spectra, shape (K_nmf, B)</span></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>nmf_maps <span class="op">=</span> W_nmf.T.reshape(K_nmf, H, W)</span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="dv">4</span>))</span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(K_nmf):</span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>    ax.plot(wavelengths, H_nmf[k], label<span class="op">=</span><span class="ss">f"Component </span><span class="sc">{</span>k<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">"</span>, linewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Wavelength (nm)"</span>)</span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Learned basis value"</span>)</span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"NMF component spectra"</span>)</span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>ax.legend(frameon<span class="op">=</span><span class="va">False</span>, fontsize<span class="op">=</span><span class="dv">9</span>, ncol<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>plt.savefig(FIG_DIR <span class="op">/</span> <span class="st">"nmf_spectra.png"</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
-<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>fig2, axes2 <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">8</span>))</span>
-<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> k, ax <span class="kw">in</span> <span class="bu">enumerate</span>(axes2.flat):</span>
-<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>    ax.imshow(nmf_maps[k], cmap<span class="op">=</span><span class="st">"viridis"</span>)</span>
-<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="ss">f"NMF component </span><span class="sc">{</span>k<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">"</span>, fontsize<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>    ax.axis(<span class="st">"off"</span>)</span>
-<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">"NMF spatial weight maps"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
-<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>plt.savefig(FIG_DIR <span class="op">/</span> <span class="st">"nmf_maps.png"</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
-<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>K_nmf <span class="op">=</span> <span class="dv">6</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>nmf <span class="op">=</span> NMF(</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    n_components<span class="op">=</span>K_nmf,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    init<span class="op">=</span><span class="st">"nndsvda"</span>,           <span class="co"># deterministic SVD-based initialization</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    solver<span class="op">=</span><span class="st">"mu"</span>,              <span class="co"># multiplicative updates (Lee &amp; Seung)</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    beta_loss<span class="op">=</span><span class="st">"frobenius"</span>,</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">42</span>,</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    max_iter<span class="op">=</span><span class="dv">500</span>,</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>W_nmf <span class="op">=</span> nmf.fit_transform(X)    <span class="co"># pixel weights, shape (N, K_nmf)</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>H_nmf <span class="op">=</span> nmf.components_          <span class="co"># component spectra, shape (K_nmf, B)</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>nmf_maps <span class="op">=</span> W_nmf.T.reshape(K_nmf, H, W)</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="dv">4</span>))</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(K_nmf):</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    ax.plot(wavelengths, H_nmf[k], label<span class="op">=</span><span class="ss">f"Component </span><span class="sc">{</span>k<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">"</span>, linewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Wavelength (nm)"</span>)</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Learned basis value"</span>)</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"NMF component spectra"</span>)</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>ax.legend(frameon<span class="op">=</span><span class="va">False</span>, fontsize<span class="op">=</span><span class="dv">9</span>, ncol<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>plt.savefig(FIG_DIR <span class="op">/</span> <span class="st">"nmf_spectra.png"</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>fig2, axes2 <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">8</span>))</span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> k, ax <span class="kw">in</span> <span class="bu">enumerate</span>(axes2.flat):</span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>    ax.imshow(nmf_maps[k], cmap<span class="op">=</span><span class="st">"viridis"</span>)</span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="ss">f"NMF component </span><span class="sc">{</span>k<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">"</span>, fontsize<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>    ax.axis(<span class="st">"off"</span>)</span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">"NMF spatial weight maps"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>plt.savefig(FIG_DIR <span class="op">/</span> <span class="st">"nmf_maps.png"</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display">
-<div>
+</div>
 <figure class="figure">
-<p><img src="index_files/figure-html/nmf-output-1.png" id="nmf-1" width="1335" height="585" class="figure-img"></p>
+<img src="figures/nmf_maps.png" alt="NMF component spectra (top) and spatial weight maps (bottom). Unlike PCA eigenvectors, NMF spectra are strictly nonnegative, they can be visually compared to known material spectra in a spectral library." style="display:block; margin:0 auto; width:100%;" class="figure-img">
+<figcaption>
+NMF component spectra (top) and spatial weight maps (bottom). Unlike PCA eigenvectors, NMF spectra are strictly nonnegative, they can be visually compared to known material spectra in a spectral library.
+</figcaption>
 </figure>
-</div>
-</div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/nmf-output-2.png" id="nmf-2" width="1736" height="1183" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="figures/nmf_maps.png" class="img-fluid figure-img"></p>
-<figcaption>NMF component spectra (top) and spatial weight maps (bottom). Unlike PCA eigenvectors, NMF spectra are strictly nonnegative — they can be visually compared to known material spectra in a spectral library.</figcaption>
-</figure>
-</div>
-<p>Where PCA’s eigenimages show positive-negative contrast, NMF maps show positive-only weights. The spatial patterns typically correspond loosely to material distributions, even without the physical constraints that unmixing enforces. Whether NMF or unmixing is more useful depends on your goal: NMF is useful for exploratory analysis when you don’t have a spectral library; unmixing is better when you have ground truth endmembers and need physically interpretable fractions.</p>
+<p>Where PCA gives contrast axes, NMF gives positive-only parts. Those parts are not guaranteed to be true materials, but they often look material-like enough to be useful. In practice, NMF is good for exploration when you do not yet know the right endmembers, while linear unmixing is better when you do know them and want physically interpretable fractions.</p>
 <section id="exporting-products" class="level3">
 <h3 class="anchored" data-anchor-id="exporting-products">Exporting products</h3>
-<p>All three decompositions produce outputs with a spatial dimension worth saving for downstream use. HYDICE Urban carries no geospatial metadata (no CRS, no geotransform), so we save as <code>.npy</code> arrays. For datasets that do have georeferencing — AVIRIS products, Sentinel data — swap this out for rasterio GeoTIFF writes:</p>
+<p>All three methods produce spatial outputs worth saving. HYDICE Urban does not include geospatial metadata such as a CRS or geotransform, so <code>.npy</code> files are a simple and honest export format here. For georeferenced datasets, you would usually write GeoTIFFs instead:</p>
 <div id="export" class="cell" data-execution_count="13">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>derived <span class="op">=</span> Path(<span class="st">"data/derived"</span>)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>derived.mkdir(exist_ok<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Save as .npy — HYDICE Urban has no CRS or geotransform, so plain arrays are more honest</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co"># than an empty GeoTIFF. Each array is (layers, H, W), float32.</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>np.save(derived <span class="op">/</span> <span class="st">"eigenimages.npy"</span>, eigenimages.astype(np.float32))</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>np.save(derived <span class="op">/</span> <span class="st">"abundances.npy"</span>, abundance_maps.astype(np.float32))</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>np.save(derived <span class="op">/</span> <span class="st">"nmf_maps.npy"</span>, nmf_maps.astype(np.float32))</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>np.save(derived <span class="op">/</span> <span class="st">"wavelengths.npy"</span>, wavelengths)</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Saved:"</span>, [<span class="bu">str</span>(p) <span class="cf">for</span> p <span class="kw">in</span> <span class="bu">sorted</span>(derived.glob(<span class="st">"*.npy"</span>))])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>derived <span class="op">=</span> Path(<span class="st">"data/derived"</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>derived.mkdir(exist_ok<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Save as .npy, HYDICE Urban has no CRS or geotransform, so plain arrays are more honest</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># than an empty GeoTIFF. Each array is (layers, H, W), float32.</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>np.save(derived <span class="op">/</span> <span class="st">"eigenimages.npy"</span>, eigenimages.astype(np.float32))</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>np.save(derived <span class="op">/</span> <span class="st">"abundances.npy"</span>, abundance_maps.astype(np.float32))</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>np.save(derived <span class="op">/</span> <span class="st">"nmf_maps.npy"</span>, nmf_maps.astype(np.float32))</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>np.save(derived <span class="op">/</span> <span class="st">"wavelengths.npy"</span>, wavelengths)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Saved:"</span>, [<span class="bu">str</span>(p) <span class="cf">for</span> p <span class="kw">in</span> <span class="bu">sorted</span>(derived.glob(<span class="st">"*.npy"</span>))])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>Saved: ['data\\derived\\abundances.npy', 'data\\derived\\eigenimages.npy', 'data\\derived\\nmf_maps.npy', 'data\\derived\\wavelengths.npy']</code></pre>
-</div>
 </div>
 </section>
 </section>
 <section id="where-this-fits-in-a-real-pipeline" class="level2">
 <h2 class="anchored" data-anchor-id="where-this-fits-in-a-real-pipeline">Where this fits in a real pipeline</h2>
-<p>The decompositions above live at the “algorithm layer” of a hyperspectral processing chain. In a production system, they sit downstream of several preprocessing steps:</p>
+<p>The analysis above sits in the middle of a larger hyperspectral workflow. In a production setting, you would usually do several preprocessing steps before running PCA, unmixing, or NMF:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -919,13 +903,13 @@ Note
 </tr>
 </tbody>
 </table>
-<p>In practice, measurements are processed through radiometric calibration, geometric correction, and atmospheric compensation before the simplified linear mixing model is applied <span class="citation" data-cites="plaza_2012">(<a href="#ref-plaza_2012" role="doc-biblioref">Plaza et al. 2009</a>)</span>. The demo skips those steps, which is fine for illustrating the algebra — but worth flagging before applying any of this to a new scene.</p>
+<p>Real pipelines usually include radiometric calibration, geometric correction, and atmospheric correction before this stage <span class="citation" data-cites="plaza_2012">(<a href="#ref-plaza_2012" role="doc-biblioref">Plaza et al. 2009</a>)</span>. This post skips those steps because the goal is to teach the decomposition ideas clearly, not to build a full operational workflow.</p>
 </section>
 <section id="reproducibility" class="level2">
 <h2 class="anchored" data-anchor-id="reproducibility">Reproducibility</h2>
 <ul>
 <li>Random seeds: <code>random_state=42</code> for PCA and NMF ensures deterministic results across runs.</li>
-<li>All figures use the full 307×307 scene with no additional spatial subsetting; re-renders will match exactly.</li>
+<li>All figures use the full 307 x 307 scene with no extra spatial cropping, so re-renders should match exactly.</li>
 <li>Freeze your environment: <code>conda env export &gt; environment.yml</code> or <code>uv pip freeze &gt; requirements.txt</code>.</li>
 <li>The dataset is freely available from ERDC <span class="citation" data-cites="erdc_hypercube">(<a href="#ref-erdc_hypercube" role="doc-biblioref">U.S. Army Engineer Research and Development Center 2004</a>)</span>; record the access date and use the provided handle as a citation.</li>
 </ul>

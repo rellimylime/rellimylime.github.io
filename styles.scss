@@ -1,33 +1,34 @@
 
 /*-- scss:defaults --*/
 
-// Import Google Fonts - Mix of modern, elegant, and playful
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
+// Import Google Fonts - editorial serif + quiet sans
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Nunito+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
-// SCSS Variables - Vibrant, Nature-Inspired, Tech-Artistic Palette
-$header-font: 'Libre Baskerville', serif;      // Elegant, readable serif
-$body-font: 'Space Grotesk', sans-serif;       // Modern, geometric sans
+// SCSS Variables - muted, hidden palette
+$header-font: 'Cormorant Garamond', serif;
+$body-font: 'Nunito Sans', sans-serif;
 $mono-font: 'JetBrains Mono', monospace;       // Code-inspired
 
-// Color Palette - Environmentalist + Designer + Coder vibes
-$forest-teal: #2A9D8F;        // Nature + tech cyan
-$warm-coral: #E76F51;         // Artistic sunset coral
-$golden-sun: #F4A261;         // Optimistic golden yellow
-$deep-purple: #6A4C93;        // Creative + code purple
-$sage-green: #8AB17D;         // Calming nature green
-$sky-blue: #4ECDC4;           // Bright creative blue
-$earth-brown: #8B6F47;        // Grounding earth tone
+// Color Palette - soft paper, dusted accents
+$forest-teal: #8A9DB1;
+$warm-coral: #ECC5C6;
+$golden-sun: #F5E9E7;
+$deep-purple: #837D68;
+$sage-green: #C1C0C2;
+$sky-blue: #aab8c4;
+$earth-brown: #837D68;
 
-$bg-warm: #FFFEF9;            // Warm off-white
-$bg-light: #FFF9F0;           // Slightly peachy white
-$text-dark: #2B2D42;          // Deep navy-charcoal
-$text-mid: #5A5A5A;
+$bg-warm: #F5E9E7;
+$bg-light: #fbf6f4;
+$text-dark: #25272c;
+$text-mid: #666662;
 
 /*-- scss:rules --*/
 
 // ========================================
-// BASE STYLES - Clean foundation with personality
+// BASE STYLES
 // ========================================
+// Affects: whole site body, default text rhythm, and the paper-like background texture.
 body {
   background: $bg-warm;
   font-family: $body-font;
@@ -60,143 +61,311 @@ main, section, .block-section {
   color: $text-dark;
 }
 
-// Scattered layout - not rigid grid
-.page-layout main {
-  max-width: 100%;
+// Page width is handled by Quarto `page-layout`; keep only vertical breathing room here.
+
+.page-foldout-wide,
+.page-log {
+  max-width: 64rem;
+}
+
+// Affects: compact metadata labels used across asides, poems, and random-line widgets.
+// Affects: small metadata labels reused across snapshots/asides/about cards.
+.aside-label,
+.snapshot-label,
+.snapshot-meta,
+.poem-summary-meta,
+.random-line-source {
+  font-family: $mono-font;
+}
+
+// Affects: two-column aside rotator layouts on creative pages.
+.aside-rotator-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 1.9rem 0 2.2rem;
+}
+
+// Affects: the reusable rotating aside card component.
+.aside-rotator {
+  padding: 1.15rem 1.15rem 1rem;
+  border-radius: 1rem;
+  background: rgba(white, 0.92);
+  border: 1px solid rgba($golden-sun, 0.16);
+  box-shadow: 0 14px 28px rgba($deep-purple, 0.05);
+  display: flex;
+  flex-direction: column;
+  min-height: 15rem;
+}
+
+.aside-rotator ul {
+  list-style: none;
+  margin: 0 0 1rem;
   padding: 0;
 }
 
-// ========================================
-// NAVIGATION - Playful but clean
-// ========================================
-.navbar {
-  background: rgba($bg-warm, 0.95) !important;
-  border-bottom: 3px solid transparent;
-  border-image: linear-gradient(90deg, $forest-teal, $warm-coral, $golden-sun, $deep-purple) 1;
-  box-shadow: 0 2px 12px rgba($forest-teal, 0.08);
-  padding: 0.85rem 0;
-  backdrop-filter: blur(10px);
+.aside-label {
+  margin: 0 0 0.75rem 0;
+  font-size: 0.76rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $warm-coral;
 }
 
-.navbar-brand {
-  font-family: $header-font !important;
-  color: $text-dark !important;
-  font-weight: 700;
-  font-size: 1.6rem;
-  letter-spacing: -0.5px;
-  position: relative;
-  transition: all 0.3s ease;
-
-  // Playful underline accent
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: -3px;
-    left: 0;
-    width: 0;
-    height: 3px;
-    background: linear-gradient(90deg, $forest-teal, $warm-coral);
-    transition: width 0.3s ease;
-  }
-
-  &:hover::after {
-    width: 100%;
-  }
+.rotator-item {
+  margin: 0;
+  list-style: none;
+  color: $text-dark;
+  line-height: 1.75;
 }
 
-.navbar-nav {
-  gap: 0.3rem;
-
-  .nav-link {
-    font-size: 0.95rem;
-    font-family: $body-font;
-    font-weight: 500;
-    color: $text-dark !important;
-    letter-spacing: 0.3px;
-    background: none !important;
-    border-radius: 0.4em;
-    padding: 0.6em 1em !important;
-    transition: all 0.3s ease;
-    position: relative;
-
-    // Scattered color accents on hover
-    &:hover {
-      color: $warm-coral !important;
-      background: rgba($warm-coral, 0.08) !important;
-      transform: translateY(-2px);
-    }
-
-    &.active {
-      color: $forest-teal !important;
-      background: rgba($forest-teal, 0.1) !important;
-      font-weight: 600;
-    }
-  }
-}
-
-.dropdown-menu {
-  background: $bg-light !important;
-  border: 2px solid $golden-sun;
-  border-radius: 0.6em;
-  box-shadow: 0 4px 20px rgba($deep-purple, 0.15);
-}
-
-.dropdown-item {
-  color: $text-dark !important;
+.rotator-next {
+  margin-top: auto;
+  align-self: flex-start;
+  border: 1px solid rgba($forest-teal, 0.2);
+  border-radius: 999px;
+  background: rgba($forest-teal, 0.08);
+  color: $forest-teal;
+  padding: 0.55rem 0.9rem;
   font-family: $body-font;
+  font-weight: 600;
+  cursor: pointer;
   transition: all 0.2s ease;
-  border-left: 3px solid transparent;
 
   &:hover {
-    background: linear-gradient(90deg, rgba($forest-teal, 0.1), transparent) !important;
-    color: $forest-teal !important;
-    border-left-color: $forest-teal;
-    padding-left: 1.5rem;
-  }
-}
-
-// ========================================
-// TYPOGRAPHY - Artistic hierarchy
-// ========================================
-.quarto-title-block {
-  background: transparent;
-  color: $text-dark;
-  padding: 2.5rem 0 1.5rem 0;
-  border-radius: 0;
-  border-bottom: none;
-}
-
-h1.title {
-  font-family: $header-font !important;
-  font-size: 2.8rem;
-  font-weight: 700;
-  color: $text-dark !important;
-  letter-spacing: -1px;
-  margin-bottom: 0.5em;
-  border: none;
-  padding-left: 0;
-  position: relative;
-
-  // Artistic accent mark
-  &::before {
-    content: '//';
-    position: absolute;
-    left: -2.5rem;
-    top: 0;
-    font-family: $mono-font;
-    font-size: 1.2rem;
+    transform: translateY(-2px);
+    background: rgba($warm-coral, 0.1);
     color: $warm-coral;
-    opacity: 0.6;
+    border-color: rgba($warm-coral, 0.24);
   }
 }
 
-.subtitle {
-  font-family: $body-font;
-  font-size: 1.1rem;
-  font-weight: 400;
+// Affects: random-line poetry callout panel on the art page.
+.random-line-panel {
+  margin: 1.6rem 0 1.8rem;
+  padding: 1.2rem 1.25rem;
+  border-radius: 1rem;
+  background: linear-gradient(135deg,
+    rgba($deep-purple, 0.08),
+    rgba($golden-sun, 0.1)
+  );
+  border: 1px solid rgba($deep-purple, 0.12);
+  box-shadow: 0 14px 28px rgba($deep-purple, 0.05);
+
+  blockquote {
+    margin: 0.75rem 0 0.9rem;
+    background: rgba(white, 0.58);
+    font-family: $header-font;
+    border-left-color: $deep-purple;
+  }
+}
+
+.random-line-source {
+  margin: 0 0 0.9rem;
   color: $text-mid;
-  margin-bottom: 0;
-  font-style: italic;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+// Affects: the button that refreshes the random-line panel.
+.random-line-trigger {
+  border: 1px solid rgba($deep-purple, 0.18);
+  border-radius: 999px;
+  background: rgba(white, 0.9);
+  color: $deep-purple;
+  padding: 0.6rem 0.95rem;
+  font-family: $body-font;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.poetry-stack {
+  display: grid;
+  gap: 1rem;
+}
+
+// Affects: collapsible poem containers on the art page.
+.poem-entry {
+  border: 1px solid rgba($forest-teal, 0.16);
+  border-radius: 1rem;
+  background: rgba(white, 0.94);
+  box-shadow: 0 18px 34px rgba($deep-purple, 0.05);
+  overflow: hidden;
+}
+
+// Affects: clickable summary/header for each poem entry.
+.poem-summary {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.75rem;
+  align-items: baseline;
+  padding: 1rem 1.2rem;
+  cursor: pointer;
+  list-style: none;
+}
+
+.poem-summary::-webkit-details-marker {
+  display: none;
+}
+
+.poem-summary-title {
+  font-family: $header-font;
+  font-size: 1.35rem;
+  color: $text-dark;
+}
+
+.poem-summary-meta {
+  font-size: 0.76rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $warm-coral;
+}
+
+.poem-entry-body {
+  padding: 0 1.2rem 1.25rem;
+}
+
+.poem-reader-note {
+  margin: 0 0 1rem 0;
+  color: $text-mid;
+  font-size: 0.95rem;
+}
+
+// Affects: poem body text after a poem is expanded.
+.poem-body {
+  display: grid;
+  gap: 1.15rem;
+}
+
+.poem-stanza {
+  display: grid;
+  gap: 0.35rem;
+}
+
+// Affects: individual lines in poem displays, including favorite-line interactions.
+.poem-line {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.85rem;
+  align-items: start;
+}
+
+.poem-line-text {
+  display: block;
+  font-family: $header-font;
+  font-size: 1.08rem;
+  line-height: 1.75;
+}
+
+.line-heart {
+  border: none;
+  background: transparent;
+  color: rgba($warm-coral, 0.45);
+  font-size: 1.15rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0.25rem 0.1rem;
+  transition: transform 0.2s ease, color 0.2s ease;
+
+  &:hover {
+    transform: scale(1.1);
+    color: $warm-coral;
+  }
+
+  &.is-favorite {
+    color: $warm-coral;
+  }
+}
+
+.marginalia {
+  margin-top: 1.3rem;
+  border-top: 1px dashed rgba($forest-teal, 0.18);
+
+  summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 0.85rem 0 0.2rem;
+    font-family: $mono-font;
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: $forest-teal;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  p {
+    color: $text-mid;
+    margin-bottom: 0;
+  }
+}
+
+.comment-shell {
+  margin-top: 1.2rem;
+  padding: 1rem 0 0;
+}
+
+// Affects: the scrollable "recent traces" / log pattern reused on multiple pages.
+.page-log {
+  margin-top: 1.6rem;
+}
+
+.snapshot-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.15rem;
+  margin: 1.6rem 0 2rem;
+}
+
+.snapshot-card {
+  background: rgba(white, 0.94);
+  border-radius: 1rem;
+  border: 1px solid rgba($forest-teal, 0.14);
+  box-shadow: 0 18px 34px rgba($deep-purple, 0.05);
+  overflow: hidden;
+}
+
+.snapshot-card img {
+  width: 100%;
+  height: 16rem;
+  object-fit: cover;
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
+
+  &:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+.snapshot-copy {
+  padding: 1rem 1.05rem 1.15rem;
+}
+
+.snapshot-label {
+  margin: 0 0 0.35rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $warm-coral;
+}
+
+.snapshot-meta {
+  margin: 0 0 0.6rem;
+  color: $text-mid;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.snapshot-text {
+  margin: 0;
+  color: $text-dark;
 }
 
 // Headers - Mix of styles
@@ -294,7 +463,8 @@ a {
 }
 
 // Artistic card styling
-.card {
+// Affects: legacy/custom cards only. Excludes Quarto blog listing cards so they can use the dedicated grid styling below.
+.card:not(.quarto-grid-item) {
   border: 2px solid transparent;
   border-image: linear-gradient(135deg, $golden-sun, $sky-blue, $sage-green) 1;
   padding: 1.5rem;
@@ -310,7 +480,7 @@ a {
 
   // Corner accent
   &::before {
-    content: '●';
+    content: '*';
     position: absolute;
     top: -10px;
     left: -10px;
@@ -419,7 +589,7 @@ hr, .elegant-divider {
   position: relative;
 
   &::after {
-    content: '✦';
+    content: '+';
     position: absolute;
     top: 50%;
     left: 50%;
@@ -434,6 +604,37 @@ hr, .elegant-divider {
 // ========================================
 // HOME PAGE - Hero section with personality
 // ========================================
+// Affects: removes Quarto's empty homepage title block so the banner sits flush under the navbar.
+body.home-page #title-block-header.quarto-title-block {
+  display: none;
+  margin: 0;
+  padding: 0;
+  min-height: 0;
+}
+
+body.home-page main.content {
+  padding-top: 0;
+}
+
+body.research-page #title-block-header.quarto-title-block {
+  margin: 0 0 0.85rem;
+  padding: 0;
+  position: relative;
+  z-index: 2;
+}
+
+body.research-page #title-block-header .quarto-title {
+  margin: 0;
+}
+
+body.research-page #title-block-header .quarto-title-meta {
+  display: none;
+}
+
+body.research-page main.content {
+  padding-top: 0;
+}
+
 .home-hero {
   text-align: center;
   width: 100vw;
@@ -685,7 +886,7 @@ hr, .elegant-divider {
   font-family: $body-font;
 
   &::before {
-    content: '— ';
+    content: '-- ';
     color: $warm-coral;
   }
 }
@@ -852,141 +1053,9 @@ pre {
 }
 
 // ========================================
-// BLOCKQUOTES - Artistic styling
-// ========================================
-blockquote {
-  border-left: 5px solid $golden-sun;
-  background: linear-gradient(90deg, rgba($golden-sun, 0.1), transparent);
-  padding: 1.5rem 2rem;
-  margin: 2rem 0;
-  font-family: $header-font;
-  font-style: italic;
-  color: $text-dark;
-  position: relative;
-
-  &::before {
-    content: '"';
-    position: absolute;
-    top: -0.5rem;
-    left: 1rem;
-    font-size: 4rem;
-    color: $golden-sun;
-    opacity: 0.3;
-    line-height: 1;
-  }
-
-  p {
-    margin: 0;
-  }
-}
-
-// ========================================
-// RESPONSIVE DESIGN
-// ========================================
-@media (max-width: 768px) {
-  body {
-    font-size: 1rem;
-  }
-
-  .navbar-brand {
-    font-size: 1.3rem;
-
-    &::after {
-      display: none;
-    }
-  }
-
-  h1.title {
-    font-size: 2rem !important;
-
-    &::before {
-      display: none;
-    }
-  }
-
-  h2 {
-    font-size: 1.5rem;
-    margin-left: 0;
-    padding-left: 0.8rem;
-  }
-
-  h3 {
-    font-size: 1.2rem;
-  }
-
-  .home-hero {
-    height: 400px;
-
-    h2 {
-      font-size: 2rem;
-      padding: 1rem 1.5rem;
-    }
-
-    section > p {
-      font-size: 1.1rem;
-      padding: 0.8rem 1.5rem;
-    }
-  }
-
-  .page-layout main {
-    max-width: 100%;
-    padding: 0 1rem;
-  }
-}
-
-@media (max-width: 480px) {
-  body {
-    font-size: 0.95rem;
-  }
-
-  h1.title {
-    font-size: 1.6rem !important;
-  }
-
-  h2 {
-    font-size: 1.3rem;
-  }
-
-  h3 {
-    font-size: 1.1rem;
-
-    &::before,
-    &::after {
-      display: none;
-    }
-  }
-
-  .home-hero {
-    height: 350px;
-
-    h2 {
-      font-size: 1.6rem;
-      padding: 0.8rem 1rem;
-    }
-
-    section > p {
-      font-size: 1rem;
-      padding: 0.6rem 1rem;
-    }
-  }
-
-  img {
-    box-shadow:
-      3px 3px 0 rgba($forest-teal, 0.2),
-      6px 6px 0 rgba($warm-coral, 0.1);
-
-    &:hover {
-      box-shadow:
-        3px 3px 0 rgba($forest-teal, 0.2),
-        6px 6px 0 rgba($warm-coral, 0.1);
-      transform: none;
-    }
-  }
-}
-
-// ========================================
 // UTILITY CLASSES
 // ========================================
+// Affects: one-off helper classes that can be reused in page content.
 .text-center {
   text-align: center;
 }
@@ -1008,10 +1077,1214 @@ blockquote {
   position: relative;
 
   &::before {
-    content: '🌱';
+    content: '*';
     position: absolute;
     left: -2rem;
     top: 0;
     opacity: 0.4;
+  }
+}
+
+// ========================================
+// SIMPLIFICATION PASS - quieter, cleaner, more editorial
+// ========================================
+// Important: this block intentionally overrides parts of the earlier stylesheet above.
+// Affects: the current live site look after the simplification redesign.
+body {
+  background: $bg-warm;
+  color: $text-dark;
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+// Affects: removes decorative accents from the earlier visual system site-wide.
+body::before,
+.navbar-brand::after,
+h1.title::before,
+h3::before,
+h3::after,
+.card::before,
+hr::after,
+.elegant-divider::after,
+.page-intro::before,
+.quote-section::before,
+.nature-accent::before {
+  content: none !important;
+  display: none !important;
+}
+
+// Affects: global main-column vertical spacing while Quarto controls actual page width.
+.page-layout main {
+  padding-bottom: 4rem;
+}
+
+// Affects: current, simplified navbar shell across the whole site.
+.navbar {
+  background: rgba($bg-warm, 0.96) !important;
+  border-bottom: 1px solid rgba($sage-green, 0.9);
+  border-image: none;
+  box-shadow: none;
+  padding: 0.75rem 0;
+  backdrop-filter: none;
+}
+
+// Affects: current navbar wordmark sizing/weight.
+.navbar-brand {
+  font-family: $header-font !important;
+  font-size: 1.22rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+// Affects: keeps the site wordmark dark regardless of Bootstrap navbar theme state.
+.navbar-brand,
+.navbar-brand:visited,
+.navbar-brand:hover,
+.navbar-brand:focus-visible,
+.navbar-brand .navbar-title,
+.navbar-title {
+  color: $text-dark !important;
+}
+
+// Affects: current navbar links and their active/hover states.
+.navbar-nav .nav-link {
+  font-size: 0.95rem;
+  padding: 0.45rem 0.8rem !important;
+  border-radius: 999px;
+  color: rgba($text-dark, 0.78) !important;
+  transition: color 0.2s ease, background-color 0.2s ease;
+
+  &:hover,
+  &.active {
+    transform: none;
+    color: $text-dark !important;
+    background: rgba($forest-teal, 0.1) !important;
+  }
+}
+
+.dropdown-menu {
+  background: $bg-light !important;
+  border: 1px solid rgba($sage-green, 0.95);
+  border-radius: 0.55rem;
+  box-shadow: 0 8px 20px rgba($text-dark, 0.06);
+}
+
+.dropdown-item {
+  border-left: none;
+
+  &:hover {
+    background: rgba($forest-teal, 0.08) !important;
+    color: $text-dark !important;
+    padding-left: 1rem;
+  }
+}
+
+// Affects: shared Quarto page-title spacing after the simplification pass.
+.quarto-title-block,
+body.about-page .quarto-title-block {
+  display: block;
+  padding: 2rem 0 0.75rem;
+}
+
+// Affects: current title scale used by Quarto-generated page titles.
+h1.title {
+  font-size: clamp(2.15rem, 4vw, 2.65rem);
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.4rem;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: rgba($text-dark, 0.65);
+  font-style: normal;
+}
+
+// Affects: all H2-H6 headings site-wide after simplification.
+h2,
+h3,
+h4,
+h5,
+h6 {
+  border: none;
+  background: none !important;
+  padding: 0;
+  margin-left: 0;
+  color: $text-dark !important;
+}
+
+h2 {
+  font-size: 1.6rem;
+  margin-top: 2.2rem;
+  margin-bottom: 0.7rem;
+}
+
+h3 {
+  font-size: 1.2rem;
+  font-family: $body-font !important;
+  font-weight: 600;
+}
+
+h4,
+h5,
+h6 {
+  font-size: 0.95rem;
+  font-family: $body-font !important;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  color: rgba($text-dark, 0.8) !important;
+}
+
+// Affects: default paragraph/list text rhythm across the site.
+p,
+li {
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+// Affects: default inline links across the site.
+a {
+  color: $text-dark;
+  border-bottom: 1px solid rgba($forest-teal, 0.5);
+  font-weight: 500;
+
+  &:hover {
+    color: $deep-purple;
+    border-bottom-color: $warm-coral;
+  }
+}
+
+// Affects: default image presentation site-wide.
+img {
+  border-radius: 0.25rem;
+  box-shadow: none;
+
+  &:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+// Affects: global blockquote style after simplification.
+blockquote {
+  border-left: 2px solid rgba($forest-teal, 0.8);
+  background: transparent;
+  padding: 0.25rem 0 0.25rem 1rem;
+  margin: 1.5rem 0;
+  font-family: $header-font;
+  font-style: normal;
+
+  &::before {
+    display: none;
+  }
+}
+
+hr,
+.elegant-divider {
+  height: 1px;
+  background: rgba($sage-green, 0.95);
+  margin: 2rem 0;
+}
+
+// Affects: shared button styling across forms, Quarto buttons, and custom CTAs.
+.btn-custom,
+.btn {
+  background: transparent;
+  color: $text-dark !important;
+  border: 1px solid rgba($sage-green, 0.95);
+  border-radius: 999px;
+  padding: 0.7rem 1rem;
+  font-weight: 600;
+  box-shadow: none;
+  text-transform: none;
+  letter-spacing: 0;
+
+  &:hover,
+  &:active {
+    background: rgba($forest-teal, 0.08);
+    color: $text-dark !important;
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+.page-shell {
+  max-width: 100%;
+}
+
+.page-intro {
+  max-width: 100%;
+  margin: 0 0 1.75rem;
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  color: rgba($deep-purple, 0.92);
+  font-size: 1.05rem;
+  line-height: 1.8;
+}
+
+// Affects: small page-companion illustrations and captions.
+.page-companion {
+  width: min(11rem, 100%);
+  margin: 0 0 1.6rem auto;
+  text-align: right;
+
+  &[hidden] {
+    display: none !important;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    max-width: 9.75rem;
+    margin: 0 0 0.45rem auto;
+    opacity: 0.9;
+    filter: saturate(0.8) contrast(0.95);
+  }
+
+  figcaption {
+    font-family: $mono-font;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba($deep-purple, 0.75);
+  }
+}
+
+// Affects: callouts inside shared page wrappers after simplification.
+.page-shell .callout,
+body.text-page .page-shell .callout {
+  margin: 1.5rem 0;
+  padding: 1rem 1.1rem;
+  border: 1px solid rgba($sage-green, 0.95);
+  border-left: 3px solid rgba($forest-teal, 0.8);
+  border-radius: 0.4rem;
+  background: transparent;
+  box-shadow: none;
+}
+
+// Affects: the simplified foldout component.
+.page-foldout {
+  margin: 1.25rem 0;
+  border: 1px solid rgba($sage-green, 0.95);
+  border-radius: 0.45rem;
+  background: transparent;
+  box-shadow: none;
+
+  summary {
+    padding: 0.8rem 0.95rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+
+  summary::after {
+    right: 0.95rem;
+    color: rgba($forest-teal, 0.8);
+  }
+}
+
+// Affects: body copy inside simplified foldouts.
+.page-foldout-body {
+  padding: 0 0.95rem 0.95rem;
+  color: rgba($text-dark, 0.72);
+}
+
+// Affects: research page section backgrounds that crossfade behind the writing.
+body.research-page main.content {
+  position: relative;
+  isolation: isolate;
+}
+
+body.research-page .research-bg-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+body.research-page .research-bg {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background-color: rgba($bg-light, 0.9);
+  transition: opacity 680ms ease;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba($bg-warm, 0.74), rgba($bg-warm, 0.28) 18%, rgba($bg-warm, 0.08) 48%, rgba($bg-warm, 0.42) 82%, rgba($bg-warm, 0.82)),
+      linear-gradient(90deg, rgba($bg-warm, 0.82), rgba($bg-warm, 0.1) 24%, rgba($bg-warm, 0.1) 76%, rgba($bg-warm, 0.82));
+  }
+}
+
+body.research-page .research-bg-media {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  filter: saturate(0.82) contrast(0.94) brightness(0.88);
+  transform: scale(1.02);
+}
+
+body.research-page .research-bg:not(.research-bg--neutral) {
+  background-color: transparent;
+}
+
+body.research-page .research-bg.is-active {
+  opacity: 1;
+}
+
+body.research-page .research-bg--neutral {
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba($forest-teal, 0.18), transparent 38%),
+    radial-gradient(circle at 80% 18%, rgba($warm-coral, 0.15), transparent 34%),
+    linear-gradient(180deg, rgba($bg-light, 0.98), rgba($bg-warm, 0.98));
+  filter: none;
+}
+
+body.research-page .research-bg--waves .research-bg-media {
+  object-position: center 52%;
+}
+
+body.research-page .research-bg--loc .research-bg-media {
+  object-position: center 44%;
+}
+
+body.research-page .research-bg--wri .research-bg-media {
+  object-position: center 38%;
+}
+
+body.research-page .page-intro,
+body.research-page .page-companion,
+body.research-page .page-shell {
+  position: relative;
+  z-index: 2;
+}
+
+body.research-page .page-intro {
+  max-width: 62rem;
+  margin-top: 0;
+  margin-bottom: 1.25rem;
+}
+
+body.research-page .page-shell {
+  background: transparent;
+  padding: 0 0 2rem;
+  box-shadow: none;
+}
+
+body.research-page .research-overview {
+  margin: 0 0 1.7rem;
+  padding: 1.1rem 1.2rem 1.15rem;
+  background: rgba($bg-light, 0.84);
+  box-shadow: 0 0 0 1px rgba(white, 0.34);
+}
+
+body.research-page .research-kicker {
+  margin: 0 0 0.5rem;
+  color: $text-dark;
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+body.research-page .research-context {
+  margin: 0;
+  color: rgba($deep-purple, 0.92);
+}
+
+body.research-page .research-project {
+  margin: 0 0 1.7rem;
+  padding: 1.15rem 1.2rem 1.35rem;
+  background: rgba($bg-light, 0.84);
+  box-shadow: 0 0 0 1px rgba(white, 0.34);
+}
+
+body.research-page .research-project + .research-project {
+  border-top: none;
+}
+
+body.research-page .research-principles {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.55rem;
+}
+
+body.research-page .research-principles li {
+  color: rgba($text-dark, 0.9);
+}
+
+body.research-page .research-principles strong {
+  display: inline-block;
+  min-width: 8rem;
+  color: $text-dark;
+}
+
+body.research-page .research-project > h3 {
+  margin-top: 0;
+}
+
+body.research-page .page-shell > h2 {
+  margin: 0.3rem 0 0.85rem;
+}
+
+body.research-page .research-note {
+  margin: 1rem 0 0;
+  color: rgba($text-dark, 0.84);
+}
+
+body.research-page .research-note strong {
+  color: $text-dark;
+}
+
+// Affects: homepage hero image / opening statement treatment.
+.home-hero {
+  height: 520px;
+  margin-bottom: 2rem;
+  line-height: 0;
+
+  &::before {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.16), rgba(0, 0, 0, 0.08));
+  }
+
+  p {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+  }
+
+  p img {
+    display: block;
+    width: 100%;
+    height: 100% !important;
+    max-width: none;
+    object-fit: cover;
+    object-position: center 62%;
+  }
+
+  h2 {
+    background: transparent !important;
+    border: none;
+    padding: 0;
+    margin-bottom: 0;
+    font-size: 0;
+  }
+
+  section > p {
+    background: rgba($bg-light, 0.94);
+    color: $text-dark;
+    text-shadow: none;
+    padding: 1rem 1.15rem;
+    max-width: 34rem;
+    font-size: 1.05rem;
+    line-height: 1.75;
+    border-radius: 0.3rem;
+    font-weight: 500;
+    border-left: 2px solid rgba($warm-coral, 0.9);
+  }
+}
+
+// Affects: homepage quote slider wrapper.
+.quote-section {
+  margin-top: 0;
+  padding: 1rem 0 0;
+  background: transparent;
+}
+
+// Affects: the main quote carousel card on the home page.
+.click-slider {
+  min-height: 0;
+  background: transparent;
+  padding: 2rem 2.5rem;
+  border-radius: 0.5rem;
+  box-shadow: none;
+  border: 1px solid rgba($sage-green, 0.95);
+}
+
+.slick-slide {
+  min-height: 0;
+}
+
+.slick-slide strong {
+  font-size: 1.2rem;
+  line-height: 1.65;
+}
+
+.slick-slide em {
+  font-size: 0.95rem;
+  color: rgba($text-dark, 0.7);
+
+  &::before {
+    color: rgba($text-dark, 0.7);
+  }
+}
+
+// Affects: home-page quote navigation arrows.
+.slick-prev,
+.slick-next {
+  width: 2.7rem;
+  height: 2.7rem;
+  background: $bg-light;
+  color: $text-dark;
+  border: 1px solid rgba($sage-green, 0.95);
+  box-shadow: none;
+
+  &:hover,
+  &:active {
+    background: rgba($forest-teal, 0.08);
+    color: $text-dark;
+    transform: translateY(-50%);
+    box-shadow: none;
+  }
+}
+
+.slick-dots li button {
+  background: rgba($forest-teal, 0.25);
+  border: none;
+}
+
+.slick-dots li.slick-active button {
+  background: rgba($warm-coral, 0.95);
+}
+
+.aside-label,
+.snapshot-label,
+.snapshot-meta,
+.poem-summary-meta,
+.random-line-source,
+.field-note-meta,
+.about-profile-label,
+.about-controls-label,
+.artifact-label {
+  font-size: 0.73rem;
+  letter-spacing: 0.08em;
+  color: rgba($deep-purple, 0.78);
+}
+
+.aside-rotator-grid {
+  margin: 1.4rem 0 1.8rem;
+  gap: 1rem;
+}
+
+// Affects: shared card shell for rotators, poetry, snapshots, official-answer cards, and field-note cards.
+.aside-rotator,
+.random-line-panel,
+.poem-entry,
+.snapshot-card,
+.official-answer,
+.artifact-card,
+.field-note {
+  background: transparent;
+  border: 1px solid rgba($sage-green, 0.95);
+  border-radius: 0.45rem;
+  box-shadow: none;
+}
+
+.aside-rotator {
+  min-height: 0;
+  padding: 1rem;
+}
+
+.rotator-next {
+  padding: 0.3rem 0;
+  border: none;
+  background: transparent;
+  color: rgba($deep-purple, 0.8);
+  font-size: 0.92rem;
+  font-weight: 500;
+
+  &:hover {
+    transform: none;
+    background: transparent;
+    color: $forest-teal;
+    border: none;
+  }
+}
+
+.random-line-panel {
+  padding: 1rem;
+}
+
+.poem-summary {
+  padding: 0.9rem 1rem;
+}
+
+.poem-summary-title {
+  font-size: 1.1rem;
+}
+
+.poem-entry-body {
+  padding: 0 1rem 1rem;
+}
+
+.poem-line-text {
+  font-size: 1rem;
+}
+
+.line-heart {
+  color: rgba($forest-teal, 0.45);
+
+  &:hover,
+  &.is-favorite {
+    color: $warm-coral;
+  }
+}
+
+.marginalia {
+  border-top: 1px solid rgba($sage-green, 0.95);
+
+  summary {
+    color: rgba($deep-purple, 0.82);
+  }
+}
+
+.snapshot-card img {
+  height: 15rem;
+}
+
+.snapshot-copy {
+  padding: 0.95rem 1rem 1rem;
+}
+
+// Affects: the compact word-index sentence near the top of the about page.
+.word-threadline {
+  margin: 1rem 0 2rem;
+  color: rgba($deep-purple, 0.88);
+  font-size: 0.98rem;
+  line-height: 1.8;
+
+  a {
+    color: rgba($deep-purple, 0.92);
+  }
+}
+
+// Affects: each single-word section on the current about page.
+.word-section {
+  padding-top: 1.25rem;
+  margin-bottom: 2.1rem;
+  border-top: 1px solid rgba($sage-green, 0.95);
+  scroll-margin-top: 5rem;
+}
+
+.word-section:first-of-type {
+  border-top: none;
+  padding-top: 0.2rem;
+}
+
+body.about-page .word-section h2 {
+  font-family: $header-font !important;
+  font-size: 1.45rem;
+  margin-bottom: 0.5rem;
+}
+
+// Affects: current trace-log details component on the about page.
+.trace-log {
+  margin-top: 1rem;
+  border-top: 1px solid rgba($sage-green, 0.95);
+  padding-top: 0.8rem;
+
+  summary {
+    list-style: none;
+    cursor: pointer;
+    color: rgba($deep-purple, 0.86);
+    font-size: 0.94rem;
+    font-weight: 600;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+}
+
+// Affects: layout of entries inside about-page trace logs.
+.trace-list {
+  list-style: none;
+  margin: 0.85rem 0 0;
+  padding: 0;
+
+  li {
+    display: grid;
+    grid-template-columns: 7.5rem minmax(0, 1fr);
+    gap: 0.9rem;
+    margin-bottom: 0.65rem;
+  }
+}
+
+// Affects: date column in trace logs.
+.trace-date {
+  font-family: $mono-font;
+  font-size: 0.8rem;
+  color: rgba($deep-purple, 0.72);
+}
+
+// Affects: description text in trace logs.
+.trace-entry {
+  color: rgba($text-dark, 0.84);
+}
+
+// Affects: optional inline link row at the end of an about-page section.
+.word-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  margin-top: 1.25rem;
+
+  a {
+    border-bottom: none;
+  }
+}
+
+// Affects: top spacing above the Quarto blog listing grid.
+body.blog-page .quarto-listing-container-grid {
+  margin-top: 2rem;
+}
+
+// Affects: gap between blog listing cards. Column count is controlled in `blog.qmd`.
+body.blog-page .quarto-listing-container-grid .list.grid {
+  gap: 1.15rem;
+  align-items: stretch;
+}
+
+// Affects: clickable blog-card wrapper links.
+body.blog-page .quarto-grid-link {
+  display: block;
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
+  border-bottom: none;
+}
+
+// Affects: blog post card shell (color, shadow, square corners, hover lift).
+body.blog-page .quarto-grid-item {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  background: linear-gradient(
+    180deg,
+    rgba($golden-sun, 0.16),
+    rgba($bg-light, 0.84)
+  );
+  box-shadow: 10px 10px 0 rgba($forest-teal, 0.12);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+// Affects: hover/focus popout behavior for blog cards.
+body.blog-page .quarto-grid-link:hover .quarto-grid-item,
+body.blog-page .quarto-grid-link:focus-visible .quarto-grid-item {
+  transform: translate(-2px, -2px);
+  border-color: transparent;
+  background: linear-gradient(
+    180deg,
+    rgba($golden-sun, 0.22),
+    rgba($bg-light, 0.96)
+  );
+  box-shadow: 14px 14px 0 rgba($forest-teal, 0.16);
+}
+
+// Affects: image area at the top of each blog card.
+// Note: actual listing image selection/columns are configured in `blog.qmd`, not here.
+body.blog-page .card-img-top {
+  margin: 0;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: rgba($sage-green, 0.18);
+  border-radius: 0;
+  flex-shrink: 0;
+}
+
+// Affects: blog thumbnails themselves; forces a full-bleed crop inside the dedicated image frame.
+body.blog-page .card-img-top .card-img,
+body.blog-page .card-img-top .thumbnail-image {
+  display: block;
+  width: 100%;
+  height: 100% !important;
+  margin: 0;
+  border-radius: 0;
+  object-fit: cover;
+}
+
+// Affects: blog post titles in the listing grid.
+body.blog-page .listing-title {
+  margin: 0;
+  font-family: $header-font !important;
+  font-size: 1.26rem;
+  line-height: 1.15;
+}
+
+// Affects: internal padding/layout of blog card text content.
+body.blog-page .card-body.post-contents {
+  display: flex;
+  flex-direction: column;
+  gap: 0.42rem;
+  padding: 0.85rem 0.88rem 0.88rem;
+  flex: 0 0 auto;
+}
+
+// Affects: preview description text in the blog listing.
+body.blog-page .listing-description {
+  color: rgba($text-dark, 0.78);
+  line-height: 1.55;
+  font-size: 0.93rem;
+}
+
+// Affects: hover color change for blog post titles.
+body.blog-page .quarto-grid-link:hover .listing-title,
+body.blog-page .quarto-grid-link:focus-visible .listing-title {
+  color: $forest-teal;
+}
+
+body.blog-page .listing-description p {
+  margin: 0;
+}
+
+body.blog-page .card-attribution {
+  margin-top: 0.1rem;
+  padding-top: 0;
+}
+
+body.blog-page .card-footer {
+  margin-top: auto;
+  padding: 0 0.88rem 0.88rem;
+  border-top: none;
+  background: transparent;
+}
+
+body.blog-page .card-file-modified {
+  font-family: $mono-font;
+  font-size: 0.72rem;
+  color: rgba($deep-purple, 0.68);
+}
+
+// Affects: blog post date metadata in the listing grid.
+body.blog-page .listing-date {
+  color: rgba($deep-purple, 0.75);
+  font-family: $mono-font;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+// Affects: the resume page header, entry cards, date labels, and skills grid.
+body.cv-page .page-shell > h2 {
+  margin-top: 2.6rem;
+  margin-bottom: 0.9rem;
+  padding-top: 0.25rem;
+  border-top: 1px solid rgba($sage-green, 0.9);
+}
+
+body.cv-page .page-shell > h2:first-of-type {
+  margin-top: 2rem;
+}
+
+body.cv-page .resume-header {
+  margin: 0 0 2rem;
+  padding-bottom: 1.1rem;
+  border-bottom: 1px solid rgba($sage-green, 0.9);
+}
+
+body.cv-page .resume-name {
+  margin: 0 0 0.35rem;
+  font-family: $header-font;
+  font-size: clamp(2.35rem, 5vw, 3.35rem);
+  line-height: 0.95;
+  color: $text-dark;
+}
+
+body.cv-page .resume-tagline {
+  max-width: 42rem;
+  margin: 0 0 0.95rem;
+  color: rgba($deep-purple, 0.92);
+  font-size: 1rem;
+}
+
+body.cv-page .resume-contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.85rem;
+  align-items: center;
+  font-size: 0.92rem;
+  color: rgba($text-dark, 0.82);
+}
+
+body.cv-page .resume-contact a,
+body.cv-page .resume-contact span {
+  display: inline-flex;
+  align-items: center;
+}
+
+body.cv-page .resume-contact a {
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.18em;
+}
+
+body.cv-page .resume-section {
+  margin: 0;
+}
+
+body.cv-page .resume-entry {
+  padding: 1rem 0 1.1rem;
+  border-top: 1px solid rgba($sage-green, 0.72);
+}
+
+body.cv-page .resume-entry:first-child {
+  padding-top: 0.35rem;
+  border-top: none;
+}
+
+body.cv-page .resume-entry-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.4rem 1rem;
+  align-items: start;
+}
+
+body.cv-page .resume-entry-title {
+  margin: 0;
+  font-family: $body-font;
+  font-size: 1.08rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+body.cv-page .resume-entry-org {
+  margin: 0.16rem 0 0;
+  color: rgba($deep-purple, 0.9);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+body.cv-page .resume-date {
+  margin: 0.08rem 0 0;
+  font-family: $mono-font;
+  font-size: 0.76rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: rgba($deep-purple, 0.78);
+}
+
+body.cv-page .resume-detail {
+  margin: 0.5rem 0 0;
+  color: rgba($text-dark, 0.88);
+}
+
+body.cv-page .resume-detail strong {
+  color: $text-dark;
+}
+
+body.cv-page .resume-entry ul {
+  margin: 0.75rem 0 0 1.1rem;
+  padding: 0;
+}
+
+body.cv-page .resume-entry li {
+  margin: 0 0 0.48rem;
+  color: rgba($text-dark, 0.9);
+}
+
+body.cv-page .resume-entry li:last-child {
+  margin-bottom: 0;
+}
+
+body.cv-page .resume-list-entry {
+  padding-top: 0.3rem;
+}
+
+body.cv-page .resume-presentation-list {
+  margin-left: 1.1rem;
+}
+
+body.cv-page .resume-skills-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem 1.25rem;
+}
+
+body.cv-page .resume-skill-group {
+  padding-top: 0.8rem;
+  border-top: 1px solid rgba($sage-green, 0.72);
+}
+
+body.cv-page .resume-skill-group h3 {
+  margin: 0 0 0.38rem;
+  font-size: 0.96rem;
+  font-family: $body-font;
+  font-weight: 700;
+}
+
+body.cv-page .resume-skill-group p {
+  margin: 0;
+  color: rgba($text-dark, 0.88);
+}
+
+// Affects: the temporary full-bleed placeholder page for Outside the Lab.
+body.outside-lab-page #title-block-header.quarto-title-block {
+  display: none;
+}
+
+body.outside-lab-page main.content {
+  max-width: none;
+  width: 100%;
+  padding-top: 0;
+}
+
+body.outside-lab-page .page-columns,
+body.outside-lab-page .page-full,
+body.outside-lab-page .column-screen,
+body.outside-lab-page .column-page {
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body.outside-lab-page .coming-soon-stage {
+  min-height: calc(100vh - 4.5rem);
+  display: flex;
+  align-items: flex-end;
+  padding: clamp(2rem, 5vw, 4rem);
+  background-image:
+    linear-gradient(180deg, rgba($text-dark, 0.18) 0%, rgba($text-dark, 0.62) 100%),
+    url("images/pages/adventures/evening-calibration.jpg");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+body.outside-lab-page .coming-soon-copy {
+  max-width: 34rem;
+  padding: 1.3rem 1.45rem 1.5rem;
+  background: rgba($bg-light, 0.9);
+  border: 1px solid rgba($sage-green, 0.52);
+  box-shadow: 0 18px 40px rgba($text-dark, 0.12);
+}
+
+body.outside-lab-page .coming-soon-kicker {
+  margin: 0 0 0.55rem;
+  font-family: $mono-font;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba($text-dark, 0.74);
+}
+
+body.outside-lab-page .coming-soon-title {
+  margin: 0 0 0.75rem;
+  font-size: clamp(2.1rem, 5vw, 3.35rem);
+}
+
+body.outside-lab-page .coming-soon-text {
+  margin: 0 0 1rem;
+  max-width: 31rem;
+  color: rgba($text-dark, 0.88);
+  font-size: 1rem;
+}
+
+body.outside-lab-page .coming-soon-links {
+  margin: 0;
+  font-family: $mono-font;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+body.outside-lab-page .coming-soon-links span {
+  color: rgba($text-dark, 0.42);
+  margin: 0 0.4rem;
+}
+
+@media (max-width: 768px) {
+  body.research-page .research-bg-stage {
+    display: none;
+  }
+
+  body.research-page .page-shell {
+    background: transparent;
+    padding-inline: 0;
+    box-shadow: none;
+  }
+
+  body.research-page .research-project {
+    padding: 0.9rem 0 1.2rem;
+  }
+
+  .home-hero {
+    height: 400px;
+  }
+
+  .page-companion {
+    width: 100%;
+    margin-left: 0;
+    text-align: left;
+
+    img {
+      margin-left: 0;
+    }
+  }
+
+  body.cv-page .resume-entry-head {
+    grid-template-columns: 1fr;
+    gap: 0.2rem;
+  }
+
+  body.cv-page .resume-date {
+    white-space: normal;
+  }
+
+  body.cv-page .resume-skills-grid {
+    grid-template-columns: 1fr;
+  }
+
+  body.outside-lab-page .coming-soon-stage {
+    min-height: calc(100vh - 4rem);
+    padding: 1.25rem;
+    align-items: flex-end;
+    background-position: center;
+  }
+
+  body.outside-lab-page .coming-soon-copy {
+    width: 100%;
+    padding: 1.1rem 1.05rem 1.15rem;
+  }
+
+  .click-slider {
+    padding: 1.6rem 1.2rem;
+  }
+
+  .trace-list li {
+    grid-template-columns: 1fr;
+    gap: 0.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-layout main {
+    padding-bottom: 3rem;
+  }
+
+  h1.title {
+    font-size: 1.9rem !important;
+  }
+
+  h2,
+  body.about-page .word-section h2 {
+    font-size: 1.3rem;
+  }
+
+  .word-threadline {
+    font-size: 0.95rem;
   }
 }

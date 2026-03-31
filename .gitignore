@@ -62,3 +62,6 @@ posts/eds240-final/data/*
 posts/eds241-final/data/*
 posts/federal-grant-watch/data/*
 
+# Locally archived media that are intentionally not part of the published site
+images/unused/
+

@@ -1,17 +1,14 @@
 ---
-title: "Mapping the Texas Blackouts: A Spatial Analysis of the 2021 Winter Storm Impacts"
+title: "Irregular Outages"
 description: "Using satellite night lights data and socioeconomic indicators to identify which Houston communities lost power during the historic February 2021 winter storms"
 date: "2025-12-03"
 categories: [MEDS, R, Geospatial Analysis, Remote Sensing, Environmental Justice]
-image: eds223-final-cover.jpg
+image: ../../images/posts/eds223-final/eds223-final-cover.jpg
 citation:
   url: https://rellimylime.github.io/posts/eds223-final/
 execute:
   freeze: true
   eval: true
-  echo: true
-  warning: false
-  message: false
 bibliography: references.bib
 ---
 

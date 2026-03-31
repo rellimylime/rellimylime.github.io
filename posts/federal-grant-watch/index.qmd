@@ -1,20 +1,15 @@
 ---
 title: "Getting Data That Doesn't Come in a CSV"
-description: "A beginner's walkthrough of three web scraping and API techniques, REST APIs, ID-based enrichment, and HTML scraping, using the DOGE federal grant termination list as a real-world example."
+description: "APIs, enrichment, and HTML scraping using the DOGE grant termination list."
 author: "Emily Miller"
 date: "2026-03-12"
 categories: [Personal, R, Data Science, Web Scraping, Tutorial]
-image: figures/academic_domain_comparison_plot.png
+image: ../../images/posts/federal-grant-watch/scraping-cover.jpg
 format:
   html:
-    theme: ../../styles.scss
     code-fold: true
     code-summary: "Show code"
     toc: false
-execute:
-  echo: true
-  warning: false
-  message: false
 ---
 
 ```{r setup}

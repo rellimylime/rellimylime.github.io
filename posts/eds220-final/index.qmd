@@ -1,20 +1,16 @@
 ---
-title: "Analyzing the 2025 Los Angeles Wildfires: Remote Sensing and Environmental Justice"
-description: "Combining satellite imagery and socioeconomic data to understand wildfire impacts"
+title: "Burn Scars and Unequal Burdens"
+description: "Combining satellite imagery and socioeconomic data to understand the impacts of the 2025 Los Angeles wildfires"
 date: 2025-11-29
 categories: [MEDS, Python, Geospatial Analysis, Remote Sensing, Environmental Justice]
-image: LA-Wildfires-crop.jpg
+image: ../../images/posts/eds220-final/LA-Wildfires-crop.jpg
 # https://www.downtoearth.org.in/natural-disasters/january-2025-los-angeles-wildfires-a-wake-up-call-report
 citation:
   url: https://rellimylime.github.io/posts/eds220-final/
 bibliography: references.bib
 jupyter: eds220-env
 execute:
-  freeze: auto
   eval: false
-  echo: true
-  warning: false
-  message: false
 ---
 
 ## About
@@ -25,7 +21,7 @@ Understanding wildfire impacts requires more than just mapping burned areas-it r
 
 **Repository:** <https://github.com/rellimylime/eaton-palisades-fires-analysis> *For complete analysis notebooks with additional data exploration and detailed outputs, visit the GitHub repository.*
 
-![Source: https://yaleclimateconnections.org/2025/01/the-role-of-climate-change-in-the-catastrophic-2025-los-angeles-fires/](LAfire.webp)
+![Source: https://yaleclimateconnections.org/2025/01/the-role-of-climate-change-in-the-catastrophic-2025-los-angeles-fires/](../../images/posts/eds220-final/LAfire.webp)
 
 ## Highlights
 
@@ -448,4 +444,3 @@ The combination of `xarray`, `rioxarray`, and `geopandas` transforms wildfire an
 
 ::: {#refs}
 :::
-

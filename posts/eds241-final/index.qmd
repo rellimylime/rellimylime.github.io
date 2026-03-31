@@ -1,15 +1,14 @@
 ---
-title: "Dam Decommissioning & Invertebrate Recovery: mBACI Analysis"
-description: "Assignment 4 - Replication of Atristain et al. (2024)"
+title: "Un-Daming the Benthos"
+description: "Dam Decommissioning & Invertebrate Recovery: mBACI Analysis - Replication of Atristain et al. (2024)"
 author: "Lucian Scher & Marie Tolteca"
 date: 2026-03-06
 categories: [R, Statistics, MEDS]
-image: "reservoir-1030292_1280.jpg"
+image: "../../images/posts/eds241-final/reservoir-1030292_1280.jpg"
 image-alt: "Enobieta reservoir during drawdown"
 format:
   html:
     code-fold: true
-    toc: true
 ---
 
 ```{r}
@@ -38,7 +37,7 @@ In this post, we walk through a full replication of Atristain et al. (2024)'s mB
 
 The figure below, reproduced from the paper's supporting materials, illustrates how dam removal via slow drawdown transforms a degraded, low-diversity system into a fully recovered, biodiverse stream ecosystem. It conceptualizes the three stages (Before, Drawdown, and After) that form the basis of the statistical analysis.
 
-![](drawdown-diagram.jpg)
+![](../../images/posts/eds241-final/drawdown-diagram.jpg)
 
 ::: callout-note
 ## Data Access

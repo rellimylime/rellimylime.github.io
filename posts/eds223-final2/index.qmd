@@ -1,9 +1,9 @@
 ---
-title: "Prioritizing Marine Aquaculture Locations on the US West Coast"
-description: "Using geospatial analysis to identify optimal locations for oyster and abalone farming based on sea surface temperature and depth criteria"
+title: "Where to Put the Oysters?"
+description: "A geospatial site-suitability analysis for oyster and abalone aquaculture along the US West Coast."
 date: 2024-11-15
 categories: [MEDS, R, Geospatial Analysis, Marine Science]
-image: aquaculture.jpg
+image: ../../images/posts/eds223-final2/aquaculture.jpg
 citation:
   url: https://rellimylime.github.io/posts/eds223-final2/
 bibliography: references.bib
@@ -11,11 +11,7 @@ output:
   html_document:
     code_download: true
 execute:
-  freeze: auto
   eval: true
-  echo: true
-  warning: false
-  message: false
 ---
 
 ## Introduction
@@ -778,4 +774,3 @@ This analysis was completed for **EDS 223: Geospatial Analysis and Remote Sensin
 
 ::: {#refs}
 :::
-

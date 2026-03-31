@@ -1,17 +1,11 @@
 ---
-title: "Driving Under the Influence... of Statistics"
+title: "Driving Under the Influence of Statistics"
 description: "How the same California crash data can be framed to 'prove' almost anything, and what that reveals about data literacy."
 author: "Emily Miller"
 date: 2026-03-09
 categories: [MEDS, R, Data Visualization]
-image: "draft2-crop.png"
+image: "../../images/posts/eds240-final/thumbnail.jpg"
 image-alt: "A dark, PSA-style infographic set inside a car interior illustration. The rearview mirror shows a bar chart of crash counts by sobriety, the dashboard gauges show polar clock charts of crash timing, and a roadside billboard shows estimated deaths by gender and sobriety."
-format:
-  html:
-    toc: true
-execute:
-  warning: false
-  message: false
 ---
 
 ```{r}
@@ -83,7 +77,7 @@ That statistic is real. It comes from the California Highway Patrol's SWITRS dat
 
 ## The Infographic
 
-![A dark PSA-style infographic set inside a car interior illustration. The rearview mirror shows raw crash counts by sobriety (sober drivers: 88%). The dashboard gauges compare crash timing by hour; all crashes peak at rush hour while alcohol-impaired crashes peak at 2am. A roadside billboard shows estimated deaths broken down by gender and sobriety.](draft2.png){fig-align="center" width="85%"}
+![A dark PSA-style infographic set inside a car interior illustration. The rearview mirror shows raw crash counts by sobriety (sober drivers: 88%). The dashboard gauges compare crash timing by hour; all crashes peak at rush hour while alcohol-impaired crashes peak at 2am. A roadside billboard shows estimated deaths broken down by gender and sobriety.](../../images/posts/eds240-final/draft2.png){fig-align="center" width="85%"}
 
 ------------------------------------------------------------------------
 

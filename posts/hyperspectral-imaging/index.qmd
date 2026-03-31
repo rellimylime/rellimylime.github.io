@@ -1,20 +1,16 @@
 ---
 jupyter: eds220-env
-title: "Beyond Color: Decomposing a Hyperspectral Scene into Its Materials"
-description: "A spring-break tutorial on PCA, linear spectral unmixing, and NMF for readers who know remote sensing but are new to hyperspectral imagery."
+title: "Hyperspectral Hyperawareness"
+description: "A spring-break rabbit-hole through PCA, linear spectral unmixing, NMF, as well as where they can benefit from deep learning and where they still hold their own."
 date: 2026-03-28
 categories: [Python, Remote Sensing, Linear Algebra, Data Science]
-image: figures/rgb_composite.png
+image: figures/rgb_composite_thumbnail.png
 image-alt: "False-color composite of the HYDICE Urban hyperspectral scene showing roads, grass, and rooftops in distinct spectral colors"
 citation:
   url: https://rellimylime.github.io/posts/hyperspectral-imaging
 bibliography: references.bib
 execute:
-  echo: true
-  freeze: auto
   eval: false
-  warning: false
-  message: false
 ---
 
 ```{python}
@@ -45,7 +41,9 @@ plt.rcParams.update({
 
 ## The question
 
-This post came out of a spring-break learning project. I wanted to go from "I know remote sensing and false-color imagery" to "I can actually open a hyperspectral cube, inspect pixel spectra, and run a few standard decomposition methods." What follows is the tutorial I wish I had at the start: not a full hyperspectral textbook, but a guided walkthrough of the ideas and code I used to teach myself the basics.
+This post came out of a spring-break learning project. I had the very specific feeling that I knew enough remote sensing to recognize what hyperspectral imagery was *for*, but not enough to open a cube from scratch and trust my own interpretation. So I did what I usually do when something seems learnable: opened too many tabs, downloaded a benchmark scene, and worked from the data upward.
+
+What follows is the tutorial I wish I had at the start. It is not a full hyperspectral textbook, and it is not trying to be. The goal is narrower and more honest: get from "I understand satellite imagery and false color composites" to "I can load a hyperspectral cube, inspect spectra, and run a few standard decomposition methods without treating the output like magic."
 
 If you work with remote sensing imagery, you already know the usual move: choose a few bands, stretch them well, and interpret the resulting composite. Even a false-color image, though, still compresses the scene down to a small number of broad spectral channels.
 
@@ -65,7 +63,7 @@ Three approaches, each with a different way of framing that problem:
 **Remote-sensing intuition.** A false-color composite asks: which three bands should I display? Hyperspectral analysis asks a different question: what can I learn if I use the *entire* spectral curve at each pixel instead of just a few display bands?
 :::
 
-::: {.panel-tabset}
+::: panel-tabset
 ### PCA: Variance View
 
 Use PCA when you want the strongest spectral contrasts in the scene, whether or not they map cleanly onto physical materials. It is especially useful for compression, QA, dimensionality reduction, and anomaly screening.
@@ -183,8 +181,11 @@ plt.show()
 ```
 
 <figure>
-  <img src="figures/rgb_composite.png" alt="RGB composite of the HYDICE Urban scene." style="display:block; margin:0 auto; width:70%;">
-  <figcaption>RGB composite of the HYDICE Urban scene.</figcaption>
+
+<img src="figures/rgb_composite.png" alt="RGB composite of the HYDICE Urban scene." style="display:block; margin:0 auto; width:70%;"/>
+
+<figcaption>RGB composite of the HYDICE Urban scene.</figcaption>
+
 </figure>
 
 ### Pixel spectra
@@ -220,8 +221,11 @@ plt.show()
 ```
 
 <figure>
-  <img src="figures/pixel_spectra.png" alt="Spectra from four hand-picked pixels. Even in raw radiance, each material type has a recognizably distinct shape across wavelength." style="display:block; margin:0 auto; width:85%;">
-  <figcaption>Spectra from four hand-picked pixels. Even in raw radiance, each material type has a recognizably distinct shape across wavelength.</figcaption>
+
+<img src="figures/pixel_spectra.png" alt="Spectra from four hand-picked pixels. Even in raw radiance, each material type has a recognizably distinct shape across wavelength." style="display:block; margin:0 auto; width:85%;"/>
+
+<figcaption>Spectra from four hand-picked pixels. Even in raw radiance, each material type has a recognizably distinct shape across wavelength.</figcaption>
+
 </figure>
 
 Even without atmospheric correction, these curves separate cleanly. Grass shows the familiar vegetation red edge, low values in the red and a strong rise into the near-infrared. Asphalt is flatter. Rooftops are brighter and less vegetation-like. Those differences are exactly the signal the decomposition methods below try to isolate.
@@ -318,8 +322,11 @@ plt.show()
 ```
 
 <figure>
-  <img src="figures/eigenimages.png" alt="Top 6 eigenimages, rendered with a diverging colormap. PC1 captures overall scene brightness. Subsequent components capture spectral contrast between material classes." style="display:block; margin:0 auto; width:100%;">
-  <figcaption>Top 6 eigenimages, rendered with a diverging colormap. PC1 captures overall scene brightness. Subsequent components capture spectral contrast between material classes.</figcaption>
+
+<img src="figures/eigenimages.png" alt="Top 6 eigenimages, rendered with a diverging colormap. PC1 captures overall scene brightness. Subsequent components capture spectral contrast between material classes." style="display:block; margin:0 auto; width:100%;"/>
+
+<figcaption>Top 6 eigenimages, rendered with a diverging colormap. PC1 captures overall scene brightness. Subsequent components capture spectral contrast between material classes.</figcaption>
+
 </figure>
 
 The scree plot tells us how much each component matters. The eigenimages show where each component is active in space.
@@ -346,8 +353,11 @@ plt.show()
 ```
 
 <figure>
-  <img src="figures/pca_error.png" alt="Per-pixel reconstruction error for K=12. Bright pixels are where a 12-dimensional subspace fits poorly, typically rare materials, mixed pixels at material boundaries, or sensor noise." style="display:block; margin:0 auto; width:65%;">
-  <figcaption>Per-pixel reconstruction error for K=12. Bright pixels are where a 12-dimensional subspace fits poorly, typically rare materials, mixed pixels at material boundaries, or sensor noise.</figcaption>
+
+<img src="figures/pca_error.png" alt="Per-pixel reconstruction error for K=12. Bright pixels are where a 12-dimensional subspace fits poorly, typically rare materials, mixed pixels at material boundaries, or sensor noise." style="display:block; margin:0 auto; width:65%;"/>
+
+<figcaption>Per-pixel reconstruction error for K=12. Bright pixels are where a 12-dimensional subspace fits poorly, typically rare materials, mixed pixels at material boundaries, or sensor noise.</figcaption>
+
 </figure>
 
 This map shows where a 12-component PCA model fits poorly. Bright areas are pixels whose spectra are unusual or hard to summarize with just 12 components.
@@ -415,8 +425,11 @@ plt.show()
 ```
 
 <figure>
-  <img src="figures/endmembers.png" alt="Selected endmember spectra. Each represents a pure material type: the vegetation signatures (Grass, Trees) show the characteristic red-edge feature near 700 nm." style="display:block; margin:0 auto; width:85%;">
-  <figcaption>Selected endmember spectra. Each represents a pure material type: the vegetation signatures (Grass, Trees) show the characteristic red-edge feature near 700 nm.</figcaption>
+
+<img src="figures/endmembers.png" alt="Selected endmember spectra. Each represents a pure material type: the vegetation signatures (Grass, Trees) show the characteristic red-edge feature near 700 nm." style="display:block; margin:0 auto; width:85%;"/>
+
+<figcaption>Selected endmember spectra. Each represents a pure material type: the vegetation signatures (Grass, Trees) show the characteristic red-edge feature near 700 nm.</figcaption>
+
 </figure>
 
 ### Solving for abundances: FCLS
@@ -492,8 +505,11 @@ plt.show()
 ```
 
 <figure>
-  <img src="figures/abundance_maps.png" alt="Abundance maps for each endmember plus the per-pixel unmixing residual. Warmer colors indicate higher fractional abundance of that material. High residual highlights pixels the four-endmember model can't explain." style="display:block; margin:0 auto; width:100%;">
-  <figcaption>Abundance maps for each endmember plus the per-pixel unmixing residual. Warmer colors indicate higher fractional abundance of that material. High residual highlights pixels the four-endmember model can't explain.</figcaption>
+
+<img src="figures/abundance_maps.png" alt="Abundance maps for each endmember plus the per-pixel unmixing residual. Warmer colors indicate higher fractional abundance of that material. High residual highlights pixels the four-endmember model can&apos;t explain." style="display:block; margin:0 auto; width:100%;"/>
+
+<figcaption>Abundance maps for each endmember plus the per-pixel unmixing residual. Warmer colors indicate higher fractional abundance of that material. High residual highlights pixels the four-endmember model can't explain.</figcaption>
+
 </figure>
 
 The residual map tells you where the chosen endmembers are not enough. Bright residuals often mean "there is something here that the current material library cannot explain well," such as shadow, water, or bare soil.
@@ -559,13 +575,38 @@ plt.show()
 ```
 
 <figure>
-  <img src="figures/nmf_maps.png" alt="NMF component spectra (top) and spatial weight maps (bottom). Unlike PCA eigenvectors, NMF spectra are strictly nonnegative, they can be visually compared to known material spectra in a spectral library." style="display:block; margin:0 auto; width:100%;">
-  <figcaption>NMF component spectra (top) and spatial weight maps (bottom). Unlike PCA eigenvectors, NMF spectra are strictly nonnegative, they can be visually compared to known material spectra in a spectral library.</figcaption>
+
+<img src="figures/nmf_maps.png" alt="NMF component spectra (top) and spatial weight maps (bottom). Unlike PCA eigenvectors, NMF spectra are strictly nonnegative, they can be visually compared to known material spectra in a spectral library." style="display:block; margin:0 auto; width:100%;"/>
+
+<figcaption>NMF component spectra (top) and spatial weight maps (bottom). Unlike PCA eigenvectors, NMF spectra are strictly nonnegative, they can be visually compared to known material spectra in a spectral library.</figcaption>
+
 </figure>
 
 Where PCA gives contrast axes, NMF gives positive-only parts. Those parts are not guaranteed to be true materials, but they often look material-like enough to be useful. In practice, NMF is good for exploration when you do not yet know the right endmembers, while linear unmixing is better when you do know them and want physically interpretable fractions.
 
-### Exporting products
+## Where deep learning fits now
+
+If I were learning hyperspectral imaging from scratch in 2026, I would not skip straight from "here is a cube" to "here is a transformer." Deep learning is absolutely part of the field now, especially for classification, detection, denoising, and operational pipelines. But the older decomposition methods are still the fastest way to build intuition about what is actually in the data.
+
+Recent reviews make that split pretty clear. Ghasemi et al. survey deep-learning methods for onboard spaceborne hyperspectral processing and emphasize lightweight CNNs, 1D-CNNs, GAN-based augmentation and denoising, and hardware-aware deployment under tight compute and bandwidth limits [@ghasemi_2025]. Bourriz et al. review AI for hyperspectral crop mapping and show how strongly the field has moved toward spectral-spatial deep models, while also pointing out the same bottlenecks people keep running into: limited labeled data, uneven use of spaceborne HSI, and the need for models that scale without becoming impossible to interpret [@bourriz_2025].
+
+::: panel-tabset
+### What deep learning changes
+
+Once you have labels or a clearly defined prediction task, deep models can learn nonlinear spectral-spatial structure that PCA or FCLS cannot. That matters for crop typing, semantic segmentation, target detection, denoising, onboard triage, and other tasks where the goal is accurate prediction rather than simple exploratory interpretation [@ghasemi_2025; @bourriz_2025].
+
+### What it does not replace
+
+Deep learning does not remove the need to check radiometry, inspect spectra, think about mixed pixels, or ask whether the result is physically plausible. PCA, unmixing, and NMF are still useful for QA, dimensionality reduction, anomaly screening, endmember discovery, and interpretable baselines. They help you understand the signal before you ask a larger model to generalize it.
+
+### A realistic workflow
+
+In practice, the stack is often hybrid: calibrate and correct the cube, inspect spectra, use PCA or another low-rank method to understand variance structure, use unmixing or NMF to get material intuition, and then move into supervised machine learning or deep learning if the task actually calls for it. In that sense, the classical methods are not pre-deep-learning leftovers. They are still part of how you figure out what problem you are solving.
+:::
+
+If I keep pushing this project, the next natural step would be a follow-on post showing that handoff more explicitly: start with decomposition for intuition, then train a small spectral-spatial model on top of the same scene.
+
+## Exporting products
 
 All three methods produce spatial outputs worth saving. HYDICE Urban does not include geospatial metadata such as a CRS or geotransform, so `.npy` files are a simple and honest export format here. For georeferenced datasets, you would usually write GeoTIFFs instead:
 
@@ -588,17 +629,17 @@ print("Saved:", [str(p) for p in sorted(derived.glob("*.npy"))])
 
 ## Where this fits in a real pipeline
 
-The analysis above sits in the middle of a larger hyperspectral workflow. In a production setting, you would usually do several preprocessing steps before running PCA, unmixing, or NMF:
+The analysis above sits in the middle of a larger hyperspectral workflow. One thing I had to keep reminding myself while learning this is that decomposition is not the whole pipeline. In a production setting, you would usually do several preprocessing steps before running PCA, unmixing, or NMF:
 
 | Demo step | Production analogue | Why it matters |
-|------------------------|------------------------|------------------------|
+|----|----|----|
 | Load ENVI cube, parse wavelengths | Data ingest, metadata validation | Wrong wavelength labels corrupt every downstream result |
 | Radiance discussion | Radiometric calibration, unit consistency | Decompositions are only cross-scene comparable when inputs share a radiometric convention |
 | Spatial subset / windowed read | Tiling, chunked processing, distributed compute | Windowed I/O and chunk sizing are core scaling tactics for cubes that exceed RAM |
 | PCA eigenimages + error map | QA, compression, anomaly flagging | Error maps surface model mismatch and flag rare materials |
 | FCLS abundance maps | Subpixel material estimation | ANC + ASC encode physical meaning; residuals guide endmember library iteration |
 | NMF component maps | Blind source separation, interpretable bases | Nonnegativity improves spectral factor interpretability without manual endmember selection |
-| Export derived products | `.npy` here (no geospatial metadata); GeoTIFF/COG for georeferenced datasets | Product generation, GIS integration | Georeferenced outputs connect the analysis to downstream spatial workflows |
+| Export derived products | `.npy` here (no geospatial metadata); GeoTIFF/COG for georeferenced datasets | Product generation, GIS integration |
 
 Real pipelines usually include radiometric calibration, geometric correction, and atmospheric correction before this stage [@plaza_2012]. This post skips those steps because the goal is to teach the decomposition ideas clearly, not to build a full operational workflow.
 

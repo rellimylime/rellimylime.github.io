@@ -8,9 +8,9 @@
 
 <meta name="author" content="Emily Miller">
 <meta name="dcterms.date" content="2026-03-28">
-<meta name="description" content="A spring-break tutorial on PCA, linear spectral unmixing, and NMF for readers who know remote sensing but are new to hyperspectral imagery.">
+<meta name="description" content="A spring-break rabbit-hole through PCA, linear spectral unmixing, NMF, as well as where they can benefit from deep learning and where they still hold their own.">
 
-<title>Beyond Color: Decomposing a Hyperspectral Scene into Its Materials – Emily Miller</title>
+<title>Hyperspectral Hyperawareness – Emily Miller</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -98,7 +98,7 @@ div.csl-indent {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-bee60ecf57315cb3986c6e19731cdde6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-98516fae384705e390a04a715b53af11.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -183,10 +183,6 @@ window.Quarto = {
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html"> 
-<span class="menu-text">About</span></a>
-  </li>  
-  <li class="nav-item">
     <a class="nav-link" href="../../blog.html"> 
 <span class="menu-text">Blog</span></a>
   </li>  
@@ -216,7 +212,7 @@ window.Quarto = {
   </li>  
         <li>
     <a class="dropdown-item" href="../../adventures.html">
- <span class="dropdown-text">Adventures</span></a>
+ <span class="dropdown-text">Outside the Lab</span></a>
   </li>  
     </ul>
   </li>
@@ -237,11 +233,11 @@ window.Quarto = {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">Beyond Color: Decomposing a Hyperspectral Scene into Its Materials</h1>
+    <div class="quarto-title column-body">
+      <h1 class="title">Hyperspectral Hyperawareness</h1>
                   <div>
         <div class="description">
-          A spring-break tutorial on PCA, linear spectral unmixing, and NMF for readers who know remote sensing but are new to hyperspectral imagery.
+          A spring-break rabbit-hole through PCA, linear spectral unmixing, NMF, as well as where they can benefit from deep learning and where they still hold their own.
         </div>
       </div>
                           <div class="quarto-categories">
@@ -253,7 +249,7 @@ window.Quarto = {
                   </div>
   </div>
     
-  <div class="quarto-title-meta-author column-page-left">
+  <div class="quarto-title-meta-author">
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-heading">Affiliation</div>
     
@@ -269,7 +265,7 @@ window.Quarto = {
         </div>
     </div>
 
-  <div class="quarto-title-meta column-page-left">
+  <div class="quarto-title-meta">
 
         
       <div>
@@ -283,7 +279,7 @@ window.Quarto = {
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
@@ -313,10 +309,9 @@ window.Quarto = {
   <li><a href="#endmember-selection" id="toc-endmember-selection" class="nav-link" data-scroll-target="#endmember-selection">Endmember selection</a></li>
   <li><a href="#solving-for-abundances-fcls" id="toc-solving-for-abundances-fcls" class="nav-link" data-scroll-target="#solving-for-abundances-fcls">Solving for abundances: FCLS</a></li>
   </ul></li>
-  <li><a href="#nmf" id="toc-nmf" class="nav-link" data-scroll-target="#nmf">NMF</a>
-  <ul class="collapse">
+  <li><a href="#nmf" id="toc-nmf" class="nav-link" data-scroll-target="#nmf">NMF</a></li>
+  <li><a href="#where-deep-learning-fits-now" id="toc-where-deep-learning-fits-now" class="nav-link" data-scroll-target="#where-deep-learning-fits-now">Where deep learning fits now</a></li>
   <li><a href="#exporting-products" id="toc-exporting-products" class="nav-link" data-scroll-target="#exporting-products">Exporting products</a></li>
-  </ul></li>
   <li><a href="#where-this-fits-in-a-real-pipeline" id="toc-where-this-fits-in-a-real-pipeline" class="nav-link" data-scroll-target="#where-this-fits-in-a-real-pipeline">Where this fits in a real pipeline</a></li>
   <li><a href="#reproducibility" id="toc-reproducibility" class="nav-link" data-scroll-target="#reproducibility">Reproducibility</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
@@ -324,7 +319,7 @@ window.Quarto = {
 </nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
@@ -332,7 +327,8 @@ window.Quarto = {
 
 <section id="the-question" class="level2">
 <h2 class="anchored" data-anchor-id="the-question">The question</h2>
-<p>This post came out of a spring-break learning project. I wanted to go from “I know remote sensing and false-color imagery” to “I can actually open a hyperspectral cube, inspect pixel spectra, and run a few standard decomposition methods.” What follows is the tutorial I wish I had at the start: not a full hyperspectral textbook, but a guided walkthrough of the ideas and code I used to teach myself the basics.</p>
+<p>This post came out of a spring-break learning project. I had the very specific feeling that I knew enough remote sensing to recognize what hyperspectral imagery was <em>for</em>, but not enough to open a cube from scratch and trust my own interpretation. So I did what I usually do when something seems learnable: opened too many tabs, downloaded a benchmark scene, and worked from the data upward.</p>
+<p>What follows is the tutorial I wish I had at the start. It is not a full hyperspectral textbook, and it is not trying to be. The goal is narrower and more honest: get from “I understand satellite imagery and false color composites” to “I can load a hyperspectral cube, inspect spectra, and run a few standard decomposition methods without treating the output like magic.”</p>
 <p>If you work with remote sensing imagery, you already know the usual move: choose a few bands, stretch them well, and interpret the resulting composite. Even a false-color image, though, still compresses the scene down to a small number of broad spectral channels.</p>
 <p>Hyperspectral imagery changes that. Instead of 3 broad RGB bands, or even a modest multispectral stack, it records hundreds of narrow, contiguous wavelength channels. In the HYDICE Urban scene used here, each pixel carries a 210-value spectrum spanning the visible through the shortwave infrared.</p>
 <p>That full spectral curve is what makes hyperspectral analysis different from standard image interpretation. Vegetation, asphalt, bare ground, rooftops, and metal surfaces can overlap in brightness or color in a broad-band composite while still differing strongly in spectral shape. The question stops being only “what does this object look like in a display image?” and becomes “what spectral signature is present in this pixel, and what does that imply about materials?”</p>
@@ -476,7 +472,7 @@ Important
 </details>
 </div>
 <figure class="figure">
-<img src="figures/rgb_composite.png" alt="RGB composite of the HYDICE Urban scene." style="display:block; margin:0 auto; width:70%;" class="figure-img">
+<p><img src="figures/rgb_composite.png" alt="RGB composite of the HYDICE Urban scene." style="display:block; margin:0 auto; width:70%;" class="figure-img"></p>
 <figcaption>
 RGB composite of the HYDICE Urban scene.
 </figcaption>
@@ -511,7 +507,7 @@ RGB composite of the HYDICE Urban scene.
 </details>
 </div>
 <figure class="figure">
-<img src="figures/pixel_spectra.png" alt="Spectra from four hand-picked pixels. Even in raw radiance, each material type has a recognizably distinct shape across wavelength." style="display:block; margin:0 auto; width:85%;" class="figure-img">
+<p><img src="figures/pixel_spectra.png" alt="Spectra from four hand-picked pixels. Even in raw radiance, each material type has a recognizably distinct shape across wavelength." style="display:block; margin:0 auto; width:85%;" class="figure-img"></p>
 <figcaption>
 Spectra from four hand-picked pixels. Even in raw radiance, each material type has a recognizably distinct shape across wavelength.
 </figcaption>
@@ -598,7 +594,7 @@ Spectra from four hand-picked pixels. Even in raw radiance, each material type h
 </details>
 </div>
 <figure class="figure">
-<img src="figures/eigenimages.png" alt="Top 6 eigenimages, rendered with a diverging colormap. PC1 captures overall scene brightness. Subsequent components capture spectral contrast between material classes." style="display:block; margin:0 auto; width:100%;" class="figure-img">
+<p><img src="figures/eigenimages.png" alt="Top 6 eigenimages, rendered with a diverging colormap. PC1 captures overall scene brightness. Subsequent components capture spectral contrast between material classes." style="display:block; margin:0 auto; width:100%;" class="figure-img"></p>
 <figcaption>
 Top 6 eigenimages, rendered with a diverging colormap. PC1 captures overall scene brightness. Subsequent components capture spectral contrast between material classes.
 </figcaption>
@@ -623,7 +619,7 @@ Top 6 eigenimages, rendered with a diverging colormap. PC1 captures overall scen
 </details>
 </div>
 <figure class="figure">
-<img src="figures/pca_error.png" alt="Per-pixel reconstruction error for K=12. Bright pixels are where a 12-dimensional subspace fits poorly, typically rare materials, mixed pixels at material boundaries, or sensor noise." style="display:block; margin:0 auto; width:65%;" class="figure-img">
+<p><img src="figures/pca_error.png" alt="Per-pixel reconstruction error for K=12. Bright pixels are where a 12-dimensional subspace fits poorly, typically rare materials, mixed pixels at material boundaries, or sensor noise." style="display:block; margin:0 auto; width:65%;" class="figure-img"></p>
 <figcaption>
 Per-pixel reconstruction error for K=12. Bright pixels are where a 12-dimensional subspace fits poorly, typically rare materials, mixed pixels at material boundaries, or sensor noise.
 </figcaption>
@@ -680,7 +676,7 @@ Per-pixel reconstruction error for K=12. Bright pixels are where a 12-dimensiona
 <span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <figure class="figure">
-<img src="figures/endmembers.png" alt="Selected endmember spectra. Each represents a pure material type: the vegetation signatures (Grass, Trees) show the characteristic red-edge feature near 700 nm." style="display:block; margin:0 auto; width:85%;" class="figure-img">
+<p><img src="figures/endmembers.png" alt="Selected endmember spectra. Each represents a pure material type: the vegetation signatures (Grass, Trees) show the characteristic red-edge feature near 700 nm." style="display:block; margin:0 auto; width:85%;" class="figure-img"></p>
 <figcaption>
 Selected endmember spectra. Each represents a pure material type: the vegetation signatures (Grass, Trees) show the characteristic red-edge feature near 700 nm.
 </figcaption>
@@ -763,7 +759,7 @@ Note
 </details>
 </div>
 <figure class="figure">
-<img src="figures/abundance_maps.png" alt="Abundance maps for each endmember plus the per-pixel unmixing residual. Warmer colors indicate higher fractional abundance of that material. High residual highlights pixels the four-endmember model can't explain." style="display:block; margin:0 auto; width:100%;" class="figure-img">
+<p><img src="figures/abundance_maps.png" alt="Abundance maps for each endmember plus the per-pixel unmixing residual. Warmer colors indicate higher fractional abundance of that material. High residual highlights pixels the four-endmember model can't explain." style="display:block; margin:0 auto; width:100%;" class="figure-img"></p>
 <figcaption>
 Abundance maps for each endmember plus the per-pixel unmixing residual. Warmer colors indicate higher fractional abundance of that material. High residual highlights pixels the four-endmember model can’t explain.
 </figcaption>
@@ -822,14 +818,35 @@ Abundance maps for each endmember plus the per-pixel unmixing residual. Warmer c
 </details>
 </div>
 <figure class="figure">
-<img src="figures/nmf_maps.png" alt="NMF component spectra (top) and spatial weight maps (bottom). Unlike PCA eigenvectors, NMF spectra are strictly nonnegative, they can be visually compared to known material spectra in a spectral library." style="display:block; margin:0 auto; width:100%;" class="figure-img">
+<p><img src="figures/nmf_maps.png" alt="NMF component spectra (top) and spatial weight maps (bottom). Unlike PCA eigenvectors, NMF spectra are strictly nonnegative, they can be visually compared to known material spectra in a spectral library." style="display:block; margin:0 auto; width:100%;" class="figure-img"></p>
 <figcaption>
 NMF component spectra (top) and spatial weight maps (bottom). Unlike PCA eigenvectors, NMF spectra are strictly nonnegative, they can be visually compared to known material spectra in a spectral library.
 </figcaption>
 </figure>
 <p>Where PCA gives contrast axes, NMF gives positive-only parts. Those parts are not guaranteed to be true materials, but they often look material-like enough to be useful. In practice, NMF is good for exploration when you do not yet know the right endmembers, while linear unmixing is better when you do know them and want physically interpretable fractions.</p>
-<section id="exporting-products" class="level3">
-<h3 class="anchored" data-anchor-id="exporting-products">Exporting products</h3>
+</section>
+<section id="where-deep-learning-fits-now" class="level2">
+<h2 class="anchored" data-anchor-id="where-deep-learning-fits-now">Where deep learning fits now</h2>
+<p>If I were learning hyperspectral imaging from scratch in 2026, I would not skip straight from “here is a cube” to “here is a transformer.” Deep learning is absolutely part of the field now, especially for classification, detection, denoising, and operational pipelines. But the older decomposition methods are still the fastest way to build intuition about what is actually in the data.</p>
+<p>Recent reviews make that split pretty clear. Ghasemi et al.&nbsp;survey deep-learning methods for onboard spaceborne hyperspectral processing and emphasize lightweight CNNs, 1D-CNNs, GAN-based augmentation and denoising, and hardware-aware deployment under tight compute and bandwidth limits <span class="citation" data-cites="ghasemi_2025">(<a href="#ref-ghasemi_2025" role="doc-biblioref">Ghasemi et al. 2025</a>)</span>. Bourriz et al.&nbsp;review AI for hyperspectral crop mapping and show how strongly the field has moved toward spectral-spatial deep models, while also pointing out the same bottlenecks people keep running into: limited labeled data, uneven use of spaceborne HSI, and the need for models that scale without becoming impossible to interpret <span class="citation" data-cites="bourriz_2025">(<a href="#ref-bourriz_2025" role="doc-biblioref">Bourriz et al. 2025</a>)</span>.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">What deep learning changes</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">What it does not replace</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false" href="">A realistic workflow</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<p>Once you have labels or a clearly defined prediction task, deep models can learn nonlinear spectral-spatial structure that PCA or FCLS cannot. That matters for crop typing, semantic segmentation, target detection, denoising, onboard triage, and other tasks where the goal is accurate prediction rather than simple exploratory interpretation <span class="citation" data-cites="ghasemi_2025 bourriz_2025">(<a href="#ref-ghasemi_2025" role="doc-biblioref">Ghasemi et al. 2025</a>; <a href="#ref-bourriz_2025" role="doc-biblioref">Bourriz et al. 2025</a>)</span>.</p>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<p>Deep learning does not remove the need to check radiometry, inspect spectra, think about mixed pixels, or ask whether the result is physically plausible. PCA, unmixing, and NMF are still useful for QA, dimensionality reduction, anomaly screening, endmember discovery, and interpretable baselines. They help you understand the signal before you ask a larger model to generalize it.</p>
+</div>
+<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
+<p>In practice, the stack is often hybrid: calibrate and correct the cube, inspect spectra, use PCA or another low-rank method to understand variance structure, use unmixing or NMF to get material intuition, and then move into supervised machine learning or deep learning if the task actually calls for it. In that sense, the classical methods are not pre-deep-learning leftovers. They are still part of how you figure out what problem you are solving.</p>
+</div>
+</div>
+</div>
+<p>If I keep pushing this project, the next natural step would be a follow-on post showing that handoff more explicitly: start with decomposition for intuition, then train a small spectral-spatial model on top of the same scene.</p>
+</section>
+<section id="exporting-products" class="level2">
+<h2 class="anchored" data-anchor-id="exporting-products">Exporting products</h2>
 <p>All three methods produce spatial outputs worth saving. HYDICE Urban does not include geospatial metadata such as a CRS or geotransform, so <code>.npy</code> files are a simple and honest export format here. For georeferenced datasets, you would usually write GeoTIFFs instead:</p>
 <div id="export" class="cell" data-execution_count="13">
 <details class="code-fold">
@@ -848,10 +865,9 @@ NMF component spectra (top) and spatial weight maps (bottom). Unlike PCA eigenve
 </details>
 </div>
 </section>
-</section>
 <section id="where-this-fits-in-a-real-pipeline" class="level2">
 <h2 class="anchored" data-anchor-id="where-this-fits-in-a-real-pipeline">Where this fits in a real pipeline</h2>
-<p>The analysis above sits in the middle of a larger hyperspectral workflow. In a production setting, you would usually do several preprocessing steps before running PCA, unmixing, or NMF:</p>
+<p>The analysis above sits in the middle of a larger hyperspectral workflow. One thing I had to keep reminding myself while learning this is that decomposition is not the whole pipeline. In a production setting, you would usually do several preprocessing steps before running PCA, unmixing, or NMF:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -917,6 +933,12 @@ NMF component spectra (top) and spatial weight maps (bottom). Unlike PCA eigenve
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-bourriz_2025" class="csl-entry" role="listitem">
+Bourriz, Mohamed, Hicham Hajji, Ahmed Laamrani, Nadir Elbouanani, Hamd Ait Abdelali, Francois Bourzeix, Ali El-Battay, Abdelhakim Amazirh, and Abdelghani Chehbouni. 2025. <span>“Integration of Hyperspectral Imaging and <span>AI</span> Techniques for Crop Type Mapping: Present Status, Trends, and Challenges.”</span> <em>Remote Sensing</em> 17 (9): 1574. <a href="https://doi.org/10.3390/rs17091574">https://doi.org/10.3390/rs17091574</a>.
+</div>
+<div id="ref-ghasemi_2025" class="csl-entry" role="listitem">
+Ghasemi, Nafiseh, Jon Alvarez Justo, Marco Celesti, Laurent Despoisse, and Jens Nieke. 2025. <span>“Onboard Processing of Hyperspectral Imagery: Deep Learning Advancements, Methodologies, Challenges, and Emerging Trends.”</span> <em>IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing</em> 18: 4780–90. <a href="https://doi.org/10.1109/JSTARS.2025.3527898">https://doi.org/10.1109/JSTARS.2025.3527898</a>.
+</div>
 <div id="ref-heinz_chang_2001" class="csl-entry" role="listitem">
 Heinz, Daniel C., and Chein-I Chang. 2001. <span>“Fully Constrained Least Squares Linear Spectral Mixture Analysis Method for Material Quantification in Hyperspectral Imagery.”</span> <em>IEEE Transactions on Geoscience and Remote Sensing</em> 39 (3): 529–45. <a href="https://doi.org/10.1109/36.911111">https://doi.org/10.1109/36.911111</a>.
 </div>
@@ -948,16 +970,217 @@ U.S. Army Engineer Research and Development Center. 2004. <span>“<span>HyperCu
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{miller2026,
   author = {Miller, Emily},
-  title = {Beyond {Color:} {Decomposing} a {Hyperspectral} {Scene} into
-    {Its} {Materials}},
+  title = {Hyperspectral {Hyperawareness}},
   date = {2026-03-28},
   url = {https://rellimylime.github.io/posts/hyperspectral-imaging},
   langid = {en}
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-miller2026" class="csl-entry quarto-appendix-citeas" role="listitem">
-Miller, Emily. 2026. <span>“Beyond Color: Decomposing a Hyperspectral
-Scene into Its Materials.”</span> March 28, 2026. <a href="https://rellimylime.github.io/posts/hyperspectral-imaging">https://rellimylime.github.io/posts/hyperspectral-imaging</a>.
+Miller, Emily. 2026. <span>“Hyperspectral Hyperawareness.”</span> March
+28, 2026. <a href="https://rellimylime.github.io/posts/hyperspectral-imaging">https://rellimylime.github.io/posts/hyperspectral-imaging</a>.
 </div></div></section></div></main> <!-- /main -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  initRotators();
+  initFavoriteLines();
+  initRandomLines();
+  initPageCompanions();
+  initResearchBackgrounds();
+});
+
+function initRotators() {
+  const rotators = document.querySelectorAll('[data-rotator]');
+
+  rotators.forEach((rotator) => {
+    const items = Array.from(rotator.querySelectorAll('.rotator-item'));
+    const button = rotator.querySelector('.rotator-next');
+
+    if (!items.length || !button) return;
+
+    let index = items.findIndex((item) => item.classList.contains('is-active'));
+    if (index < 0) index = 0;
+
+    syncRotator(items, index);
+
+    button.addEventListener('click', function () {
+      index = (index + 1) % items.length;
+      syncRotator(items, index);
+    });
+  });
+}
+
+function syncRotator(items, activeIndex) {
+  items.forEach((item, index) => {
+    const isActive = index === activeIndex;
+    item.hidden = !isActive;
+    item.classList.toggle('is-active', isActive);
+  });
+}
+
+function initFavoriteLines() {
+  const hearts = document.querySelectorAll('.line-heart');
+  if (!hearts.length) return;
+
+  const storageKey = 'favoriteLines.v1';
+  let saved = {};
+
+  try {
+    saved = JSON.parse(localStorage.getItem(storageKey) || '{}');
+  } catch (error) {
+    saved = {};
+  }
+
+  hearts.forEach((button) => {
+    const lineId = button.dataset.lineId;
+    if (!lineId) return;
+
+    updateHeart(button, Boolean(saved[lineId]));
+
+    button.addEventListener('click', function () {
+      const nextState = !button.classList.contains('is-favorite');
+      saved[lineId] = nextState;
+      updateHeart(button, nextState);
+      localStorage.setItem(storageKey, JSON.stringify(saved));
+    });
+  });
+}
+
+function updateHeart(button, isFavorite) {
+  button.classList.toggle('is-favorite', isFavorite);
+  button.setAttribute('aria-pressed', isFavorite ? 'true' : 'false');
+  button.setAttribute('aria-label', isFavorite ? 'Line saved to favorites' : 'Save this line');
+  button.innerHTML = isFavorite ? '&#9829;' : '&#9825;';
+}
+
+function initRandomLines() {
+  const panels = document.querySelectorAll('.random-line-panel');
+  if (!panels.length) return;
+
+  const poemLines = Array.from(document.querySelectorAll('.poem-line')).map((line) => {
+    const textNode = line.querySelector('.poem-line-text');
+    const poemBody = line.closest('.poem-body');
+
+    return {
+      text: textNode ? textNode.textContent.trim() : '',
+      poem: poemBody ? poemBody.dataset.poemTitle : ''
+    };
+  }).filter((line) => line.text);
+
+  if (!poemLines.length) return;
+
+  panels.forEach((panel) => {
+    const trigger = panel.querySelector('.random-line-trigger');
+    const output = panel.querySelector('[data-random-output]');
+    const source = panel.querySelector('[data-random-source]');
+
+    if (!trigger || !output || !source) return;
+
+    const setRandomLine = function () {
+      const choice = poemLines[Math.floor(Math.random() * poemLines.length)];
+      output.textContent = '"' + choice.text + '"';
+      source.textContent = choice.poem ? 'from ' + choice.poem : '';
+    };
+
+    trigger.addEventListener('click', setRandomLine);
+    setRandomLine();
+  });
+}
+
+function initPageCompanions() {
+  const companions = document.querySelectorAll('[data-page-companion]');
+  if (!companions.length) return;
+
+  companions.forEach((figure) => {
+    const image = figure.querySelector('img');
+    if (!image) {
+      figure.hidden = true;
+      return;
+    }
+
+    const hideFigure = function () {
+      figure.hidden = true;
+    };
+
+    const showFigure = function () {
+      figure.hidden = false;
+    };
+
+    if (image.complete) {
+      if (image.naturalWidth > 0) {
+        showFigure();
+      } else {
+        hideFigure();
+      }
+    } else {
+      image.addEventListener('load', showFigure, { once: true });
+      image.addEventListener('error', hideFigure, { once: true });
+    }
+  });
+}
+
+function initResearchBackgrounds() {
+  const stage = document.querySelector('.research-bg-stage');
+  const sections = Array.from(document.querySelectorAll('.research-project[data-bg-id]'));
+  const backgrounds = Array.from(document.querySelectorAll('.research-bg-stage .research-bg[data-bg-id]'));
+
+  if (!stage || !sections.length || !backgrounds.length) return;
+
+  let frameId = null;
+
+  const applyBlend = function () {
+    frameId = null;
+
+    const viewportMid = window.innerHeight / 2;
+    const influenceRange = window.innerHeight * 0.9;
+    const scoresById = new Map();
+
+    sections.forEach((section) => {
+      const rect = section.getBoundingClientRect();
+      const sectionMid = rect.top + rect.height / 2;
+      const distance = Math.abs(sectionMid - viewportMid);
+      const score = Math.max(0, 1 - (distance / influenceRange));
+      const bgId = section.dataset.bgId;
+
+      if (!bgId) return;
+
+      const currentScore = scoresById.get(bgId) || 0;
+      scoresById.set(bgId, Math.max(currentScore, score));
+    });
+
+    const ranked = Array.from(scoresById.entries())
+      .map(([bgId, score]) => ({ bgId, score }))
+      .sort((a, b) => b.score - a.score);
+
+    const top = ranked[0];
+    const second = ranked[1];
+    const weights = new Map();
+
+    if (!top || top.score <= 0.001) {
+      weights.set('neutral', 1);
+    } else if (!second || second.score <= 0.001) {
+      weights.set(top.bgId, 1);
+    } else {
+      const total = top.score + second.score;
+      weights.set(top.bgId, top.score / total);
+      weights.set(second.bgId, second.score / total);
+    }
+
+    backgrounds.forEach((background) => {
+      const weight = weights.get(background.dataset.bgId) || 0;
+      background.style.opacity = weight.toFixed(3);
+    });
+  };
+
+  const requestBlend = function () {
+    if (frameId !== null) return;
+    frameId = window.requestAnimationFrame(applyBlend);
+  };
+
+  requestBlend();
+  window.addEventListener('scroll', requestBlend, { passive: true });
+  window.addEventListener('resize', requestBlend);
+}
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -1031,7 +1254,7 @@ Scene into Its Materials.”</span> March 28, 2026. <a href="https://rellimylime
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/rellimylime\.github\.io");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
@@ -1359,6 +1582,19 @@ Scene into Its Materials.”</span> March 28, 2026. <a href="https://rellimylime
   });
   </script>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Made with Quarto, GitHub Pages, and love.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p><a href="../..\colophon.html">Colophon</a></p>
+</div>
+  </div>
+</footer>
 
 
 

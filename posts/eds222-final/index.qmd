@@ -1,9 +1,9 @@
 ---
-title: "Traffic, Land Use, and Wildlife-Vehicle Collisions in Denmark"
+title: "Crossing Signals"
 description: "Using a hurdle model to understand roadkill patterns on Danish roads"
 date: 2025-11-29
 categories: [MEDS, R, Statistics, Wildlife]
-image: eds222-final-cover.jpg
+image: ../../images/posts/eds222-final/eds222-final-cover.jpg
 citation:
   url: https://rellimylime.github.io/posts/eds222-final/
 bibliography: references.bib
@@ -11,16 +11,12 @@ output:
   html_document:
     code_download: true
 execute:
-  freeze: auto
   eval: true
-  echo: true
-  warning: false
-  message: false
 ---
 
 # 1. Introduction: Why This Matters
 
-Wildlife-vehicle collisions threaten biodiversity and pose safety risks. Understanding which road and landscape characteristics predict roadkill hotspots enables evidence-based mitigation. We analyze ~11,000 roadkill events on 241,000 Danish road segments (2017-2019) to test whether traffic volume, forest proximity, and urban development predict collision rates.
+Wildlife-vehicle collisions threaten biodiversity and pose safety risks. Understanding which road and landscape characteristics predict roadkill hotspots enables evidence-based mitigation. We analyze \~11,000 roadkill events on 241,000 Danish road segments (2017-2019) to test whether traffic volume, forest proximity, and urban development predict collision rates.
 
 **The puzzle**: Some roads experience frequent wildlife collisions while others have zero incidents. Is it just random chance or collection bias? Or are there systematic patterns we can identify and address?
 
@@ -35,7 +31,7 @@ Specifically, we investigate two processes:
 1.  **Occurrence**: What makes roadkill more likely to happen at all on a given road segment?
 2.  **Intensity**: Once roadkill does occur, what factors influence how many collision events happen?
 
-The high proportion of road segments with zero observed roadkill (~83%) suggests these processes operate differently, making a hurdle model the appropriate statistical framework.
+The high proportion of road segments with zero observed roadkill (\~83%) suggests these processes operate differently, making a hurdle model the appropriate statistical framework.
 
 ------------------------------------------------------------------------
 
@@ -189,11 +185,11 @@ Based on our causal theory, we make three sets of predictions:
 
 | Hypothesis | Variable | Expected Effect | Rationale |
 |------------------|------------------|------------------|------------------|
-| **H1: Traffic** | AADT (↑) | + occurrence, + intensity | More vehicles → more collision opportunities |
-| **H2a: Wildlife habitat** | Forest/Park (↑) | + occurrence, + intensity | Attracts wildlife near roads |
-| **H2b: Urban development** | Residential (↑) | - occurrence, - intensity | Reduces wildlife presence |
-| **H3a: Road infrastructure** | Minor roads (vs Major baseline) | - occurrence, - intensity | Lower speeds, fewer lanes than major roads |
-| **H3b: Speed** | Speed limit (↑) | + occurrence, + intensity | Reduced reaction time, higher mortality |
+| **H1: Traffic** | AADT (↑) | \+ occurrence, + intensity | More vehicles → more collision opportunities |
+| **H2a: Wildlife habitat** | Forest/Park (↑) | \+ occurrence, + intensity | Attracts wildlife near roads |
+| **H2b: Urban development** | Residential (↑) | \- occurrence, - intensity | Reduces wildlife presence |
+| **H3a: Road infrastructure** | Minor roads (vs Major baseline) | \- occurrence, - intensity | Lower speeds, fewer lanes than major roads |
+| **H3b: Speed** | Speed limit (↑) | \+ occurrence, + intensity | Reduced reaction time, higher mortality |
 
 **Note:** Count component effects control for road segment length by including log(length) as a predictor.
 
@@ -399,7 +395,7 @@ Top land use classes:
 knitr::kable(head(landuse_summary, 10), caption = "Top 10 Land Use Classes")
 ```
 
-**Computational Note**: These shapefiles are large (millions of features); we cache the processed/projected versions to avoid reloading and processing during every run. First runs take ~5-10 minutes each; cached runs take seconds.
+**Computational Note**: These shapefiles are large (millions of features); we cache the processed/projected versions to avoid reloading and processing during every run. First runs take \~5-10 minutes each; cached runs take seconds.
 
 ------------------------------------------------------------------------
 
@@ -439,7 +435,7 @@ cat("  Mean segment length:", round(mean(car_roads$len_km), 2), "km\n\n")
 
 #### Match Traffic to Road Segments
 
-Traffic monitoring stations are point locations. Since there are far more roads than monitoring stations, I assigned each road segment with the AADT from its nearest station, applying a distance threshold. This means we only assign traffic data to roads within ~3.7 km of a monitoring station, avoiding matches to stations that are unreasonably far away. This balances **coverage** (75% of roads get traffic data) with **accuracy** (avoiding spurious long-distance matches).
+Traffic monitoring stations are point locations. Since there are far more roads than monitoring stations, I assigned each road segment with the AADT from its nearest station, applying a distance threshold. This means we only assign traffic data to roads within \~3.7 km of a monitoring station, avoiding matches to stations that are unreasonably far away. This balances **coverage** (75% of roads get traffic data) with **accuracy** (avoiding spurious long-distance matches).
 
 ```{r}
 #| label: match-traffic
@@ -817,16 +813,11 @@ p_roadtype <- model_data %>%
 (p_aadt_dist + p_length_dist) / (p_speed_dist + p_roadtype) / p_landuse_dist
 ```
 
-**Key patterns at a glance:**
-- Traffic and forest coverage show strong positive relationships with roadkill
-- Residential development shows negative relationship (fewer wildlife)
-- Major roads have much higher collision rates than minor roads
-- Speed limits cluster into two groups (urban vs highway)
+**Key patterns at a glance:** - Traffic and forest coverage show strong positive relationships with roadkill - Residential development shows negative relationship (fewer wildlife) - Major roads have much higher collision rates than minor roads - Speed limits cluster into two groups (urban vs highway)
 
 ### Detailed Exploration by Predictor
 
-::: panel-tabset
-
+::::::::::::::::::::::: panel-tabset
 ### Traffic Volume
 
 :::::: columns
@@ -843,7 +834,7 @@ ggplot(model_data, aes(x = AADT)) +
   theme_cohesive()
 ```
 
-**What we see:** Most road segments experience moderate-to-high traffic (100-10,000 vehicles/day). Few segments have very low (<10) or very high (>10,000) traffic volumes.
+**What we see:** Most road segments experience moderate-to-high traffic (100-10,000 vehicles/day). Few segments have very low (\<10) or very high (\>10,000) traffic volumes.
 :::
 
 ::: {.column width="4%"}
@@ -883,7 +874,7 @@ ggplot(model_data, aes(x = pct_forest)) +
   theme_cohesive()
 ```
 
-**What we see:** Most road segments have 0-20% forest nearby, very few have >50%.
+**What we see:** Most road segments have 0-20% forest nearby, very few have \>50%.
 :::
 
 ::: {.column width="4%"}
@@ -903,7 +894,7 @@ ggplot(model_data, aes(x = pct_forest, y = as.numeric(roadkill_count > 0))) +
   theme_cohesive()
 ```
 
-**What we see:** **Strongest predictor!** Roadkill probability jumps from ~2% to ~20% as forest increases. Supports **H2a**.
+**What we see:** **Strongest predictor!** Roadkill probability jumps from \~2% to \~20% as forest increases. Supports **H2a**.
 :::
 ::::::
 
@@ -942,7 +933,7 @@ ggplot(model_data, aes(x = pct_residential, y = as.numeric(roadkill_count > 0)))
   theme_cohesive()
 ```
 
-**What we see:** Strong negative relationship - roadkill probability drops from ~10% to <1% as residential development increases. Supports **H2b**.
+**What we see:** Strong negative relationship - roadkill probability drops from \~10% to \<1% as residential development increases. Supports **H2b**.
 :::
 ::::::
 
@@ -966,7 +957,7 @@ model_data %>%
   theme_cohesive()
 ```
 
-**What we see:** Network dominated by minor roads (~180k), with major roads (~60k) less common.
+**What we see:** Network dominated by minor roads (\~180k), with major roads (\~60k) less common.
 :::
 
 ::: {.column width="4%"}
@@ -990,7 +981,7 @@ model_data %>%
   theme_cohesive()
 ```
 
-**What we see:** Major roads have 7x higher roadkill rates (~7%) than Minor roads (~1%). Supports **H3a**.
+**What we see:** Major roads have 7x higher roadkill rates (\~7%) than Minor roads (\~1%). Supports **H3a**.
 :::
 ::::::
 
@@ -1009,7 +1000,7 @@ ggplot(model_data, aes(x = speed_limit)) +
   theme_cohesive()
 ```
 
-**What we see:** Three clusters - low-speed zones (~0 km/h, likely missing data), moderate speeds (~50 km/h), and highways (~80 km/h).
+**What we see:** Three clusters - low-speed zones (\~0 km/h, likely missing data), moderate speeds (\~50 km/h), and highways (\~80 km/h).
 :::
 
 ::: {.column width="4%"}
@@ -1034,11 +1025,10 @@ model_data %>%
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
-**What we see:** Roadkill rates peak at moderate speeds (70-90 km/h, ~15%), then decline at higher speeds. Non-linear pattern suggests **H3b** needs refinement.
+**What we see:** Roadkill rates peak at moderate speeds (70-90 km/h, \~15%), then decline at higher speeds. Non-linear pattern suggests **H3b** needs refinement.
 :::
 ::::::
-
-:::
+:::::::::::::::::::::::
 
 These exploratory patterns support some hypotheses (forest, road type) but challenge others (traffic, speed). The hurdle model will quantify these effects while controlling for confounding.
 
@@ -1051,7 +1041,7 @@ These exploratory patterns support some hypotheses (forest, road type) but chall
 Traditional count models (Poisson, negative binomial) underestimate zeros. Our data exhibits:
 
 -   **Excess zeros**: `r round(mean(model_data$roadkill_count == 0) * 100, 1)`% of segments have no roadkill
--   **Overdispersion**: Variance (`r round(var(model_data$roadkill_count), 2)`) >> Mean (`r round(mean(model_data$roadkill_count), 3)`)
+-   **Overdispersion**: Variance (`r round(var(model_data$roadkill_count), 2)`) \>\> Mean (`r round(mean(model_data$roadkill_count), 3)`)
 
 A **hurdle model** separates two processes:
 
@@ -1125,9 +1115,9 @@ sim_data <- tibble(x = x_sim, y = y_sim)
 
 Simulated data characteristics:
 
-> - Zero rate: `r round(mean(sim_data$y == 0) * 100, 1)`%
-> - Mean count (all): `r round(mean(sim_data$y), 3)`
-> - Mean count (non-zero only): `r round(mean(sim_data$y[sim_data$y > 0]), 3)`
+> -   Zero rate: `r round(mean(sim_data$y == 0) * 100, 1)`%
+> -   Mean count (all): `r round(mean(sim_data$y), 3)`
+> -   Mean count (non-zero only): `r round(mean(sim_data$y[sim_data$y > 0]), 3)`
 
 ```{r}
 #| label: fit-simulated
@@ -1164,7 +1154,7 @@ recovery_table <- tibble(
 knitr::kable(recovery_table, caption = "Parameter Recovery Check: Simulated Data", digits = 3)
 ```
 
-**Conclusion**: Model successfully recovers known parameters (differences < 0.2). We can apply it to real data with confidence.
+**Conclusion**: Model successfully recovers known parameters (differences \< 0.2). We can apply it to real data with confidence.
 
 ```{r}
 #| label: simulation-predictions
@@ -1311,9 +1301,9 @@ hurdle_model <- hurdle(
 
 #### Model Diagnostics
 
-> - [Log-Likelihood](https://www.statlect.com/glossary/log-likelihood): `r round(logLik(hurdle_model), 1)`
-> - [AIC](https://en.wikipedia.org/wiki/Akaike_information_criterion): `r round(AIC(hurdle_model), 1)`
-> - [BIC](https://en.wikipedia.org/wiki/Bayesian_information_criterion): `r round(BIC(hurdle_model), 1)`
+> -   [Log-Likelihood](https://www.statlect.com/glossary/log-likelihood): `r round(logLik(hurdle_model), 1)`
+> -   [AIC](https://en.wikipedia.org/wiki/Akaike_information_criterion): `r round(AIC(hurdle_model), 1)`
+> -   [BIC](https://en.wikipedia.org/wiki/Bayesian_information_criterion): `r round(BIC(hurdle_model), 1)`
 
 ### Model Coefficients
 
@@ -1348,7 +1338,7 @@ knitr::kable(results, caption = "Hurdle Model Results")
 
 -   **Zero component**: Log-odds coefficients. Positive values increase the probability of roadkill occurring at all.
 -   **Count component**: Log-scale coefficients. Positive values increase the expected count given that roadkill occurs.
--   **Significance levels**: *** p<0.001, ** p<0.01, * p<0.05
+-   **Significance levels**: \*\*\* p\<0.001, \*\* p\<0.01, \* p\<0.05
 
 ### Model Predictions with Confidence Intervals
 
@@ -1532,13 +1522,11 @@ empirical_roadtype_intensity <- model_data %>%
 
 We visualize model predictions against observed data to assess fit and interpret effect sizes.
 
-::: panel-tabset
-
+::::::::::: panel-tabset
 ### Forest Coverage
 
 :::::: columns
 ::: {.column width="48%"}
-
 **Occurrence (Zero Hurdle)**
 
 ```{r}
@@ -1581,14 +1569,13 @@ ggplot() +
   theme_cohesive()
 ```
 
-Forest coverage strongly predicts whether roadkill happens at all. Roads with 100% forest nearby have ~20% probability vs ~2% for roads with no forest.
+Forest coverage strongly predicts whether roadkill happens at all. Roads with 100% forest nearby have \~20% probability vs \~2% for roads with no forest.
 :::
 
 ::: {.column width="4%"}
 :::
 
 ::: {.column width="48%"}
-
 **Intensity (Count Component)**
 
 ```{r}
@@ -1648,7 +1635,6 @@ ggplot() +
 
 :::::: columns
 ::: {.column width="48%"}
-
 **Occurrence (Zero Hurdle)**
 
 ```{r}
@@ -1689,14 +1675,13 @@ ggplot() +
   theme_cohesive()
 ```
 
-**Interpretation:** Major roads are 7x more likely to experience any roadkill compared to minor roads (~7% vs ~1%).
+**Interpretation:** Major roads are 7x more likely to experience any roadkill compared to minor roads (\~7% vs \~1%).
 :::
 
 ::: {.column width="4%"}
 :::
 
 ::: {.column width="48%"}
-
 **Intensity (Count Component)**
 
 ```{r}
@@ -1761,8 +1746,7 @@ ggplot() +
 **Interpretation:** Major roads also have higher intensity, but the effect is less dramatic than for occurrence.
 :::
 ::::::
-
-:::
+:::::::::::
 
 **Model performance summary**: The model captures occurrence patterns much better than intensity patterns. The hurdle model excels at predicting WHETHER roadkill occurs, but has limited ability to predict HOW MUCH occurs given that it happens.
 
@@ -1819,7 +1803,7 @@ H1 Status: `r ifelse(traffic_zero$P_value < 0.05 | traffic_count$P_value < 0.05,
 ::: column
 ##### H2a: Forest/Park habitat
 
-Occurrence: p = `r forest_zero$P_value` `r forest_zero$Sig` | Intensity: p = `r forest_count$P_value` `r forest_count$Sig`
+Occurrence: p = `r forest_zero$P_value` `r forest_zero$Sig` \| Intensity: p = `r forest_count$P_value` `r forest_count$Sig`
 
 Forest coverage `r ifelse(forest_zero$P_value < 0.05 | forest_count$P_value < 0.05, "significantly affects", "does not significantly affect")` roadkill patterns.
 :::
@@ -1827,7 +1811,7 @@ Forest coverage `r ifelse(forest_zero$P_value < 0.05 | forest_count$P_value < 0.
 ::: column
 ##### H2b: Residential development
 
-Occurrence: p = `r residential_zero$P_value` `r residential_zero$Sig` | Intensity: p = `r residential_count$P_value` `r residential_count$Sig`
+Occurrence: p = `r residential_zero$P_value` `r residential_zero$Sig` \| Intensity: p = `r residential_count$P_value` `r residential_count$Sig`
 
 Residential areas show `r ifelse(residential_zero$Estimate < 0, "negative", "positive")` association (as predicted).
 :::
@@ -1841,7 +1825,7 @@ H2 Status: `r ifelse((forest_zero$P_value < 0.05 | forest_count$P_value < 0.05) 
 ::: column
 ##### H3a: Minor roads (vs Major baseline)
 
-Occurrence: p = `r minor_zero$P_value` `r minor_zero$Sig` | Intensity: p = `r minor_count$P_value` `r minor_count$Sig`
+Occurrence: p = `r minor_zero$P_value` `r minor_zero$Sig` \| Intensity: p = `r minor_count$P_value` `r minor_count$Sig`
 
 Minor roads have `r ifelse(minor_zero$Estimate > 0, "higher", "lower")` roadkill rates than major roads.
 :::
@@ -1849,7 +1833,7 @@ Minor roads have `r ifelse(minor_zero$Estimate > 0, "higher", "lower")` roadkill
 ::: column
 ##### H3b: Speed limit
 
-Occurrence: p = `r speed_zero$P_value` `r speed_zero$Sig` | Intensity: p = `r speed_count$P_value` `r speed_count$Sig`
+Occurrence: p = `r speed_zero$P_value` `r speed_zero$Sig` \| Intensity: p = `r speed_count$P_value` `r speed_count$Sig`
 
 Speed limit `r ifelse(speed_zero$P_value < 0.05 | speed_count$P_value < 0.05, "significantly", "does not significantly")` `r ifelse(speed_zero$P_value < 0.05 | speed_count$P_value < 0.05, "affects", "affect")` collision risk.
 :::
@@ -1897,9 +1881,7 @@ knitr::kable(summary_table, caption = "Hypothesis Test Results (+ positive effec
 
 **Key Pattern:** Almost all predictors successfully explain occurrence but fail to explain intensity. This suggests that **where** roadkill occurs is predictable from landscape features, but **how frequently** it occurs at those locations involves additional unmeasured factors.
 
-**What this means:**
-- **WHERE roadkill happens** (occurrence) is highly predictable from landscape and infrastructure features
-- **HOW MUCH roadkill happens** (intensity) is largely unexplained by our model-suggesting it's driven by unmeasured factors like wildlife population dynamics, seasonal movements, or driver behavior
+**What this means:** - **WHERE roadkill happens** (occurrence) is highly predictable from landscape and infrastructure features - **HOW MUCH roadkill happens** (intensity) is largely unexplained by our model-suggesting it's driven by unmeasured factors like wildlife population dynamics, seasonal movements, or driver behavior
 
 ### Policy Implications
 
@@ -1908,15 +1890,16 @@ Our findings suggest several evidence-based mitigation strategies:
 1.  **Habitat-road interfaces**: Roads passing through or adjacent to forests and parks show substantially elevated collision risk. These areas should be prioritized for wildlife crossing structures and fencing.
 
 2.  **Targeted interventions**: Focus mitigation efforts (wildlife crossings, fencing) on:
-    - Major roads (which have 7x higher collision probability than minor roads)
-    - Roads adjacent to forests/parks (strongest predictor of occurrence)
-    - Areas where predicted collision probability exceeds acceptable thresholds
+
+    -   Major roads (which have 7x higher collision probability than minor roads)
+    -   Roads adjacent to forests/parks (strongest predictor of occurrence)
+    -   Areas where predicted collision probability exceeds acceptable thresholds
 
 3.  **Land use planning**: Consider roadkill risk in environmental impact assessments when approving development near wildlife habitat
 
 ### Limitations
 
-1.  **Spatial coverage**: Analysis limited to roads near traffic counters (~75% of network). Low-traffic rural roads may be underrepresented.
+1.  **Spatial coverage**: Analysis limited to roads near traffic counters (\~75% of network). Low-traffic rural roads may be underrepresented.
 
 2.  **Species grouping**: All species combined into one outcome. Species-specific behaviors and risks are not captured.
 
@@ -1948,4 +1931,3 @@ The hurdle model approach extends beyond roadkill to any ecological phenomenon w
 
 ::: {#refs}
 :::
-

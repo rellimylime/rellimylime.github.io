@@ -10,7 +10,7 @@
 <meta name="dcterms.date" content="2025-12-03">
 <meta name="description" content="Using satellite night lights data and socioeconomic indicators to identify which Houston communities lost power during the historic February 2021 winter storms">
 
-<title>Mapping the Texas Blackouts: A Spatial Analysis of the 2021 Winter Storm Impacts – Emily Miller</title>
+<title>Irregular Outages – Emily Miller</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -98,7 +98,7 @@ div.csl-indent {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-bee60ecf57315cb3986c6e19731cdde6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-98516fae384705e390a04a715b53af11.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -158,10 +158,6 @@ div.csl-indent {
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html"> 
-<span class="menu-text">About</span></a>
-  </li>  
-  <li class="nav-item">
     <a class="nav-link" href="../../blog.html"> 
 <span class="menu-text">Blog</span></a>
   </li>  
@@ -191,7 +187,7 @@ div.csl-indent {
   </li>  
         <li>
     <a class="dropdown-item" href="../../adventures.html">
- <span class="dropdown-text">Adventures</span></a>
+ <span class="dropdown-text">Outside the Lab</span></a>
   </li>  
     </ul>
   </li>
@@ -212,8 +208,8 @@ div.csl-indent {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">Mapping the Texas Blackouts: A Spatial Analysis of the 2021 Winter Storm Impacts</h1>
+    <div class="quarto-title column-body">
+      <h1 class="title">Irregular Outages</h1>
                   <div>
         <div class="description">
           Using satellite night lights data and socioeconomic indicators to identify which Houston communities lost power during the historic February 2021 winter storms
@@ -229,7 +225,7 @@ div.csl-indent {
                   </div>
   </div>
     
-  <div class="quarto-title-meta-author column-page-left">
+  <div class="quarto-title-meta-author">
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-heading">Affiliation</div>
     
@@ -245,7 +241,7 @@ div.csl-indent {
         </div>
     </div>
 
-  <div class="quarto-title-meta column-page-left">
+  <div class="quarto-title-meta">
 
         
       <div>
@@ -259,7 +255,7 @@ div.csl-indent {
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
@@ -303,7 +299,7 @@ div.csl-indent {
 </nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
@@ -341,10 +337,10 @@ div.csl-indent {
 <section id="data-sources" class="level3">
 <h3 class="anchored" data-anchor-id="data-sources">Data Sources</h3>
 <p>This analysis integrates four primary datasets:</p>
-<p><strong>VIIRS Night Lights Data</strong> — NASA’s VIIRS instrument provides daily measurements of nighttime light intensity. I used two dates of imagery: February 7, 2021 (before the storm) and February 16, 2021 (during the height of the blackouts). The data is measured in nanowatts per square centimeter per steradian (nW cm⁻²sr⁻¹) <span class="citation" data-cites="nasa2021">(<a href="#ref-nasa2021" role="doc-biblioref">NASA LAADS DAAC 2021</a>)</span>.</p>
-<p><strong>OpenStreetMap Building Footprints</strong> — Residential building polygons for the Houston metropolitan area, including houses, apartments, and other residential structures <span class="citation" data-cites="openstreetmap2021">(<a href="#ref-openstreetmap2021" role="doc-biblioref">OpenStreetMap Contributors 2021</a>)</span>.</p>
-<p><strong>OpenStreetMap Road Network</strong> — Highway and major road data used to filter out areas where reduced light may be due to decreased traffic rather than power outages <span class="citation" data-cites="openstreetmap2021">(<a href="#ref-openstreetmap2021" role="doc-biblioref">OpenStreetMap Contributors 2021</a>)</span>.</p>
-<p><strong>U.S. Census American Community Survey</strong> — 2015-2019 five-year estimates at the census tract level, including median household income datndefinedandefine</p>
+<p><strong>VIIRS Night Lights Data</strong> - NASA’s VIIRS instrument provides daily measurements of nighttime light intensity. I used two dates of imagery: February 7, 2021 (before the storm) and February 16, 2021 (during the height of the blackouts). The data is measured in nanowatts per square centimeter per steradian (nW cm⁻²sr⁻¹) <span class="citation" data-cites="nasa2021">(<a href="#ref-nasa2021" role="doc-biblioref">NASA LAADS DAAC 2021</a>)</span>.</p>
+<p><strong>OpenStreetMap Building Footprints</strong> - Residential building polygons for the Houston metropolitan area, including houses, apartments, and other residential structures <span class="citation" data-cites="openstreetmap2021">(<a href="#ref-openstreetmap2021" role="doc-biblioref">OpenStreetMap Contributors 2021</a>)</span>.</p>
+<p><strong>OpenStreetMap Road Network</strong> - Highway and major road data used to filter out areas where reduced light may be due to decreased traffic rather than power outages <span class="citation" data-cites="openstreetmap2021">(<a href="#ref-openstreetmap2021" role="doc-biblioref">OpenStreetMap Contributors 2021</a>)</span>.</p>
+<p><strong>U.S. Census American Community Survey</strong> - 2015-2019 five-year estimates at the census tract level, including median household income data <span class="citation" data-cites="census2019">(<a href="#ref-census2019" role="doc-biblioref">U.S. Census Bureau 2019</a>)</span>.</p>
 </section>
 <section id="analytical-approach" class="level3">
 <h3 class="anchored" data-anchor-id="analytical-approach">Analytical Approach</h3>
@@ -363,12 +359,12 @@ div.csl-indent {
 </div>
 <p>The analysis follows these steps:</p>
 <ol type="1">
-<li><strong>Load and prepare spatial data</strong> — Read VIIRS night lights tiles, building footprints, road networks, and census data</li>
-<li><strong>Calculate light intensity changes</strong> — Compare pre- and post-storm imagery to identify areas with significant light reduction</li>
-<li><strong>Define blackout threshold</strong> — Classify areas with light intensity drops &gt;200 nW cm⁻²sr⁻¹ as experiencing blackouts</li>
-<li><strong>Filter highway corridors</strong> — Exclude areas within 200m of major highways to avoid misidentifying reduced traffic as power outages</li>
-<li><strong>Identify impacted buildings</strong> — Intersect blackout areas with residential building footprints</li>
-<li><strong>Analyze socioeconomic patterns</strong> — Compare median household income distributions between census tracts with and without blackouts</li>
+<li><strong>Load and prepare spatial data</strong> - Read VIIRS night lights tiles, building footprints, road networks, and census data</li>
+<li><strong>Calculate light intensity changes</strong> - Compare pre- and post-storm imagery to identify areas with significant light reduction</li>
+<li><strong>Define blackout threshold</strong> - Classify areas with light intensity drops &gt;200 nW cm⁻²sr⁻¹ as experiencing blackouts</li>
+<li><strong>Filter highway corridors</strong> - Exclude areas within 200m of major highways to avoid misidentifying reduced traffic as power outages</li>
+<li><strong>Identify impacted buildings</strong> - Intersect blackout areas with residential building footprints</li>
+<li><strong>Analyze socioeconomic patterns</strong> - Compare median household income distributions between census tracts with and without blackouts</li>
 </ol>
 </section>
 <section id="loading-and-preparing-the-data" class="level3">
@@ -455,7 +451,7 @@ div.csl-indent {
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>map <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(combined_crop) <span class="sc">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(combined_crop) <span class="sc">+</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_raster</span>(<span class="at">col.scale =</span> <span class="fu">tm_scale</span>(<span class="at">values =</span> <span class="st">"inferno"</span>),</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">col.legend =</span> <span class="fu">tm_legend</span>(<span class="at">title =</span> <span class="st">"Light Intensity</span><span class="sc">\n</span><span class="st">(nW cm⁻²sr⁻¹)"</span>,</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">title.size =</span> <span class="fl">0.9</span>,</span>
@@ -467,12 +463,17 @@ div.csl-indent {
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend.outside.size =</span> <span class="fl">0.12</span>,</span>
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">panel.labels =</span> <span class="fu">c</span>(<span class="st">"February 7 (Before)"</span>, <span class="st">"February 16 (After)"</span>),</span>
 <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">fontfamily =</span> <span class="st">"sans"</span>) <span class="sc">+</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_graticules</span>(<span class="at">lwd =</span> <span class="fl">0.2</span>, <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">labels.size =</span> <span class="fl">0.5</span>)</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>map</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_graticules</span>(<span class="at">lwd =</span> <span class="fl">0.2</span>, <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">labels.size =</span> <span class="fl">0.5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="1152"></p>
+<figcaption>Night lights imagery showing Houston before (left) and during (right) the February 2021 blackouts. Darker areas in the right panel indicate regions that lost power. The widespread darkening across the metropolitan area illustrates the extensive scale of the grid failure.</figcaption>
+</figure>
 </div>
-<p><img src="before-after-fig.png" class="img-fluid"></p>
+</div>
+</div>
 <p>The comparison reveals significant light reduction across much of the Houston metropolitan area. The bright urban core visible on February 7 dims substantially by February 16, indicating widespread power failures.</p>
 </section>
 <section id="identifying-blackout-areas" class="level3">
@@ -585,7 +586,7 @@ div.csl-indent {
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="960"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="960"></p>
 <figcaption>Refinement of blackout areas by excluding highway corridors. The yellow lines show major highways with 200m buffers applied. This step removes areas where reduced light may be due to decreased traffic rather than residential power outages.</figcaption>
 </figure>
 </div>
@@ -652,7 +653,7 @@ div.csl-indent {
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="960"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="960"></p>
 <figcaption>Spatial distribution of impacted and non-impacted residential buildings. Dark red points represent homes that experienced blackouts, while light pink points indicate buildings that maintained power throughout the crisis.</figcaption>
 </figure>
 </div>
@@ -822,8 +823,8 @@ div.csl-indent {
 <h2 class="anchored" data-anchor-id="discussion">Discussion</h2>
 <section id="main-findings" class="level3">
 <h3 class="anchored" data-anchor-id="main-findings">Main Findings</h3>
-<p>This analysis identified approximately <strong>157,410</strong> residential buildings (33.1% of the study area) that lost power during the February 2021 storms. Unlike typical climate disasters, blackout exposure showed minimal income-based disparities—tracts with and without blackouts had median incomes differing by only ~$3,000 (5%). This likely reflects the systemic nature of the grid failure: when the entire system collapsed, infrastructure vulnerabilities crossed neighborhood boundaries.</p>
-<p>However, <em>exposure</em> differs from <em>impact</em>. Low-income communities faced greater difficulty evacuating, accessing backup heating, and recovering—even when blackout rates were similar <span class="citation" data-cites="gronlund2022">(<a href="#ref-gronlund2022" role="doc-biblioref">Gronlund 2014</a>)</span>.</p>
+<p>This analysis identified approximately <strong>157,410</strong> residential buildings (33.1% of the study area) that lost power during the February 2021 storms. Unlike typical climate disasters, blackout exposure showed minimal income-based disparities-tracts with and without blackouts had median incomes differing by only ~$3,000 (5%). This likely reflects the systemic nature of the grid failure: when the entire system collapsed, infrastructure vulnerabilities crossed neighborhood boundaries.</p>
+<p>However, <em>exposure</em> differs from <em>impact</em>. Low-income communities faced greater difficulty evacuating, accessing backup heating, and recovering-even when blackout rates were similar <span class="citation" data-cites="gronlund2022">(<a href="#ref-gronlund2022" role="doc-biblioref">Gronlund 2014</a>)</span>.</p>
 </section>
 <section id="limitations" class="level3">
 <h3 class="anchored" data-anchor-id="limitations">Limitations</h3>
@@ -840,13 +841,13 @@ div.csl-indent {
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<p>The February 2021 blackouts revealed catastrophic infrastructure vulnerabilities affecting millions. This analysis demonstrates how satellite remote sensing combined with socioeconomic data enables rapid disaster assessment. While blackouts affected Houston relatively uniformly across income levels—likely due to systemic grid failure—this doesn’t mean impacts were equitable. Understanding both exposure patterns and underlying vulnerabilities remains essential for building resilient, just infrastructure as climate change intensifies extreme weather events.</p>
+<p>The February 2021 blackouts revealed catastrophic infrastructure vulnerabilities affecting millions. This analysis demonstrates how satellite remote sensing combined with socioeconomic data enables rapid disaster assessment. While blackouts affected Houston relatively uniformly across income levels-likely due to systemic grid failure-this doesn’t mean impacts were equitable. Understanding both exposure patterns and underlying vulnerabilities remains essential for building resilient, just infrastructure as climate change intensifies extreme weather events.</p>
 </section>
 <section id="data-sources-and-acknowledgments" class="level2">
 <h2 class="anchored" data-anchor-id="data-sources-and-acknowledgments">Data Sources and Acknowledgments</h2>
-<p><strong>VIIRS Night Lights Data (VNP46A1)</strong> — NASA’s Visible Infrared Imaging Radiometer Suite, Suomi NPP satellite, tiles h08v05 and h08v06. Accessed via NASA Earthdata: <a href="https://worldview.earthdata.nasa.gov/" class="uri">https://worldview.earthdata.nasa.gov/</a></p>
-<p><strong>OpenStreetMap</strong> — Road network and building footprint data. Accessed via Geofabrik: <a href="https://download.geofabrik.de/" class="uri">https://download.geofabrik.de/</a></p>
-<p><strong>U.S. Census Bureau</strong> — American Community Survey 5-Year Estimates (2015-2019), Texas census tracts. Accessed via: <a href="https://www.census.gov/programs-surveys/acs" class="uri">https://www.census.gov/programs-surveys/acs</a></p>
+<p><strong>VIIRS Night Lights Data (VNP46A1)</strong> - NASA’s Visible Infrared Imaging Radiometer Suite, Suomi NPP satellite, tiles h08v05 and h08v06. Accessed via NASA Earthdata: <a href="https://worldview.earthdata.nasa.gov/" class="uri">https://worldview.earthdata.nasa.gov/</a></p>
+<p><strong>OpenStreetMap</strong> - Road network and building footprint data. Accessed via Geofabrik: <a href="https://download.geofabrik.de/" class="uri">https://download.geofabrik.de/</a></p>
+<p><strong>U.S. Census Bureau</strong> - American Community Survey 5-Year Estimates (2015-2019), Texas census tracts. Accessed via: <a href="https://www.census.gov/programs-surveys/acs" class="uri">https://www.census.gov/programs-surveys/acs</a></p>
 </section>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>
@@ -860,6 +861,9 @@ NASA LAADS DAAC. 2021. <span>“VIIRS/NPP Daily Gridded Day Night Band 15 Arc-Se
 <div id="ref-openstreetmap2021" class="csl-entry" role="listitem">
 OpenStreetMap Contributors. 2021. <span>“OpenStreetMap Data Extracts.”</span> Geofabrik GmbH. <a href="https://download.geofabrik.de/">https://download.geofabrik.de/</a>.
 </div>
+<div id="ref-census2019" class="csl-entry" role="listitem">
+U.S. Census Bureau. 2019. <span>“American Community Survey 5-Year Data (2015-2019).”</span> U.S. Census Bureau. <a href="https://www.census.gov/programs-surveys/acs/technical-documentation/table-and-geography-changes/2019/5-year.html">https://www.census.gov/programs-surveys/acs/technical-documentation/table-and-geography-changes/2019/5-year.html</a>.
+</div>
 </div>
 
 
@@ -867,16 +871,217 @@ OpenStreetMap Contributors. 2021. <span>“OpenStreetMap Data Extracts.”</span
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{miller2025,
   author = {Miller, Emily},
-  title = {Mapping the {Texas} {Blackouts:} {A} {Spatial} {Analysis} of
-    the 2021 {Winter} {Storm} {Impacts}},
+  title = {Irregular {Outages}},
   date = {2025-12-03},
   url = {https://rellimylime.github.io/posts/eds223-final/},
   langid = {en}
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-miller2025" class="csl-entry quarto-appendix-citeas" role="listitem">
-Miller, Emily. 2025. <span>“Mapping the Texas Blackouts: A Spatial
-Analysis of the 2021 Winter Storm Impacts.”</span> December 3, 2025. <a href="https://rellimylime.github.io/posts/eds223-final/">https://rellimylime.github.io/posts/eds223-final/</a>.
+Miller, Emily. 2025. <span>“Irregular Outages.”</span> December 3, 2025.
+<a href="https://rellimylime.github.io/posts/eds223-final/">https://rellimylime.github.io/posts/eds223-final/</a>.
 </div></div></section></div></main> <!-- /main -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  initRotators();
+  initFavoriteLines();
+  initRandomLines();
+  initPageCompanions();
+  initResearchBackgrounds();
+});
+
+function initRotators() {
+  const rotators = document.querySelectorAll('[data-rotator]');
+
+  rotators.forEach((rotator) => {
+    const items = Array.from(rotator.querySelectorAll('.rotator-item'));
+    const button = rotator.querySelector('.rotator-next');
+
+    if (!items.length || !button) return;
+
+    let index = items.findIndex((item) => item.classList.contains('is-active'));
+    if (index < 0) index = 0;
+
+    syncRotator(items, index);
+
+    button.addEventListener('click', function () {
+      index = (index + 1) % items.length;
+      syncRotator(items, index);
+    });
+  });
+}
+
+function syncRotator(items, activeIndex) {
+  items.forEach((item, index) => {
+    const isActive = index === activeIndex;
+    item.hidden = !isActive;
+    item.classList.toggle('is-active', isActive);
+  });
+}
+
+function initFavoriteLines() {
+  const hearts = document.querySelectorAll('.line-heart');
+  if (!hearts.length) return;
+
+  const storageKey = 'favoriteLines.v1';
+  let saved = {};
+
+  try {
+    saved = JSON.parse(localStorage.getItem(storageKey) || '{}');
+  } catch (error) {
+    saved = {};
+  }
+
+  hearts.forEach((button) => {
+    const lineId = button.dataset.lineId;
+    if (!lineId) return;
+
+    updateHeart(button, Boolean(saved[lineId]));
+
+    button.addEventListener('click', function () {
+      const nextState = !button.classList.contains('is-favorite');
+      saved[lineId] = nextState;
+      updateHeart(button, nextState);
+      localStorage.setItem(storageKey, JSON.stringify(saved));
+    });
+  });
+}
+
+function updateHeart(button, isFavorite) {
+  button.classList.toggle('is-favorite', isFavorite);
+  button.setAttribute('aria-pressed', isFavorite ? 'true' : 'false');
+  button.setAttribute('aria-label', isFavorite ? 'Line saved to favorites' : 'Save this line');
+  button.innerHTML = isFavorite ? '&#9829;' : '&#9825;';
+}
+
+function initRandomLines() {
+  const panels = document.querySelectorAll('.random-line-panel');
+  if (!panels.length) return;
+
+  const poemLines = Array.from(document.querySelectorAll('.poem-line')).map((line) => {
+    const textNode = line.querySelector('.poem-line-text');
+    const poemBody = line.closest('.poem-body');
+
+    return {
+      text: textNode ? textNode.textContent.trim() : '',
+      poem: poemBody ? poemBody.dataset.poemTitle : ''
+    };
+  }).filter((line) => line.text);
+
+  if (!poemLines.length) return;
+
+  panels.forEach((panel) => {
+    const trigger = panel.querySelector('.random-line-trigger');
+    const output = panel.querySelector('[data-random-output]');
+    const source = panel.querySelector('[data-random-source]');
+
+    if (!trigger || !output || !source) return;
+
+    const setRandomLine = function () {
+      const choice = poemLines[Math.floor(Math.random() * poemLines.length)];
+      output.textContent = '"' + choice.text + '"';
+      source.textContent = choice.poem ? 'from ' + choice.poem : '';
+    };
+
+    trigger.addEventListener('click', setRandomLine);
+    setRandomLine();
+  });
+}
+
+function initPageCompanions() {
+  const companions = document.querySelectorAll('[data-page-companion]');
+  if (!companions.length) return;
+
+  companions.forEach((figure) => {
+    const image = figure.querySelector('img');
+    if (!image) {
+      figure.hidden = true;
+      return;
+    }
+
+    const hideFigure = function () {
+      figure.hidden = true;
+    };
+
+    const showFigure = function () {
+      figure.hidden = false;
+    };
+
+    if (image.complete) {
+      if (image.naturalWidth > 0) {
+        showFigure();
+      } else {
+        hideFigure();
+      }
+    } else {
+      image.addEventListener('load', showFigure, { once: true });
+      image.addEventListener('error', hideFigure, { once: true });
+    }
+  });
+}
+
+function initResearchBackgrounds() {
+  const stage = document.querySelector('.research-bg-stage');
+  const sections = Array.from(document.querySelectorAll('.research-project[data-bg-id]'));
+  const backgrounds = Array.from(document.querySelectorAll('.research-bg-stage .research-bg[data-bg-id]'));
+
+  if (!stage || !sections.length || !backgrounds.length) return;
+
+  let frameId = null;
+
+  const applyBlend = function () {
+    frameId = null;
+
+    const viewportMid = window.innerHeight / 2;
+    const influenceRange = window.innerHeight * 0.9;
+    const scoresById = new Map();
+
+    sections.forEach((section) => {
+      const rect = section.getBoundingClientRect();
+      const sectionMid = rect.top + rect.height / 2;
+      const distance = Math.abs(sectionMid - viewportMid);
+      const score = Math.max(0, 1 - (distance / influenceRange));
+      const bgId = section.dataset.bgId;
+
+      if (!bgId) return;
+
+      const currentScore = scoresById.get(bgId) || 0;
+      scoresById.set(bgId, Math.max(currentScore, score));
+    });
+
+    const ranked = Array.from(scoresById.entries())
+      .map(([bgId, score]) => ({ bgId, score }))
+      .sort((a, b) => b.score - a.score);
+
+    const top = ranked[0];
+    const second = ranked[1];
+    const weights = new Map();
+
+    if (!top || top.score <= 0.001) {
+      weights.set('neutral', 1);
+    } else if (!second || second.score <= 0.001) {
+      weights.set(top.bgId, 1);
+    } else {
+      const total = top.score + second.score;
+      weights.set(top.bgId, top.score / total);
+      weights.set(second.bgId, second.score / total);
+    }
+
+    backgrounds.forEach((background) => {
+      const weight = weights.get(background.dataset.bgId) || 0;
+      background.style.opacity = weight.toFixed(3);
+    });
+  };
+
+  const requestBlend = function () {
+    if (frameId !== null) return;
+    frameId = window.requestAnimationFrame(applyBlend);
+  };
+
+  requestBlend();
+  window.addEventListener('scroll', requestBlend, { passive: true });
+  window.addEventListener('resize', requestBlend);
+}
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -950,7 +1155,7 @@ Analysis of the 2021 Winter Storm Impacts.”</span> December 3, 2025. <a href="
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/rellimylime\.github\.io");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
@@ -1278,6 +1483,19 @@ Analysis of the 2021 Winter Storm Impacts.”</span> December 3, 2025. <a href="
   });
   </script>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Made with Quarto, GitHub Pages, and love.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p><a href="../..\colophon.html">Colophon</a></p>
+</div>
+  </div>
+</footer>
 
 
 

@@ -3,12 +3,11 @@ title: "Resume"
 body-classes: text-page cv-page
 ---
 
-::: {.page-intro}
+::: page-intro
 Condensed version of the formal record. The fuller context for the work itself lives on the [research](research.qmd) page.
 :::
 
-::: {.page-shell}
-
+::: page-shell
 ```{=html}
 <div class="resume-header">
   <p class="resume-name">Emily Miller</p>
@@ -201,5 +200,4 @@ Condensed version of the formal record. The fuller context for the work itself l
   </article>
 </section>
 ```
-
 :::

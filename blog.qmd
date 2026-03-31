@@ -1,9 +1,22 @@
 ---
 title: "Blog"
+body-classes: text-page blog-page
+page-layout: full
 listing:
   contents: posts
-  type: default
+  feed: 
+    items: 10
+    title: "Emily Miller's Blog"
+  type: grid
   sort: "date desc"
-  categories: true
-toc: false
+  fields: [image, title, description, date, file-modified]
+  exclude:
+    draft: true
+  categories: false
+  grid-columns: 3
+  grid-item-border: false
 ---
+
+::: page-intro
+Notes, project writeups, course pieces, and the occasional record of whatever I have been trying to understand lately.
+:::

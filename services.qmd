@@ -1,11 +1,22 @@
 ---
 title: "Collaborate"
-toc: false
+body-classes: text-page services-page
 ---
 
-# Collaborate
+::: {.page-intro}
+I occasionally take on scoped projects, research support, tutoring, and workshops when the fit is good.
+:::
 
-*I occasionally take on scoped projects, research support, tutoring, and workshops when the fit is good.*
+::: {.page-shell}
+
+```{=html}
+<details class="page-foldout">
+  <summary>Why this page exists</summary>
+  <div class="page-foldout-body">
+    <p>This page is here so I can answer "do you do this for other people too?" once, clearly, without turning it into theater.</p>
+  </div>
+</details>
+```
 
 This page exists mostly so I have somewhere to point people when they ask whether I do this for other humans too. The answer is: sometimes, yes.
 
@@ -56,3 +67,5 @@ I am a MEDS candidate at UCSB, so my availability is limited and changes with th
 If it sounds like a fit, I can usually tell you quickly whether I have capacity.
 
 [Email Me](mailto:ermiller@ucsb.edu?subject=Collaboration%20Inquiry)
+
+:::

@@ -1,0 +1,27 @@
+---
+title: "Colophon"
+body-classes: text-page colophon-page
+---
+
+::: {.page-intro}
+Notes on how this site is built and maintained.
+:::
+
+::: {.page-shell}
+
+## Stack
+
+-   Built with Quarto
+-   Styled with `styles.scss`
+-   A small `site-scripts.html` file handles the interactive pieces
+-   Published from GitHub to GitHub Pages
+
+## Structure
+
+Most pages are written in `.qmd` files. Posts live in `posts/`, and the site is generated into `docs/` for GitHub Pages.
+
+## Maintenance
+
+I try to keep the setup simple enough that I can update a page, publish a post, or change the design without turning the site itself into a second project.
+
+:::

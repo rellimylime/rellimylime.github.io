@@ -1,10 +1,10 @@
 ---
-title: ""
-toc: false
+page-layout: full
+body-classes: home-page
 ---
 
 ::: home-hero
-![](images/PXL_20240914_192718413.jpg)
+![](images/pages/home/hero.jpg)
 
 #### 
 
@@ -16,22 +16,53 @@ Data scientist, environmental systems thinker, and compulsive fixer of things.
 ::::::::::::::::::::::::::: quote-section
 :::::::::::::::::::::::::: slider-container
 ::::::::::::::::::::::::: click-slider
-::: slick-slide
-**"Without data, you're just another person with an opinion."**
-
--   W. Edwards Deming
-:::
-
-::: slick-slide
-**"All models are wrong, but some are useful."**
-
--   George E. P. Box
-:::
 
 ::: slick-slide
 **"I have no fear of losing my life-if I have to save a koala or a crocodile or a kangaroo or a snake, mate, I will save it."**
 
 -   Steve Irwin
+:::
+
+::: slick-slide
+**"It is my experience that proofs involving matrices can be shortened by 50% if one throws the matrices out."**
+
+-   Emil Artin
+:::
+
+::: slick-slide
+**"With four parameters I can fit an elephant, and with five I can make him wiggle his trunk."**
+
+-   John von Neumann (on overfitting)
+:::
+
+::: slick-slide
+**"Statisticians, like artists, have the bad habit of falling in love with their models."**
+
+-   George Box
+:::
+
+::: slick-slide
+**"Documentation is a love letter that you write to your future self."**
+
+-   Damian Conway
+:::
+
+::: slick-slide
+**"The first principle is that you must not fool yourself and you are the easiest person to fool."**
+
+-   Richard Feynman
+:::
+
+::: slick-slide
+**"The real problem of humanity is this: we have paleolithic emotions, medieval institutions, and god-like technology."**
+
+-   E.O. Wilson
+:::
+
+::: slick-slide
+**"Without data, you're just another person with an opinion."**
+
+-   W. Edwards Deming
 :::
 
 ::: slick-slide
@@ -119,19 +150,13 @@ Data scientist, environmental systems thinker, and compulsive fixer of things.
 :::
 
 ::: slick-slide
-**"If you don't know where you are going, any road will get you there."**
-
--   Lewis Carroll
-:::
-
-::: slick-slide
-**"It’s easy to lie with statistics. It’s hard to tell the truth without statistics."**
+**"It's easy to lie with statistics. It's hard to tell the truth without statistics."**
 
 -   Andrejs Dunkels
 :::
 
 ::: slick-slide
-**"If you can’t explain it simply, you don’t understand it well enough."**
+**"If you can't explain it simply, you don't understand it well enough."**
 
 -   Albert Einstein
 :::
@@ -143,10 +168,11 @@ Data scientist, environmental systems thinker, and compulsive fixer of things.
 :::
 
 ::: slick-slide
-**"It is my experience that proofs involving matrices can be shortened by 50% if one throws the matrices out."**
+**"All models are wrong, but some are useful."**
 
--   Emil Artin
+-   George E. P. Box
 :::
+
 :::::::::::::::::::::::::
 ::::::::::::::::::::::::::
 :::::::::::::::::::::::::::
@@ -155,41 +181,41 @@ Data scientist, environmental systems thinker, and compulsive fixer of things.
 
 ### What I'm Working On
 
-[**Research →**](research.qmd) \| [**Art & Poetry →**](art.qmd) \| [**Blog →**](blog.qmd) \| [**More About Me →**](about.qmd)
+[**Research -\>**](research.qmd) \| [**Art & Poetry -\>**](art.qmd) \| [**Blog -\>**](blog.qmd)
 
 ```{=html}
 <script>
 // Simple Carousel/Slider Implementation
 document.addEventListener('DOMContentLoaded', function() {
   const sliders = document.querySelectorAll('.click-slider');
-  
-  sliders.forEach((slider, sliderIndex) => {
+
+  sliders.forEach((slider) => {
     const slides = slider.querySelectorAll('.slick-slide');
     let currentSlide = 0;
-    
+
     if (slides.length === 0) return;
-    
+
     // Initialize - show first slide
     slides[0].classList.add('slick-active');
-    
+
     // Create navigation buttons
     const prevBtn = document.createElement('button');
     prevBtn.classList.add('slick-prev');
-    prevBtn.innerHTML = '❮';
+    prevBtn.innerHTML = '&lsaquo;';
     prevBtn.setAttribute('aria-label', 'Previous quote');
-    
+
     const nextBtn = document.createElement('button');
     nextBtn.classList.add('slick-next');
-    nextBtn.innerHTML = '❯';
+    nextBtn.innerHTML = '&rsaquo;';
     nextBtn.setAttribute('aria-label', 'Next quote');
-    
+
     slider.parentElement.appendChild(prevBtn);
     slider.parentElement.appendChild(nextBtn);
-    
+
     // Create dots for pagination - append to slider-container (parent of click-slider)
     const dotsContainer = document.createElement('ul');
     dotsContainer.classList.add('slick-dots');
-    
+
     slides.forEach((slide, index) => {
       const dot = document.createElement('li');
       const btn = document.createElement('button');
@@ -200,42 +226,42 @@ document.addEventListener('DOMContentLoaded', function() {
       };
       dot.appendChild(btn);
       dotsContainer.appendChild(dot);
-      
+
       if (index === 0) {
         dot.classList.add('slick-active');
       }
     });
-    
+
     // Append dots to the slider-container (which uses flexbox with order)
     slider.parentElement.appendChild(dotsContainer);
-    
+
     function showSlide(n) {
       slides[currentSlide].classList.remove('slick-active');
       document.querySelectorAll('.slick-dots li')[currentSlide].classList.remove('slick-active');
-      
+
       currentSlide = (n + slides.length) % slides.length;
-      
+
       slides[currentSlide].classList.add('slick-active');
       document.querySelectorAll('.slick-dots li')[currentSlide].classList.add('slick-active');
     }
-    
+
     function goToSlide(n) {
       showSlide(n);
     }
-    
+
     function nextSlide() {
       showSlide(currentSlide + 1);
     }
-    
+
     function prevSlide() {
       showSlide(currentSlide - 1);
     }
-    
+
     // Event listeners
     nextBtn.addEventListener('click', nextSlide);
     prevBtn.addEventListener('click', prevSlide);
-    
-    // Optional: Auto-rotate every 10 seconds
+
+    // Optional: Auto-rotate every 20 seconds
     setInterval(nextSlide, 20000);
   });
 });

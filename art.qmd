@@ -1,110 +1,242 @@
 ---
 title: "Art & Poetry"
-toc: false
+body-classes: text-page art-page
 ---
 
-*Where data meets creativity, and the messy, beautiful human experience becomes art*
+::: {.page-intro}
+Poems, photographs, and visual work from the same brain that likes maps, systems, repair manuals, and the exact shade of light before evening fully commits.
+:::
 
-## On Making Art
+::: {.page-shell}
 
-I believe that art and science aren't opposites-they're different languages for the same truth. Whether I'm analyzing satellite imagery or standing in front of a blank canvas, I'm asking the same questions: What do I see? What matters? How do I make others see it too?
+```{=html}
+<details class="page-foldout">
+  <summary>Why this page exists</summary>
+  <div class="page-foldout-body">
+    <p>I do not think creative work lives in a separate room from technical work. It comes from the same habits: attention, structure, revision, and the need to make something legible.</p>
+  </div>
+</details>
+```
 
-When creativity strikes, it doesn't wait for the perfect time. So I paint, I write, I take photos. Sometimes the work is polished. Often it's raw, unfinished, bleeding into the margins of notebooks. All of it is real.
+## Studio Note
 
-## Visual Art
+I use poems, images, and design experiments to work on the same questions that show up elsewhere on this site. What deserves attention. What can be said plainly. What refuses to stay plain.
 
-Paintings, drawings, and experiments at the intersection of observation and intuition. Coming soon...
+<!--
+```{=html}
+<p class="word-links">
+  <a href="research.html">Research</a>
+  <a href="cv.html">Resume</a>
+</p>
+```
 
-## Photography
+:::::: aside-rotator-grid
+:::: {.aside-rotator data-rotator=""}
+::: aside-label
+Currently making
+:::
 
-Capturing light, moments, and the strange beauty hiding in plain sight. Coming soon...
+```{=html}
+<ul>
+  <li class="rotator-item is-active">Poems that begin in observation and end somewhere less tidy.</li>
+  <li class="rotator-item" hidden>Small visual pieces that care as much about rhythm as they do about information.</li>
+  <li class="rotator-item" hidden>A creative practice that does not apologize for living next to research.</li>
+</ul>
+<button type="button" class="rotator-next">Another note</button>
+```
+::::
+
+:::: {.aside-rotator data-rotator=""}
+::: aside-label
+Currently reading
+:::
+
+```{=html}
+<ul>
+  <li class="rotator-item is-active">Books with strong sentences and no patience for decorative thinking.</li>
+  <li class="rotator-item" hidden>The sort of essay that makes me want to rebuild an entire page around one paragraph.</li>
+  <li class="rotator-item" hidden>Anything that treats design as an ethics question rather than a styling exercise.</li>
+</ul>
+<button type="button" class="rotator-next">Another note</button>
+```
+::::
+
+:::: {.aside-rotator data-rotator=""}
+::: aside-label
+Currently noticing
+:::
+
+```{=html}
+<ul>
+  <li class="rotator-item is-active">How often a poem and a good figure fail for the same reason: they never quite decide what matters.</li>
+  <li class="rotator-item" hidden>The objects people carry until they either fix them or admit they never will.</li>
+  <li class="rotator-item" hidden>The way place sneaks into almost everything I make.</li>
+</ul>
+<button type="button" class="rotator-next">Another note</button>
+```
+::::
+::::::
+-->
 
 ## Poetry
 
-Words that hold what data can't measure. The messy, true stuff.
+Words are slower than data and less obedient. That is part of the appeal.
 
-### A Bad Design
+::: {.random-line-panel}
+::: aside-label
+Random line
+:::
 
-My heels leak,\
-With each step, grating, chafing,\
-Could this be by design?\
-We've only been together a few days,\
-Perhaps it is my fault,\
-Not taking the time to offer support,\
-Before slamming, stomping into you.
+```{=html}
+<blockquote data-random-output="">Press the button and let the page choose a line worth keeping.</blockquote>
+<p class="random-line-source" data-random-source=""></p>
+<button type="button" class="random-line-trigger">Pull a line</button>
+```
+:::
 
-Who would design such a thing?\
-No one else would want you in this state,\
-To suggest so feels like a setup, a hoax.\
-Perhaps a hairdryer and a rigid form,\
-Maybe some duct tape,\
-A pair of pliers, some wire cutters,\
-To surgically remove the parts of you that rub me the wrong way.
+```{=html}
+<div class="poetry-stack">
+  <details class="poem-entry">
+    <summary class="poem-summary">
+      <span class="poem-summary-title">A Bad Design</span>
+      <span class="poem-summary-meta">poem / objects / engineering with feelings</span>
+    </summary>
+    <div class="poem-entry-body">
+      <p class="poem-reader-note">Tap the heart on a line you want to keep.</p>
+      <div class="poem-body" data-poem-title="A Bad Design">
+        <div class="poem-stanza">
+          <div class="poem-line"><span class="poem-line-text">My heels leak,</span><button type="button" class="line-heart" data-line-id="bad-design-01" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">With each step, grating, chafing,</span><button type="button" class="line-heart" data-line-id="bad-design-02" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">Could this be by design?</span><button type="button" class="line-heart" data-line-id="bad-design-03" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">We've only been together a few days,</span><button type="button" class="line-heart" data-line-id="bad-design-04" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">Perhaps it is my fault,</span><button type="button" class="line-heart" data-line-id="bad-design-05" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">Not taking the time to offer support,</span><button type="button" class="line-heart" data-line-id="bad-design-06" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">Before slamming, stomping into you.</span><button type="button" class="line-heart" data-line-id="bad-design-07" aria-pressed="false">&#9825;</button></div>
+        </div>
+        <div class="poem-stanza">
+          <div class="poem-line"><span class="poem-line-text">Who would design such a thing?</span><button type="button" class="line-heart" data-line-id="bad-design-08" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">No one else would want you in this state,</span><button type="button" class="line-heart" data-line-id="bad-design-09" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">To suggest so feels like a setup, a hoax.</span><button type="button" class="line-heart" data-line-id="bad-design-10" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">Perhaps a hairdryer and a rigid form,</span><button type="button" class="line-heart" data-line-id="bad-design-11" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">Maybe some duct tape,</span><button type="button" class="line-heart" data-line-id="bad-design-12" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">A pair of pliers, some wire cutters,</span><button type="button" class="line-heart" data-line-id="bad-design-13" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">To surgically remove the parts of you that rub me the wrong way.</span><button type="button" class="line-heart" data-line-id="bad-design-14" aria-pressed="false">&#9825;</button></div>
+        </div>
+        <div class="poem-stanza">
+          <div class="poem-line"><span class="poem-line-text">To no avail, and now my foolish faith in you has brought me far from home.</span><button type="button" class="line-heart" data-line-id="bad-design-15" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">Far, and I think I might be bleeding-</span><button type="button" class="line-heart" data-line-id="bad-design-16" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">I will carry you the rest of the way.</span><button type="button" class="line-heart" data-line-id="bad-design-17" aria-pressed="false">&#9825;</button></div>
+        </div>
+        <div class="poem-stanza">
+          <div class="poem-line"><span class="poem-line-text">Soon the limp of uneven stilts,</span><button type="button" class="line-heart" data-line-id="bad-design-18" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">Will send a pang through my hips, a warning.</span><button type="button" class="line-heart" data-line-id="bad-design-19" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">Socks on searing sidewalks,</span><button type="button" class="line-heart" data-line-id="bad-design-20" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">Catching on stale gum,</span><button type="button" class="line-heart" data-line-id="bad-design-21" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">Collecting stories laid by treads,</span><button type="button" class="line-heart" data-line-id="bad-design-22" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">Left by soles not soaked in scarlet,</span><button type="button" class="line-heart" data-line-id="bad-design-23" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">The better of your ilk.</span><button type="button" class="line-heart" data-line-id="bad-design-24" aria-pressed="false">&#9825;</button></div>
+        </div>
+        <div class="poem-stanza">
+          <div class="poem-line"><span class="poem-line-text">For you, I've sacrificed my heels,</span><button type="button" class="line-heart" data-line-id="bad-design-25" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">My toes harbor liquid cushions,</span><button type="button" class="line-heart" data-line-id="bad-design-26" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">Feet gone flat,</span><button type="button" class="line-heart" data-line-id="bad-design-27" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">My balls slowly scorched.</span><button type="button" class="line-heart" data-line-id="bad-design-28" aria-pressed="false">&#9825;</button></div>
+        </div>
+        <div class="poem-stanza">
+          <div class="poem-line"><span class="poem-line-text">But I still feel for you;</span><button type="button" class="line-heart" data-line-id="bad-design-29" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">Betrayer.</span><button type="button" class="line-heart" data-line-id="bad-design-30" aria-pressed="false">&#9825;</button></div>
+        </div>
+        <div class="poem-stanza">
+          <div class="poem-line"><span class="poem-line-text">I know, if it were up to you, you would not have picked this.</span><button type="button" class="line-heart" data-line-id="bad-design-31" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">You remind me of me.</span><button type="button" class="line-heart" data-line-id="bad-design-32" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">Brandishing your name as bait,</span><button type="button" class="line-heart" data-line-id="bad-design-33" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">Luring investments in naive idolatry.</span><button type="button" class="line-heart" data-line-id="bad-design-34" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">Aspiring beyond clearance rack compromises,</span><button type="button" class="line-heart" data-line-id="bad-design-35" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">Seduced by a gilded construction,</span><button type="button" class="line-heart" data-line-id="bad-design-36" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">I championed your promise.</span><button type="button" class="line-heart" data-line-id="bad-design-37" aria-pressed="false">&#9825;</button></div>
+        </div>
+        <div class="poem-stanza">
+          <div class="poem-line"><span class="poem-line-text">To discard you now</span><button type="button" class="line-heart" data-line-id="bad-design-38" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">Would be to admit defeat,</span><button type="button" class="line-heart" data-line-id="bad-design-39" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">To waste not only money,</span><button type="button" class="line-heart" data-line-id="bad-design-40" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">But value of conviction.</span><button type="button" class="line-heart" data-line-id="bad-design-41" aria-pressed="false">&#9825;</button></div>
+        </div>
+        <div class="poem-stanza">
+          <div class="poem-line"><span class="poem-line-text">So you'll live in my closet,</span><button type="button" class="line-heart" data-line-id="bad-design-42" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">Next to the others,</span><button type="button" class="line-heart" data-line-id="bad-design-43" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">Until I come up with a way to fix you-</span><button type="button" class="line-heart" data-line-id="bad-design-44" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">Trading band aids for false hope once again-</span><button type="button" class="line-heart" data-line-id="bad-design-45" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">Or I find the heart to throw you out.</span><button type="button" class="line-heart" data-line-id="bad-design-46" aria-pressed="false">&#9825;</button></div>
+        </div>
+      </div>
+      <details class="marginalia">
+        <summary>Marginalia</summary>
+        <p>This started with a pair of shoes. I don't have them anymore.</p>
+      </details>
+    </div>
+  </details>
 
-To no avail, and now my foolish faith in you has brought me far from home.\
-Far, and I think I might be bleeding-\
-I will carry you the rest of the way.
+  <details class="poem-entry">
+    <summary class="poem-summary">
+      <span class="poem-summary-title">The Ocean Listened</span>
+      <span class="poem-summary-meta">poem / coast / indifference as comfort</span>
+    </summary>
+    <div class="poem-entry-body">
+      <p class="poem-reader-note">The quiet lines can keep their teeth too.</p>
+      <div class="poem-body" data-poem-title="The Ocean Listened">
+        <div class="poem-stanza">
+          <div class="poem-line"><span class="poem-line-text">I cried to the ocean today</span><button type="button" class="line-heart" data-line-id="ocean-listened-01" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">She listened deeper than I spoke,</span><button type="button" class="line-heart" data-line-id="ocean-listened-02" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">and she told me she did not care.</span><button type="button" class="line-heart" data-line-id="ocean-listened-03" aria-pressed="false">&#9825;</button></div>
+        </div>
+        <div class="poem-stanza">
+          <div class="poem-line"><span class="poem-line-text">So I asked the birds,</span><button type="button" class="line-heart" data-line-id="ocean-listened-04" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">but they were too busy</span><button type="button" class="line-heart" data-line-id="ocean-listened-05" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">idling against the ocean breeze</span><button type="button" class="line-heart" data-line-id="ocean-listened-06" aria-pressed="false">&#9825;</button></div>
+        </div>
+        <div class="poem-stanza">
+          <div class="poem-line"><span class="poem-line-text">I asked the grasses,</span><button type="button" class="line-heart" data-line-id="ocean-listened-07" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">they stopped to listen</span><button type="button" class="line-heart" data-line-id="ocean-listened-08" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">and went back to sharing quiet whispers with the trees.</span><button type="button" class="line-heart" data-line-id="ocean-listened-09" aria-pressed="false">&#9825;</button></div>
+        </div>
+        <div class="poem-stanza">
+          <div class="poem-line"><span class="poem-line-text">Then I asked the wind,</span><button type="button" class="line-heart" data-line-id="ocean-listened-10" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">and she swept up my tears faster than they could fall.</span><button type="button" class="line-heart" data-line-id="ocean-listened-11" aria-pressed="false">&#9825;</button></div>
+        </div>
+        <div class="poem-stanza">
+          <div class="poem-line"><span class="poem-line-text">I have never felt more loved.</span><button type="button" class="line-heart" data-line-id="ocean-listened-12" aria-pressed="false">&#9825;</button></div>
+        </div>
+      </div>
+      <details class="marginalia">
+        <summary>Marginalia</summary>
+        <p>I like that this one refuses to make comfort sentimental. The love arrives through reverence, not reassurance.</p>
+      </details>
+    </div>
+  </details>
+</div>
+```
 
-Soon the limp of uneven stilts,\
-Will send a pang through my hips, a warning.\
-Socks on searing sidewalks,\
-Catching on stale gum,\
-Collecting stories laid by treads,\
-Left by soles not soaked in scarlet,\
-The better of your ilk.
+## Visual Work
 
-For you, I've sacrificed my heels,\
-My toes harbor liquid cushions,\
-Feet gone flat,\
-My balls slowly scorched.
+I am building this section more selectively than I used to. 
 
-But I still feel for you;\
-Betrayer.
+Photography and visual work are coming next!
 
-I know, if it were up to you, you wouldn't have picked this.\
-You remind me of me.\
-Brandishing your name as bait,\
-Luring investments in naïve idolatry.\
-Aspiring beyond clearance rack compromises\
-Seduced by a gilded construction\
-I championed your promise.
+## Leave a Note
 
-To discard you now\
-Would be to admit defeat\
-To waste not only money,\
-But value of conviction.
+Comments on this page run through GitHub. If you want to leave a note on the work, that is the room.
 
-So you'll live in my closet,\
-Next to the others,\
-Until I come up with a way to fix you-\
-Trading band aids for false hope once again-\
-Or I find the heart to throw you out.
+```{=html}
+<div class="comment-shell">
+  <script src="https://utteranc.es/client.js"
+          repo="rellimylime/rellimylime.github.io"
+          issue-term="pathname"
+          label="site-comment"
+          theme="github-light"
+          crossorigin="anonymous"
+          async>
+  </script>
+</div>
+```
 
-------------------------------------------------------------------------
-
-### The Ocean Listened
-
-I cried to the ocean today\
-She listened deeper than I spoke,\
-and she told me she didn't care.
-
-So I asked the birds,\
-but they were too busy\
-idling against the ocean breeze
-
-I asked the grasses,\
-they stopped to listen\
-and went back to sharing quiet whispers with the trees.
-
-Then I asked the wind,\
-and she swept up my tears faster than they could fall.
-
-I have never felt more loved.
-
-------------------------------------------------------------------------
-
-# What Comes Next
-
-I'm always creating. New pieces, new explorations, new ways of seeing. If you'd like to collaborate, commission work, or just chat about art and science, reach out.
-
-[Let's Create Something](mailto:ermiller@ucsb.edu)
+:::

@@ -1,45 +1,126 @@
 ---
-title: "About Me"
-subtitle: "The stuff that makes me, me"
-toc: false
+title: "About"
+body-classes: about-page text-page
 ---
 
-![](images/headshot.jpg)
+::: {.page-intro}
+I could give you the polished version. This is the more accurate one.
+:::
 
-*If you're looking for the official version, the [research page](research.qmd) and [resume](cv.qmd) do that better. This page is on the kookier side.*
+::: {.page-shell}
 
-## The Real Stuff
+The official bio and the resume are both true. They are also compressed. This page is for the patterns that show up more reliably than either of those documents.
 
-I have a hard time sitting still. If something is broken and there is even a *slim* chance I can fix it, I will probably try. I will weld, solder, sew, paint, or open seventeen tabs and teach myself whatever the problem requires. Debugging code feels more like a puzzle than a chore.
+::: {.word-threadline}
+This page moves through six threads:
+[Salvage](#salvage),
+[Tinkering](#tinkering),
+[Inquiry](#inquiry),
+[Signals](#signals),
+[Stakes](#stakes),
+and [In Plain Terms](#plain-terms).
+:::
 
-I grew up between Concord, Massachusetts, and California's Central Valley, but my heart belongs to [Great Diamond Island](https://en.wikipedia.org/wiki/Great_Diamond_Island) off the coast of Portland, Maine. There’s something about that place. I usually come at problems a little sideways. At this point I have stopped trying to right myself.
+::: {.word-section}
+## Salvage {#salvage}
 
+I am drawn to things that are broken but recoverable. That includes objects, workflows, explanations, websites, and any system that is almost useful but not quite there yet. Repair feels less like a hobby to me than a way of thinking.
 
-## What I Actually Do With My Time
+```{=html}
+<details class="trace-log">
+  <summary>Recent traces</summary>
+  <ul class="trace-list">
+    <li><span class="trace-date">March 2026</span><span class="trace-entry">Rebuilt this site because it felt too dressed up and not precise enough.</span></li>
+    <li><span class="trace-date">March 2026</span><span class="trace-entry">Debugged a stubborn render pipeline instead of pretending the weird output was acceptable.</span></li>
+    <li><span class="trace-date">Ongoing</span><span class="trace-entry">Keep a mental inventory of objects that look one careful afternoon away from becoming useful again.</span></li>
+  </ul>
+</details>
+```
+:::
 
-I garden. I bake. I paint. I photograph things. I listen to audiobooks obsessively. I rewatch TV shows. I weld things. I sew things. I play piano badly. I write poetry about satellite imagery. Lately I have been down a deep learning and web scraping rabbit hole. I am curious about too many things at once, which is both useful and exhausting.
+::: {.word-section}
+## Tinkering {#tinkering}
 
-I tend to go deep, get competent, and then wander on to the next curiosity. I used to think that meant I lacked focus. Now I think it is just how I learn. Most of it loops back into the same bigger interests anyway: the work and the wild.
+I like making things in a provisional, iterative way. Dashboards, interfaces, figures, poems, and small web experiments all belong here. Tinkering is what happens when curiosity is allowed to touch the materials directly instead of staying theoretical.
 
-## Why I Do Anything
+```{=html}
+<details class="trace-log">
+  <summary>Recent traces</summary>
+  <ul class="trace-list">
+    <li><span class="trace-date">March 2026</span><span class="trace-entry">Turned the poetry page into a quieter reading space with foldouts, marginalia, and favorite-line hearts.</span></li>
+    <li><span class="trace-date">March 2026</span><span class="trace-entry">Kept simplifying page layouts until the writing had more room than the styling.</span></li>
+    <li><span class="trace-date">Ongoing</span><span class="trace-entry">Use design as a way to make complicated work legible without sanding off what makes it interesting.</span></li>
+  </ul>
+</details>
+```
+:::
 
-The wild is the real north star. Everything else orbits that. Conservation, restoration, and understanding how humans and ecosystems affect each other are the through-lines.
+::: {.word-section}
+## Inquiry {#inquiry}
 
-I do not think creativity and precision are opposites. Most of the work I care about needs both. Good science needs imagination. Good art needs structure. Good debugging usually needs snacks.
+Most of my learning happens by following a question until it becomes inconvenient. Remote sensing, deep learning, web scraping, environmental data systems, and whatever tool or method makes the next layer of the problem visible all tend to accumulate this way.
 
-## Random Facts
+```{=html}
+<details class="trace-log">
+  <summary>Recent traces</summary>
+  <ul class="trace-list">
+    <li><span class="trace-date">2025-2026</span><span class="trace-entry">Spent a great deal of time with CNNs, U-Net segmentation, and irrigation mapping.</span></li>
+    <li><span class="trace-date">2026</span><span class="trace-entry">Keep moving between cloud geospatial infrastructure, reproducible pipelines, and the questions that make them worth building.</span></li>
+    <li><span class="trace-date">Habit</span><span class="trace-entry">Read widely, underline aggressively, and keep too many tabs open until a pattern emerges.</span></li>
+  </ul>
+</details>
+```
+:::
 
--   My default setting is "I can probably figure that out," which is how I end up learning inconvenient skills.
--   I am dyslexic, so I read everything at least twice.
--   I did a lot of jazz singing. A lot.
--   My service dog is still one of the best decisions I have made.
+::: {.word-section}
+## Signals {#signals}
 
-## Outside This Page
+I pay attention to the small detail that gives away the larger system. Sometimes that is a strange edge pixel, a mislabeled figure, or a workflow assumption that is quietly steering everything in the wrong direction. Sometimes it is a tide line, a cleanup bucket, or the way a place makes its condition obvious if you look long enough.
 
-Most of my formal work lives in remote sensing, machine learning, and environmental data systems. If you want the more official version, the [research page](research.qmd) and [resume](cv.qmd) do that better than this one.
+```{=html}
+<details class="trace-log">
+  <summary>Recent traces</summary>
+  <ul class="trace-list">
+    <li><span class="trace-date">Always</span><span class="trace-entry">Trust the odd detail enough to investigate it before dismissing it as noise.</span></li>
+    <li><span class="trace-date">Field habit</span><span class="trace-entry">Notice what kinds of care a place has or has not been receiving.</span></li>
+    <li><span class="trace-date">Working habit</span><span class="trace-entry">Prefer the clue that explains the whole mess to the summary that hides it.</span></li>
+  </ul>
+</details>
+```
+:::
 
-## Let's Connect
+::: {.word-section}
+## Stakes {#stakes}
 
-I like talking about weird intersections of things: how data can tell stories, why nature keeps outsmarting us, and whether foaming hand soap is a triumph of convenience or a mildly perfumed scam. If you want to talk about any of that, reach out.
+I care most about work that is useful, rigorous, and materially good for the world it touches. Conservation, restoration, stewardship, good infrastructure, and clear communication all sit in the same category for me. I am not very interested in technical theater. I am interested in work that matters.
 
-[Email Me](mailto:ermiller@ucsb.edu) \| [LinkedIn](https://www.linkedin.com/in/rellimylime/) \| [GitHub](https://github.com/rellimylime)
+```{=html}
+<details class="trace-log">
+  <summary>Recent traces</summary>
+  <ul class="trace-list">
+    <li><span class="trace-date">Present</span><span class="trace-entry">Working on environmental data tools that make large, complicated datasets easier to use without flattening them.</span></li>
+    <li><span class="trace-date">Recent years</span><span class="trace-entry">Keep showing up for beach cleanups because care works better as a practice than an identity.</span></li>
+    <li><span class="trace-date">General rule</span><span class="trace-entry">If a project is technically clever but not useful to anyone, I lose interest quickly.</span></li>
+  </ul>
+</details>
+```
+:::
+
+::: {.word-section .word-section-final}
+## In Plain Terms {#plain-terms}
+
+I am an environmental data scientist, builder, and creative person with a compulsive fixing instinct. Most of what I do lives somewhere between remote sensing, machine learning, environmental data infrastructure, design, and communication.
+
+What that looks like in practice is research, code, reproducible workflows, interfaces, poetry, photography, stewardship, and learning whatever the problem requires next.
+
+```{=html}
+<p class="word-links">
+  <a href="research.html">Research</a>
+  <a href="cv.html">Resume</a>
+  <a href="art.html">Art &amp; Poetry</a>
+  <a href="mailto:ermiller@ucsb.edu">Email</a>
+</p>
+```
+:::
+
+:::

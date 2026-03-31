@@ -1,103 +1,151 @@
 ---
-title: "Adventures"
-toc: false
+title: "Outside the Lab"
+page-layout: full
+body-classes: outside-lab-page coming-soon-page
 ---
 
-*Life happens between the data points*
+```{=html}
+<section class="coming-soon-stage">
+  <div class="coming-soon-copy">
+    <p class="coming-soon-kicker">Outside the Lab</p>
+    <h1 class="coming-soon-title">Coming soon.</h1>
+    <p class="coming-soon-text">This page is on pause while I rebuild it into something that feels more accurate and less performative. The coastlines, cleanup work, dog supervision, and off-hours notes will come back once the page feels honest.</p>
+    <p class="coming-soon-links"><a href="art.html">Art &amp; Poetry</a> <span>/</span> <a href="research.html">Research</a> <span>/</span> <a href="cv.html">Resume</a></p>
+  </div>
+</section>
+```
 
-------------------------------------------------------------------------
+<!--
+Original draft content preserved below for later reuse.
 
-## What This Is All About
-
-Welcome to the moments that live between the data points and outside the lab-the beautiful chaos, unexpected discoveries, and genuinely ridiculous moments that make up a life worth living. This is where I share the adventures, the daily wonder, and the goofy things that happen when you're paying attention to the world around you.
-
-> *"Tell me, what is it you plan to do with your one wild and precious life?"* - Mary Oliver
-
-------------------------------------------------------------------------
-
-## Dog
-
-Meet the love of my life
-
--   
-
-    ![Seaweed dog](images/PXL_20221112_225110870.jpg)
-
-    -   **The Fragrance Connoisseur**\
-        *Beach day • 2024*\
-        She will find the most spectacularly stinky kelp and roll in it with the dedication of a perfume critic. Ten out of ten, would stink again.
-
--   
-
-    ![IV Recovery Mascot (and insatiable composter)](images/20240407-ivstreets-066.jpg)
-
-    -   **Environmental Activist**\
-        *Beach cleanup • 2024*\
-        She may not understand why we're cleaning, but she's definitely helping-and enjoying every second of being at the beach with her people.
-
--   ![](images/PXL_20220408_212844403.jpg)
-
-    -   **Research Companion**\
-        *UCSB Research Lab • 2024*\
-        When your lab assistant has four legs, unlimited enthusiasm, and absolutely no interest in the data you're analyzing.
-
-------------------------------------------------------------------------
-
-## 🌊 Beach Life
-
-Living near the ocean saves my life on the daily. The salt water is where ideas come alive, where I remember what matters, and where the best conversations happen.
-
--   
-
-    ![Beach cleanup volunteers](images/IMG_20240915_165357~3.jpg)
-
-    -   **Community Care**\
-        *Beach cleanup • 2024*\
-        When strangers become stewards, and an afternoon at the beach becomes an afternoon caring for home.
-
--   
-
-    ![Moments with mother](images/IMG_20210723_180733.jpg)
-
-    -   **Golden Hour Wisdom**\
-        *Evening beach walk • 2024*\
-        The best conversations happen with your feet in the sand and the sky turning colors you can't quite name.
-
--   
-
-    ![Beach art](images/PXL_20230921_205848129.jpg)
-
-    -   **Accidental Creation**\
-        *Low tide creativity • 2024*\
-        Art happens when we're not trying. The ocean has its way of reminding us that creation is everywhere-we just have to show up and play.
-
-------------------------------------------------------------------------
-
-## 🤪 Random Moments
-
-The completely unexpected, wonderfully weird moments that make life interesting and definitely worth documenting.
-
-::: {style="background: var(--bg-light); padding: 2rem; border-radius: 10px; text-align: center; margin: 2rem 0;"}
-**Coming Soon...**
-
-*Building a collection of the ridiculous, the beautiful, and the completely unexpected moments worth remembering.*
+::: {.page-intro}
+The places, routines, and off-hours evidence that keep the rest of the work honest.
 :::
 
-------------------------------------------------------------------------
+::: {.page-shell}
 
-## 🌍 Travel
+```{=html}
+<details class="page-foldout">
+  <summary>Why this page exists</summary>
+  <div class="page-foldout-body">
+    <p>The work does not come from nowhere. It comes from places, people, rituals, coastlines, dogs, cleanup buckets, and whatever reminds me that data still belongs to an actual world.</p>
+  </div>
+</details>
+```
 
-::: {style="background: var(--bg-light); padding: 2rem; border-radius: 10px; text-align: center; margin: 2rem 0;"}
-**Coming Soon...**
+This page is for the parts of my life that shape the work without belonging in a CV. The beach, my dog, community cleanup, and the specific sort of quiet that only shows up once I am outside and paying attention.
+
+It updates slowly on purpose. I would rather keep a few sharp notes than turn the page into a running feed of my whereabouts.
+
+:::::: aside-rotator-grid
+:::: {.aside-rotator data-rotator=""}
+::: aside-label
+Reset
 :::
 
-------------------------------------------------------------------------
+-   {.rotator-item .is-active} Salt water, walking, and enough room for the noise in my head to reorganize itself.
+-   {.rotator-item hidden="hidden"} A beach cleanup when I need to stop pretending care is abstract.
+-   {.rotator-item hidden="hidden"} The kind of long walk where the useful thought arrives twenty minutes after I stop trying to force it.
 
-::: fun-divider
+```{=html}
+<button type="button" class="rotator-next">Another note</button>
+```
+::::
+
+:::: {.aside-rotator data-rotator=""}
+::: aside-label
+Companion
 :::
 
-# Join the Adventure! 🚀
+-   {.rotator-item .is-active} My dog, who remains committed to seaweed, supervision, and morale.
+-   {.rotator-item hidden="hidden"} The four-legged reminder that enthusiasm is a legitimate operating system.
+-   {.rotator-item hidden="hidden"} A research assistant with terrible data instincts and excellent emotional range.
 
-Life's too short to be serious all the time. Whether you want to join a beach cleanup, collaborate on a research project, or just chat about the weird and wonderful moments that make life interesting, let's connect!
+```{=html}
+<button type="button" class="rotator-next">Another note</button>
+```
+::::
 
-[Let's Be Adventure Buddies](mailto:ermiller@ucsb.edu)
+:::: {.aside-rotator data-rotator=""}
+::: aside-label
+Field note
+:::
+
+-   {.rotator-item .is-active} Stewardship works better when it is regular enough to become a habit rather than an identity performance.
+-   {.rotator-item hidden="hidden"} Some of my clearest thinking still happens with sand in my shoes.
+-   {.rotator-item hidden="hidden"} Not everything worth documenting is impressive. Some of it is just what keeps a person calibrated.
+
+```{=html}
+<button type="button" class="rotator-next">Another note</button>
+```
+::::
+::::::
+
+## Snapshots
+
+```{=html}
+<div class="snapshot-grid">
+  <article class="snapshot-card">
+    <img src="images/pages/adventures/seaweed-specialist.jpg" alt="Dog rolling in seaweed on the beach." />
+    <div class="snapshot-copy">
+      <p class="snapshot-label">Seaweed specialist</p>
+      <p class="snapshot-meta">Beach day | 2024</p>
+      <p class="snapshot-text">She finds the worst-smelling kelp available and commits to it completely. I respect the clarity of purpose.</p>
+    </div>
+  </article>
+
+  <article class="snapshot-card">
+    <img src="images/pages/adventures/cleanup-crew.jpg" alt="Dog at a beach cleanup." />
+    <div class="snapshot-copy">
+      <p class="snapshot-label">Cleanup crew</p>
+      <p class="snapshot-meta">Community cleanup | 2024</p>
+      <p class="snapshot-text">The beach is not scenery to me. It is a place I feel responsible to, which is a better relationship than admiration alone.</p>
+    </div>
+  </article>
+
+  <article class="snapshot-card">
+    <img src="images/pages/adventures/lab-supervision.jpg" alt="Dog in a research lab." />
+    <div class="snapshot-copy">
+      <p class="snapshot-label">Lab supervision</p>
+      <p class="snapshot-meta">UCSB research lab | 2024</p>
+      <p class="snapshot-text">Very little interest in the data. Extremely strong opinions about whether anyone has taken enough breaks.</p>
+    </div>
+  </article>
+
+  <article class="snapshot-card">
+    <img src="images/pages/adventures/community-care.jpg" alt="People at a beach cleanup." />
+    <div class="snapshot-copy">
+      <p class="snapshot-label">Community care</p>
+      <p class="snapshot-meta">Beach cleanup | 2024</p>
+      <p class="snapshot-text">The most grounding kind of environmental work is often small, local, repeated, and done alongside other people who showed up on purpose.</p>
+    </div>
+  </article>
+
+  <article class="snapshot-card">
+    <img src="images/pages/adventures/evening-calibration.jpg" alt="Beach walk at golden hour." />
+    <div class="snapshot-copy">
+      <p class="snapshot-label">Evening calibration</p>
+      <p class="snapshot-meta">Beach walk | 2024</p>
+      <p class="snapshot-text">Some of the best conversations I have ever had happened with the sky changing color faster than either person could finish a thought.</p>
+    </div>
+  </article>
+
+  <article class="snapshot-card">
+    <img src="images/pages/adventures/low-tide-drawing.jpg" alt="Art made on the beach." />
+    <div class="snapshot-copy">
+      <p class="snapshot-label">Low tide drawing</p>
+      <p class="snapshot-meta">Low tide | 2024</p>
+      <p class="snapshot-text">Not everything worth making needs a studio. Sometimes the right tool is just time, sand, and the willingness to play without trying to keep it.</p>
+    </div>
+  </article>
+</div>
+```
+
+## Say Hello
+
+If you want to talk about coastlines, cleanup work, dogs, or the off-hours parts of life that keep the serious work from becoming sterile, reach out.
+
+[Email Me](mailto:ermiller@ucsb.edu?subject=Outside%20the%20Lab)
+
+:::
+-->

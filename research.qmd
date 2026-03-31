@@ -1,77 +1,92 @@
 ---
 title: "Research"
-toc: false
+body-classes: text-page research-page
+resources:
+  - images/pages/research/backgrounds/*
 ---
 
-::: callout-note
-## At a Glance
-
-**Emily Miller** · MEDS Candidate (Expected June 2026) · Bren School, UC Santa Barbara · GPA 4.0
-
-I currently work in two labs, the **WaVeS Lab** (irrigation mapping across Sub-Saharan Africa using satellite data and deep learning) and the **LOC Lab** (large scale data integration and analysis workflow integrating FIA, USDA, and gridded climate datasets), and on my capstone project with the **Wildfire Resilience Index** team at NCEAS. Lately I have been teaching myself CNNs, U-Net semantic segmentation, and web scraping.
-
-**Core tools:** Python (Rasterio, GeoPandas, scikit-learn, PyTorch) · R (tidyverse, terra, renv) · Google Earth Engine · SQL · Streamlit · GitHub Actions · AWS S3
+::: page-intro
+Remote sensing, machine learning, and environmental data infrastructure for projects that need to be useful on the ground, not just impressive in a slide deck.
 :::
 
-## Research
+```{=html}
+<!-- Research section background images live in images/pages/research/backgrounds/. -->
+<div class="research-bg-stage" aria-hidden="true">
+  <div class="research-bg research-bg--neutral is-active" data-bg-id="neutral"></div>
+  <div class="research-bg research-bg--waves" data-bg-id="waves">
+    <img class="research-bg-media" src="images/pages/research/backgrounds/waves-irrigation.jpg" alt="" loading="eager" decoding="async">
+  </div>
+  <div class="research-bg research-bg--loc" data-bg-id="loc">
+    <img class="research-bg-media" src="images/pages/research/backgrounds/loc-research.jpg" alt="" loading="eager" decoding="async">
+  </div>
+  <div class="research-bg research-bg--wri" data-bg-id="wri">
+    <img class="research-bg-media" src="images/pages/research/backgrounds/wri-fire.jpg" alt="" loading="eager" decoding="async">
+  </div>
+</div>
+```
 
-My work sits at the intersection of remote sensing, machine learning, and environmental data infrastructure. I am most interested in projects that are technically messy, environmentally relevant, and useful to people making decisions on the ground. A lot of what I build involves turning large, stubborn datasets into workflows that are reproducible, interpretable, and actually usable. 
+:::::::::: page-shell
+```{=html}
+<div class="research-overview">
+  <p class="research-kicker">Current work spans irrigation mapping in Sub-Saharan Africa, national-scale forest change analysis, and cloud-accessible wildfire resilience tools.</p>
+  <p class="research-context">That work currently lives across the <a href="https://www.waveslab.org/"><strong>WaVeS Lab</strong></a>, the <a href="https://www.landscapesofchangelab.com/"><strong>LOC Lab</strong></a>, and my capstone with the <a href="https://www.nceas.ucsb.edu/wildfire-resilience-index"><strong>Wildfire Resilience Index</strong></a> team at NCEAS.</p>
+</div>
+```
 
-::: callout-note
-## How I Work
+::: {.research-project data-bg-id="neutral"}
+My work sits at the intersection of remote sensing, machine learning, and environmental data infrastructure. I am most interested in projects that are technically messy, environmentally relevant, and useful to people making decisions on the ground. A lot of what I build involves turning large, stubborn datasets into workflows that are reproducible, interpretable, and actually usable.
 
--   **Useful:** I care about work that helps someone answer a real question, not just work that looks impressive in a slide deck
--   **Reproducible:** Clean handoffs, readable code, and documented workflows matter
--   **Interdisciplinary:** The best projects usually involve several people who know different things
--   **Grounded:** Environmental data is never just abstract data; it is tied to places, systems, and people
+```{=html}
+<ul class="research-principles">
+  <li><strong>Useful</strong> I care about work that helps someone answer a real question, not just work that looks impressive in a slide deck.</li>
+  <li><strong>Reproducible</strong> Clean handoffs, readable code, and documented workflows matter.</li>
+  <li><strong>Interdisciplinary</strong> The best projects usually involve several people who know different things.</li>
+  <li><strong>Grounded</strong> Environmental data is never just abstract data; it is tied to places, systems, and people.</li>
+</ul>
+```
 :::
 
-## Current Research Projects
-
+::: {.research-project data-bg-id="waves"}
 ### Satellite-Based Irrigation Mapping in Sub-Saharan Africa
 
 **Lab:** UCSB Water Vegetation and Society (WaVeS) Lab, Prof. Kelly Caylor\
-**Timeline:** June 2024 – Present\
+**Timeline:** June 2024 - Present\
 **Status:** In Progress
 
-The WaVeS Lab uses satellite data to understand how irrigation is expanding across Sub-Saharan Africa — who is irrigating, where, and how that's changing under climate stress. The current research agenda is organized around five interconnected questions:
+At WaVeS, I contribute to a broader research program on irrigation expansion, water access, and agricultural change in Sub-Saharan Africa, with several linked papers currently in progress. My part of that work focuses on where irrigation growth is happening: whether expansion over the past two decades has been concentrated inside major command areas or has emerged more diffusely through decentralized systems.
 
-1.  **Irrigation growth inside vs. outside command areas** *(Emily — lead)* — Over the past 20 years, has irrigation expansion occurred predominantly within areas supported by large-scale dam infrastructure, or has Sub-Saharan Africa shifted toward more decentralized systems?
-2.  **Small-scale irrigation presence in Zambia** *(Anna — lead)* — Characterizing the distribution and footprint of small-scale irrigation in Zambia as a case study in decentralized water access.
-3.  **Mapping irrigation expansion and continued use across SSA** *(Cella — lead, building on Jason's work)* — Continental-scale tracking of where irrigation has grown and persisted over time.
-4.  **Climate shock effects on irrigation expansion and continued use, and how this interacts with command areas** *(all three — the big one)* — How do climate shocks drive or suppress irrigation adoption, and does proximity to major dam infrastructure change that dynamic?
-5.  **Climate shock effects on small-scale irrigation** — Extending question 4 to the Zambia context and potentially broader.
+I work closely with Prof. Kelly Caylor and [Anna Boser](https://anna-boser.github.io/), who has been an important advisor and mentor throughout the project. Anna's work on small-scale irrigation and agricultural systems helps ground the broader research agenda, and related technical development in [this pivot-detection repository](https://github.com/Jason-Perez27/SSA-Pivot-Detect) is part of the larger infrastructure that this work can both contribute to and benefit from.
 
-My contribution focuses on question 1 and the detection infrastructure underlying the broader effort. I am implementing center pivot irrigation detection following the methodology of Chen et al., applying Convolutional Neural Networks (CNNs) and semantic segmentation (U-Net architecture) to Landsat imagery to identify and map center pivot systems at continental scale. This builds on earlier Python pipelines I developed using Rasterio, GeoPandas, and Shapely to process multiband raster and vector datasets (aridity indices, AEI, CPIS shapefiles) across heterogeneous sources.
+Alongside the paper pipeline, I have also been developing a separate center-pivot segmentation workflow following Chen et al., using CNN and U-Net style semantic segmentation on Landsat imagery. The immediate goal is to build a 2015 detection layer that can be compared on the right temporal footing with existing irrigation and agriculture datasets. That segmentation work is useful supporting infrastructure, but it is not required for the publication track itself.
 
-::: callout-tip
-## Technical Details
-
-Center pivot detection via CNN and U-Net semantic segmentation on Landsat imagery, following Chen et al. Continental-scale raster/vector processing in Python. CRS transformations, spatial joins, raster clipping, and reprojection across heterogeneous sources.
+```{=html}
+<p class="research-note"><strong>Technical details:</strong> My current WaVeS workflows use Python geospatial pipelines built with Rasterio, GeoPandas, and Shapely to process multiband raster and vector datasets such as aridity indices, AEI layers, and CPIS shapefiles across heterogeneous sources. In parallel, I have been testing a Chen-style center-pivot segmentation workflow to generate a 2015 detection dataset that can support temporally aligned comparisons with existing irrigation and agricultural products.</p>
+```
 :::
 
+::: {.research-project data-bg-id="loc"}
 ### Forest Thermophilization & Disturbance Analysis
 
 **Lab:** Landscapes of Change (LOC) Lab, Bren School, UCSB\
-**Timeline:** January 2026 – Present\
+**Timeline:** January 2026 - Present\
 **Status:** In Progress
 
 The LOC Lab investigates how forests are changing in response to climate and disturbance: thermophilization (the shift toward warmer-adapted species compositions), fire, insects, drought. I'm building and maintaining the data infrastructure that makes this analysis possible at national scale.
 
-The core pipeline integrates five federal datasets, USDA Forest Service aerial disturbance surveys (IDS), TerraClimate, PRISM, WorldClim, and the Forest Inventory and Analysis database (FIA), across ~4.47M records and ~300 GB of processed output. Key elements of the work:
+The core pipeline integrates five federal datasets, USDA Forest Service aerial disturbance surveys (IDS), TerraClimate, PRISM, WorldClim, and the Forest Inventory and Analysis database (FIA), across \~4.47M records and \~300 GB of processed output. Key elements of the work:
 
 -   **Pixel decomposition architecture** - Spatially links forest disturbance polygon observations to gridded climate data using area-weighted joins, extracting pixel-level values via Google Earth Engine across all climate datasets
--   **Plot-level FIA summaries** - Tree metrics, diversity indices, disturbance history, and site-level climate records (1958–present) for thermophilization analysis across ~7,000 permanent FIA sites
+-   **Plot-level FIA summaries** - Tree metrics, diversity indices, disturbance history, and site-level climate records (1958-present) for thermophilization analysis across \~7,000 permanent FIA sites
 -   **Reproducible pipeline design** - Centralized YAML configuration, renv for R environment management, config-driven architecture built to be sustained and extended post-project
 
-I also built the [FIA Database Schema Navigator](https://fiadb-dashboard.streamlit.app/), a Streamlit tool for exploring the FIADB v9.4 schema without loading the full 70 GB SQLite file, along with two downstream dashboards for compiled data QA and full project exploration. Details in the [blog post](../posts/forest-data-compilation/index.qmd) and [repository](https://github.com/rellimylime/forest-data-compilation).
+I also built the [FIA Database Schema Navigator](https://fiadb-dashboard.streamlit.app/), a Streamlit tool for exploring the FIADB v9.4 schema without loading the full 70 GB SQLite file, along with two downstream dashboards for compiled data QA and full project exploration. Details in the [blog post](posts/forest-data-compilation/index.qmd) and [repository](https://github.com/rellimylime/forest-data-compilation).
 
-::: callout-tip
-## Technical Details
-
-R and Python pipelines integrating IDS, TerraClimate, PRISM, WorldClim, and FIA. Google Earth Engine pixel decomposition with area-weighted coverage fractions. Streamlit dashboards for schema navigation, data exploration, and project documentation. renv and YAML config-driven reproducibility.
+```{=html}
+<p class="research-note"><strong>Technical details:</strong> R and Python pipelines integrating IDS, TerraClimate, PRISM, WorldClim, and FIA. Google Earth Engine pixel decomposition with area-weighted coverage fractions. Streamlit dashboards for schema navigation, data exploration, and project documentation. <code>renv</code> and YAML config-driven reproducibility.</p>
+```
 :::
 
+::: {.research-project data-bg-id="wri"}
 ### Wildfire Resilience Index Data Access & R Package
 
 **Client:** National Center for Ecological Analysis and Synthesis (NCEAS), Dr. Caitlin Fong\
@@ -87,12 +102,12 @@ Key pieces of the work:
 -   **R package development** - Building functions for catalog queries, spatial subsetting, and visualization so researchers and practitioners can work with the data without managing huge local files
 -   **Client handoff infrastructure** - Documenting the processing pipeline so future WRI releases can be updated and maintained by the client team
 
-::: callout-tip
-## Technical Details
-
-R package development with `terra`, `sf`, `rstac`, and `testthat`, paired with GDAL-based TIFF-to-COG conversion, STAC metadata generation, and public data hosting through the Knowledge Network for Biocomplexity (KNB).
+```{=html}
+<p class="research-note"><strong>Technical details:</strong> R package development with <code>terra</code>, <code>sf</code>, <code>rstac</code>, and <code>testthat</code>, paired with GDAL-based TIFF-to-COG conversion, STAC metadata generation, and public data hosting through the Knowledge Network for Biocomplexity (KNB).</p>
+```
 :::
 
+::: {.research-project data-bg-id="neutral"}
 ## Proposed Projects
 
 ### Scaling Metadata Quality Assessment for Environmental Data Repositories
@@ -117,12 +132,12 @@ This was a proposed capstone direction focused on building reproducible, scalabl
 
 **Impact:** This project enhances Arctic research data accessibility and usability by turning existing checks into clear, repeatable quality signals. Plain-language, FAIR-aligned metrics reduce barriers for research teams, particularly those with limited institutional data support, promoting equitable participation in environmental science. The scalable framework offers a model for other repositories, improving the connected environmental data ecosystem.
 
-::: callout-tip
-## Broader Impacts
-
-Plain-language metrics and transparent interface aids environmental education and literacy. Cross-repository comparisons can identify patterns for new checks or standard improvements. The reproducible design fosters collaboration among repository teams and advances community standards for FAIR data.
+```{=html}
+<p class="research-note"><strong>Broader impact:</strong> Plain-language metrics and transparent interfaces can make environmental data quality issues easier to see, compare, and act on across repositories. The larger goal is to turn existing checks into something more useful for curation teams and more legible for the people who depend on those repositories.</p>
+```
 :::
 
+<!--
 ## Presentations
 
 ### Conference Presentations & Talks
@@ -167,7 +182,7 @@ Plain-language metrics and transparent interface aids environmental education an
 
 ### Master of Environmental Data Science (MEDS)
 
-**University of California, Santa Barbara – Bren School**\
+**University of California, Santa Barbara - Bren School**\
 *Expected June 2026* \| GPA: 4.0
 
 Focus: Remote sensing, machine learning, and environmental data engineering
@@ -208,16 +223,9 @@ Most of my work depends on collaboration. I do my best work when I am building a
 
 I tend to work on infrastructure and analysis that helps other people ask better questions and make better decisions with environmental data.
 
-::: callout-tip
-## Current Focus
-
--   **Water Resource Sustainability** - Analyzing irrigation systems in Sub-Saharan Africa to inform climate adaptation and water management strategies
--   **Environmental Data Infrastructure** - Building tools for cloud-hosted geospatial access, reproducible pipelines, and large-scale environmental data reuse
--   **Community Engagement** - Organizing local environmental stewardship through the IV Recovery Community Initiative
-:::
-
 ## Let's Collaborate!
 
 If you are working on something in remote sensing, environmental data infrastructure, or applied machine learning and think I might be useful, feel free to reach out.
 
 [Start a Collaboration](mailto:ermiller@ucsb.edu){.btn-custom}
+::::::::::

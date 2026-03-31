@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>About Me – Emily Miller</title>
+<title>Colophon – Emily Miller</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -40,7 +40,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-bee60ecf57315cb3986c6e19731cdde6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-98516fae384705e390a04a715b53af11.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -72,7 +72,7 @@ ul.task-list li input[type="checkbox"] {
 
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-fixed text-page colophon-page fullcontent quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -94,10 +94,6 @@ ul.task-list li input[type="checkbox"] {
   <li class="nav-item">
     <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link active" href="./about.html" aria-current="page"> 
-<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./blog.html"> 
@@ -129,7 +125,7 @@ ul.task-list li input[type="checkbox"] {
   </li>  
         <li>
     <a class="dropdown-item" href="./adventures.html">
- <span class="dropdown-text">Adventures</span></a>
+ <span class="dropdown-text">Outside the Lab</span></a>
   </li>  
     </ul>
   </li>
@@ -148,22 +144,21 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content column-page" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">About Me</h1>
-<p class="subtitle lead">The stuff that makes me, me</p>
+<h1 class="title">Colophon</h1>
 </div>
 
 
 
-<div class="quarto-title-meta column-page">
+<div class="quarto-title-meta">
 
     
   
@@ -175,45 +170,234 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><img src="images/headshot.jpg" class="img-fluid"></p>
-<p><em>If you’re looking for the official version, the <a href="./research.html">research page</a> and <a href="./cv.html">resume</a> do that better. This page is on the kookier side.</em></p>
-<section id="the-real-stuff" class="level2">
-<h2 class="anchored" data-anchor-id="the-real-stuff">The Real Stuff</h2>
-<p>I have a hard time sitting still. If something is broken and there is even a <em>slim</em> chance I can fix it, I will probably try. I will weld, solder, sew, paint, or open seventeen tabs and teach myself whatever the problem requires. Debugging code feels more like a puzzle than a chore.</p>
-<p>I grew up between Concord, Massachusetts, and California’s Central Valley, but my heart belongs to <a href="https://en.wikipedia.org/wiki/Great_Diamond_Island">Great Diamond Island</a> off the coast of Portland, Maine. There’s something about that place. I usually come at problems a little sideways. At this point I have stopped trying to right myself.</p>
-</section>
-<section id="what-i-actually-do-with-my-time" class="level2">
-<h2 class="anchored" data-anchor-id="what-i-actually-do-with-my-time">What I Actually Do With My Time</h2>
-<p>I garden. I bake. I paint. I photograph things. I listen to audiobooks obsessively. I rewatch TV shows. I weld things. I sew things. I play piano badly. I write poetry about satellite imagery. Lately I have been down a deep learning and web scraping rabbit hole. I am curious about too many things at once, which is both useful and exhausting.</p>
-<p>I tend to go deep, get competent, and then wander on to the next curiosity. I used to think that meant I lacked focus. Now I think it is just how I learn. Most of it loops back into the same bigger interests anyway: the work and the wild.</p>
-</section>
-<section id="why-i-do-anything" class="level2">
-<h2 class="anchored" data-anchor-id="why-i-do-anything">Why I Do Anything</h2>
-<p>The wild is the real north star. Everything else orbits that. Conservation, restoration, and understanding how humans and ecosystems affect each other are the through-lines.</p>
-<p>I do not think creativity and precision are opposites. Most of the work I care about needs both. Good science needs imagination. Good art needs structure. Good debugging usually needs snacks.</p>
-</section>
-<section id="random-facts" class="level2">
-<h2 class="anchored" data-anchor-id="random-facts">Random Facts</h2>
+<div class="page-intro">
+<p>Notes on how this site is built and maintained.</p>
+</div>
+<div class="page-shell">
+<section id="stack" class="level2">
+<h2 class="anchored" data-anchor-id="stack">Stack</h2>
 <ul>
-<li>My default setting is “I can probably figure that out,” which is how I end up learning inconvenient skills.</li>
-<li>I am dyslexic, so I read everything at least twice.</li>
-<li>I did a lot of jazz singing. A lot.</li>
-<li>My service dog is still one of the best decisions I have made.</li>
+<li>Built with Quarto</li>
+<li>Styled with <code>styles.scss</code></li>
+<li>A small <code>site-scripts.html</code> file handles the interactive pieces</li>
+<li>Published from GitHub to GitHub Pages</li>
 </ul>
 </section>
-<section id="outside-this-page" class="level2">
-<h2 class="anchored" data-anchor-id="outside-this-page">Outside This Page</h2>
-<p>Most of my formal work lives in remote sensing, machine learning, and environmental data systems. If you want the more official version, the <a href="./research.html">research page</a> and <a href="./cv.html">resume</a> do that better than this one.</p>
+<section id="structure" class="level2">
+<h2 class="anchored" data-anchor-id="structure">Structure</h2>
+<p>Most pages are written in <code>.qmd</code> files. Posts live in <code>posts/</code>, and the site is generated into <code>docs/</code> for GitHub Pages.</p>
 </section>
-<section id="lets-connect" class="level2">
-<h2 class="anchored" data-anchor-id="lets-connect">Let’s Connect</h2>
-<p>I like talking about weird intersections of things: how data can tell stories, why nature keeps outsmarting us, and whether foaming hand soap is a triumph of convenience or a mildly perfumed scam. If you want to talk about any of that, reach out.</p>
-<p><a href="mailto:ermiller@ucsb.edu">Email Me</a> | <a href="https://www.linkedin.com/in/rellimylime/">LinkedIn</a> | <a href="https://github.com/rellimylime">GitHub</a></p>
+<section id="maintenance" class="level2">
+<h2 class="anchored" data-anchor-id="maintenance">Maintenance</h2>
+<p>I try to keep the setup simple enough that I can update a page, publish a post, or change the design without turning the site itself into a second project.</p>
+</section>
+</div>
 
 
-</section>
 
 </main> <!-- /main -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  initRotators();
+  initFavoriteLines();
+  initRandomLines();
+  initPageCompanions();
+  initResearchBackgrounds();
+});
+
+function initRotators() {
+  const rotators = document.querySelectorAll('[data-rotator]');
+
+  rotators.forEach((rotator) => {
+    const items = Array.from(rotator.querySelectorAll('.rotator-item'));
+    const button = rotator.querySelector('.rotator-next');
+
+    if (!items.length || !button) return;
+
+    let index = items.findIndex((item) => item.classList.contains('is-active'));
+    if (index < 0) index = 0;
+
+    syncRotator(items, index);
+
+    button.addEventListener('click', function () {
+      index = (index + 1) % items.length;
+      syncRotator(items, index);
+    });
+  });
+}
+
+function syncRotator(items, activeIndex) {
+  items.forEach((item, index) => {
+    const isActive = index === activeIndex;
+    item.hidden = !isActive;
+    item.classList.toggle('is-active', isActive);
+  });
+}
+
+function initFavoriteLines() {
+  const hearts = document.querySelectorAll('.line-heart');
+  if (!hearts.length) return;
+
+  const storageKey = 'favoriteLines.v1';
+  let saved = {};
+
+  try {
+    saved = JSON.parse(localStorage.getItem(storageKey) || '{}');
+  } catch (error) {
+    saved = {};
+  }
+
+  hearts.forEach((button) => {
+    const lineId = button.dataset.lineId;
+    if (!lineId) return;
+
+    updateHeart(button, Boolean(saved[lineId]));
+
+    button.addEventListener('click', function () {
+      const nextState = !button.classList.contains('is-favorite');
+      saved[lineId] = nextState;
+      updateHeart(button, nextState);
+      localStorage.setItem(storageKey, JSON.stringify(saved));
+    });
+  });
+}
+
+function updateHeart(button, isFavorite) {
+  button.classList.toggle('is-favorite', isFavorite);
+  button.setAttribute('aria-pressed', isFavorite ? 'true' : 'false');
+  button.setAttribute('aria-label', isFavorite ? 'Line saved to favorites' : 'Save this line');
+  button.innerHTML = isFavorite ? '&#9829;' : '&#9825;';
+}
+
+function initRandomLines() {
+  const panels = document.querySelectorAll('.random-line-panel');
+  if (!panels.length) return;
+
+  const poemLines = Array.from(document.querySelectorAll('.poem-line')).map((line) => {
+    const textNode = line.querySelector('.poem-line-text');
+    const poemBody = line.closest('.poem-body');
+
+    return {
+      text: textNode ? textNode.textContent.trim() : '',
+      poem: poemBody ? poemBody.dataset.poemTitle : ''
+    };
+  }).filter((line) => line.text);
+
+  if (!poemLines.length) return;
+
+  panels.forEach((panel) => {
+    const trigger = panel.querySelector('.random-line-trigger');
+    const output = panel.querySelector('[data-random-output]');
+    const source = panel.querySelector('[data-random-source]');
+
+    if (!trigger || !output || !source) return;
+
+    const setRandomLine = function () {
+      const choice = poemLines[Math.floor(Math.random() * poemLines.length)];
+      output.textContent = '"' + choice.text + '"';
+      source.textContent = choice.poem ? 'from ' + choice.poem : '';
+    };
+
+    trigger.addEventListener('click', setRandomLine);
+    setRandomLine();
+  });
+}
+
+function initPageCompanions() {
+  const companions = document.querySelectorAll('[data-page-companion]');
+  if (!companions.length) return;
+
+  companions.forEach((figure) => {
+    const image = figure.querySelector('img');
+    if (!image) {
+      figure.hidden = true;
+      return;
+    }
+
+    const hideFigure = function () {
+      figure.hidden = true;
+    };
+
+    const showFigure = function () {
+      figure.hidden = false;
+    };
+
+    if (image.complete) {
+      if (image.naturalWidth > 0) {
+        showFigure();
+      } else {
+        hideFigure();
+      }
+    } else {
+      image.addEventListener('load', showFigure, { once: true });
+      image.addEventListener('error', hideFigure, { once: true });
+    }
+  });
+}
+
+function initResearchBackgrounds() {
+  const stage = document.querySelector('.research-bg-stage');
+  const sections = Array.from(document.querySelectorAll('.research-project[data-bg-id]'));
+  const backgrounds = Array.from(document.querySelectorAll('.research-bg-stage .research-bg[data-bg-id]'));
+
+  if (!stage || !sections.length || !backgrounds.length) return;
+
+  let frameId = null;
+
+  const applyBlend = function () {
+    frameId = null;
+
+    const viewportMid = window.innerHeight / 2;
+    const influenceRange = window.innerHeight * 0.9;
+    const scoresById = new Map();
+
+    sections.forEach((section) => {
+      const rect = section.getBoundingClientRect();
+      const sectionMid = rect.top + rect.height / 2;
+      const distance = Math.abs(sectionMid - viewportMid);
+      const score = Math.max(0, 1 - (distance / influenceRange));
+      const bgId = section.dataset.bgId;
+
+      if (!bgId) return;
+
+      const currentScore = scoresById.get(bgId) || 0;
+      scoresById.set(bgId, Math.max(currentScore, score));
+    });
+
+    const ranked = Array.from(scoresById.entries())
+      .map(([bgId, score]) => ({ bgId, score }))
+      .sort((a, b) => b.score - a.score);
+
+    const top = ranked[0];
+    const second = ranked[1];
+    const weights = new Map();
+
+    if (!top || top.score <= 0.001) {
+      weights.set('neutral', 1);
+    } else if (!second || second.score <= 0.001) {
+      weights.set(top.bgId, 1);
+    } else {
+      const total = top.score + second.score;
+      weights.set(top.bgId, top.score / total);
+      weights.set(second.bgId, second.score / total);
+    }
+
+    backgrounds.forEach((background) => {
+      const weight = weights.get(background.dataset.bgId) || 0;
+      background.style.opacity = weight.toFixed(3);
+    });
+  };
+
+  const requestBlend = function () {
+    if (frameId !== null) return;
+    frameId = window.requestAnimationFrame(applyBlend);
+  };
+
+  requestBlend();
+  window.addEventListener('scroll', requestBlend, { passive: true });
+  window.addEventListener('resize', requestBlend);
+}
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -287,7 +471,7 @@ ul.task-list li input[type="checkbox"] {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/rellimylime\.github\.io");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
@@ -615,6 +799,19 @@ ul.task-list li input[type="checkbox"] {
   });
   </script>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Made with Quarto, GitHub Pages, and love.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p><a href=".\colophon.html">Colophon</a></p>
+</div>
+  </div>
+</footer>
 
 
 

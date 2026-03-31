@@ -42,7 +42,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-bee60ecf57315cb3986c6e19731cdde6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-98516fae384705e390a04a715b53af11.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -80,9 +80,9 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-image','listing-title','listing-description','listing-date','listing-file-modified',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
+      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -130,9 +130,9 @@ window.Quarto = {
 };
 </script>
 
-</head>
+<link rel="alternate" type="application/rss+xml" title="Emily Miller's Blog" href="blog.xml" data-external="1"></head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-fixed text-page blog-page quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -154,10 +154,6 @@ window.Quarto = {
   <li class="nav-item">
     <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
-<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link active" href="./blog.html" aria-current="page"> 
@@ -189,7 +185,7 @@ window.Quarto = {
   </li>  
         <li>
     <a class="dropdown-item" href="./adventures.html">
- <span class="dropdown-text">Adventures</span></a>
+ <span class="dropdown-text">Outside the Lab</span></a>
   </li>  
     </ul>
   </li>
@@ -211,10 +207,9 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(11)</span></div><div class="category" data-category="Q2xpbWF0ZSUyMFNjaWVuY2U=">Climate Science <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RGF0YSUyMFNjaWVuY2U=">Data Science <span class="quarto-category-count">(4)</span></div><div class="category" data-category="RGF0YSUyMFZpc3VhbGl6YXRpb24=">Data Visualization <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RW52aXJvbm1lbnRhbCUyMEp1c3RpY2U=">Environmental Justice <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Rm9yZXN0JTIwRWNvbG9neQ==">Forest Ecology <span class="quarto-category-count">(1)</span></div><div class="category" data-category="R2Vvc3BhdGlhbCUyMEFuYWx5c2lz">Geospatial Analysis <span class="quarto-category-count">(4)</span></div><div class="category" data-category="TGluZWFyJTIwQWxnZWJyYQ==">Linear Algebra <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TWFyaW5lJTIwU2NpZW5jZQ==">Marine Science <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TUVEUw==">MEDS <span class="quarto-category-count">(7)</span></div><div class="category" data-category="UGVyc29uYWw=">Personal <span class="quarto-category-count">(3)</span></div><div class="category" data-category="UHl0aG9u">Python <span class="quarto-category-count">(4)</span></div><div class="category" data-category="Ug==">R <span class="quarto-category-count">(7)</span></div><div class="category" data-category="UmVtb3RlJTIwU2Vuc2luZw==">Remote Sensing <span class="quarto-category-count">(3)</span></div><div class="category" data-category="U3RhdGlzdGljcw==">Statistics <span class="quarto-category-count">(2)</span></div><div class="category" data-category="VHV0b3JpYWw=">Tutorial <span class="quarto-category-count">(2)</span></div><div class="category" data-category="V2ViJTIwU2NyYXBpbmc=">Web Scraping <span class="quarto-category-count">(1)</span></div><div class="category" data-category="V2lsZGxpZmU=">Wildlife <span class="quarto-category-count">(1)</span></div></div></div>
+    
 <!-- main -->
-<main class="content column-page-left" id="quarto-document-content">
+<main class="content column-page" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -223,7 +218,7 @@ window.Quarto = {
 
 
 
-<div class="quarto-title-meta column-page-left">
+<div class="quarto-title-meta column-page">
 
     
   
@@ -235,413 +230,484 @@ window.Quarto = {
 </header>
 
 
-
-
-
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="UHl0aG9uJTJDUmVtb3RlJTIwU2Vuc2luZyUyQ0xpbmVhciUyMEFsZ2VicmElMkNEYXRhJTIwU2NpZW5jZQ==" data-listing-date-sort="1774681200000" data-listing-file-modified-sort="1774828163702" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="21" data-listing-word-count-sort="4165">
-<div class="thumbnail"><a href="./posts/hyperspectral-imaging/index.html" class="no-external">
-
-<img loading="lazy" src="./posts/hyperspectral-imaging/figures/rgb_composite.png" class="thumbnail-image" alt="False-color composite of the HYDICE Urban hyperspectral scene showing roads, grass, and rooftops in distinct spectral colors">
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/hyperspectral-imaging/index.html" class="no-external">Beyond Color: Decomposing a Hyperspectral Scene into Its Materials</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('UmVtb3RlJTIwU2Vuc2luZw=='); return false;">Remote Sensing</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('TGluZWFyJTIwQWxnZWJyYQ=='); return false;">Linear Algebra</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('RGF0YSUyMFNjaWVuY2U='); return false;">Data Science</div>
-
+<div class="page-intro">
+<p>Notes, project writeups, course pieces, and the occasional record of whatever I have been trying to understand lately.</p>
 </div>
-<div class="delink listing-description"><a href="./posts/hyperspectral-imaging/index.html" class="no-external">
-<p>A spring-break tutorial on PCA, linear spectral unmixing, and NMF for readers who know remote sensing but are new to hyperspectral imagery.</p>
-</a></div>
+
+
+
+
+<div class="quarto-listing quarto-listing-container-grid" id="listing-listing">
+<div class="list grid quarto-listing-cols-3">
+<div class="g-col-1" data-index="0" data-categories="UHl0aG9uJTJDUmVtb3RlJTIwU2Vuc2luZyUyQ0xpbmVhciUyMEFsZ2VicmElMkNEYXRhJTIwU2NpZW5jZQ==" data-listing-date-sort="1774681200000" data-listing-file-modified-sort="1774893714062" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="23" data-listing-word-count-sort="4586">
+<a href="./posts/hyperspectral-imaging/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left borderless">
+<p class="card-img-top">
+<img loading="lazy" src="./posts/hyperspectral-imaging/figures/rgb_composite_thumbnail.png" class="thumbnail-image card-img" style="height: 150px;" alt="False-color composite of the HYDICE Urban hyperspectral scene showing roads, grass, and rooftops in distinct spectral colors">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Hyperspectral Hyperawareness
+</h5>
+<div class="card-text listing-description delink">
+<p>A spring-break rabbit-hole through PCA, linear spectral unmixing, NMF, as well as where they can benefit from deep learning and where they still hold their own.</p>
 </div>
-<div class="metadata">
-<a href="./posts/hyperspectral-imaging/index.html" class="no-external">
+<div class="card-attribution card-text-small end">
 <div class="listing-date">
 Mar 28, 2026
 </div>
-<div class="listing-author">
-Emily Miller
-</div>
-</a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="1" data-categories="UGVyc29uYWwlMkNSJTJDRGF0YSUyMFNjaWVuY2UlMkNXZWIlMjBTY3JhcGluZyUyQ1R1dG9yaWFs" data-listing-date-sort="1773298800000" data-listing-file-modified-sort="1774733765029" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="21" data-listing-word-count-sort="4152">
-<div class="thumbnail"><a href="./posts/federal-grant-watch/index.html" class="no-external">
-
-<img loading="lazy" src="./posts/federal-grant-watch/figures/academic_domain_comparison_plot.png" class="thumbnail-image">
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/federal-grant-watch/index.html" class="no-external">Getting Data That Doesn’t Come in a CSV</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('UGVyc29uYWw='); return false;">Personal</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Ug=='); return false;">R</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('RGF0YSUyMFNjaWVuY2U='); return false;">Data Science</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('V2ViJTIwU2NyYXBpbmc='); return false;">Web Scraping</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('VHV0b3JpYWw='); return false;">Tutorial</div>
-
+<div class="card-footer">
+<div class="card-file-modified listing-file-modified">3/30/26, 11:01:54 AM</div>
 </div>
-<div class="delink listing-description"><a href="./posts/federal-grant-watch/index.html" class="no-external">
-<p>A beginner’s walkthrough of three web scraping and API techniques, REST APIs, ID-based enrichment, and HTML scraping, using the DOGE federal grant termination list as a real-world example.</p>
-</a></div>
+</div></a>
 </div>
-<div class="metadata">
-<a href="./posts/federal-grant-watch/index.html" class="no-external">
+<div class="g-col-1" data-index="1" data-categories="UGVyc29uYWwlMkNSJTJDRGF0YSUyMFNjaWVuY2UlMkNXZWIlMjBTY3JhcGluZyUyQ1R1dG9yaWFs" data-listing-date-sort="1773298800000" data-listing-file-modified-sort="1774983129793" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="21" data-listing-word-count-sort="4152">
+<a href="./posts/federal-grant-watch/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left borderless">
+<p class="card-img-top">
+<img loading="lazy" src="./images/posts/federal-grant-watch/scraping-cover.jpg" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Getting Data That Doesn’t Come in a CSV
+</h5>
+<div class="card-text listing-description delink">
+<p>APIs, enrichment, and HTML scraping using the DOGE grant termination list.</p>
+</div>
+<div class="card-attribution card-text-small end">
 <div class="listing-date">
 Mar 12, 2026
 </div>
-<div class="listing-author">
-Emily Miller
-</div>
-</a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="2" data-categories="TUVEUyUyQ1IlMkNEYXRhJTIwVmlzdWFsaXphdGlvbg==" data-listing-date-sort="1773039600000" data-listing-file-modified-sort="1774568413238" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="21" data-listing-word-count-sort="4113">
-<div class="thumbnail"><a href="./posts/eds240-final/index.html" class="no-external">
-
-<img loading="lazy" src="./posts/eds240-final/draft2-crop.png" class="thumbnail-image" alt="A dark, PSA-style infographic set inside a car interior illustration. The rearview mirror shows a bar chart of crash counts by sobriety, the dashboard gauges show polar clock charts of crash timing, and a roadside billboard shows estimated deaths by gender and sobriety.">
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/eds240-final/index.html" class="no-external">Driving Under the Influence… of Statistics</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('TUVEUw=='); return false;">MEDS</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Ug=='); return false;">R</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('RGF0YSUyMFZpc3VhbGl6YXRpb24='); return false;">Data Visualization</div>
-
+<div class="card-footer">
+<div class="card-file-modified listing-file-modified">3/31/26, 11:52:09 AM</div>
 </div>
-<div class="delink listing-description"><a href="./posts/eds240-final/index.html" class="no-external">
+</div></a>
+</div>
+<div class="g-col-1" data-index="2" data-categories="TUVEUyUyQ1IlMkNEYXRhJTIwVmlzdWFsaXphdGlvbg==" data-listing-date-sort="1773039600000" data-listing-file-modified-sort="1774983100311" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="21" data-listing-word-count-sort="4113">
+<a href="./posts/eds240-final/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left borderless">
+<p class="card-img-top">
+<img loading="lazy" src="./images/posts/eds240-final/thumbnail.jpg" class="thumbnail-image card-img" style="height: 150px;" alt="A dark, PSA-style infographic set inside a car interior illustration. The rearview mirror shows a bar chart of crash counts by sobriety, the dashboard gauges show polar clock charts of crash timing, and a roadside billboard shows estimated deaths by gender and sobriety.">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Driving Under the Influence of Statistics
+</h5>
+<div class="card-text listing-description delink">
 <p>How the same California crash data can be framed to ‘prove’ almost anything, and what that reveals about data literacy.</p>
-</a></div>
 </div>
-<div class="metadata">
-<a href="./posts/eds240-final/index.html" class="no-external">
+<div class="card-attribution card-text-small end">
 <div class="listing-date">
 Mar 9, 2026
 </div>
-<div class="listing-author">
-Emily Miller
-</div>
-</a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="3" data-categories="UiUyQ1N0YXRpc3RpY3MlMkNNRURT" data-listing-date-sort="1772784000000" data-listing-file-modified-sort="1774069417736" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="24" data-listing-word-count-sort="4671">
-<div class="thumbnail"><a href="./posts/eds241-final/index.html" class="no-external">
-
-<img loading="lazy" src="./posts/eds241-final/reservoir-1030292_1280.jpg" class="thumbnail-image" alt="Enobieta reservoir during drawdown">
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/eds241-final/index.html" class="no-external">Dam Decommissioning &amp; Invertebrate Recovery: mBACI Analysis</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('Ug=='); return false;">R</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('U3RhdGlzdGljcw=='); return false;">Statistics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('TUVEUw=='); return false;">MEDS</div>
-
+<div class="card-footer">
+<div class="card-file-modified listing-file-modified">3/31/26, 11:51:40 AM</div>
 </div>
-<div class="delink listing-description"><a href="./posts/eds241-final/index.html" class="no-external">
-<p>Assignment 4 - Replication of Atristain et al.&nbsp;(2024)</p>
-</a></div>
+</div></a>
 </div>
-<div class="metadata">
-<a href="./posts/eds241-final/index.html" class="no-external">
+<div class="g-col-1" data-index="3" data-categories="UiUyQ1N0YXRpc3RpY3MlMkNNRURT" data-listing-date-sort="1772784000000" data-listing-file-modified-sort="1774983108173" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="24" data-listing-word-count-sort="4671">
+<a href="./posts/eds241-final/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left borderless">
+<p class="card-img-top">
+<img loading="lazy" src="./images/posts/eds241-final/reservoir-1030292_1280.jpg" class="thumbnail-image card-img" style="height: 150px;" alt="Enobieta reservoir during drawdown">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Un-Daming the Benthos
+</h5>
+<div class="card-text listing-description delink">
+<p>Dam Decommissioning &amp; Invertebrate Recovery: mBACI Analysis - Replication of Atristain et al.&nbsp;(2024)</p>
+</div>
+<div class="card-attribution card-text-small end">
 <div class="listing-date">
 Mar 6, 2026
 </div>
-<div class="listing-author">
-Emily Miller, Lucian Scher &amp; Marie Tolteca
-</div>
-</a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="4" data-categories="UGVyc29uYWwlMkNQeXRob24lMkNSJTJDR2Vvc3BhdGlhbCUyMEFuYWx5c2lzJTJDRm9yZXN0JTIwRWNvbG9neSUyQ0RhdGElMjBTY2llbmNl" data-listing-date-sort="1772611200000" data-listing-file-modified-sort="1774568415326" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11" data-listing-word-count-sort="2155">
-<div class="thumbnail"><a href="./posts/forest-data-compilation/index.html" class="no-external">
-
-<img loading="lazy" src="./posts/forest-data-compilation/fia-thumbnail.jpeg" class="thumbnail-image" alt="FIA dashboard preview thumbnail">
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/forest-data-compilation/index.html" class="no-external">Building a Navigator for the World’s Largest Forest Database</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('UGVyc29uYWw='); return false;">Personal</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Ug=='); return false;">R</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('R2Vvc3BhdGlhbCUyMEFuYWx5c2lz'); return false;">Geospatial Analysis</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Rm9yZXN0JTIwRWNvbG9neQ=='); return false;">Forest Ecology</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('RGF0YSUyMFNjaWVuY2U='); return false;">Data Science</div>
-
+<div class="card-footer">
+<div class="card-file-modified listing-file-modified">3/31/26, 11:51:48 AM</div>
 </div>
-<div class="delink listing-description"><a href="./posts/forest-data-compilation/index.html" class="no-external">
-<p>How I built a Streamlit schema navigator for FIA and used it to launch a national forest data workflow.</p>
-</a></div>
+</div></a>
 </div>
-<div class="metadata">
-<a href="./posts/forest-data-compilation/index.html" class="no-external">
+<div class="g-col-1" data-index="4" data-categories="UGVyc29uYWwlMkNQeXRob24lMkNSJTJDR2Vvc3BhdGlhbCUyMEFuYWx5c2lzJTJDRm9yZXN0JTIwRWNvbG9neSUyQ0RhdGElMjBTY2llbmNl" data-listing-date-sort="1772611200000" data-listing-file-modified-sort="1774983138973" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11" data-listing-word-count-sort="2155">
+<a href="./posts/forest-data-compilation/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left borderless">
+<p class="card-img-top">
+<img loading="lazy" src="./images/posts/forest-data-compilation/fia-thumbnail.jpeg" class="thumbnail-image card-img" style="height: 150px;" alt="FIA dashboard preview thumbnail">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Lost in the Woods
+</h5>
+<div class="card-text listing-description delink">
+<p>How I built a Streamlit navigator for FIA and used it to make a national forest data workflow easier to explore.</p>
+</div>
+<div class="card-attribution card-text-small end">
 <div class="listing-date">
 Mar 4, 2026
 </div>
-<div class="listing-author">
-Emily Miller
-</div>
-</a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="5" data-categories="UGVyc29uYWwlMkNQeXRob24lMkNUdXRvcmlhbA==" data-listing-date-sort="1769587200000" data-listing-file-modified-sort="1774568416370" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="954">
-<div class="thumbnail"><a href="./posts/garmin-calendar-sync/index.html" class="no-external">
-
-<img loading="lazy" src="./posts/garmin-calendar-sync/garmin-calendar.jpg" class="thumbnail-image">
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/garmin-calendar-sync/index.html" class="no-external">40 Spam Emails and a Garmin: A Calendar Sync Love Story</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('UGVyc29uYWw='); return false;">Personal</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('VHV0b3JpYWw='); return false;">Tutorial</div>
-
+<div class="card-footer">
+<div class="card-file-modified listing-file-modified">3/31/26, 11:52:18 AM</div>
 </div>
-<div class="delink listing-description"><a href="./posts/garmin-calendar-sync/index.html" class="no-external">
-<p>I built a Python script to copy Google Calendar events when my Garmin refused to sync subscribed calendars. I also accidentally mass-emailed everyone in the process, which makes for a fun story.</p>
-</a></div>
+</div></a>
 </div>
-<div class="metadata">
-<a href="./posts/garmin-calendar-sync/index.html" class="no-external">
+<div class="g-col-1" data-index="5" data-categories="UGVyc29uYWwlMkNQeXRob24lMkNUdXRvcmlhbA==" data-listing-date-sort="1769587200000" data-listing-file-modified-sort="1774983147894" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="954">
+<a href="./posts/garmin-calendar-sync/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left borderless">
+<p class="card-img-top">
+<img loading="lazy" src="./images/posts/garmin-calendar-sync/garmin-calendar.jpg" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Out of Sync
+</h5>
+<div class="card-text listing-description delink">
+<p>I built a Python script to copy Google Calendar events when my Garmin refused to sync subscribed calendars.</p>
+</div>
+<div class="card-attribution card-text-small end">
 <div class="listing-date">
 Jan 28, 2026
 </div>
-<div class="listing-author">
-Emily Miller
-</div>
-</a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="6" data-categories="TUVEUyUyQ1IlMkNHZW9zcGF0aWFsJTIwQW5hbHlzaXMlMkNSZW1vdGUlMjBTZW5zaW5nJTJDRW52aXJvbm1lbnRhbCUyMEp1c3RpY2U=" data-listing-date-sort="1764748800000" data-listing-file-modified-sort="1774568412197" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="24" data-listing-word-count-sort="4627">
-<div class="thumbnail"><a href="./posts/eds223-final/index.html" class="no-external">
-
-<img loading="lazy" src="./posts/eds223-final/eds223-final-cover.jpg" class="thumbnail-image">
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/eds223-final/index.html" class="no-external">Mapping the Texas Blackouts: A Spatial Analysis of the 2021 Winter Storm Impacts</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('TUVEUw=='); return false;">MEDS</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Ug=='); return false;">R</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('R2Vvc3BhdGlhbCUyMEFuYWx5c2lz'); return false;">Geospatial Analysis</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('UmVtb3RlJTIwU2Vuc2luZw=='); return false;">Remote Sensing</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('RW52aXJvbm1lbnRhbCUyMEp1c3RpY2U='); return false;">Environmental Justice</div>
-
+<div class="card-footer">
+<div class="card-file-modified listing-file-modified">3/31/26, 11:52:27 AM</div>
 </div>
-<div class="delink listing-description"><a href="./posts/eds223-final/index.html" class="no-external">
+</div></a>
+</div>
+<div class="g-col-1" data-index="6" data-categories="TUVEUyUyQ1IlMkNHZW9zcGF0aWFsJTIwQW5hbHlzaXMlMkNSZW1vdGUlMjBTZW5zaW5nJTJDRW52aXJvbm1lbnRhbCUyMEp1c3RpY2U=" data-listing-date-sort="1764748800000" data-listing-file-modified-sort="1774983079104" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="24" data-listing-word-count-sort="4627">
+<a href="./posts/eds223-final/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left borderless">
+<p class="card-img-top">
+<img loading="lazy" src="./images/posts/eds223-final/eds223-final-cover.jpg" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Irregular Outages
+</h5>
+<div class="card-text listing-description delink">
 <p>Using satellite night lights data and socioeconomic indicators to identify which Houston communities lost power during the historic February 2021 winter storms</p>
-</a></div>
 </div>
-<div class="metadata">
-<a href="./posts/eds223-final/index.html" class="no-external">
+<div class="card-attribution card-text-small end">
 <div class="listing-date">
 Dec 3, 2025
 </div>
-<div class="listing-author">
-Emily Miller
-</div>
-</a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="7" data-categories="TUVEUyUyQ1B5dGhvbiUyQ0dlb3NwYXRpYWwlMjBBbmFseXNpcyUyQ1JlbW90ZSUyMFNlbnNpbmclMkNFbnZpcm9ubWVudGFsJTIwSnVzdGljZQ==" data-listing-date-sort="1764403200000" data-listing-file-modified-sort="1774568424387" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2287">
-<div class="thumbnail"><a href="./posts/eds220-final/index.html" class="no-external">
-
-<img loading="lazy" src="./posts/eds220-final/LA-Wildfires-crop.jpg" class="thumbnail-image">
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/eds220-final/index.html" class="no-external">Analyzing the 2025 Los Angeles Wildfires: Remote Sensing and Environmental Justice</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('TUVEUw=='); return false;">MEDS</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('R2Vvc3BhdGlhbCUyMEFuYWx5c2lz'); return false;">Geospatial Analysis</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('UmVtb3RlJTIwU2Vuc2luZw=='); return false;">Remote Sensing</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('RW52aXJvbm1lbnRhbCUyMEp1c3RpY2U='); return false;">Environmental Justice</div>
-
+<div class="card-footer">
+<div class="card-file-modified listing-file-modified">3/31/26, 11:51:19 AM</div>
 </div>
-<div class="delink listing-description"><a href="./posts/eds220-final/index.html" class="no-external">
-<p>Combining satellite imagery and socioeconomic data to understand wildfire impacts</p>
-</a></div>
+</div></a>
 </div>
-<div class="metadata">
-<a href="./posts/eds220-final/index.html" class="no-external">
+<div class="g-col-1" data-index="7" data-categories="TUVEUyUyQ1B5dGhvbiUyQ0dlb3NwYXRpYWwlMjBBbmFseXNpcyUyQ1JlbW90ZSUyMFNlbnNpbmclMkNFbnZpcm9ubWVudGFsJTIwSnVzdGljZQ==" data-listing-date-sort="1764403200000" data-listing-file-modified-sort="1774983066225" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2287">
+<a href="./posts/eds220-final/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left borderless">
+<p class="card-img-top">
+<img loading="lazy" src="./images/posts/eds220-final/LA-Wildfires-crop.jpg" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Burn Scars and Unequal Burdens
+</h5>
+<div class="card-text listing-description delink">
+<p>Combining satellite imagery and socioeconomic data to understand the impacts of the 2025 Los Angeles wildfires</p>
+</div>
+<div class="card-attribution card-text-small end">
 <div class="listing-date">
 Nov 29, 2025
 </div>
-<div class="listing-author">
-Emily Miller
-</div>
-</a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="8" data-categories="TUVEUyUyQ1IlMkNTdGF0aXN0aWNzJTJDV2lsZGxpZmU=" data-listing-date-sort="1764403200000" data-listing-file-modified-sort="1773164564024" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="47" data-listing-word-count-sort="9334">
-<div class="thumbnail"><a href="./posts/eds222-final/index.html" class="no-external">
-
-<img loading="lazy" src="./posts/eds222-final/eds222-final-cover.jpg" class="thumbnail-image">
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/eds222-final/index.html" class="no-external">Traffic, Land Use, and Wildlife-Vehicle Collisions in Denmark</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('TUVEUw=='); return false;">MEDS</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Ug=='); return false;">R</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('U3RhdGlzdGljcw=='); return false;">Statistics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('V2lsZGxpZmU='); return false;">Wildlife</div>
-
+<div class="card-footer">
+<div class="card-file-modified listing-file-modified">3/31/26, 11:51:06 AM</div>
 </div>
-<div class="delink listing-description"><a href="./posts/eds222-final/index.html" class="no-external">
+</div></a>
+</div>
+<div class="g-col-1" data-index="8" data-categories="TUVEUyUyQ1IlMkNTdGF0aXN0aWNzJTJDV2lsZGxpZmU=" data-listing-date-sort="1764403200000" data-listing-file-modified-sort="1774983072336" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="47" data-listing-word-count-sort="9358">
+<a href="./posts/eds222-final/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left borderless">
+<p class="card-img-top">
+<img loading="lazy" src="./images/posts/eds222-final/eds222-final-cover.jpg" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Crossing Signals
+</h5>
+<div class="card-text listing-description delink">
 <p>Using a hurdle model to understand roadkill patterns on Danish roads</p>
-</a></div>
 </div>
-<div class="metadata">
-<a href="./posts/eds222-final/index.html" class="no-external">
+<div class="card-attribution card-text-small end">
 <div class="listing-date">
 Nov 29, 2025
 </div>
-<div class="listing-author">
-Emily Miller
-</div>
-</a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="9" data-categories="TUVEUyUyQ0NsaW1hdGUlMjBTY2llbmNlJTJDRGF0YSUyMFNjaWVuY2U=" data-listing-date-sort="1733472000000" data-listing-file-modified-sort="1774568414280" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8" data-listing-word-count-sort="1402">
-<div class="thumbnail"><a href="./posts/eds242-final/index.html" class="no-external">
-
-<img loading="lazy" src="./posts/eds242-final/eds242-final-cover2.jpeg" class="thumbnail-image">
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/eds242-final/index.html" class="no-external">The Fog the Models Missed</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('TUVEUw=='); return false;">MEDS</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Q2xpbWF0ZSUyMFNjaWVuY2U='); return false;">Climate Science</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('RGF0YSUyMFNjaWVuY2U='); return false;">Data Science</div>
-
+<div class="card-footer">
+<div class="card-file-modified listing-file-modified">3/31/26, 11:51:12 AM</div>
 </div>
-<div class="delink listing-description"><a href="./posts/eds242-final/index.html" class="no-external">
+</div></a>
+</div>
+<div class="g-col-1" data-index="9" data-categories="TUVEUyUyQ0NsaW1hdGUlMjBTY2llbmNlJTJDRGF0YSUyMFNjaWVuY2U=" data-listing-date-sort="1733472000000" data-listing-file-modified-sort="1774983122104" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8" data-listing-word-count-sort="1402">
+<a href="./posts/eds242-final/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left borderless">
+<p class="card-img-top">
+<img loading="lazy" src="./images/posts/eds242-final/eds242-final-cover2.jpeg" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+The Fog the Models Missed
+</h5>
+<div class="card-text listing-description delink">
 <p>How climate model biases in California’s marine layer contributed to the 2020 blackouts</p>
-</a></div>
 </div>
-<div class="metadata">
-<a href="./posts/eds242-final/index.html" class="no-external">
+<div class="card-attribution card-text-small end">
 <div class="listing-date">
 Dec 6, 2024
 </div>
-<div class="listing-author">
-Emily Miller
-</div>
-</a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="10" data-categories="TUVEUyUyQ1IlMkNHZW9zcGF0aWFsJTIwQW5hbHlzaXMlMkNNYXJpbmUlMjBTY2llbmNl" data-listing-date-sort="1731657600000" data-listing-file-modified-sort="1773164568804" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="24" data-listing-word-count-sort="4726">
-<div class="thumbnail"><a href="./posts/eds223-final2/index.html" class="no-external">
-
-<img loading="lazy" src="./posts/eds223-final2/aquaculture.jpg" class="thumbnail-image">
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/eds223-final2/index.html" class="no-external">Prioritizing Marine Aquaculture Locations on the US West Coast</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('TUVEUw=='); return false;">MEDS</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Ug=='); return false;">R</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('R2Vvc3BhdGlhbCUyMEFuYWx5c2lz'); return false;">Geospatial Analysis</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('TWFyaW5lJTIwU2NpZW5jZQ=='); return false;">Marine Science</div>
-
+<div class="card-footer">
+<div class="card-file-modified listing-file-modified">3/31/26, 11:52:02 AM</div>
 </div>
-<div class="delink listing-description"><a href="./posts/eds223-final2/index.html" class="no-external">
-<p>Using geospatial analysis to identify optimal locations for oyster and abalone farming based on sea surface temperature and depth criteria</p>
-</a></div>
+</div></a>
 </div>
-<div class="metadata">
-<a href="./posts/eds223-final2/index.html" class="no-external">
+<div class="g-col-1" data-index="10" data-categories="TUVEUyUyQ1IlMkNHZW9zcGF0aWFsJTIwQW5hbHlzaXMlMkNNYXJpbmUlMjBTY2llbmNl" data-listing-date-sort="1731657600000" data-listing-file-modified-sort="1774983089451" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="24" data-listing-word-count-sort="4726">
+<a href="./posts/eds223-final2/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left borderless">
+<p class="card-img-top">
+<img loading="lazy" src="./images/posts/eds223-final2/aquaculture.jpg" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Where to Put the Oysters?
+</h5>
+<div class="card-text listing-description delink">
+<p>A geospatial site-suitability analysis for oyster and abalone aquaculture along the US West Coast.</p>
+</div>
+<div class="card-attribution card-text-small end">
 <div class="listing-date">
 Nov 15, 2024
 </div>
-<div class="listing-author">
-Emily Miller
 </div>
-</a>
 </div>
+<div class="card-footer">
+<div class="card-file-modified listing-file-modified">3/31/26, 11:51:29 AM</div>
+</div>
+</div></a>
 </div>
 </div>
 <div class="listing-no-matching d-none">No matching items</div>
 </div></main> <!-- /main -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  initRotators();
+  initFavoriteLines();
+  initRandomLines();
+  initPageCompanions();
+  initResearchBackgrounds();
+});
+
+function initRotators() {
+  const rotators = document.querySelectorAll('[data-rotator]');
+
+  rotators.forEach((rotator) => {
+    const items = Array.from(rotator.querySelectorAll('.rotator-item'));
+    const button = rotator.querySelector('.rotator-next');
+
+    if (!items.length || !button) return;
+
+    let index = items.findIndex((item) => item.classList.contains('is-active'));
+    if (index < 0) index = 0;
+
+    syncRotator(items, index);
+
+    button.addEventListener('click', function () {
+      index = (index + 1) % items.length;
+      syncRotator(items, index);
+    });
+  });
+}
+
+function syncRotator(items, activeIndex) {
+  items.forEach((item, index) => {
+    const isActive = index === activeIndex;
+    item.hidden = !isActive;
+    item.classList.toggle('is-active', isActive);
+  });
+}
+
+function initFavoriteLines() {
+  const hearts = document.querySelectorAll('.line-heart');
+  if (!hearts.length) return;
+
+  const storageKey = 'favoriteLines.v1';
+  let saved = {};
+
+  try {
+    saved = JSON.parse(localStorage.getItem(storageKey) || '{}');
+  } catch (error) {
+    saved = {};
+  }
+
+  hearts.forEach((button) => {
+    const lineId = button.dataset.lineId;
+    if (!lineId) return;
+
+    updateHeart(button, Boolean(saved[lineId]));
+
+    button.addEventListener('click', function () {
+      const nextState = !button.classList.contains('is-favorite');
+      saved[lineId] = nextState;
+      updateHeart(button, nextState);
+      localStorage.setItem(storageKey, JSON.stringify(saved));
+    });
+  });
+}
+
+function updateHeart(button, isFavorite) {
+  button.classList.toggle('is-favorite', isFavorite);
+  button.setAttribute('aria-pressed', isFavorite ? 'true' : 'false');
+  button.setAttribute('aria-label', isFavorite ? 'Line saved to favorites' : 'Save this line');
+  button.innerHTML = isFavorite ? '&#9829;' : '&#9825;';
+}
+
+function initRandomLines() {
+  const panels = document.querySelectorAll('.random-line-panel');
+  if (!panels.length) return;
+
+  const poemLines = Array.from(document.querySelectorAll('.poem-line')).map((line) => {
+    const textNode = line.querySelector('.poem-line-text');
+    const poemBody = line.closest('.poem-body');
+
+    return {
+      text: textNode ? textNode.textContent.trim() : '',
+      poem: poemBody ? poemBody.dataset.poemTitle : ''
+    };
+  }).filter((line) => line.text);
+
+  if (!poemLines.length) return;
+
+  panels.forEach((panel) => {
+    const trigger = panel.querySelector('.random-line-trigger');
+    const output = panel.querySelector('[data-random-output]');
+    const source = panel.querySelector('[data-random-source]');
+
+    if (!trigger || !output || !source) return;
+
+    const setRandomLine = function () {
+      const choice = poemLines[Math.floor(Math.random() * poemLines.length)];
+      output.textContent = '"' + choice.text + '"';
+      source.textContent = choice.poem ? 'from ' + choice.poem : '';
+    };
+
+    trigger.addEventListener('click', setRandomLine);
+    setRandomLine();
+  });
+}
+
+function initPageCompanions() {
+  const companions = document.querySelectorAll('[data-page-companion]');
+  if (!companions.length) return;
+
+  companions.forEach((figure) => {
+    const image = figure.querySelector('img');
+    if (!image) {
+      figure.hidden = true;
+      return;
+    }
+
+    const hideFigure = function () {
+      figure.hidden = true;
+    };
+
+    const showFigure = function () {
+      figure.hidden = false;
+    };
+
+    if (image.complete) {
+      if (image.naturalWidth > 0) {
+        showFigure();
+      } else {
+        hideFigure();
+      }
+    } else {
+      image.addEventListener('load', showFigure, { once: true });
+      image.addEventListener('error', hideFigure, { once: true });
+    }
+  });
+}
+
+function initResearchBackgrounds() {
+  const stage = document.querySelector('.research-bg-stage');
+  const sections = Array.from(document.querySelectorAll('.research-project[data-bg-id]'));
+  const backgrounds = Array.from(document.querySelectorAll('.research-bg-stage .research-bg[data-bg-id]'));
+
+  if (!stage || !sections.length || !backgrounds.length) return;
+
+  let frameId = null;
+
+  const applyBlend = function () {
+    frameId = null;
+
+    const viewportMid = window.innerHeight / 2;
+    const influenceRange = window.innerHeight * 0.9;
+    const scoresById = new Map();
+
+    sections.forEach((section) => {
+      const rect = section.getBoundingClientRect();
+      const sectionMid = rect.top + rect.height / 2;
+      const distance = Math.abs(sectionMid - viewportMid);
+      const score = Math.max(0, 1 - (distance / influenceRange));
+      const bgId = section.dataset.bgId;
+
+      if (!bgId) return;
+
+      const currentScore = scoresById.get(bgId) || 0;
+      scoresById.set(bgId, Math.max(currentScore, score));
+    });
+
+    const ranked = Array.from(scoresById.entries())
+      .map(([bgId, score]) => ({ bgId, score }))
+      .sort((a, b) => b.score - a.score);
+
+    const top = ranked[0];
+    const second = ranked[1];
+    const weights = new Map();
+
+    if (!top || top.score <= 0.001) {
+      weights.set('neutral', 1);
+    } else if (!second || second.score <= 0.001) {
+      weights.set(top.bgId, 1);
+    } else {
+      const total = top.score + second.score;
+      weights.set(top.bgId, top.score / total);
+      weights.set(second.bgId, second.score / total);
+    }
+
+    backgrounds.forEach((background) => {
+      const weight = weights.get(background.dataset.bgId) || 0;
+      background.style.opacity = weight.toFixed(3);
+    });
+  };
+
+  const requestBlend = function () {
+    if (frameId !== null) return;
+    frameId = window.requestAnimationFrame(applyBlend);
+  };
+
+  requestBlend();
+  window.addEventListener('scroll', requestBlend, { passive: true });
+  window.addEventListener('resize', requestBlend);
+}
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -715,7 +781,7 @@ Emily Miller
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/rellimylime\.github\.io");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
@@ -1043,6 +1109,19 @@ Emily Miller
   });
   </script>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Made with Quarto, GitHub Pages, and love.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p><a href=".\colophon.html">Colophon</a></p>
+</div>
+  </div>
+</footer>
 
 
 

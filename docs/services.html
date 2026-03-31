@@ -40,7 +40,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-bee60ecf57315cb3986c6e19731cdde6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-98516fae384705e390a04a715b53af11.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -72,7 +72,7 @@ ul.task-list li input[type="checkbox"] {
 
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-fixed text-page services-page fullcontent quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -94,10 +94,6 @@ ul.task-list li input[type="checkbox"] {
   <li class="nav-item">
     <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
-<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./blog.html"> 
@@ -129,7 +125,7 @@ ul.task-list li input[type="checkbox"] {
   </li>  
         <li>
     <a class="dropdown-item" href="./adventures.html">
- <span class="dropdown-text">Adventures</span></a>
+ <span class="dropdown-text">Outside the Lab</span></a>
   </li>  
     </ul>
   </li>
@@ -148,12 +144,12 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content column-page" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -162,7 +158,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<div class="quarto-title-meta column-page">
+<div class="quarto-title-meta">
 
     
   
@@ -174,9 +170,16 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="collaborate" class="level1">
-<h1>Collaborate</h1>
-<p><em>I occasionally take on scoped projects, research support, tutoring, and workshops when the fit is good.</em></p>
+<div class="page-intro">
+<p>I occasionally take on scoped projects, research support, tutoring, and workshops when the fit is good.</p>
+</div>
+<div class="page-shell">
+<details class="page-foldout">
+  <summary>Why this page exists</summary>
+  <div class="page-foldout-body">
+    <p>This page is here so I can answer "do you do this for other people too?" once, clearly, without turning it into theater.</p>
+  </div>
+</details>
 <p>This page exists mostly so I have somewhere to point people when they ask whether I do this for other humans too. The answer is: sometimes, yes.</p>
 <p>I am most useful when the problem is real, the scope is clear, and the data are messy in an interesting way rather than a cursed way.</p>
 <section id="ways-i-can-help" class="level2">
@@ -229,12 +232,214 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="contact">Contact</h2>
 <p>If it sounds like a fit, I can usually tell you quickly whether I have capacity.</p>
 <p><a href="mailto:ermiller@ucsb.edu?subject=Collaboration%20Inquiry">Email Me</a></p>
+</section>
+</div>
 
 
-</section>
-</section>
 
 </main> <!-- /main -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  initRotators();
+  initFavoriteLines();
+  initRandomLines();
+  initPageCompanions();
+  initResearchBackgrounds();
+});
+
+function initRotators() {
+  const rotators = document.querySelectorAll('[data-rotator]');
+
+  rotators.forEach((rotator) => {
+    const items = Array.from(rotator.querySelectorAll('.rotator-item'));
+    const button = rotator.querySelector('.rotator-next');
+
+    if (!items.length || !button) return;
+
+    let index = items.findIndex((item) => item.classList.contains('is-active'));
+    if (index < 0) index = 0;
+
+    syncRotator(items, index);
+
+    button.addEventListener('click', function () {
+      index = (index + 1) % items.length;
+      syncRotator(items, index);
+    });
+  });
+}
+
+function syncRotator(items, activeIndex) {
+  items.forEach((item, index) => {
+    const isActive = index === activeIndex;
+    item.hidden = !isActive;
+    item.classList.toggle('is-active', isActive);
+  });
+}
+
+function initFavoriteLines() {
+  const hearts = document.querySelectorAll('.line-heart');
+  if (!hearts.length) return;
+
+  const storageKey = 'favoriteLines.v1';
+  let saved = {};
+
+  try {
+    saved = JSON.parse(localStorage.getItem(storageKey) || '{}');
+  } catch (error) {
+    saved = {};
+  }
+
+  hearts.forEach((button) => {
+    const lineId = button.dataset.lineId;
+    if (!lineId) return;
+
+    updateHeart(button, Boolean(saved[lineId]));
+
+    button.addEventListener('click', function () {
+      const nextState = !button.classList.contains('is-favorite');
+      saved[lineId] = nextState;
+      updateHeart(button, nextState);
+      localStorage.setItem(storageKey, JSON.stringify(saved));
+    });
+  });
+}
+
+function updateHeart(button, isFavorite) {
+  button.classList.toggle('is-favorite', isFavorite);
+  button.setAttribute('aria-pressed', isFavorite ? 'true' : 'false');
+  button.setAttribute('aria-label', isFavorite ? 'Line saved to favorites' : 'Save this line');
+  button.innerHTML = isFavorite ? '&#9829;' : '&#9825;';
+}
+
+function initRandomLines() {
+  const panels = document.querySelectorAll('.random-line-panel');
+  if (!panels.length) return;
+
+  const poemLines = Array.from(document.querySelectorAll('.poem-line')).map((line) => {
+    const textNode = line.querySelector('.poem-line-text');
+    const poemBody = line.closest('.poem-body');
+
+    return {
+      text: textNode ? textNode.textContent.trim() : '',
+      poem: poemBody ? poemBody.dataset.poemTitle : ''
+    };
+  }).filter((line) => line.text);
+
+  if (!poemLines.length) return;
+
+  panels.forEach((panel) => {
+    const trigger = panel.querySelector('.random-line-trigger');
+    const output = panel.querySelector('[data-random-output]');
+    const source = panel.querySelector('[data-random-source]');
+
+    if (!trigger || !output || !source) return;
+
+    const setRandomLine = function () {
+      const choice = poemLines[Math.floor(Math.random() * poemLines.length)];
+      output.textContent = '"' + choice.text + '"';
+      source.textContent = choice.poem ? 'from ' + choice.poem : '';
+    };
+
+    trigger.addEventListener('click', setRandomLine);
+    setRandomLine();
+  });
+}
+
+function initPageCompanions() {
+  const companions = document.querySelectorAll('[data-page-companion]');
+  if (!companions.length) return;
+
+  companions.forEach((figure) => {
+    const image = figure.querySelector('img');
+    if (!image) {
+      figure.hidden = true;
+      return;
+    }
+
+    const hideFigure = function () {
+      figure.hidden = true;
+    };
+
+    const showFigure = function () {
+      figure.hidden = false;
+    };
+
+    if (image.complete) {
+      if (image.naturalWidth > 0) {
+        showFigure();
+      } else {
+        hideFigure();
+      }
+    } else {
+      image.addEventListener('load', showFigure, { once: true });
+      image.addEventListener('error', hideFigure, { once: true });
+    }
+  });
+}
+
+function initResearchBackgrounds() {
+  const stage = document.querySelector('.research-bg-stage');
+  const sections = Array.from(document.querySelectorAll('.research-project[data-bg-id]'));
+  const backgrounds = Array.from(document.querySelectorAll('.research-bg-stage .research-bg[data-bg-id]'));
+
+  if (!stage || !sections.length || !backgrounds.length) return;
+
+  let frameId = null;
+
+  const applyBlend = function () {
+    frameId = null;
+
+    const viewportMid = window.innerHeight / 2;
+    const influenceRange = window.innerHeight * 0.9;
+    const scoresById = new Map();
+
+    sections.forEach((section) => {
+      const rect = section.getBoundingClientRect();
+      const sectionMid = rect.top + rect.height / 2;
+      const distance = Math.abs(sectionMid - viewportMid);
+      const score = Math.max(0, 1 - (distance / influenceRange));
+      const bgId = section.dataset.bgId;
+
+      if (!bgId) return;
+
+      const currentScore = scoresById.get(bgId) || 0;
+      scoresById.set(bgId, Math.max(currentScore, score));
+    });
+
+    const ranked = Array.from(scoresById.entries())
+      .map(([bgId, score]) => ({ bgId, score }))
+      .sort((a, b) => b.score - a.score);
+
+    const top = ranked[0];
+    const second = ranked[1];
+    const weights = new Map();
+
+    if (!top || top.score <= 0.001) {
+      weights.set('neutral', 1);
+    } else if (!second || second.score <= 0.001) {
+      weights.set(top.bgId, 1);
+    } else {
+      const total = top.score + second.score;
+      weights.set(top.bgId, top.score / total);
+      weights.set(second.bgId, second.score / total);
+    }
+
+    backgrounds.forEach((background) => {
+      const weight = weights.get(background.dataset.bgId) || 0;
+      background.style.opacity = weight.toFixed(3);
+    });
+  };
+
+  const requestBlend = function () {
+    if (frameId !== null) return;
+    frameId = window.requestAnimationFrame(applyBlend);
+  };
+
+  requestBlend();
+  window.addEventListener('scroll', requestBlend, { passive: true });
+  window.addEventListener('resize', requestBlend);
+}
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -308,7 +513,7 @@ ul.task-list li input[type="checkbox"] {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/rellimylime\.github\.io");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
@@ -636,6 +841,19 @@ ul.task-list li input[type="checkbox"] {
   });
   </script>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Made with Quarto, GitHub Pages, and love.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p><a href=".\colophon.html">Colophon</a></p>
+</div>
+  </div>
+</footer>
 
 
 

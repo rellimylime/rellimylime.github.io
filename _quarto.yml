@@ -1,15 +1,22 @@
 project:
   type: website
   output-dir: docs
+  render:
+    - "*.qmd"
+    - "posts/**/index.qmd"
+    - "!about.qmd"
+    - "!posts/meds-story/index.qmd"
 
 website:
   title: "Emily Miller"
+  site-url: https://rellimylime.github.io
+  page-footer:
+    left: "Made with Quarto, GitHub Pages, and love."
+    right: "[Colophon](/colophon.html)"
   navbar:
     left:
       - href: index.qmd
         text: "Home"
-      - href: about.qmd
-        text: "About"
       - href: blog.qmd
         text: "Blog"
       - text: "Bona Fides"
@@ -23,7 +30,7 @@ website:
           - href: art.qmd
             text: "Art & Poetry"
           - href: adventures.qmd
-            text: "Adventures"
+            text: "Outside the Lab"
     right:
       - icon: github
         href: https://github.com/rellimylime
@@ -32,8 +39,12 @@ website:
 format:
   html:
     theme: styles.scss
-    toc: true
-    page-layout: full
+    toc: false
+    page-layout: article
+    include-after-body: site-scripts.html
+
+execute:
+  freeze: auto
 
 editor: visual
 

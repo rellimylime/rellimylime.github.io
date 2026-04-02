@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
   initRandomLines();
   initPageCompanions();
   initResearchBackgrounds();
+  initBirdSeparators();
 });
 
 function initRotators() {
@@ -198,5 +199,30 @@ function initResearchBackgrounds() {
   requestBlend();
   window.addEventListener('scroll', requestBlend, { passive: true });
   window.addEventListener('resize', requestBlend);
+}
+
+function initBirdSeparators() {
+  const separators = document.querySelectorAll('[data-bird-separator]');
+  if (!separators.length) return;
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (prefersReducedMotion) {
+    separators.forEach((separator) => separator.classList.add('is-startled'));
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-startled');
+      observer.unobserve(entry.target);
+    });
+  }, {
+    threshold: 0.5,
+    rootMargin: '0px 0px -8% 0px'
+  });
+
+  separators.forEach((separator) => observer.observe(separator));
 }
 </script>

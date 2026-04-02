@@ -5,16 +5,63 @@ body-classes: outside-lab-page coming-soon-page
 ---
 
 ```{=html}
-<section class="coming-soon-stage">
-  <div class="coming-soon-copy">
-    <p class="coming-soon-kicker">Outside the Lab</p>
-    <h1 class="coming-soon-title">Coming soon.</h1>
-    <p class="coming-soon-text">This page is on pause while I rebuild it into something that feels more accurate and less performative. The coastlines, cleanup work, dog supervision, and off-hours notes will come back once the page feels honest.</p>
-    <p class="coming-soon-links"><a href="art.html">Art &amp; Poetry</a> <span>/</span> <a href="research.html">Research</a> <span>/</span> <a href="cv.html">Resume</a></p>
+<section class="evolution-stage" aria-labelledby="evolution-title">
+  <div class="evolution-dialog-stage">
+    <div class="evolution-dialog">
+      <p class="evolution-dialog-title" data-text="What?">What?</p>
+      <h1 id="evolution-title" class="evolution-dialog-title" data-text="THIS PAGE is evolving!">
+        THIS PAGE is evolving!
+      </h1>
+      <span class="evolution-cursor" aria-hidden="true"></span>
+    </div>
+  </div>
+
+  <div class="evolution-footer">
+    <p class="evolution-links"><a href="art.html">Art &amp; Poetry</a> <span>/</span> <a href="research.html">Research</a> <span>/</span> <a href="cv.html">Resume</a></p>
   </div>
 </section>
+
+<script>
+  (() => {
+    const dialog = document.querySelector(".evolution-dialog");
+    if (!dialog) return;
+
+    const prompt = dialog.querySelector(".evolution-dialog-prompt");
+    const line = dialog.querySelector(".evolution-dialog-title");
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    async function typeInto(node, delay) {
+      const text = node.dataset.text || node.textContent;
+      node.textContent = "";
+      for (const char of text) {
+        node.textContent += char;
+        await new Promise((resolve) => window.setTimeout(resolve, delay));
+      }
+    }
+
+    async function runTypewriter() {
+      dialog.classList.remove("is-complete");
+
+      if (prefersReducedMotion) {
+        prompt.textContent = prompt.dataset.text;
+        line.textContent = line.dataset.text;
+        dialog.classList.add("is-complete");
+        return;
+      }
+
+      await typeInto(prompt, 70);
+      await new Promise((resolve) => window.setTimeout(resolve, 180));
+      await typeInto(line, 45);
+      dialog.classList.add("is-complete");
+    }
+
+    runTypewriter();
+  })();
+</script>
+
 ```
 
+````{=html}
 <!--
 Original draft content preserved below for later reuse.
 
@@ -149,3 +196,4 @@ If you want to talk about coastlines, cleanup work, dogs, or the off-hours parts
 
 :::
 -->
+````

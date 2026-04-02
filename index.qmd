@@ -11,7 +11,33 @@ body-classes: home-page
 Data scientist, environmental systems thinker, and compulsive fixer of things.
 :::
 
-------------------------------------------------------------------------
+```{=html}
+<div class="home-separator bird-separator" data-bird-separator aria-hidden="true">
+  <span class="home-separator-line"></span>
+  <div class="home-bird-group">
+    <span class="home-bird bird-one">
+      <svg viewBox="0 0 48 28" role="presentation" focusable="false">
+        <path d="M1 18C7 8 15 5 24 14C33 5 41 8 47 18C40 14 33 13 24 20C15 13 8 14 1 18Z" fill="currentColor"/>
+      </svg>
+    </span>
+    <span class="home-bird bird-two">
+      <svg viewBox="0 0 48 28" role="presentation" focusable="false">
+        <path d="M1 18C7 8 15 5 24 14C33 5 41 8 47 18C40 14 33 13 24 20C15 13 8 14 1 18Z" fill="currentColor"/>
+      </svg>
+    </span>
+    <span class="home-bird bird-three">
+      <svg viewBox="0 0 48 28" role="presentation" focusable="false">
+        <path d="M1 18C7 8 15 5 24 14C33 5 41 8 47 18C40 14 33 13 24 20C15 13 8 14 1 18Z" fill="currentColor"/>
+      </svg>
+    </span>
+    <span class="home-bird bird-four">
+      <svg viewBox="0 0 48 28" role="presentation" focusable="false">
+        <path d="M1 18C7 8 15 5 24 14C33 5 41 8 47 18C40 14 33 13 24 20C15 13 8 14 1 18Z" fill="currentColor"/>
+      </svg>
+    </span>
+  </div>
+</div>
+```
 
 ::::::::::::::::::::::::::: quote-section
 :::::::::::::::::::::::::: slider-container
@@ -32,7 +58,7 @@ Data scientist, environmental systems thinker, and compulsive fixer of things.
 ::: slick-slide
 **"With four parameters I can fit an elephant, and with five I can make him wiggle his trunk."**
 
--   John von Neumann (on overfitting)
+-   John von Neumann
 :::
 
 ::: slick-slide
@@ -176,8 +202,6 @@ Data scientist, environmental systems thinker, and compulsive fixer of things.
 :::::::::::::::::::::::::
 ::::::::::::::::::::::::::
 :::::::::::::::::::::::::::
-
-------------------------------------------------------------------------
 
 ### What I'm Working On
 

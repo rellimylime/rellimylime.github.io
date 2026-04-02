@@ -865,7 +865,7 @@
     "href": "research.html",
     "title": "Research",
     "section": "",
-    "text": "Remote sensing, machine learning, and environmental data infrastructure for projects that need to be useful on the ground, not just impressive in a slide deck."
+    "text": "Remote sensing, machine learning, and environmental/geospatial data infrastructure for projects that need to be useful on the ground and in the lab."
   },
   {
     "objectID": "research.html#proposed-projects",
@@ -873,47 +873,5 @@
     "title": "Research",
     "section": "Proposed Projects",
     "text": "Proposed Projects\n\nScaling Metadata Quality Assessment for Environmental Data Repositories\nClient: Arctic Data Center / National Center for Ecological Analysis and Synthesis (NCEAS)\nTimeline: Fall 2024 - Spring 2025\nStatus: Proposed capstone project (not currently in progress)\nThis was a proposed capstone direction focused on building reproducible, scalable workflows to aggregate and visualize FAIR (Findable, Accessible, Interoperable, Reusable) metadata quality assessments across environmental data repositories.\nProject Goal: Currently, the Arctic Data Center runs automated metadata checks generating per-dataset results, but aggregated results are not readily available. With thousands of datasets, it’s difficult to identify systemic curation issues such as missing ORCIDs or inconsistent units. This project transforms individual metadata quality assessments into standardized, scalable, and actionable insights.\nKey Deliverables:\n\nRepeatable ingest pipeline - Clean, timestamped snapshots of quality assessment data enriched with dataset metadata, with validation to catch data format changes early\nAutomated visualizations and analysis - Generate FAIR pillar summaries, temporal trends, and first vs. latest comparisons that auto-update when new data arrives\nFocused deep-dives - Analyze specific dataset types or disciplines, regroup individual checks into themes, and track percent-pass and patterns across time\nLightweight access interface - Simple filterable web interface to view and download tables, figures, and summaries by time, metadata standard, pillar, or dataset type\nStretch goal - Configure one additional repository with the same framework to demonstrate portability\n\nTechnical Approach: Building reproducible workflows in Python with open data formats (CSV, Parquet). Using Quarto/Jupyter for reports. Emphasis on lightweight, maintainable design that repository staff can sustain post-project.\nImpact: This project enhances Arctic research data accessibility and usability by turning existing checks into clear, repeatable quality signals. Plain-language, FAIR-aligned metrics reduce barriers for research teams, particularly those with limited institutional data support, promoting equitable participation in environmental science. The scalable framework offers a model for other repositories, improving the connected environmental data ecosystem.\nBroader impact: Plain-language metrics and transparent interfaces can make environmental data quality issues easier to see, compare, and act on across repositories. The larger goal is to turn existing checks into something more useful for curation teams and more legible for the people who depend on those repositories."
-  },
-  {
-    "objectID": "research.html#technical-skills-tools",
-    "href": "research.html#technical-skills-tools",
-    "title": "Research",
-    "section": "Technical Skills & Tools",
-    "text": "Technical Skills & Tools\n\nRemote Sensing\n\nSentinel-1/2, Landsat, Planet imagery\nGoogle Earth Engine\nQGIS, ArcGIS Pro\nRasterio, GDAL\n\n\n\nMachine Learning\n\nPyTorch, TensorFlow\nCustom CNN architectures\nTime series analysis\nTransfer learning\n\n\n\nProgramming\n\nPython (pandas, numpy, scikit-learn)\nR (tidyverse, spatial packages)\nJavaScript (Google Earth Engine)\nGit version control\n\n\n\nData Visualization\n\nMatplotlib, Seaborn\nPlotly, D3.js\nTableau, PowerBI\nCustom web visualizations"
-  },
-  {
-    "objectID": "research.html#academic-background",
-    "href": "research.html#academic-background",
-    "title": "Research",
-    "section": "Academic Background",
-    "text": "Academic Background\n\nMaster of Environmental Data Science (MEDS)\nUniversity of California, Santa Barbara - Bren School\nExpected June 2026 | GPA: 4.0\nFocus: Remote sensing, machine learning, and environmental data engineering\n\n\nBachelor of Science in Mathematics\nUniversity of California, Santa Barbara\nJune 2025 | GPA: 3.67\nFocus: Applied mathematics and environmental science\n\n\nAssociate of Science in Mathematics\nSacramento City College\nJune 2022 | GPA: 4.0"
-  },
-  {
-    "objectID": "research.html#recognition",
-    "href": "research.html#recognition",
-    "title": "Research",
-    "section": "Recognition",
-    "text": "Recognition\n\nMEDS Student Faculty Representative - Selected by MEDS cohort to represent student voice in faculty meetings and curriculum development\nBren Environmental Leadership Fellow - Competitive fellowship supporting research on irrigation systems and water resource sustainability in Sub-Saharan Africa (June-December 2024)"
-  },
-  {
-    "objectID": "research.html#research-collaborations",
-    "href": "research.html#research-collaborations",
-    "title": "Research",
-    "section": "Research Collaborations",
-    "text": "Research Collaborations\nMost of my work depends on collaboration. I do my best work when I am building alongside researchers, domain experts, and community partners who know things I do not.\n\nAcademic Partners\n\nUCSB Water Vegetation and Society (WaVeS) Lab\nUCSB Bren School of Environmental Science & Management\nNational Center for Ecological Analysis and Synthesis (NCEAS)\n\n\n\nCommunity & Professional Partners\n\nIV Recovery Community Initiative (Founder)\nWomen in Science and Engineering (WiSE) Mentorship Program"
-  },
-  {
-    "objectID": "research.html#research-impact",
-    "href": "research.html#research-impact",
-    "title": "Research",
-    "section": "Research Impact",
-    "text": "Research Impact\nI tend to work on infrastructure and analysis that helps other people ask better questions and make better decisions with environmental data."
-  },
-  {
-    "objectID": "research.html#lets-collaborate",
-    "href": "research.html#lets-collaborate",
-    "title": "Research",
-    "section": "Let’s Collaborate!",
-    "text": "Let’s Collaborate!\nIf you are working on something in remote sensing, environmental data infrastructure, or applied machine learning and think I might be useful, feel free to reach out.\nStart a Collaboration"
   }
 ]

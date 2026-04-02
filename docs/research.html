@@ -40,7 +40,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-2b0b1eb3fd9f1f9d529a88536e1d45e4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-5a7c0de58d8320ca337128a48766cb55.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -170,12 +170,15 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="page-intro">
-<p>Remote sensing, machine learning, and environmental data infrastructure for projects that need to be useful on the ground, not just impressive in a slide deck.</p>
+<div class="page-intro research-bg-trigger" data-bg-id="intro">
+<p>Remote sensing, machine learning, and environmental/geospatial data infrastructure for projects that need to be useful on the ground and in the lab.</p>
 </div>
 <!-- Research section background images live in images/pages/research/backgrounds/. -->
 <div class="research-bg-stage" aria-hidden="true">
   <div class="research-bg research-bg--neutral is-active" data-bg-id="neutral"></div>
+  <div class="research-bg research-bg--intro" data-bg-id="intro">
+    <img class="research-bg-media" src="images/pages/research/backgrounds/research_background.jpg" alt="" loading="eager" decoding="async">
+  </div>
   <div class="research-bg research-bg--waves" data-bg-id="waves">
     <img class="research-bg-media" src="images/pages/research/backgrounds/waves-irrigation.jpg" alt="" loading="eager" decoding="async">
   </div>
@@ -185,22 +188,16 @@ ul.task-list li input[type="checkbox"] {
   <div class="research-bg research-bg--wri" data-bg-id="wri">
     <img class="research-bg-media" src="images/pages/research/backgrounds/wri-fire.jpg" alt="" loading="eager" decoding="async">
   </div>
+  <div class="research-bg research-bg--proposed" data-bg-id="proposed">
+    <img class="research-bg-media" src="images/pages/research/backgrounds/proposed_background.jpg" alt="" loading="eager" decoding="async">
+  </div>
 </div>
 <div class="page-shell">
-<div class="research-overview">
+<div class="research-overview research-bg-trigger" data-bg-id="intro">
   <p class="research-kicker">Current work spans irrigation mapping in Sub-Saharan Africa, national-scale forest change analysis, and cloud-accessible wildfire resilience tools.</p>
   <p class="research-context">That work currently lives across the <a href="https://www.waveslab.org/"><strong>WaVeS Lab</strong></a>, the <a href="https://www.landscapesofchangelab.com/"><strong>LOC Lab</strong></a>, and my capstone with the <a href="https://www.nceas.ucsb.edu/wildfire-resilience-index"><strong>Wildfire Resilience Index</strong></a> team at NCEAS.</p>
 </div>
-<div class="research-project" data-bg-id="neutral">
-<p>My work sits at the intersection of remote sensing, machine learning, and environmental data infrastructure. I am most interested in projects that are technically messy, environmentally relevant, and useful to people making decisions on the ground. A lot of what I build involves turning large, stubborn datasets into workflows that are reproducible, interpretable, and actually usable.</p>
-<ul class="research-principles">
-  <li><strong>Useful</strong> I care about work that helps someone answer a real question, not just work that looks impressive in a slide deck.</li>
-  <li><strong>Reproducible</strong> Clean handoffs, readable code, and documented workflows matter.</li>
-  <li><strong>Interdisciplinary</strong> The best projects usually involve several people who know different things.</li>
-  <li><strong>Grounded</strong> Environmental data is never just abstract data; it is tied to places, systems, and people.</li>
-</ul>
-</div>
-<section id="satellite-based-irrigation-mapping-in-sub-saharan-africa" class="level3 research-project" data-bg-id="waves">
+<section id="satellite-based-irrigation-mapping-in-sub-saharan-africa" class="level3 research-project research-bg-trigger" data-bg-id="waves">
 <h3 class="anchored" data-anchor-id="satellite-based-irrigation-mapping-in-sub-saharan-africa">Satellite-Based Irrigation Mapping in Sub-Saharan Africa</h3>
 <p><strong>Lab:</strong> UCSB Water Vegetation and Society (WaVeS) Lab, Prof.&nbsp;Kelly Caylor<br>
 <strong>Timeline:</strong> June 2024 - Present<br>
@@ -210,7 +207,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Alongside the paper pipeline, I have also been developing a separate center-pivot segmentation workflow following Chen et al., using CNN and U-Net style semantic segmentation on Landsat imagery. The immediate goal is to build a 2015 detection layer that can be compared on the right temporal footing with existing irrigation and agriculture datasets. That segmentation work is useful supporting infrastructure, but it is not required for the publication track itself.</p>
 <p class="research-note"><strong>Technical details:</strong> My current WaVeS workflows use Python geospatial pipelines built with Rasterio, GeoPandas, and Shapely to process multiband raster and vector datasets such as aridity indices, AEI layers, and CPIS shapefiles across heterogeneous sources. In parallel, I have been testing a Chen-style center-pivot segmentation workflow to generate a 2015 detection dataset that can support temporally aligned comparisons with existing irrigation and agricultural products.</p>
 </section>
-<section id="forest-thermophilization-disturbance-analysis" class="level3 research-project" data-bg-id="loc">
+<section id="forest-thermophilization-disturbance-analysis" class="level3 research-project research-bg-trigger" data-bg-id="loc">
 <h3 class="anchored" data-anchor-id="forest-thermophilization-disturbance-analysis">Forest Thermophilization &amp; Disturbance Analysis</h3>
 <p><strong>Lab:</strong> Landscapes of Change (LOC) Lab, Bren School, UCSB<br>
 <strong>Timeline:</strong> January 2026 - Present<br>
@@ -225,7 +222,7 @@ ul.task-list li input[type="checkbox"] {
 <p>I also built the <a href="https://fiadb-dashboard.streamlit.app/">FIA Database Schema Navigator</a>, a Streamlit tool for exploring the FIADB v9.4 schema without loading the full 70 GB SQLite file, along with two downstream dashboards for compiled data QA and full project exploration. Details in the <a href="./posts/forest-data-compilation/index.html">blog post</a> and <a href="https://github.com/rellimylime/forest-data-compilation">repository</a>.</p>
 <p class="research-note"><strong>Technical details:</strong> R and Python pipelines integrating IDS, TerraClimate, PRISM, WorldClim, and FIA. Google Earth Engine pixel decomposition with area-weighted coverage fractions. Streamlit dashboards for schema navigation, data exploration, and project documentation. <code>renv</code> and YAML config-driven reproducibility.</p>
 </section>
-<section id="wildfire-resilience-index-data-access-r-package" class="level3 research-project" data-bg-id="wri">
+<section id="wildfire-resilience-index-data-access-r-package" class="level3 research-project research-bg-trigger" data-bg-id="wri">
 <h3 class="anchored" data-anchor-id="wildfire-resilience-index-data-access-r-package">Wildfire Resilience Index Data Access &amp; R Package</h3>
 <p><strong>Client:</strong> National Center for Ecological Analysis and Synthesis (NCEAS), Dr.&nbsp;Caitlin Fong<br>
 <strong>Timeline:</strong> January 2026 - Present<br>
@@ -240,7 +237,7 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 <p class="research-note"><strong>Technical details:</strong> R package development with <code>terra</code>, <code>sf</code>, <code>rstac</code>, and <code>testthat</code>, paired with GDAL-based TIFF-to-COG conversion, STAC metadata generation, and public data hosting through the Knowledge Network for Biocomplexity (KNB).</p>
 </section>
-<section id="proposed-projects" class="level2 research-project" data-bg-id="neutral">
+<section id="proposed-projects" class="level2 research-project research-bg-trigger" data-bg-id="proposed">
 <h2 class="anchored" data-anchor-id="proposed-projects">Proposed Projects</h2>
 <section id="scaling-metadata-quality-assessment-for-environmental-data-repositories" class="level3">
 <h3 class="anchored" data-anchor-id="scaling-metadata-quality-assessment-for-environmental-data-repositories">Scaling Metadata Quality Assessment for Environmental Data Repositories</h3>
@@ -262,109 +259,6 @@ ul.task-list li input[type="checkbox"] {
 <p class="research-note"><strong>Broader impact:</strong> Plain-language metrics and transparent interfaces can make environmental data quality issues easier to see, compare, and act on across repositories. The larger goal is to turn existing checks into something more useful for curation teams and more legible for the people who depend on those repositories.</p>
 </section>
 </section>
-<p>&lt;!– ## Presentations</p>
-<section id="conference-presentations-talks" class="level3">
-<h3 class="anchored" data-anchor-id="conference-presentations-talks">Conference Presentations &amp; Talks</h3>
-<ul>
-<li><p><strong>American Geophysical Union (AGU) Fall Meeting 2024</strong> - “Analyzing the sustainability and climate resilience of rapidly expanding center pivot Irrigation in Sub-Saharan Africa using remote sensing” with Boser A, Perez J, and Prof.&nbsp;Caylor K (Washington D.C., December 9-13, 2024)</p></li>
-<li><p><strong>Mantell Symposium in Environmental Justice and Conservation Innovation 2024</strong> - “Water Source Attribution for Center Pivot Irrigation in Sub-Saharan Africa” (UCSB, October 24, 2024)</p></li>
-<li><p><strong>Summer@Bren 2024 Flash Talks</strong> - “Satellite Data Reveal Emerging Decentralized Irrigation Systems in Sub-Saharan Africa” (UCSB, August 29, 2024)</p></li>
-</ul>
-</section>
-<section id="technical-skills-tools" class="level2">
-<h2 class="anchored" data-anchor-id="technical-skills-tools">Technical Skills &amp; Tools</h2>
-<section id="remote-sensing" class="level3">
-<h3 class="anchored" data-anchor-id="remote-sensing">Remote Sensing</h3>
-<ul>
-<li>Sentinel-1/2, Landsat, Planet imagery</li>
-<li>Google Earth Engine</li>
-<li>QGIS, ArcGIS Pro</li>
-<li>Rasterio, GDAL</li>
-</ul>
-</section>
-<section id="machine-learning" class="level3">
-<h3 class="anchored" data-anchor-id="machine-learning">Machine Learning</h3>
-<ul>
-<li>PyTorch, TensorFlow</li>
-<li>Custom CNN architectures</li>
-<li>Time series analysis</li>
-<li>Transfer learning</li>
-</ul>
-</section>
-<section id="programming" class="level3">
-<h3 class="anchored" data-anchor-id="programming">Programming</h3>
-<ul>
-<li>Python (pandas, numpy, scikit-learn)</li>
-<li>R (tidyverse, spatial packages)</li>
-<li>JavaScript (Google Earth Engine)</li>
-<li>Git version control</li>
-</ul>
-</section>
-<section id="data-visualization" class="level3">
-<h3 class="anchored" data-anchor-id="data-visualization">Data Visualization</h3>
-<ul>
-<li>Matplotlib, Seaborn</li>
-<li>Plotly, D3.js</li>
-<li>Tableau, PowerBI</li>
-<li>Custom web visualizations</li>
-</ul>
-</section>
-</section>
-<section id="academic-background" class="level2">
-<h2 class="anchored" data-anchor-id="academic-background">Academic Background</h2>
-<section id="master-of-environmental-data-science-meds" class="level3">
-<h3 class="anchored" data-anchor-id="master-of-environmental-data-science-meds">Master of Environmental Data Science (MEDS)</h3>
-<p><strong>University of California, Santa Barbara - Bren School</strong><br>
-<em>Expected June 2026</em> | GPA: 4.0</p>
-<p>Focus: Remote sensing, machine learning, and environmental data engineering</p>
-</section>
-<section id="bachelor-of-science-in-mathematics" class="level3">
-<h3 class="anchored" data-anchor-id="bachelor-of-science-in-mathematics">Bachelor of Science in Mathematics</h3>
-<p><strong>University of California, Santa Barbara</strong><br>
-<em>June 2025</em> | GPA: 3.67</p>
-<p>Focus: Applied mathematics and environmental science</p>
-</section>
-<section id="associate-of-science-in-mathematics" class="level3">
-<h3 class="anchored" data-anchor-id="associate-of-science-in-mathematics">Associate of Science in Mathematics</h3>
-<p><strong>Sacramento City College</strong><br>
-<em>June 2022</em> | GPA: 4.0</p>
-</section>
-</section>
-<section id="recognition" class="level2">
-<h2 class="anchored" data-anchor-id="recognition">Recognition</h2>
-<ul>
-<li><strong>MEDS Student Faculty Representative</strong> - Selected by MEDS cohort to represent student voice in faculty meetings and curriculum development</li>
-<li><strong>Bren Environmental Leadership Fellow</strong> - Competitive fellowship supporting research on irrigation systems and water resource sustainability in Sub-Saharan Africa (June-December 2024)</li>
-</ul>
-</section>
-<section id="research-collaborations" class="level2">
-<h2 class="anchored" data-anchor-id="research-collaborations">Research Collaborations</h2>
-<p>Most of my work depends on collaboration. I do my best work when I am building alongside researchers, domain experts, and community partners who know things I do not.</p>
-<section id="academic-partners" class="level3">
-<h3 class="anchored" data-anchor-id="academic-partners">Academic Partners</h3>
-<ul>
-<li>UCSB Water Vegetation and Society (WaVeS) Lab</li>
-<li>UCSB Bren School of Environmental Science &amp; Management</li>
-<li>National Center for Ecological Analysis and Synthesis (NCEAS)</li>
-</ul>
-</section>
-<section id="community-professional-partners" class="level3">
-<h3 class="anchored" data-anchor-id="community-professional-partners">Community &amp; Professional Partners</h3>
-<ul>
-<li>IV Recovery Community Initiative (Founder)</li>
-<li>Women in Science and Engineering (WiSE) Mentorship Program</li>
-</ul>
-</section>
-</section>
-<section id="research-impact" class="level2">
-<h2 class="anchored" data-anchor-id="research-impact">Research Impact</h2>
-<p>I tend to work on infrastructure and analysis that helps other people ask better questions and make better decisions with environmental data.</p>
-</section>
-<section id="lets-collaborate" class="level2">
-<h2 class="anchored" data-anchor-id="lets-collaborate">Let’s Collaborate!</h2>
-<p>If you are working on something in remote sensing, environmental data infrastructure, or applied machine learning and think I might be useful, feel free to reach out.</p>
-<p><a href="mailto:ermiller@ucsb.edu" class="btn-custom">Start a Collaboration</a></p>
-</section>
 </div>
 
 
@@ -372,12 +266,14 @@ ul.task-list li input[type="checkbox"] {
 </main> <!-- /main -->
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+  document.body.classList.add('js-enhanced');
   initRotators();
   initFavoriteLines();
   initRandomLines();
   initPageCompanions();
   initResearchBackgrounds();
   initBirdSeparators();
+  initQuoteFadeIn();
 });
 
 function initRotators() {
@@ -512,7 +408,7 @@ function initPageCompanions() {
 
 function initResearchBackgrounds() {
   const stage = document.querySelector('.research-bg-stage');
-  const sections = Array.from(document.querySelectorAll('.research-project[data-bg-id]'));
+  const sections = Array.from(document.querySelectorAll('.research-bg-trigger[data-bg-id]'));
   const backgrounds = Array.from(document.querySelectorAll('.research-bg-stage .research-bg[data-bg-id]'));
 
   if (!stage || !sections.length || !backgrounds.length) return;
@@ -571,6 +467,31 @@ function initResearchBackgrounds() {
   requestBlend();
   window.addEventListener('scroll', requestBlend, { passive: true });
   window.addEventListener('resize', requestBlend);
+}
+
+function initQuoteFadeIn() {
+  const quoteSection = document.querySelector('body.home-page .quote-section');
+  if (!quoteSection) return;
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (prefersReducedMotion) {
+    quoteSection.classList.add('is-visible');
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      observer.unobserve(entry.target);
+    });
+  }, {
+    threshold: 0.2,
+    rootMargin: '0px 0px -12% 0px'
+  });
+
+  observer.observe(quoteSection);
 }
 
 function initBirdSeparators() {

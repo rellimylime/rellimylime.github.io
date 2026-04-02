@@ -23,6 +23,15 @@ Condensed version of the formal record. The fuller context for the work itself l
 </div>
 ```
 
+```{=html}
+<details class="page-foldout resume-context-foldout">
+  <summary>Current project context</summary>
+  <div class="page-foldout-body">
+    <p>Current work is spread across the <a href="https://www.waveslab.org/">WaVeS Lab</a>, the <a href="https://www.landscapesofchangelab.com/">LOC Lab</a>, and a MEDS capstone with the <a href="https://www.nceas.ucsb.edu/wildfire-resilience-index">Wildfire Resilience Index</a> team at NCEAS. The project-level narratives live on the <a href="research.qmd">research</a> page.</p>
+  </div>
+</details>
+```
+
 ## Education
 
 ```{=html}

@@ -1453,12 +1453,20 @@ body.research-page .research-bg--waves .research-bg-media {
   object-position: center 52%;
 }
 
+body.research-page .research-bg--intro .research-bg-media {
+  object-position: center 46%;
+}
+
 body.research-page .research-bg--loc .research-bg-media {
   object-position: center 44%;
 }
 
 body.research-page .research-bg--wri .research-bg-media {
   object-position: center 38%;
+}
+
+body.research-page .research-bg--proposed .research-bg-media {
+  object-position: center 54%;
 }
 
 body.research-page .page-intro,
@@ -1597,8 +1605,21 @@ body.research-page .research-note strong {
 // Affects: homepage quote slider wrapper.
 .quote-section {
   margin-top: 0;
-  padding: 1rem 0 0;
+  padding: 1.3rem 0 0;
   background: transparent;
+}
+
+body.js-enhanced.home-page .quote-section {
+  opacity: 0;
+  transform: translateY(1.5rem);
+  transition:
+    opacity 850ms ease,
+    transform 850ms ease;
+}
+
+body.js-enhanced.home-page .quote-section.is-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 // Affects: the bird separator between the home hero and quotes.
@@ -1696,8 +1717,9 @@ body.research-page .research-note strong {
 // Affects: the main quote carousel card on the home page.
 .click-slider {
   min-height: 0;
+  max-width: 68rem;
   background: transparent;
-  padding: 2rem 2.5rem;
+  padding: 2.85rem 3.4rem;
   border-radius: 0.5rem;
   box-shadow: none;
   border: 1px solid rgba($sage-green, 0.95);
@@ -1705,20 +1727,25 @@ body.research-page .research-note strong {
 
 .slick-slide {
   min-height: 0;
+  padding: 2.1rem 1.2rem;
 }
 
 .slick-slide strong {
-  font-size: 1.2rem;
-  line-height: 1.65;
+  font-size: clamp(1.38rem, 1.08rem + 0.6vw, 1.72rem);
+  line-height: 1.72;
 }
 
 .slick-slide em {
-  font-size: 0.95rem;
+  font-size: 1.08rem;
   color: rgba($text-dark, 0.7);
 
   &::before {
     color: rgba($text-dark, 0.7);
   }
+}
+
+.slider-container {
+  max-width: 74rem;
 }
 
 // Affects: home-page quote navigation arrows.
@@ -2425,6 +2452,10 @@ body.outside-lab-page .evolution-links span {
     height: 400px;
   }
 
+  .quote-section {
+    padding-top: 1rem;
+  }
+
   .home-separator {
     width: min(100%, 28rem);
     margin-bottom: 1rem;
@@ -2506,7 +2537,21 @@ body.outside-lab-page .evolution-links span {
   }
 
   .click-slider {
-    padding: 1.6rem 1.2rem;
+    max-width: none;
+    padding: 2rem 1.4rem;
+  }
+
+  .slick-slide {
+    padding: 1.45rem 0.4rem;
+  }
+
+  .slick-slide strong {
+    font-size: clamp(1.18rem, 1rem + 0.9vw, 1.34rem);
+    line-height: 1.68;
+  }
+
+  .slick-slide em {
+    font-size: 0.96rem;
   }
 
   .trace-list li {

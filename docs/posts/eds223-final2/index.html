@@ -98,7 +98,7 @@ div.csl-indent {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-2b0b1eb3fd9f1f9d529a88536e1d45e4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-5a7c0de58d8320ca337128a48766cb55.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -1297,12 +1297,14 @@ Miller, Emily. 2024. <span>“Where to Put the Oysters?”</span> November
 </div></div></section></div></main> <!-- /main -->
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+  document.body.classList.add('js-enhanced');
   initRotators();
   initFavoriteLines();
   initRandomLines();
   initPageCompanions();
   initResearchBackgrounds();
   initBirdSeparators();
+  initQuoteFadeIn();
 });
 
 function initRotators() {
@@ -1437,7 +1439,7 @@ function initPageCompanions() {
 
 function initResearchBackgrounds() {
   const stage = document.querySelector('.research-bg-stage');
-  const sections = Array.from(document.querySelectorAll('.research-project[data-bg-id]'));
+  const sections = Array.from(document.querySelectorAll('.research-bg-trigger[data-bg-id]'));
   const backgrounds = Array.from(document.querySelectorAll('.research-bg-stage .research-bg[data-bg-id]'));
 
   if (!stage || !sections.length || !backgrounds.length) return;
@@ -1496,6 +1498,31 @@ function initResearchBackgrounds() {
   requestBlend();
   window.addEventListener('scroll', requestBlend, { passive: true });
   window.addEventListener('resize', requestBlend);
+}
+
+function initQuoteFadeIn() {
+  const quoteSection = document.querySelector('body.home-page .quote-section');
+  if (!quoteSection) return;
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (prefersReducedMotion) {
+    quoteSection.classList.add('is-visible');
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      observer.unobserve(entry.target);
+    });
+  }, {
+    threshold: 0.2,
+    rootMargin: '0px 0px -12% 0px'
+  });
+
+  observer.observe(quoteSection);
 }
 
 function initBirdSeparators() {

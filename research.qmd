@@ -5,14 +5,17 @@ resources:
   - images/pages/research/backgrounds/*
 ---
 
-::: page-intro
-Remote sensing, machine learning, and environmental data infrastructure for projects that need to be useful on the ground, not just impressive in a slide deck.
+::: {.page-intro .research-bg-trigger data-bg-id="intro"}
+Remote sensing, machine learning, and environmental/geospatial data infrastructure for projects that need to be useful on the ground and in the lab.
 :::
 
 ```{=html}
 <!-- Research section background images live in images/pages/research/backgrounds/. -->
 <div class="research-bg-stage" aria-hidden="true">
   <div class="research-bg research-bg--neutral is-active" data-bg-id="neutral"></div>
+  <div class="research-bg research-bg--intro" data-bg-id="intro">
+    <img class="research-bg-media" src="images/pages/research/backgrounds/research_background.jpg" alt="" loading="eager" decoding="async">
+  </div>
   <div class="research-bg research-bg--waves" data-bg-id="waves">
     <img class="research-bg-media" src="images/pages/research/backgrounds/waves-irrigation.jpg" alt="" loading="eager" decoding="async">
   </div>
@@ -22,31 +25,21 @@ Remote sensing, machine learning, and environmental data infrastructure for proj
   <div class="research-bg research-bg--wri" data-bg-id="wri">
     <img class="research-bg-media" src="images/pages/research/backgrounds/wri-fire.jpg" alt="" loading="eager" decoding="async">
   </div>
+  <div class="research-bg research-bg--proposed" data-bg-id="proposed">
+    <img class="research-bg-media" src="images/pages/research/backgrounds/proposed_background.jpg" alt="" loading="eager" decoding="async">
+  </div>
 </div>
 ```
 
-:::::::::: page-shell
+:::::::: page-shell
 ```{=html}
-<div class="research-overview">
+<div class="research-overview research-bg-trigger" data-bg-id="intro">
   <p class="research-kicker">Current work spans irrigation mapping in Sub-Saharan Africa, national-scale forest change analysis, and cloud-accessible wildfire resilience tools.</p>
   <p class="research-context">That work currently lives across the <a href="https://www.waveslab.org/"><strong>WaVeS Lab</strong></a>, the <a href="https://www.landscapesofchangelab.com/"><strong>LOC Lab</strong></a>, and my capstone with the <a href="https://www.nceas.ucsb.edu/wildfire-resilience-index"><strong>Wildfire Resilience Index</strong></a> team at NCEAS.</p>
 </div>
 ```
 
-::: {.research-project data-bg-id="neutral"}
-My work sits at the intersection of remote sensing, machine learning, and environmental data infrastructure. I am most interested in projects that are technically messy, environmentally relevant, and useful to people making decisions on the ground. A lot of what I build involves turning large, stubborn datasets into workflows that are reproducible, interpretable, and actually usable.
-
-```{=html}
-<ul class="research-principles">
-  <li><strong>Useful</strong> I care about work that helps someone answer a real question, not just work that looks impressive in a slide deck.</li>
-  <li><strong>Reproducible</strong> Clean handoffs, readable code, and documented workflows matter.</li>
-  <li><strong>Interdisciplinary</strong> The best projects usually involve several people who know different things.</li>
-  <li><strong>Grounded</strong> Environmental data is never just abstract data; it is tied to places, systems, and people.</li>
-</ul>
-```
-:::
-
-::: {.research-project data-bg-id="waves"}
+::: {.research-project .research-bg-trigger data-bg-id="waves"}
 ### Satellite-Based Irrigation Mapping in Sub-Saharan Africa
 
 **Lab:** UCSB Water Vegetation and Society (WaVeS) Lab, Prof. Kelly Caylor\
@@ -64,7 +57,7 @@ Alongside the paper pipeline, I have also been developing a separate center-pivo
 ```
 :::
 
-::: {.research-project data-bg-id="loc"}
+::: {.research-project .research-bg-trigger data-bg-id="loc"}
 ### Forest Thermophilization & Disturbance Analysis
 
 **Lab:** Landscapes of Change (LOC) Lab, Bren School, UCSB\
@@ -86,7 +79,7 @@ I also built the [FIA Database Schema Navigator](https://fiadb-dashboard.streaml
 ```
 :::
 
-::: {.research-project data-bg-id="wri"}
+::: {.research-project .research-bg-trigger data-bg-id="wri"}
 ### Wildfire Resilience Index Data Access & R Package
 
 **Client:** National Center for Ecological Analysis and Synthesis (NCEAS), Dr. Caitlin Fong\
@@ -107,7 +100,7 @@ Key pieces of the work:
 ```
 :::
 
-::: {.research-project data-bg-id="neutral"}
+::: {.research-project .research-bg-trigger data-bg-id="proposed"}
 ## Proposed Projects
 
 ### Scaling Metadata Quality Assessment for Environmental Data Repositories
@@ -136,96 +129,4 @@ This was a proposed capstone direction focused on building reproducible, scalabl
 <p class="research-note"><strong>Broader impact:</strong> Plain-language metrics and transparent interfaces can make environmental data quality issues easier to see, compare, and act on across repositories. The larger goal is to turn existing checks into something more useful for curation teams and more legible for the people who depend on those repositories.</p>
 ```
 :::
-
-<!--
-## Presentations
-
-### Conference Presentations & Talks
-
--   **American Geophysical Union (AGU) Fall Meeting 2024** - "Analyzing the sustainability and climate resilience of rapidly expanding center pivot Irrigation in Sub-Saharan Africa using remote sensing" with Boser A, Perez J, and Prof. Caylor K (Washington D.C., December 9-13, 2024)
-
--   **Mantell Symposium in Environmental Justice and Conservation Innovation 2024** - "Water Source Attribution for Center Pivot Irrigation in Sub-Saharan Africa" (UCSB, October 24, 2024)
-
--   **Summer\@Bren 2024 Flash Talks** - "Satellite Data Reveal Emerging Decentralized Irrigation Systems in Sub-Saharan Africa" (UCSB, August 29, 2024)
-
-## Technical Skills & Tools
-
-### Remote Sensing
-
--   Sentinel-1/2, Landsat, Planet imagery
--   Google Earth Engine
--   QGIS, ArcGIS Pro
--   Rasterio, GDAL
-
-### Machine Learning
-
--   PyTorch, TensorFlow
--   Custom CNN architectures
--   Time series analysis
--   Transfer learning
-
-### Programming
-
--   Python (pandas, numpy, scikit-learn)
--   R (tidyverse, spatial packages)
--   JavaScript (Google Earth Engine)
--   Git version control
-
-### Data Visualization
-
--   Matplotlib, Seaborn
--   Plotly, D3.js
--   Tableau, PowerBI
--   Custom web visualizations
-
-## Academic Background
-
-### Master of Environmental Data Science (MEDS)
-
-**University of California, Santa Barbara - Bren School**\
-*Expected June 2026* \| GPA: 4.0
-
-Focus: Remote sensing, machine learning, and environmental data engineering
-
-### Bachelor of Science in Mathematics
-
-**University of California, Santa Barbara**\
-*June 2025* \| GPA: 3.67
-
-Focus: Applied mathematics and environmental science
-
-### Associate of Science in Mathematics
-
-**Sacramento City College**\
-*June 2022* \| GPA: 4.0
-
-## Recognition
-
--   **MEDS Student Faculty Representative** - Selected by MEDS cohort to represent student voice in faculty meetings and curriculum development
--   **Bren Environmental Leadership Fellow** - Competitive fellowship supporting research on irrigation systems and water resource sustainability in Sub-Saharan Africa (June-December 2024)
-
-## Research Collaborations
-
-Most of my work depends on collaboration. I do my best work when I am building alongside researchers, domain experts, and community partners who know things I do not.
-
-### Academic Partners
-
--   UCSB Water Vegetation and Society (WaVeS) Lab
--   UCSB Bren School of Environmental Science & Management
--   National Center for Ecological Analysis and Synthesis (NCEAS)
-
-### Community & Professional Partners
-
--   IV Recovery Community Initiative (Founder)
--   Women in Science and Engineering (WiSE) Mentorship Program
-
-## Research Impact
-
-I tend to work on infrastructure and analysis that helps other people ask better questions and make better decisions with environmental data.
-
-## Let's Collaborate!
-
-If you are working on something in remote sensing, environmental data infrastructure, or applied machine learning and think I might be useful, feel free to reach out.
-
-[Start a Collaboration](mailto:ermiller@ucsb.edu){.btn-custom}
-::::::::::
+::::::::

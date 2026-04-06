@@ -13,6 +13,116 @@ execute:
   eval: false
 ---
 
+```{=html}
+<style>
+.hsi-mixer {
+  margin: 1.75rem 0;
+  padding: 1rem 1.05rem 1.1rem;
+  border: 1px solid rgba(124, 146, 137, 0.55);
+  border-left: 3px solid rgba(47, 111, 103, 0.85);
+  border-radius: 0.45rem;
+  background: rgba(250, 248, 244, 0.78);
+}
+
+.hsi-mixer h4 {
+  margin: 0 0 0.35rem;
+  font-size: 1rem;
+}
+
+.hsi-mixer p {
+  margin: 0 0 0.8rem;
+}
+
+.hsi-mixer-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.hsi-mixer-controls {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.hsi-mixer-control label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+
+.hsi-mixer-control input[type="range"] {
+  width: 100%;
+}
+
+.hsi-mixer-readout {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.88rem;
+  color: rgba(39, 46, 54, 0.82);
+}
+
+.hsi-mixer-summary {
+  min-height: 2.75rem;
+  padding: 0.6rem 0.7rem;
+  border-radius: 0.35rem;
+  background: rgba(255, 255, 255, 0.72);
+  font-size: 0.94rem;
+}
+
+.hsi-mixer-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.hsi-mixer-buttons button {
+  padding: 0.42rem 0.7rem;
+  border: 1px solid rgba(124, 146, 137, 0.6);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.88);
+  color: rgba(39, 46, 54, 0.88);
+  font-size: 0.88rem;
+}
+
+.hsi-mixer-figure {
+  margin: 0;
+}
+
+.hsi-mixer-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 0.55rem;
+  font-size: 0.86rem;
+}
+
+.hsi-mixer-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.hsi-mixer-swatch {
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 999px;
+  display: inline-block;
+}
+
+.hsi-mixer-note {
+  margin-top: 0.65rem;
+  font-size: 0.88rem;
+  color: rgba(39, 46, 54, 0.78);
+}
+
+@media (max-width: 760px) {
+  .hsi-mixer-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+```
+
 ```{python}
 #| label: setup
 #| echo: false
@@ -41,17 +151,25 @@ plt.rcParams.update({
 
 ## The question
 
-This post came out of a spring-break learning project. I had the very specific feeling that I knew enough remote sensing to recognize what hyperspectral imagery was *for*, but not enough to open a cube from scratch and trust my own interpretation. So I did what I usually do when something seems learnable: opened too many tabs, downloaded a benchmark scene, and worked from the data upward.
+This post came out of a gap in my own understanding. I knew what hyperspectral imagery was useful for, but I did not yet feel fluent enough to open a cube from scratch and trust what I was seeing. So I worked from the data upward: load the scene, inspect a few spectra, and follow the methods until they stopped feeling opaque.
 
-What follows is the tutorial I wish I had at the start. It is not a full hyperspectral textbook, and it is not trying to be. The goal is narrower and more honest: get from "I understand satellite imagery and false color composites" to "I can load a hyperspectral cube, inspect spectra, and run a few standard decomposition methods without treating the output like magic."
+What follows is the guide I wanted at the start. It is not a full hyperspectral textbook. It is a way to get from "I know how to read satellite imagery and false-color composites" to "I understand what a hyperspectral pixel is, why people reshape cubes into matrices, and what PCA, unmixing, and NMF are actually doing."
 
-If you work with remote sensing imagery, you already know the usual move: choose a few bands, stretch them well, and interpret the resulting composite. Even a false-color image, though, still compresses the scene down to a small number of broad spectral channels.
+If you work with remote sensing imagery, you already know the usual move: choose a few bands, stretch them well, and interpret the resulting composite. Even a good false-color image, though, still compresses the scene down to a small number of broad spectral channels.
 
-Hyperspectral imagery changes that. Instead of 3 broad RGB bands, or even a modest multispectral stack, it records hundreds of narrow, contiguous wavelength channels. In the HYDICE Urban scene used here, each pixel carries a 210-value spectrum spanning the visible through the shortwave infrared.
+Hyperspectral imagery changes the question. Instead of 3 broad RGB bands, or even a modest multispectral stack, it records hundreds of narrow, contiguous wavelength channels. In the HYDICE Urban scene used here, each pixel carries a 210-value spectrum spanning the visible through the shortwave infrared.
 
 That full spectral curve is what makes hyperspectral analysis different from standard image interpretation. Vegetation, asphalt, bare ground, rooftops, and metal surfaces can overlap in brightness or color in a broad-band composite while still differing strongly in spectral shape. The question stops being only "what does this object look like in a display image?" and becomes "what spectral signature is present in this pixel, and what does that imply about materials?"
 
 So the real question in this post is: **given a full spectrum at each pixel, can we separate the scene into meaningful material patterns without labels?**
+
+::: callout-note
+**How to read this post**
+
+-   If you are new to the topic, the most important sections are **Pixel spectra**, **From cube to matrix**, and the intuition summaries inside each method.
+-   If you are comfortable with linear algebra, the displayed equations show the same ideas in matrix form.
+-   If you mainly want the practical judgment call, skip to **What these methods are actually for** near the end.
+:::
 
 Three approaches, each with a different way of framing that problem:
 
@@ -61,6 +179,10 @@ Three approaches, each with a different way of framing that problem:
 
 ::: callout-tip
 **Remote-sensing intuition.** A false-color composite asks: which three bands should I display? Hyperspectral analysis asks a different question: what can I learn if I use the *entire* spectral curve at each pixel instead of just a few display bands?
+:::
+
+::: callout-note
+**Why a non-specialist might care.** The broader idea here is not unique to remote sensing. Once every observation carries a long feature vector instead of one or two numbers, the job becomes: find the main directions of variation, estimate mixtures, or learn parts. The same logic shows up in chemistry, audio mixtures, genomics, and other high-dimensional signals.
 :::
 
 ::: panel-tabset
@@ -76,6 +198,12 @@ Use linear unmixing when you already have plausible endmembers and want outputs 
 
 Use NMF when you want interpretable additive components but do not yet trust a fixed endmember library. It often sits between purely mathematical compression and fully supervised unmixing.
 :::
+
+| Method | Main question | Matrix view | Easiest way to read the output |
+|----|----|----|----|
+| PCA | What varies most across the scene? | $X_c \approx ZV^T$ | Contrast axes plus eigenimages |
+| Unmixing | What is this pixel made of? | $X \approx SM^T$ | Material fractions |
+| NMF | What additive parts can I learn? | $X \approx WH$ | Learned parts plus weight maps |
 
 ## The data
 
@@ -131,6 +259,10 @@ The cube shape `(B, H, W)` means:
 -   third index = column
 
 That layout is convenient because it makes both views of the data easy: one band at a time as an image, or one pixel at a time as a spectrum.
+
+::: callout-note
+**Simple mental picture.** A hyperspectral cube is just a stack of grayscale images. Band 1 is the scene at one wavelength, band 2 is the same scene a few nanometers away, and so on. A pixel spectrum is what you get when you stop at one location and read straight down through that stack.
+:::
 
 ### A note on radiance vs. reflectance
 
@@ -230,6 +362,12 @@ plt.show()
 
 Even without atmospheric correction, these curves separate cleanly. Grass shows the familiar vegetation red edge, low values in the red and a strong rise into the near-infrared. Asphalt is flatter. Rooftops are brighter and less vegetation-like. Those differences are exactly the signal the decomposition methods below try to isolate.
 
+A few useful things to notice in that figure:
+
+-   vegetation curves are defined more by **shape** than by absolute brightness, especially around the red edge
+-   asphalt is relatively flat, so it tends to stand out less as a dramatic curve and more as a low-contrast baseline
+-   rooftops can be bright without looking vegetation-like, which is exactly why broad-band color alone is often not enough
+
 ## From cube to matrix
 
 All three methods below want the data in matrix form rather than cube form, so we flatten the image:
@@ -237,6 +375,35 @@ All three methods below want the data in matrix form rather than cube form, so w
 $$X \in \mathbb{R}^{N \times B}, \quad N = H \cdot W$$
 
 Each row is one pixel spectrum. Each column is one wavelength band. We have not changed the data itself, only its shape.
+
+If that still feels abstract, here is a tiny toy version. Imagine a `2 x 2` scene with four pixels:
+
+$$
+\text{Scene} =
+\begin{bmatrix}
+A:\ \text{road} & B:\ \text{grass} \\
+C:\ \text{roof} & D:\ \text{trees}
+\end{bmatrix}
+$$
+
+After flattening, the same scene becomes a pixel-by-band matrix:
+
+$$
+X_{\text{toy}} =
+\begin{bmatrix}
+18 & 22 & 24 & 26 \\
+10 & 16 & 9 & 41 \\
+28 & 31 & 34 & 37 \\
+9 & 14 & 8 & 38
+\end{bmatrix}
+$$
+
+$$
+\text{rows } = (A, B, C, D), \qquad
+\text{bands } = (450, 550, 650, 850)\ \text{nm}
+$$
+
+Flattening turns image position into a row index. The spectrum in pixel $B$ does not change when we do that bookkeeping move, it just becomes row 2 of $X$.
 
 ```{python}
 #| label: reshape
@@ -247,7 +414,7 @@ N = X.shape[0]
 print(f"Pixel matrix X: {X.shape}")  # (94249, 210)
 ```
 
-This is more than bookkeeping. Once the data are in this form, each pixel becomes one point in a 210-dimensional spectral space, and the methods below look for structure in that cloud of points.
+In the real HYDICE scene, that bookkeeping step turns a `307 x 307 x 210` cube into a `94,249 x 210` matrix. Once the data are in this form, each pixel becomes one point in a 210-dimensional spectral space, and the methods below look for structure in that cloud of points.
 
 ## PCA / SVD
 
@@ -255,21 +422,68 @@ This is more than bookkeeping. Once the data are in this form, each pixel become
 
 PCA looks for a small number of directions that explain most of the variation in the data. For a remote-sensing reader, one good way to think about it is this: if you had to summarize each 210-band spectrum with just a few spectral contrasts, which contrasts would matter most?
 
+The plain-language version is:
+
+1.  subtract the average spectrum
+2.  rotate the data into the most informative spectral directions
+3.  keep only the first few directions
+
+::: callout-note
+**What PCA actually does to the matrix**
+
+-   It subtracts one average spectrum from every row.
+-   It rotates the spectral axes into a new orthogonal basis ordered by variance.
+-   It lets you keep the first few directions and ignore the rest.
+:::
+
 Mathematically, PCA is SVD applied to the mean-centered data. "Mean-centered" just means we subtract the average spectrum first:
 
 $$X_c = X - \mathbf{1}\mu^T, \quad \mu = \frac{1}{N}\sum_{n=1}^{N} x_n$$
 
-Then apply the economy SVD:
+A centered spectrum is no longer "raw radiance." It is "how this pixel differs from the scene average" at each wavelength. For a toy three-band example,
 
-$$X_c = U \Sigma V^T$$
+$$
+\mu =
+\begin{bmatrix}
+30 \\
+28 \\
+42
+\end{bmatrix},
+\qquad
+x_n =
+\begin{bmatrix}
+26 \\
+32 \\
+51
+\end{bmatrix},
+\qquad
+x_n - \mu =
+\begin{bmatrix}
+-4 \\
+4 \\
+9
+\end{bmatrix}
+$$
+
+where those three entries correspond to 550 nm, 650 nm, and 850 nm.
+
+That minus sign is the part that usually makes PCA feel strange at first. It does **not** mean negative light or negative material. It only means "below the average spectrum at this wavelength."
+
+Then approximate the centered matrix with a low-rank factorization:
+
+$$X_c \approx ZV^T$$
+
+Under the hood, this comes from the economy SVD:
+
+$$X_c = U \Sigma V^T, \quad Z = U\Sigma$$
 
 The three factors have a useful remote-sensing interpretation:
 
 -   $V \in \mathbb{R}^{B \times K}$: spectral loading vectors, or wavelength patterns that capture strong variance
--   $\Sigma \in \mathbb{R}^{K \times K}$: the strength of those patterns
--   $U \in \mathbb{R}^{N \times K}$: the per-pixel scores telling us how strongly each pixel expresses each pattern
+-   $Z \in \mathbb{R}^{N \times K}$: the per-pixel scores telling us where each pixel lands in the reduced PC space
+-   $\Sigma \in \mathbb{R}^{K \times K}$: the strength of those patterns in the full SVD view
 
-If you reshape one score column of $U$ back into image form, you get an **eigenimage**: a map showing where that spectral pattern is strong or weak. In scikit-learn, `components_` stores the spectral loadings and `transform` returns the pixel scores [@sklearn_pca].
+If you reshape one score column of $Z$ back into image form, you get an **eigenimage**: a map showing where that spectral pattern is strong or weak. That is the exact bridge between the matrix factorization and the image. In scikit-learn, `components_` stores rows of $V^T$ and `transform` returns the score matrix $Z$ [@sklearn_pca].
 
 ### Code
 
@@ -323,15 +537,23 @@ plt.show()
 
 <figure>
 
+<img src="figures/scree.png" alt="Scree plot showing how much variance each principal component explains. The first few components account for most of the scene variability." style="display:block; margin:0 auto; width:60%;"/>
+
+<figcaption>Scree plot for the HYDICE Urban PCA. The steep early drop is the visual cue that the first few components explain most of the variation.</figcaption>
+
+</figure>
+
+<figure>
+
 <img src="figures/eigenimages.png" alt="Top 6 eigenimages, rendered with a diverging colormap. PC1 captures overall scene brightness. Subsequent components capture spectral contrast between material classes." style="display:block; margin:0 auto; width:100%;"/>
 
 <figcaption>Top 6 eigenimages, rendered with a diverging colormap. PC1 captures overall scene brightness. Subsequent components capture spectral contrast between material classes.</figcaption>
 
 </figure>
 
-The scree plot tells us how much each component matters. The eigenimages show where each component is active in space.
+The scree plot answers "how many components are doing most of the work?" The eigenimages answer a different question: "where in the scene does each component matter?"
 
-Usually, the first component captures broad scene brightness. The next few components often pick up real material contrasts, especially vegetation versus built surfaces or bright rooftops versus darker pavement. Later components tend to capture finer structure and, eventually, noise.
+Usually, the first component captures broad scene brightness, because many wavelengths rise and fall together. The next few components often pick up real material contrasts, especially vegetation versus built surfaces or bright rooftops versus darker pavement. Later components tend to capture finer structure and, eventually, noise.
 
 One important point: PCA values can be positive or negative. That is fine mathematically, but awkward physically. A negative PCA score does **not** mean "negative asphalt" or "negative grass." It only means the pixel sits on one side of a mathematical axis instead of the other. That is why the next methods can be easier to interpret.
 
@@ -360,7 +582,7 @@ plt.show()
 
 </figure>
 
-This map shows where a 12-component PCA model fits poorly. Bright areas are pixels whose spectra are unusual or hard to summarize with just 12 components.
+This map comes from a simple round trip: project each pixel into the first 12 principal components, reconstruct it back into 210 bands, and measure how much changed. Bright areas are pixels whose spectra are unusual or hard to summarize with just 12 components.
 
 In practice, those bright spots often correspond to rare materials, shadows, standing water, vehicles, or strongly mixed pixels. That makes the error map a simple but useful anomaly detector.
 
@@ -372,11 +594,216 @@ Now switch from compression to mixing.
 
 The linear mixing model says that one pixel can be approximated as a weighted sum of a few pure material spectra, called **endmembers** [@plaza_2012]. For an urban scene at 2 m resolution, that is a reasonable first model: many pixels are mixtures of vegetation, pavement, roof, and shadow rather than perfectly pure targets.
 
-$$y_n \approx \sum_{p=1}^{P} s_{np} \, m_p = M s_n$$
+If PCA is the contrast view, unmixing is the recipe view. The pixel is the dish, the endmembers are the ingredients, and the abundance vector tells us how much of each ingredient is present.
 
-In matrix form for all pixels: $Y \approx S M^T$, where $M \in \mathbb{R}^{B \times P}$ is the endmember matrix and $S \in \mathbb{R}^{N \times P}$ contains per-pixel abundance vectors.
+$$x_n \approx \sum_{p=1}^{P} s_{np} \, m_p = M s_n$$
+
+At a single wavelength, the same recipe logic applies band by band. At 650 nm, for example,
+
+$$x_{n,650} \approx s_{n1}m_{1,650} + s_{n2}m_{2,650} + \cdots + s_{nP}m_{P,650}$$
+
+So the matrix equation is not doing anything mysterious. It is just applying the same weighted-sum idea at every wavelength at once.
+
+In matrix form for all pixels: $X \approx SM^T$, where $M \in \mathbb{R}^{B \times P}$ is the endmember matrix and $S \in \mathbb{R}^{N \times P}$ contains per-pixel abundance vectors.
 
 This model is only an approximation, but it is a useful one. At 2 m resolution, many pixels cover more than one surface type, so "unmixing" means estimating the fractions of those hidden ingredients.
+
+An illustrative toy abundance vector might look like this:
+
+$$
+s_n =
+\begin{bmatrix}
+0.55 \\
+0.25 \\
+0.15 \\
+0.05
+\end{bmatrix},
+\qquad
+\text{ordered as } (\text{asphalt}, \text{grass}, \text{rooftop}, \text{trees})
+$$
+
+That means "this pixel looks mostly like asphalt, with some vegetation and a little roof and tree signal mixed in."
+
+::: callout-note
+**What unmixing actually does to the matrix**
+
+-   It keeps the endmember matrix $M$ fixed.
+-   It solves for one abundance vector $s_n$ per pixel.
+-   It uses the residual to tell you where your ingredient list is incomplete.
+:::
+
+### Try a toy mixed pixel
+
+This is the same idea in playable form. The sliders below control the amounts of four toy endmembers. The app normalizes them to sum to one, then redraws the mixed spectrum. The point is not physical realism. The point is to make the "pixel as recipe" idea feel concrete.
+
+```{=html}
+<div class="hsi-mixer" id="hsi-mixer">
+  <div class="hsi-mixer-grid">
+    <div class="hsi-mixer-controls">
+      <div class="hsi-mixer-control">
+        <label for="hsi-asphalt">Asphalt</label>
+        <input id="hsi-asphalt" type="range" min="0" max="100" value="45" step="1" data-component="asphalt">
+        <div class="hsi-mixer-readout" data-readout="asphalt">45%</div>
+      </div>
+      <div class="hsi-mixer-control">
+        <label for="hsi-grass">Grass</label>
+        <input id="hsi-grass" type="range" min="0" max="100" value="25" step="1" data-component="grass">
+        <div class="hsi-mixer-readout" data-readout="grass">25%</div>
+      </div>
+      <div class="hsi-mixer-control">
+        <label for="hsi-roof">Rooftop</label>
+        <input id="hsi-roof" type="range" min="0" max="100" value="20" step="1" data-component="roof">
+        <div class="hsi-mixer-readout" data-readout="roof">20%</div>
+      </div>
+      <div class="hsi-mixer-control">
+        <label for="hsi-trees">Trees</label>
+        <input id="hsi-trees" type="range" min="0" max="100" value="10" step="1" data-component="trees">
+        <div class="hsi-mixer-readout" data-readout="trees">10%</div>
+      </div>
+      <div class="hsi-mixer-buttons">
+        <button type="button" data-preset="road-heavy">Road-heavy</button>
+        <button type="button" data-preset="vegetation-heavy">Vegetation-heavy</button>
+        <button type="button" data-preset="roof-heavy">Roof-heavy</button>
+      </div>
+      <div class="hsi-mixer-summary" aria-live="polite"></div>
+    </div>
+    <figure class="hsi-mixer-figure">
+      <svg id="hsi-mixer-svg" viewBox="0 0 420 240" role="img" aria-labelledby="hsi-mixer-title hsi-mixer-desc">
+        <title id="hsi-mixer-title">Toy hyperspectral mixing chart</title>
+        <desc id="hsi-mixer-desc">A line chart showing four toy endmember spectra and their weighted mixture.</desc>
+        <rect x="0" y="0" width="420" height="240" fill="white"></rect>
+        <line x1="48" y1="24" x2="48" y2="196" stroke="rgba(39,46,54,0.35)" stroke-width="1"></line>
+        <line x1="48" y1="196" x2="390" y2="196" stroke="rgba(39,46,54,0.35)" stroke-width="1"></line>
+        <polyline id="hsi-line-asphalt" fill="none" stroke="#6f5b4b" stroke-width="2" opacity="0.48"></polyline>
+        <polyline id="hsi-line-grass" fill="none" stroke="#4b8b3b" stroke-width="2" opacity="0.48"></polyline>
+        <polyline id="hsi-line-roof" fill="none" stroke="#c86d4d" stroke-width="2" opacity="0.48"></polyline>
+        <polyline id="hsi-line-trees" fill="none" stroke="#2f6f67" stroke-width="2" opacity="0.48"></polyline>
+        <polyline id="hsi-line-mix" fill="none" stroke="#1f2937" stroke-width="4"></polyline>
+        <g id="hsi-axis-labels" font-size="11" fill="rgba(39,46,54,0.75)"></g>
+      </svg>
+      <div class="hsi-mixer-legend">
+        <span><i class="hsi-mixer-swatch" style="background:#6f5b4b"></i>Asphalt</span>
+        <span><i class="hsi-mixer-swatch" style="background:#4b8b3b"></i>Grass</span>
+        <span><i class="hsi-mixer-swatch" style="background:#c86d4d"></i>Rooftop</span>
+        <span><i class="hsi-mixer-swatch" style="background:#2f6f67"></i>Trees</span>
+        <span><i class="hsi-mixer-swatch" style="background:#1f2937"></i>Mixture</span>
+      </div>
+      <div class="hsi-mixer-note">The mixture line is the weighted sum of the four toy spectra. This is the intuition behind linear unmixing before any solver enters the picture.</div>
+    </figure>
+  </div>
+</div>
+<script>
+(() => {
+  const root = document.getElementById("hsi-mixer");
+  if (!root) return;
+
+  const wavelengths = [450, 550, 650, 850, 1200, 1800, 2200];
+  const endmembers = {
+    asphalt: [0.23, 0.25, 0.27, 0.29, 0.31, 0.30, 0.28],
+    grass:   [0.12, 0.18, 0.10, 0.72, 0.58, 0.34, 0.22],
+    roof:    [0.38, 0.44, 0.50, 0.56, 0.52, 0.46, 0.40],
+    trees:   [0.10, 0.16, 0.09, 0.64, 0.49, 0.28, 0.18]
+  };
+
+  const presets = {
+    "road-heavy": { asphalt: 75, grass: 10, roof: 10, trees: 5 },
+    "vegetation-heavy": { asphalt: 10, grass: 45, roof: 5, trees: 40 },
+    "roof-heavy": { asphalt: 15, grass: 10, roof: 65, trees: 10 }
+  };
+
+  const sliders = Array.from(root.querySelectorAll('input[type="range"]'));
+  const summary = root.querySelector(".hsi-mixer-summary");
+  const svg = root.querySelector("#hsi-mixer-svg");
+  const axisLabels = root.querySelector("#hsi-axis-labels");
+  const lines = {
+    asphalt: root.querySelector("#hsi-line-asphalt"),
+    grass: root.querySelector("#hsi-line-grass"),
+    roof: root.querySelector("#hsi-line-roof"),
+    trees: root.querySelector("#hsi-line-trees"),
+    mix: root.querySelector("#hsi-line-mix")
+  };
+
+  const x0 = 48;
+  const y0 = 196;
+  const width = 342;
+  const height = 172;
+  const yMax = 0.8;
+
+  function seriesToPoints(values) {
+    return values.map((value, i) => {
+      const x = x0 + (i / (values.length - 1)) * width;
+      const y = y0 - (value / yMax) * height;
+      return `${x.toFixed(1)},${y.toFixed(1)}`;
+    }).join(" ");
+  }
+
+  function normalize(raw) {
+    const total = Object.values(raw).reduce((a, b) => a + b, 0);
+    if (!total) {
+      const equal = 1 / Object.keys(raw).length;
+      return Object.fromEntries(Object.keys(raw).map((key) => [key, equal]));
+    }
+    return Object.fromEntries(Object.entries(raw).map(([key, value]) => [key, value / total]));
+  }
+
+  function currentRawWeights() {
+    return Object.fromEntries(
+      sliders.map((slider) => [slider.dataset.component, Number(slider.value)])
+    );
+  }
+
+  function drawAxes() {
+    axisLabels.innerHTML = wavelengths.map((w, i) => {
+      const x = x0 + (i / (wavelengths.length - 1)) * width;
+      return `<text x="${x}" y="214" text-anchor="middle">${w}</text>`;
+    }).join("") + `
+      <text x="14" y="30" transform="rotate(-90 14 30)">toy value</text>
+      <text x="208" y="232" text-anchor="middle">wavelength (nm)</text>
+    `;
+  }
+
+  function update() {
+    const raw = currentRawWeights();
+    const weights = normalize(raw);
+
+    Object.entries(weights).forEach(([key, value]) => {
+      const readout = root.querySelector(`[data-readout="${key}"]`);
+      if (readout) readout.textContent = `${(value * 100).toFixed(1)}%`;
+    });
+
+    Object.entries(endmembers).forEach(([key, values]) => {
+      lines[key].setAttribute("points", seriesToPoints(values));
+    });
+
+    const mixed = wavelengths.map((_, i) =>
+      Object.keys(endmembers).reduce((sum, key) => sum + weights[key] * endmembers[key][i], 0)
+    );
+    lines.mix.setAttribute("points", seriesToPoints(mixed));
+
+    summary.textContent =
+      `Normalized mixture: asphalt ${(weights.asphalt * 100).toFixed(1)}%, ` +
+      `grass ${(weights.grass * 100).toFixed(1)}%, ` +
+      `rooftop ${(weights.roof * 100).toFixed(1)}%, ` +
+      `trees ${(weights.trees * 100).toFixed(1)}%.`;
+  }
+
+  sliders.forEach((slider) => slider.addEventListener("input", update));
+
+  root.querySelectorAll("[data-preset]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const preset = presets[button.dataset.preset];
+      sliders.forEach((slider) => {
+        slider.value = preset[slider.dataset.component];
+      });
+      update();
+    });
+  });
+
+  drawAxes();
+  update();
+})();
+</script>
+```
 
 Two physical constraints on the abundance vector $s_n$:
 
@@ -385,9 +812,16 @@ Two physical constraints on the abundance vector $s_n$:
 
 Together, those constraints make the weights behave like fractions. The optimization problem per pixel is:
 
-$$s_n^* = \arg\min_{s \,\in\, \Delta^{P-1}} \|y_n - Ms\|_2^2$$
+$$s_n^* = \arg\min_{s \,\in\, \Delta^{P-1}} \|x_n - Ms\|_2^2$$
 
-Once $M$ is fixed, this is a well-behaved optimization problem with one best solution per pixel [@heinz_chang_2001].
+Once $M$ is fixed, this is a well-behaved optimization problem that returns one abundance vector per pixel [@heinz_chang_2001].
+
+A toy example of why the constraints matter:
+
+| Solver | Asphalt | Grass | Roof | Interpretation |
+|----|----|----|----|----|
+| Unconstrained least squares | 1.08 | -0.11 | 0.03 | Algebraically possible, physically nonsense |
+| FCLS | 0.97 | 0.00 | 0.03 | Readable as fractions |
 
 ### Endmember selection
 
@@ -431,6 +865,8 @@ plt.show()
 <figcaption>Selected endmember spectra. Each represents a pure material type: the vegetation signatures (Grass, Trees) show the characteristic red-edge feature near 700 nm.</figcaption>
 
 </figure>
+
+These four curves are not "the truth." They are a small hand-built library. If one important material is missing, the residual map will tell on us later.
 
 ### Solving for abundances: FCLS
 
@@ -514,11 +950,21 @@ plt.show()
 
 The residual map tells you where the chosen endmembers are not enough. Bright residuals often mean "there is something here that the current material library cannot explain well," such as shadow, water, or bare soil.
 
-Compared with PCA, these abundance maps are easier to explain. Each one answers a direct question like: "Where in the scene does this material seem common?" The trade-off is that the answer depends heavily on the endmembers you chose.
+Compared with PCA, these abundance maps are easier to explain. Each one answers a direct question like: "Where in the scene does this ingredient seem common?" The trade-off is that the answer depends heavily on the endmembers you chose.
 
 ## NMF
 
 NMF asks a similar question to unmixing, but with less supervision: can we factor $X$ into two nonnegative matrices without telling the model in advance what the materials are?
+
+The easiest mental picture is: learn the ingredients and the ingredient amounts at the same time.
+
+::: callout-note
+**What NMF actually does to the matrix**
+
+-   It learns the spectral ingredients and their weights at the same time.
+-   It keeps both factors nonnegative, so components can add but not cancel.
+-   It trades physical constraints for exploratory flexibility.
+:::
 
 $$X \approx WH, \quad W \in \mathbb{R}_{\geq 0}^{N \times K}, \; H \in \mathbb{R}_{\geq 0}^{K \times B}$$
 
@@ -526,11 +972,16 @@ The objective (squared Frobenius norm) is:
 
 $$\min_{W,\, H\, \geq\, 0} \;\frac{1}{2}\|X - WH\|_F^2$$
 
-Rows of $H$ are learned spectral patterns. Columns of $W$ tell us how much of each pattern appears in each pixel. Unlike PCA, NMF does not allow negative values, and unlike unmixing, it does not require the weights to sum to one.
+Rows of $H$ are learned spectral patterns. Each row of $W$ tells us how strongly one pixel uses those patterns, and each column of $W$ becomes a spatial weight map when reshaped back into image form. Unlike PCA, NMF does not allow negative values, and unlike unmixing, it does not require the weights to sum to one.
 
 The main idea from @lee_seung_1999 is simple: nonnegative parts can only add, not cancel each other out. That often makes the learned components easier to read. PCA can produce positive-negative contrast patterns. NMF tends to produce parts that look more like material pieces of the scene.
 
 The downside is that NMF is not unique. Different initial guesses can lead to somewhat different answers. Using `nndsvda` gives the algorithm a stable starting point and usually leads to cleaner results [@sklearn_nmf].
+
+| Method | Spectral ingredients | Weight rule |
+|----|----|----|
+| Unmixing | supplied by you | nonnegative and sums to one |
+| NMF | learned from the data | nonnegative only |
 
 ```{python}
 #| label: nmf
@@ -576,35 +1027,62 @@ plt.show()
 
 <figure>
 
-<img src="figures/nmf_maps.png" alt="NMF component spectra (top) and spatial weight maps (bottom). Unlike PCA eigenvectors, NMF spectra are strictly nonnegative, they can be visually compared to known material spectra in a spectral library." style="display:block; margin:0 auto; width:100%;"/>
+<img src="figures/nmf_spectra.png" alt="Six learned NMF component spectra. Because they are nonnegative, they read more like additive parts than positive-negative contrast axes." style="display:block; margin:0 auto; width:85%;"/>
 
-<figcaption>NMF component spectra (top) and spatial weight maps (bottom). Unlike PCA eigenvectors, NMF spectra are strictly nonnegative, they can be visually compared to known material spectra in a spectral library.</figcaption>
+<figcaption>NMF component spectra. Unlike PCA loadings, these are strictly nonnegative, so they read more like additive parts than contrast directions.</figcaption>
+
+</figure>
+
+<figure>
+
+<img src="figures/nmf_maps.png" alt="Spatial weight maps for the six NMF components. Brighter areas are where each learned component contributes more strongly." style="display:block; margin:0 auto; width:100%;"/>
+
+<figcaption>NMF spatial weight maps. Because the weights are nonnegative but not constrained to sum to one, several components can be strong in the same pixel.</figcaption>
 
 </figure>
 
 Where PCA gives contrast axes, NMF gives positive-only parts. Those parts are not guaranteed to be true materials, but they often look material-like enough to be useful. In practice, NMF is good for exploration when you do not yet know the right endmembers, while linear unmixing is better when you do know them and want physically interpretable fractions.
 
-## Where deep learning fits now
+## What These Methods Are Actually For
 
-If I were learning hyperspectral imaging from scratch in 2026, I would not skip straight from "here is a cube" to "here is a transformer." Deep learning is absolutely part of the field now, especially for classification, detection, denoising, and operational pipelines. But the older decomposition methods are still the fastest way to build intuition about what is actually in the data.
+The cheap version of this section would be: classical methods are old, deep learning is newer, use deep learning when you can. I do not think that is very helpful.
 
-Recent reviews make that split pretty clear. Ghasemi et al. survey deep-learning methods for onboard spaceborne hyperspectral processing and emphasize lightweight CNNs, 1D-CNNs, GAN-based augmentation and denoising, and hardware-aware deployment under tight compute and bandwidth limits [@ghasemi_2025]. Bourriz et al. review AI for hyperspectral crop mapping and show how strongly the field has moved toward spectral-spatial deep models, while also pointing out the same bottlenecks people keep running into: limited labeled data, uneven use of spaceborne HSI, and the need for models that scale without becoming impossible to interpret [@bourriz_2025].
+The more honest version is that these methods answer different questions.
 
-::: panel-tabset
-### What deep learning changes
+| If your real goal is... | Best first move | Why |
+|----|----|----|
+| Understand what is varying in the cube | PCA | Fast global structure, good for QA and anomaly screening |
+| Estimate subpixel composition with plausible materials | Linear unmixing | Gives fractions plus a residual you can inspect |
+| Explore additive parts before you trust a library | NMF | Learns basis spectra directly from the scene |
+| Predict classes, detect targets, or segment with labels | Supervised ML or deep learning | Optimizes prediction rather than interpretation |
+| Capture nonlinear spectral-spatial patterns | Deep learning | Uses context and nonlinearities the linear methods cannot |
 
-Once you have labels or a clearly defined prediction task, deep models can learn nonlinear spectral-spatial structure that PCA or FCLS cannot. That matters for crop typing, semantic segmentation, target detection, denoising, onboard triage, and other tasks where the goal is accurate prediction rather than simple exploratory interpretation [@ghasemi_2025; @bourriz_2025].
+Recent reviews are still useful here, but mostly as a reality check. They show that the field has moved strongly toward spectral-spatial deep models for tasks like crop mapping, denoising, onboard triage, and classification, while also repeating the same constraints over and over: labels are expensive, compute is finite, and interpretability does not come for free [@ghasemi_2025; @bourriz_2025].
 
-### What it does not replace
+### What deep models genuinely add
 
-Deep learning does not remove the need to check radiometry, inspect spectra, think about mixed pixels, or ask whether the result is physically plausible. PCA, unmixing, and NMF are still useful for QA, dimensionality reduction, anomaly screening, endmember discovery, and interpretable baselines. They help you understand the signal before you ask a larger model to generalize it.
+Deep models can learn nonlinear relationships and spatial context that PCA, FCLS, and NMF simply do not model. That matters when neighboring pixels help disambiguate a target, when the decision boundary is not linear, or when the real goal is predictive accuracy rather than interpretability.
 
-### A realistic workflow
+### What I would not let them skip
 
-In practice, the stack is often hybrid: calibrate and correct the cube, inspect spectra, use PCA or another low-rank method to understand variance structure, use unmixing or NMF to get material intuition, and then move into supervised machine learning or deep learning if the task actually calls for it. In that sense, the classical methods are not pre-deep-learning leftovers. They are still part of how you figure out what problem you are solving.
-:::
+Even if the eventual solution is a spectral-spatial neural network, I would still want to know:
 
-If I keep pushing this project, the next natural step would be a follow-on post showing that handoff more explicitly: start with decomposition for intuition, then train a small spectral-spatial model on top of the same scene.
+-   what the spectra look like before training
+-   whether the radiometry is trustworthy
+-   whether the scene is dominated by a few materials or many mixed ones
+-   where the weird pixels are
+-   whether a simpler baseline already explains most of the structure
+
+That is what the classical methods are buying you. They are not just old alternatives. They are how you learn what kind of problem you have.
+
+### The workflow that feels honest to me
+
+1.  Look at the cube as an image and as spectra.
+2.  Use PCA to understand dominant variance and obvious outliers.
+3.  Use unmixing or NMF to ask whether the scene reads more clearly as fractions or as learned parts.
+4.  Only then decide whether the task actually wants a predictive model.
+
+That is why I did not want to skip straight to "here is a transformer." A model can be impressive and still leave you with very little intuition about what it learned.
 
 ## Exporting products
 
@@ -642,6 +1120,12 @@ The analysis above sits in the middle of a larger hyperspectral workflow. One th
 | Export derived products | `.npy` here (no geospatial metadata); GeoTIFF/COG for georeferenced datasets | Product generation, GIS integration |
 
 Real pipelines usually include radiometric calibration, geometric correction, and atmospheric correction before this stage [@plaza_2012]. This post skips those steps because the goal is to teach the decomposition ideas clearly, not to build a full operational workflow.
+
+## If You Only Remember Three Things
+
+-   A hyperspectral pixel is not just a color. It is a curve.
+-   PCA, unmixing, and NMF are three different ways of asking what that curve is made of or how it varies.
+-   The most useful question is not "which method is best?" but "what kind of answer do I need from this cube?"
 
 ## Reproducibility
 

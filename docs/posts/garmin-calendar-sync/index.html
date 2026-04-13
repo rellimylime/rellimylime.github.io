@@ -8,7 +8,7 @@
 
 <meta name="author" content="Emily Miller">
 <meta name="dcterms.date" content="2026-01-28">
-<meta name="description" content="I built a Python script to copy Google Calendar events when my Garmin refused to sync subscribed calendars.">
+<meta name="description" content="Why Garmin misses subscribed Google Calendars, and a safer workaround for getting shared events onto your watch.">
 
 <title>Out of Sync – Emily Miller</title>
 <style>
@@ -78,7 +78,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-5a7c0de58d8320ca337128a48766cb55.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-523f5493addfbd3b29120b8b3e74620a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -188,7 +188,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <h1 class="title">Out of Sync</h1>
                   <div>
         <div class="description">
-          I built a Python script to copy Google Calendar events when my Garmin refused to sync subscribed calendars.
+          Why Garmin misses subscribed Google Calendars, and a safer workaround for getting shared events onto your watch.
         </div>
       </div>
                           <div class="quarto-categories">
@@ -389,6 +389,7 @@ document.addEventListener('DOMContentLoaded', function () {
   initRotators();
   initFavoriteLines();
   initRandomLines();
+  initBlogListingMeta();
   initPageCompanions();
   initResearchBackgrounds();
   initBirdSeparators();
@@ -490,6 +491,22 @@ function initRandomLines() {
 
     trigger.addEventListener('click', setRandomLine);
     setRandomLine();
+  });
+}
+
+function initBlogListingMeta() {
+  const cards = document.querySelectorAll('body.blog-page .card-attribution');
+  if (!cards.length) return;
+
+  cards.forEach((card) => {
+    const author = card.querySelector('.listing-author');
+    if (!author) return;
+
+    const normalizedName = author.textContent.replace(/\s+/g, ' ').trim();
+    if (normalizedName === 'Emily Miller') {
+      author.hidden = true;
+      card.classList.add('author-hidden');
+    }
   });
 }
 

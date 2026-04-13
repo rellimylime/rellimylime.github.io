@@ -1,6 +1,6 @@
 ---
 title: "Out of Sync"
-description: "I built a Python script to copy Google Calendar events when my Garmin refused to sync subscribed calendars."
+description: "Why Garmin misses subscribed Google Calendars, and a safer workaround for getting shared events onto your watch."
 date: 2026-01-28
 categories: [Personal, Python, Tutorial]
 image: ../../images/posts/garmin-calendar-sync/garmin-calendar.jpg

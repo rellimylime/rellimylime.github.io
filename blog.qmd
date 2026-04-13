@@ -9,7 +9,7 @@ listing:
     title: "Emily Miller's Blog"
   type: grid
   sort: "date desc"
-  fields: [image, title, description, date, file-modified]
+  fields: [image, title, description, author, date, categories]
   exclude:
     draft: true
   categories: false

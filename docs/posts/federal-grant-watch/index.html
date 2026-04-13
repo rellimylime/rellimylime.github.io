@@ -78,7 +78,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-5a7c0de58d8320ca337128a48766cb55.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-523f5493addfbd3b29120b8b3e74620a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -712,6 +712,7 @@ document.addEventListener('DOMContentLoaded', function () {
   initRotators();
   initFavoriteLines();
   initRandomLines();
+  initBlogListingMeta();
   initPageCompanions();
   initResearchBackgrounds();
   initBirdSeparators();
@@ -813,6 +814,22 @@ function initRandomLines() {
 
     trigger.addEventListener('click', setRandomLine);
     setRandomLine();
+  });
+}
+
+function initBlogListingMeta() {
+  const cards = document.querySelectorAll('body.blog-page .card-attribution');
+  if (!cards.length) return;
+
+  cards.forEach((card) => {
+    const author = card.querySelector('.listing-author');
+    if (!author) return;
+
+    const normalizedName = author.textContent.replace(/\s+/g, ' ').trim();
+    if (normalizedName === 'Emily Miller') {
+      author.hidden = true;
+      card.classList.add('author-hidden');
+    }
   });
 }
 

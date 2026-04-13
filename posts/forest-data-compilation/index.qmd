@@ -1,6 +1,6 @@
 ---
 title: "Lost in the Woods"
-description: "How I built a Streamlit navigator for FIA and used it to make a national forest data workflow easier to explore."
+description: "Why FIA data is hard to work with, and how to navigate the national forest inventory without getting lost in the schema."
 date: 2026-03-04
 categories: [Personal, Python, R, Geospatial Analysis, Forest Ecology, Data Science]
 citation:

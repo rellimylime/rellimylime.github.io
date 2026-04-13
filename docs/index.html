@@ -40,7 +40,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-5a7c0de58d8320ca337128a48766cb55.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-523f5493addfbd3b29120b8b3e74620a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -161,40 +161,12 @@ ul.task-list li input[type="checkbox"] {
 <p>Data scientist, environmental systems thinker, and compulsive fixer of things.</p>
 </section>
 </div>
-<div class="home-separator bird-separator" data-bird-separator="" aria-hidden="true">
+<div class="home-separator" aria-hidden="true">
   <span class="home-separator-line"></span>
-  <div class="home-bird-group">
-    <span class="home-bird bird-one">
-      <svg viewbox="0 0 48 28" role="presentation" focusable="false">
-        <path d="M1 18C7 8 15 5 24 14C33 5 41 8 47 18C40 14 33 13 24 20C15 13 8 14 1 18Z" fill="currentColor"></path>
-      </svg>
-    </span>
-    <span class="home-bird bird-two">
-      <svg viewbox="0 0 48 28" role="presentation" focusable="false">
-        <path d="M1 18C7 8 15 5 24 14C33 5 41 8 47 18C40 14 33 13 24 20C15 13 8 14 1 18Z" fill="currentColor"></path>
-      </svg>
-    </span>
-    <span class="home-bird bird-three">
-      <svg viewbox="0 0 48 28" role="presentation" focusable="false">
-        <path d="M1 18C7 8 15 5 24 14C33 5 41 8 47 18C40 14 33 13 24 20C15 13 8 14 1 18Z" fill="currentColor"></path>
-      </svg>
-    </span>
-    <span class="home-bird bird-four">
-      <svg viewbox="0 0 48 28" role="presentation" focusable="false">
-        <path d="M1 18C7 8 15 5 24 14C33 5 41 8 47 18C40 14 33 13 24 20C15 13 8 14 1 18Z" fill="currentColor"></path>
-      </svg>
-    </span>
-  </div>
 </div>
 <div class="quote-section">
 <div class="slider-container">
 <div class="click-slider">
-<div class="slick-slide">
-<p><strong>“I have no fear of losing my life-if I have to save a koala or a crocodile or a kangaroo or a snake, mate, I will save it.”</strong></p>
-<ul>
-<li>Steve Irwin</li>
-</ul>
-</div>
 <div class="slick-slide">
 <p><strong>“It is my experience that proofs involving matrices can be shortened by 50% if one throws the matrices out.”</strong></p>
 <ul>
@@ -211,6 +183,12 @@ ul.task-list li input[type="checkbox"] {
 <p><strong>“Statisticians, like artists, have the bad habit of falling in love with their models.”</strong></p>
 <ul>
 <li>George Box</li>
+</ul>
+</div>
+<div class="slick-slide">
+<p><strong>“I have no fear of losing my life-if I have to save a koala or a crocodile or a kangaroo or a snake, mate, I will save it.”</strong></p>
+<ul>
+<li>Steve Irwin</li>
 </ul>
 </div>
 <div class="slick-slide">
@@ -444,6 +422,7 @@ document.addEventListener('DOMContentLoaded', function () {
   initRotators();
   initFavoriteLines();
   initRandomLines();
+  initBlogListingMeta();
   initPageCompanions();
   initResearchBackgrounds();
   initBirdSeparators();
@@ -545,6 +524,22 @@ function initRandomLines() {
 
     trigger.addEventListener('click', setRandomLine);
     setRandomLine();
+  });
+}
+
+function initBlogListingMeta() {
+  const cards = document.querySelectorAll('body.blog-page .card-attribution');
+  if (!cards.length) return;
+
+  cards.forEach((card) => {
+    const author = card.querySelector('.listing-author');
+    if (!author) return;
+
+    const normalizedName = author.textContent.replace(/\s+/g, ' ').trim();
+    if (normalizedName === 'Emily Miller') {
+      author.hidden = true;
+      card.classList.add('author-hidden');
+    }
   });
 }
 

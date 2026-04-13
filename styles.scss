@@ -2040,8 +2040,29 @@ body.blog-page .card-img-top .thumbnail-image {
 body.blog-page .listing-title {
   margin: 0;
   font-family: $header-font !important;
-  font-size: 1.26rem;
-  line-height: 1.15;
+  font-size: clamp(1.42rem, 2.1vw, 1.72rem);
+  line-height: 1.08;
+}
+
+// Affects: category tags shown on each blog listing card.
+body.blog-page .listing-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0.05rem 0 0.2rem;
+}
+
+body.blog-page .listing-category {
+  border: 1px solid rgba($forest-teal, 0.22);
+  border-radius: 999px;
+  background: rgba($forest-teal, 0.09);
+  color: rgba($text-dark, 0.78);
+  font-family: $mono-font;
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  padding: 0.22rem 0.48rem;
+  text-transform: uppercase;
 }
 
 // Affects: internal padding/layout of blog card text content.
@@ -2075,6 +2096,23 @@ body.blog-page .card-attribution {
   padding-top: 0;
 }
 
+body.blog-page .card-attribution.justify {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 0.2rem;
+}
+
+body.blog-page .listing-author {
+  color: rgba($text-dark, 0.7);
+  font-size: 0.76rem;
+}
+
+body.blog-page .card-attribution.author-hidden {
+  gap: 0;
+}
+
 body.blog-page .card-footer {
   margin-top: auto;
   padding: 0 0.88rem 0.88rem;
@@ -2090,10 +2128,17 @@ body.blog-page .card-file-modified {
 
 // Affects: blog post date metadata in the listing grid.
 body.blog-page .listing-date {
-  color: rgba($deep-purple, 0.75);
+  display: inline-flex;
+  align-items: center;
+  padding: 0.18rem 0.48rem;
+  border: 1px solid rgba($deep-purple, 0.18);
+  border-radius: 999px;
+  background: rgba($warm-coral, 0.28);
+  color: rgba($text-dark, 0.84);
   font-family: $mono-font;
-  font-size: 0.78rem;
-  letter-spacing: 0.04em;
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
   text-transform: uppercase;
 }
 

@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
   initRotators();
   initFavoriteLines();
   initRandomLines();
+  initBlogListingMeta();
   initPageCompanions();
   initResearchBackgrounds();
   initBirdSeparators();
@@ -105,6 +106,22 @@ function initRandomLines() {
 
     trigger.addEventListener('click', setRandomLine);
     setRandomLine();
+  });
+}
+
+function initBlogListingMeta() {
+  const cards = document.querySelectorAll('body.blog-page .card-attribution');
+  if (!cards.length) return;
+
+  cards.forEach((card) => {
+    const author = card.querySelector('.listing-author');
+    if (!author) return;
+
+    const normalizedName = author.textContent.replace(/\s+/g, ' ').trim();
+    if (normalizedName === 'Emily Miller') {
+      author.hidden = true;
+      card.classList.add('author-hidden');
+    }
   });
 }
 

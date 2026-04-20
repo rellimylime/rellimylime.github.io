@@ -98,7 +98,7 @@ div.csl-indent {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-523f5493addfbd3b29120b8b3e74620a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-8b2a3eb311bd6738e54f5e9df6f25fc6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -1304,6 +1304,7 @@ document.addEventListener('DOMContentLoaded', function () {
   initBlogListingMeta();
   initPageCompanions();
   initResearchBackgrounds();
+  initHashLandingAdjustments();
   initBirdSeparators();
   initQuoteFadeIn();
 });
@@ -1515,6 +1516,70 @@ function initResearchBackgrounds() {
   requestBlend();
   window.addEventListener('scroll', requestBlend, { passive: true });
   window.addEventListener('resize', requestBlend);
+}
+
+function initHashLandingAdjustments() {
+  if (!document.body.classList.contains('research-page') || !window.location.hash) return;
+
+  const header = document.querySelector('header.fixed-top');
+  const target = getHashTarget(window.location.hash);
+
+  if (!header || !target) return;
+
+  const showHeader = function () {
+    header.classList.add('headroom--pinned');
+    header.classList.remove('headroom--unpinned');
+  };
+
+  let headroomFrozen = false;
+
+  const freezeHeader = function () {
+    if (headroomFrozen || typeof window.quartoToggleHeadroom !== 'function') return;
+    window.quartoToggleHeadroom();
+    headroomFrozen = true;
+  };
+
+  const unfreezeHeader = function () {
+    if (!headroomFrozen || typeof window.quartoToggleHeadroom !== 'function') return;
+    window.quartoToggleHeadroom();
+    headroomFrozen = false;
+  };
+
+  const landOnTarget = function () {
+    showHeader();
+    window.requestAnimationFrame(function () {
+      target.scrollIntoView({ block: 'start', inline: 'nearest' });
+      window.requestAnimationFrame(function () {
+        showHeader();
+        freezeHeader();
+      });
+    });
+  };
+
+  const releaseOnFirstScroll = function () {
+    window.removeEventListener('scroll', releaseOnFirstScroll);
+    unfreezeHeader();
+  };
+
+  landOnTarget();
+  window.setTimeout(landOnTarget, 140);
+  window.setTimeout(function () {
+    window.addEventListener('scroll', releaseOnFirstScroll, { once: true, passive: true });
+  }, 260);
+}
+
+function getHashTarget(hash) {
+  const id = decodeURIComponent(hash.replace(/^#/, ''));
+  if (!id) return null;
+
+  const byId = document.getElementById(id);
+  if (byId) return byId;
+
+  try {
+    return document.querySelector(hash);
+  } catch (error) {
+    return null;
+  }
 }
 
 function initQuoteFadeIn() {

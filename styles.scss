@@ -615,6 +615,14 @@ body.home-page #title-block-header.quarto-title-block {
 
 body.home-page main.content {
   padding-top: 0;
+  padding-inline: 0;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+
+body.home-page {
+  overflow-x: clip;
 }
 
 body.research-page #title-block-header.quarto-title-block {
@@ -1512,6 +1520,7 @@ body.research-page .research-project {
   padding: 1.15rem 1.2rem 1.35rem;
   background: rgba($bg-light, 0.84);
   box-shadow: 0 0 0 1px rgba(white, 0.34);
+  scroll-margin-top: 7rem;
 }
 
 body.research-page .research-project + .research-project {
@@ -1538,6 +1547,7 @@ body.research-page .research-principles strong {
 
 body.research-page .research-project > h3 {
   margin-top: 0;
+  scroll-margin-top: 5rem;
 }
 
 body.research-page .page-shell > h2 {
@@ -1555,6 +1565,8 @@ body.research-page .research-note strong {
 
 // Affects: homepage hero image / opening statement treatment.
 .home-hero {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
   height: 520px;
   margin-bottom: 2rem;
   line-height: 0;
@@ -1604,6 +1616,8 @@ body.research-page .research-note strong {
 
 // Affects: homepage quote slider wrapper.
 .quote-section {
+  width: 100%;
+  margin-left: 0;
   margin-top: 0;
   padding: 1.3rem 0 0;
   background: transparent;
@@ -1723,6 +1737,20 @@ body.js-enhanced.home-page .quote-section.is-visible {
   border-radius: 0.5rem;
   box-shadow: none;
   border: 1px solid rgba($sage-green, 0.95);
+  touch-action: pan-y pinch-zoom;
+
+  &:focus-visible {
+    outline: 2px solid rgba($warm-coral, 0.7);
+    outline-offset: 0.28rem;
+  }
+}
+
+.click-slider.is-swipe-ready {
+  cursor: grab;
+}
+
+.click-slider.is-swipe-ready:active {
+  cursor: grabbing;
 }
 
 .slick-slide {
@@ -1746,6 +1774,16 @@ body.js-enhanced.home-page .quote-section.is-visible {
 
 .slider-container {
   max-width: 74rem;
+}
+
+.quote-card li {
+  color: rgba($text-dark, 0.72);
+  font-size: 1rem;
+
+  &::before {
+    content: '— ';
+    color: rgba($text-dark, 0.7);
+  }
 }
 
 // Affects: home-page quote navigation arrows.
@@ -1774,6 +1812,350 @@ body.js-enhanced.home-page .quote-section.is-visible {
 
 .slick-dots li.slick-active button {
   background: rgba($warm-coral, 0.95);
+}
+
+// Affects: constrained wrapper used by the redesigned homepage sections below the hero.
+.home-shell {
+  width: min(100%, 76rem);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+// Affects: the current homepage hero composition with image, headline, and short bio.
+.home-hero {
+  display: flex;
+  align-items: center;
+  min-height: 38rem;
+  height: auto;
+  margin-bottom: 0;
+  overflow: hidden;
+
+  &::before {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.24));
+  }
+}
+
+.home-hero-image {
+  position: absolute;
+  top: -20%;
+  bottom: auto;
+  left: 0;
+  right: 0;
+  display: block;
+  width: 100%;
+  height: 140% !important;
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
+  object-fit: cover;
+  object-position: center 62%;
+  will-change: transform;
+
+  &:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+.home-hero-copy {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 76rem);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.home-hero-headline {
+  position: static;
+  inset: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.22em;
+  width: auto;
+  height: auto;
+  margin: 0 auto;
+  max-width: 42rem;
+  padding: 1.1rem 1.5rem 1.25rem 1.6rem;
+  border: none;
+  border-left: 2px solid rgba($warm-coral, 0.85);
+  border-radius: 0;
+  background: rgba($bg-light, 0.84);
+  backdrop-filter: blur(14px);
+  box-shadow: none;
+  color: rgba($text-dark, 0.95);
+  font-family: $header-font !important;
+  font-size: clamp(1.35rem, 2.4vw, 1.95rem);
+  line-height: 1.22;
+  letter-spacing: -0.02em;
+  text-align: left;
+  text-shadow: none;
+}
+
+.home-hero-headline::before,
+.home-hero-headline::after {
+  content: none !important;
+}
+
+// Affects: individual lines in the hero headline, used for staggered entrance animation.
+.hero-line {
+  display: block;
+  opacity: 0;
+  transform: translateY(0.55rem);
+  animation: hero-line-in 0.7s ease forwards;
+}
+
+.hero-line--1 {
+  font-weight: 700;
+  animation-delay: 0.2s;
+}
+
+.hero-line--2 {
+  font-weight: 500;
+  color: rgba($text-dark, 0.78);
+  animation-delay: 0.46s;
+}
+
+.hero-line--3 {
+  font-weight: 400;
+  font-style: italic;
+  color: rgba($text-dark, 0.62);
+  animation-delay: 0.74s;
+}
+
+@keyframes hero-line-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-line {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
+// Affects: typographic word treatments inside the hero headline.
+.word-reflect {
+  display: inline-block;
+  font-weight: 400;
+}
+
+.word-reflect-s {
+  font-weight: 700;
+}
+
+// Affects: shared section headings on the redesigned homepage.
+.home-section-head {
+  margin-bottom: 1.15rem;
+}
+
+.home-section-kicker {
+  margin: 0 0 0.42rem;
+  color: rgba($deep-purple, 0.8);
+  font-family: $mono-font;
+  font-size: 0.76rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.home-section-title {
+  margin: 0;
+  padding: 0;
+  border: none !important;
+  background: none !important;
+  color: $text-dark !important;
+  font-family: $header-font !important;
+  font-size: clamp(1.9rem, 2.3vw, 2.45rem);
+  line-height: 1.02;
+}
+
+.home-section-title::before,
+.home-section-title::after {
+  content: none !important;
+}
+
+// Affects: spacing and grid layout for the homepage featured-work band.
+.home-featured {
+  margin-top: 2.1rem;
+}
+
+.home-featured-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.15rem;
+}
+
+.home-feature-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  overflow: hidden;
+  border: 1px solid rgba($sage-green, 0.95);
+  border-radius: 0.45rem;
+  background: rgba(white, 0.8);
+  color: inherit;
+  box-shadow: none;
+  transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+  border-bottom: none;
+
+  &:hover,
+  &:focus-visible {
+    transform: translateY(-3px);
+    border-color: rgba($forest-teal, 0.36);
+    background: rgba(white, 0.94);
+  }
+}
+
+.home-feature-card-image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
+
+  &:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+.home-feature-card-copy {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem 1rem 1.05rem;
+}
+
+.home-feature-card-label,
+.home-feature-card-summary {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 0;
+}
+
+.home-feature-card-label {
+  color: rgba($deep-purple, 0.8);
+  font-family: $mono-font;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.home-feature-card-title {
+  margin: 0;
+  color: $text-dark !important;
+  font-family: $header-font !important;
+  font-size: 1.36rem;
+  line-height: 1.08;
+}
+
+.home-feature-card-title::before,
+.home-feature-card-title::after {
+  content: none !important;
+}
+
+.home-feature-card-summary {
+  color: rgba($text-dark, 0.82);
+  line-height: 1.6;
+}
+
+.home-feature-card-link {
+  margin-top: auto;
+  color: rgba($forest-teal, 0.95);
+  font-family: $mono-font;
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.home-feature-card:hover .home-feature-card-title,
+.home-feature-card:focus-visible .home-feature-card-title {
+  color: $forest-teal !important;
+}
+
+// Affects: spacing above the moved homepage quote carousel.
+.home-quote-intro {
+  margin-top: 3.1rem;
+}
+
+.home-quote-intro .home-section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  margin-bottom: 0.35rem;
+}
+
+.home-quote-intro .home-section-kicker {
+  margin: 0;
+}
+
+.home-quote-hint {
+  margin: 0;
+  color: rgba($deep-purple, 0.76);
+  font-family: $mono-font;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+// Affects: the homepage bio block that bridges the hero and featured work.
+.home-intro {
+  margin-top: 2.4rem;
+}
+
+.home-intro-bio {
+  margin: 0;
+  max-width: 53rem;
+  color: rgba($text-dark, 0.86);
+  font-size: 1.05rem;
+  line-height: 1.85;
+}
+
+// Affects: the compact link/footer band at the bottom of the homepage.
+.home-link-band {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.35rem 3rem;
+  margin: 2.9rem auto 4rem;
+  padding-top: 1.35rem;
+  border-top: 1px solid rgba($sage-green, 0.95);
+}
+
+.home-link-group {
+  min-width: 0;
+}
+
+.home-link-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem 0.9rem;
+}
+
+.home-link-list a {
+  border-bottom: none;
+  color: rgba($text-dark, 0.84);
+  font-family: $mono-font;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+
+  &:hover {
+    color: $forest-teal;
+  }
 }
 
 .aside-label,
@@ -2494,11 +2876,46 @@ body.outside-lab-page .evolution-links span {
   }
 
   .home-hero {
-    height: 400px;
+    min-height: 32rem;
+    height: auto;
   }
 
   .quote-section {
     padding-top: 1rem;
+  }
+
+  .home-shell,
+  .home-hero-copy {
+    padding: 0 1rem;
+  }
+
+  .home-hero-headline {
+    max-width: 28rem;
+    font-size: clamp(1.1rem, 4.5vw, 1.55rem);
+    line-height: 1.25;
+    padding: 0.9rem 1.1rem 1rem 1.2rem;
+  }
+
+  .home-featured-grid,
+  .home-link-band {
+    grid-template-columns: 1fr;
+  }
+
+  .home-intro {
+    margin-top: 2rem;
+  }
+
+  .home-intro-bio {
+    font-size: 0.98rem;
+    line-height: 1.75;
+  }
+
+  .home-quote-intro {
+    margin-top: 2.5rem;
+  }
+
+  .home-quote-intro .home-section-head {
+    align-items: flex-start;
   }
 
   .home-separator {

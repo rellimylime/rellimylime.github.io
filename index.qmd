@@ -3,24 +3,73 @@ page-layout: full
 body-classes: home-page
 ---
 
-::: home-hero
-![](images/pages/home/hero.jpg)
-
-#### 
-
-Data scientist, environmental systems thinker, and compulsive fixer of things.
-:::
-
 ```{=html}
-<div class="home-separator" aria-hidden="true">
-  <span class="home-separator-line"></span>
-</div>
+<section class="home-hero" aria-labelledby="home-hero-headline">
+  <img class="home-hero-image" src="images/pages/home/hero.jpg" alt="">
+  <div class="home-hero-copy">
+    <div id="home-hero-headline" class="home-hero-headline">
+      <span class="hero-line hero-line--1" aria-label="What the world reflects.">What the world <span class="word-reflect"><span class="word-reflect-s">s</span>ʇɔǝʅɟǝɹ</span>.</span>
+      <span class="hero-line hero-line--2">What our instruments preserve.</span>
+      <span class="hero-line hero-line--3">What inference can honestly recover.</span>
+    </div>
+  </div>
+</section>
+
+<section class="home-shell home-intro" aria-labelledby="home-intro-title">
+  <div class="home-section-head">
+    <p class="home-section-kicker">About</p>
+    <h2 id="home-intro-title" class="home-section-title">What I'm working on</h2>
+  </div>
+  <p class="home-intro-bio">I build geospatial data pipelines and apply machine learning to satellite imagery to understand how land and climate systems are changing. I'm finishing a Master of Environmental Data Science at UC Santa Barbara's Bren School, expected June 2026, alongside a B.S. in Mathematics. My work sits at the intersection of remote sensing, spatial statistics, and reproducible data engineering. Right now that looks like irrigation mapping, national-scale forest change analysis, and cloud-accessible wildfire resilience tools.</p>
+</section>
+
+<section class="home-shell home-featured" aria-labelledby="home-featured-title">
+  <div class="home-section-head">
+    <p class="home-section-kicker">Featured Work</p>
+    <h2 id="home-featured-title" class="home-section-title">Selected projects</h2>
+  </div>
+  <div class="home-featured-grid">
+    <a class="home-feature-card" href="research.html#forest-thermophilization-disturbance-analysis">
+      <img class="home-feature-card-image" src="images/pages/research/backgrounds/loc-research.jpg" alt="LOC Lab project background showing forest landscape imagery.">
+      <div class="home-feature-card-copy">
+        <p class="home-feature-card-label">LOC Lab</p>
+        <h3 class="home-feature-card-title">Forest Thermophilization &amp; Disturbance Analysis</h3>
+        <p class="home-feature-card-summary">National-scale R and Python pipeline linking FIA, IDS, TerraClimate, PRISM, and WorldClim to study how U.S. forests are changing under climate and disturbance.</p>
+        <span class="home-feature-card-link">View project -&gt;</span>
+      </div>
+    </a>
+    <a class="home-feature-card" href="research.html#satellite-based-irrigation-mapping-in-sub-saharan-africa">
+      <img class="home-feature-card-image" src="images/pages/research/backgrounds/waves-irrigation.jpg" alt="WaVeS Lab project background showing irrigated agricultural fields.">
+      <div class="home-feature-card-copy">
+        <p class="home-feature-card-label">WaVeS Lab</p>
+        <h3 class="home-feature-card-title">Satellite-Based Irrigation Mapping</h3>
+        <p class="home-feature-card-summary">Python geospatial workflows and segmentation experiments for tracing where irrigation expansion is actually happening across Sub-Saharan Africa.</p>
+        <span class="home-feature-card-link">View project -&gt;</span>
+      </div>
+    </a>
+    <a class="home-feature-card" href="research.html#wildfire-resilience-index-data-access-r-package">
+      <img class="home-feature-card-image" src="images/pages/research/backgrounds/wri-fire.jpg" alt="Wildfire Resilience Index project background showing fire-affected landscape.">
+      <div class="home-feature-card-copy">
+        <p class="home-feature-card-label">NCEAS Capstone</p>
+        <h3 class="home-feature-card-title">Wildfire Resilience Index R Package</h3>
+        <p class="home-feature-card-summary">Cloud-accessible wildfire resilience archive and open-source R package work so users can query, subset, and visualize 100+ layers without downloading terabytes locally.</p>
+        <span class="home-feature-card-link">View project -&gt;</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<section class="home-shell home-quote-intro" aria-label="Quotes">
+  <div class="home-section-head">
+    <p class="home-section-kicker">Quotes</p>
+    <p class="home-quote-hint">Swipe, scroll, or use arrows</p>
+  </div>
+</section>
 ```
 
-::::::::::::::::::::::::::: quote-section
-:::::::::::::::::::::::::: slider-container
-::::::::::::::::::::::::: click-slider
-
+::::::::::::::::::::::::::::::: quote-section
+:::::::::::::::::::::::::::::: slider-container
+::::::::::::::::::::::::::::: click-slider
 ::: slick-slide
 **"It is my experience that proofs involving matrices can be shortened by 50% if one throws the matrices out."**
 
@@ -28,15 +77,15 @@ Data scientist, environmental systems thinker, and compulsive fixer of things.
 :::
 
 ::: slick-slide
-**"With four parameters I can fit an elephant, and with five I can make him wiggle his trunk."**
-
--   John von Neumann
-:::
-
-::: slick-slide
 **"Statisticians, like artists, have the bad habit of falling in love with their models."**
 
 -   George Box
+:::
+
+::: slick-slide
+**"With four parameters I can fit an elephant, and with five I can make him wiggle his trunk."**
+
+-   John von Neumann
 :::
 
 ::: slick-slide
@@ -176,31 +225,80 @@ Data scientist, environmental systems thinker, and compulsive fixer of things.
 
 -   George E. P. Box
 :::
+:::::::::::::::::::::::::::::
+::::::::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::
 
-:::::::::::::::::::::::::
-::::::::::::::::::::::::::
-:::::::::::::::::::::::::::
-
-### What I'm Working On
-
-[**Research -\>**](research.qmd) \| [**Art & Poetry -\>**](art.qmd) \| [**Blog -\>**](blog.qmd)
+```{=html}
+<section class="home-shell home-link-band" aria-label="Homepage navigation and contact links">
+  <div class="home-link-group">
+    <p class="home-section-kicker">What I'm Working On</p>
+    <div class="home-link-list">
+      <a href="research.html">Research</a>
+      <a href="blog.html">Blog</a>
+      <a href="art.html">Art &amp; Poetry</a>
+    </div>
+  </div>
+  <div class="home-link-group">
+    <p class="home-section-kicker">Elsewhere</p>
+    <div class="home-link-list">
+      <a href="cv.html">CV</a>
+      <a href="https://github.com/rellimylime">GitHub</a>
+      <a href="mailto:ermiller@ucsb.edu">Contact</a>
+    </div>
+  </div>
+</section>
+```
 
 ```{=html}
 <script>
-// Simple Carousel/Slider Implementation
+document.addEventListener('DOMContentLoaded', function() {
+  const hero = document.querySelector('.home-hero');
+  const heroImage = document.querySelector('.home-hero-image');
+
+  if (hero && heroImage && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    let ticking = false;
+
+    function updateParallax() {
+      const scrollY = window.scrollY;
+      const heroHeight = hero.offsetHeight;
+      if (scrollY <= heroHeight) {
+        heroImage.style.transform = 'translateY(' + (scrollY * 0.1) + 'px)';
+      }
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', function() {
+      if (!ticking) {
+        requestAnimationFrame(updateParallax);
+        ticking = true;
+      }
+    }, { passive: true });
+  }
+});
+</script>
+```
+
+```{=html}
+<script>
 document.addEventListener('DOMContentLoaded', function() {
   const sliders = document.querySelectorAll('.click-slider');
 
   sliders.forEach((slider) => {
     const slides = slider.querySelectorAll('.slick-slide');
     let currentSlide = 0;
+    let touchStartX = null;
+    let touchStartY = null;
+    let wheelLocked = false;
+    let wheelUnlockTimer = null;
 
     if (slides.length === 0) return;
 
-    // Initialize - show first slide
     slides[0].classList.add('slick-active');
+    slider.classList.add('is-swipe-ready');
+    slider.setAttribute('tabindex', '0');
+    slider.setAttribute('aria-label', 'Quote carousel');
 
-    // Create navigation buttons
     const prevBtn = document.createElement('button');
     prevBtn.classList.add('slick-prev');
     prevBtn.innerHTML = '&lsaquo;';
@@ -214,7 +312,6 @@ document.addEventListener('DOMContentLoaded', function() {
     slider.parentElement.appendChild(prevBtn);
     slider.parentElement.appendChild(nextBtn);
 
-    // Create dots for pagination - append to slider-container (parent of click-slider)
     const dotsContainer = document.createElement('ul');
     dotsContainer.classList.add('slick-dots');
 
@@ -234,17 +331,18 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
 
-    // Append dots to the slider-container (which uses flexbox with order)
     slider.parentElement.appendChild(dotsContainer);
 
     function showSlide(n) {
+      const dots = dotsContainer.querySelectorAll('li');
+
       slides[currentSlide].classList.remove('slick-active');
-      document.querySelectorAll('.slick-dots li')[currentSlide].classList.remove('slick-active');
+      dots[currentSlide].classList.remove('slick-active');
 
       currentSlide = (n + slides.length) % slides.length;
 
       slides[currentSlide].classList.add('slick-active');
-      document.querySelectorAll('.slick-dots li')[currentSlide].classList.add('slick-active');
+      dots[currentSlide].classList.add('slick-active');
     }
 
     function goToSlide(n) {
@@ -259,12 +357,67 @@ document.addEventListener('DOMContentLoaded', function() {
       showSlide(currentSlide - 1);
     }
 
-    // Event listeners
     nextBtn.addEventListener('click', nextSlide);
     prevBtn.addEventListener('click', prevSlide);
 
-    // Optional: Auto-rotate every 20 seconds
-    setInterval(nextSlide, 20000);
+    slider.addEventListener('keydown', function(e) {
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevSlide();
+      }
+    });
+
+    slider.addEventListener('touchstart', function(e) {
+      const firstTouch = e.changedTouches[0];
+      touchStartX = firstTouch.clientX;
+      touchStartY = firstTouch.clientY;
+    }, { passive: true });
+
+    slider.addEventListener('touchend', function(e) {
+      if (touchStartX === null || touchStartY === null) return;
+
+      const endTouch = e.changedTouches[0];
+      const deltaX = endTouch.clientX - touchStartX;
+      const deltaY = endTouch.clientY - touchStartY;
+
+      touchStartX = null;
+      touchStartY = null;
+
+      if (Math.abs(deltaX) < 48 || Math.abs(deltaX) <= Math.abs(deltaY)) return;
+
+      if (deltaX < 0) {
+        nextSlide();
+      } else {
+        prevSlide();
+      }
+    }, { passive: true });
+
+    slider.addEventListener('wheel', function(e) {
+      const horizontalIntent = Math.abs(e.deltaX) > Math.abs(e.deltaY) || e.shiftKey;
+
+      if (!horizontalIntent || wheelLocked) return;
+
+      const intendedDelta = Math.abs(e.deltaX) > 0 ? e.deltaX : e.deltaY;
+
+      if (Math.abs(intendedDelta) < 8) return;
+
+      e.preventDefault();
+      wheelLocked = true;
+
+      if (intendedDelta > 0) {
+        nextSlide();
+      } else {
+        prevSlide();
+      }
+
+      window.clearTimeout(wheelUnlockTimer);
+      wheelUnlockTimer = window.setTimeout(() => {
+        wheelLocked = false;
+      }, 320);
+    }, { passive: false });
   });
 });
 </script>

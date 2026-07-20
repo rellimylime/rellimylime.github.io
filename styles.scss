@@ -234,6 +234,17 @@ main, section, .block-section {
   font-size: 0.95rem;
 }
 
+.prose-body {
+  max-width: 48rem;
+}
+
+.prose-body .poem-line-text {
+  color: rgba($text-dark, 0.86);
+  font-family: $header-font;
+  font-size: 1.08rem;
+  line-height: 1.82;
+}
+
 // Affects: poem body text after a poem is expanded.
 .poem-body {
   display: grid;
@@ -1864,9 +1875,11 @@ body.js-enhanced.home-page .quote-section.is-visible {
   margin: 0 auto;
   padding: 0 1.5rem;
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: center;
-  text-align: center;
+  align-items: flex-start;
+  gap: 0.55rem;
+  text-align: left;
 }
 
 .home-hero-headline {
@@ -1938,6 +1951,34 @@ body.js-enhanced.home-page .quote-section.is-visible {
     opacity: 1;
     transform: none;
     animation: none;
+  }
+}
+
+// Affects: small kicker label above the hero headline box.
+.hero-kicker {
+  margin: 0;
+  font-family: $mono-font;
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(white, 0.72);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  animation: hero-line-in 0.5s ease forwards 0.05s;
+}
+
+// Affects: hero headline lines when used as links.
+a.hero-line {
+  border-bottom: none;
+  font-weight: inherit;
+  color: inherit;
+  transition: color 0.22s ease, transform 0.22s ease;
+
+  &:hover {
+    border-bottom: none;
+    color: rgba($forest-teal, 0.95);
+    transform: translateX(0.45rem);
   }
 }
 

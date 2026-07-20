@@ -127,6 +127,85 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ─── Scroll reveal ────────────────────────────────────────── */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(1.2rem);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.scroll-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal { opacity: 1; transform: none; transition: none; }
+}
+
+/* ─── Method cards ─────────────────────────────────────────── */
+.method-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 1.5rem 0 1.75rem;
+}
+.method-card {
+  padding: 1.1rem 1.2rem 1.2rem;
+  border: 1px solid rgba(124, 146, 137, 0.38);
+  border-top: 3px solid rgba(47, 111, 103, 0.72);
+  border-radius: 0.45rem;
+  background: rgba(250, 248, 244, 0.7);
+}
+.method-card h4 {
+  margin: 0 0 0.18rem;
+  font-size: 1rem;
+}
+.method-card-tag {
+  margin: 0 0 0.6rem;
+  font-size: 0.76rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color: rgba(47, 111, 103, 0.82);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.method-card p:last-child { margin: 0; font-size: 0.93rem; line-height: 1.5; }
+@media (max-width: 700px) {
+  .method-cards { grid-template-columns: 1fr; }
+}
+
+/* ─── Image placeholders ───────────────────────────────────── */
+.img-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  margin: 1.5rem auto;
+  padding: 2.25rem 2rem;
+  border: 2px dashed rgba(124, 146, 137, 0.45);
+  border-radius: 0.45rem;
+  background: rgba(124, 146, 137, 0.05);
+  color: rgba(39, 46, 54, 0.5);
+  font-size: 0.88rem;
+  text-align: center;
+  min-height: 7rem;
+}
+.img-placeholder-icon { font-size: 1.8rem; opacity: 0.35; line-height: 1; }
+.img-placeholder strong { color: rgba(39, 46, 54, 0.72); display: block; margin-bottom: 0.2rem; font-size: 0.92rem; }
+
+/* ─── Concept figures ──────────────────────────────────────── */
+.concept-figure {
+  margin: 1.75rem 0;
+}
+.concept-figure figcaption {
+  text-align: center;
+  font-size: 0.87rem;
+  color: rgba(39, 46, 54, 0.62);
+  margin-top: 0.65rem;
+  max-width: 44rem;
+  margin-left: auto;
+  margin-right: auto;
+}
 </style>
 <section id="the-question" class="level2">
 <h2 class="anchored" data-anchor-id="the-question">The question</h2>
@@ -160,19 +239,6 @@ Note
 <li><strong>Linear spectral unmixing</strong>: If we already know what a few pure materials look like, what fraction of each material is present in a given pixel? This is the fraction view, closest to the classic subpixel remote-sensing problem.</li>
 <li><strong>Non-negative matrix factorization (NMF)</strong>: Can we learn additive, material-like spectral patterns directly from the data, without supplying endmembers ahead of time? This is the discovery view.</li>
 </ol>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Remote-sensing intuition.</strong> A false-color composite asks: which three bands should I display? Hyperspectral analysis asks a different question: what can I learn if I use the <em>entire</em> spectral curve at each pixel instead of just a few display bands?</p>
-</div>
-</div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -186,32 +252,33 @@ Note
 <p><strong>Why a non-specialist might care.</strong> The broader idea here is not unique to remote sensing. Once every observation carries a long feature vector instead of one or two numbers, the job becomes: find the main directions of variation, estimate mixtures, or learn parts. The same logic shows up in chemistry, audio mixtures, genomics, and other high-dimensional signals.</p>
 </div>
 </div>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs"><li class="nav-item"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" aria-controls="tabset-1-1" aria-selected="true" href="">PCA: Variance View</a></li><li class="nav-item"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" aria-controls="tabset-1-2" aria-selected="false" href="">Unmixing: Fraction View</a></li><li class="nav-item"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" aria-controls="tabset-1-3" aria-selected="false" href="">NMF: Parts View</a></li></ul>
-<div class="tab-content">
-<div id="tabset-1-1" class="tab-pane active" aria-labelledby="tabset-1-1-tab">
-<p>Use PCA when you want the strongest spectral contrasts in the scene, whether or not they map cleanly onto physical materials. It is especially useful for compression, QA, dimensionality reduction, and anomaly screening.</p>
-</div>
-<div id="tabset-1-2" class="tab-pane" aria-labelledby="tabset-1-2-tab">
-<p>Use linear unmixing when you already have plausible endmembers and want outputs that read like material fractions. This is the most direct fit to the remote-sensing question of mixed pixels and subpixel composition.</p>
-</div>
-<div id="tabset-1-3" class="tab-pane" aria-labelledby="tabset-1-3-tab">
-<p>Use NMF when you want interpretable additive components but do not yet trust a fixed endmember library. It often sits between purely mathematical compression and fully supervised unmixing.</p>
-</div>
-</div>
+<div class="method-cards">
+  <div class="method-card">
+    <h4 class="anchored">PCA</h4>
+    <p class="method-card-tag">Variance view</p>
+    <p>Find the dominant directions of spectral variation in the scene. Best for compression, quality checks, and anomaly screening.</p>
+  </div>
+  <div class="method-card">
+    <h4 class="anchored">Linear Unmixing</h4>
+    <p class="method-card-tag">Fraction view</p>
+    <p>Given known pure-material spectra, estimate what fraction of each material is present in every pixel. Closest to the classic subpixel mixing problem.</p>
+  </div>
+  <div class="method-card">
+    <h4 class="anchored">NMF</h4>
+    <p class="method-card-tag">Parts view</p>
+    <p>Learn additive spectral parts directly from the data, without supplying endmembers in advance. Sits between PCA compression and supervised unmixing.</p>
+  </div>
 </div>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Method</th>
 <th>Main question</th>
-<th>Matrix view</th>
 <th>Easiest way to read the output</th>
 </tr>
 </thead>
@@ -219,28 +286,52 @@ Note
 <tr class="odd">
 <td>PCA</td>
 <td>What varies most across the scene?</td>
-<td><img src="https://latex.codecogs.com/png.latex?X_c%20%5Capprox%20ZV%5ET"></td>
 <td>Contrast axes plus eigenimages</td>
 </tr>
 <tr class="even">
 <td>Unmixing</td>
 <td>What is this pixel made of?</td>
-<td><img src="https://latex.codecogs.com/png.latex?X%20%5Capprox%20SM%5ET"></td>
 <td>Material fractions</td>
 </tr>
 <tr class="odd">
 <td>NMF</td>
 <td>What additive parts can I learn?</td>
-<td><img src="https://latex.codecogs.com/png.latex?X%20%5Capprox%20WH"></td>
 <td>Learned parts plus weight maps</td>
 </tr>
 </tbody>
 </table>
+<div class="cell" data-eval="true" data-layout-align="center">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    A[Load cube] --&gt; B[Inspect spectra]
+    B --&gt; C[Reshape to matrix]
+    C --&gt; D{Goal?}
+    D -- dominant variance --&gt; E[PCA]
+    D -- material fractions --&gt; F[Unmixing]
+    D -- learned parts --&gt; G[NMF]
+    E --&gt; H[Eigenimages]
+    F --&gt; I[Abundance maps]
+    G --&gt; J[Component maps]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 </section>
 <section id="the-data" class="level2">
 <h2 class="anchored" data-anchor-id="the-data">The data</h2>
 <p>We’ll use <strong>HYDICE Urban</strong> <span class="citation" data-cites="erdc_hypercube">(U.S. Army Engineer Research and Development Center 2004)</span>, a classic hyperspectral benchmark from the U.S. Army Engineer Research and Development Center. It is a 307 x 307 pixel urban scene with 210 bands spanning roughly 400-2500 nm, at about 2 m ground sampling distance.</p>
 <p>It is a useful teaching scene because it mixes vegetation, roads, rooftops, bare ground, and shadow in a compact area. If you already have intuition for urban false-color imagery, this dataset is a natural next step: the same scene elements are there, but now we can analyze their full spectral behavior rather than only a few displayed bands.</p>
+<div class="img-placeholder scroll-reveal">
+  <div class="img-placeholder-icon">🛰</div>
+  <strong>Geographic context — image to add</strong>
+  Aerial or satellite overview of the HYDICE Urban scene footprint (~307 × 307 px, 2 m GSD), annotated with labeled land cover zones: vegetation patches, road network, rooftops, shadowed areas.<br><br>
+  <em>How to get it:</em> the HYDICE Urban scene is located near Washington, D.C. (Chantilly, VA area — confirm in ERDC metadata). Overlay the scene bounding box on a Google Earth or Mapbox satellite basemap using the corner coordinates from the <code>.hdr</code> file, then export a labeled screenshot. Alternatively, annotate the RGB composite directly in Python with <code>matplotlib</code> patches and text.
+</div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -642,7 +733,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb2-19">plt.show()</span></code></pre></div></div>
 </details>
 </div>
-<figure class="figure">
+<figure class="scroll-reveal figure">
 <p><img src="https://rellimylime.github.io/posts/hyperspectral-imaging/figures/rgb_composite.png" alt="RGB composite of the HYDICE Urban scene." style="display:block; margin:0 auto; width:70%;" class="figure-img"></p>
 <figcaption>
 RGB composite of the HYDICE Urban scene.
@@ -749,7 +840,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb3-19">plt.show()</span></code></pre></div></div>
 </details>
 </div>
-<figure class="figure">
+<figure class="scroll-reveal figure">
 <p><img src="https://rellimylime.github.io/posts/hyperspectral-imaging/figures/pixel_spectra.png" alt="Spectra from four hand-picked pixels. Even in raw radiance, each material type has a recognizably distinct shape across wavelength." style="display:block; margin:0 auto; width:85%;" class="figure-img"></p>
 <figcaption>
 Spectra from four hand-picked pixels. Even in raw radiance, each material type has a recognizably distinct shape across wavelength.
@@ -806,6 +897,47 @@ background-color: null;
 font-style: inherit;"># (94249, 210)</span></span></code></pre></div></div>
 </div>
 <p>In the real HYDICE scene, that bookkeeping step turns a <code>307 x 307 x 210</code> cube into a <code>94,249 x 210</code> matrix. Once the data are in this form, each pixel becomes one point in a 210-dimensional spectral space, and the methods below look for structure in that cloud of points.</p>
+<figure class="concept-figure scroll-reveal figure">
+  <svg viewbox="0 0 520 195" xmlns="http://www.w3.org/2000/svg" aria-label="Diagram showing a 3D hyperspectral cube being reshaped into a 2D pixel-by-band matrix">
+    <!-- Cube: front face -->
+    <polygon points="28,68 128,68 128,168 28,168" fill="rgba(47,111,103,0.1)" stroke="rgba(47,111,103,0.65)" stroke-width="1.5"></polygon>
+    <!-- Cube: top face -->
+    <polygon points="28,68 60,38 160,38 128,68" fill="rgba(47,111,103,0.07)" stroke="rgba(47,111,103,0.65)" stroke-width="1.5"></polygon>
+    <!-- Cube: right face -->
+    <polygon points="128,68 160,38 160,138 128,168" fill="rgba(47,111,103,0.05)" stroke="rgba(47,111,103,0.65)" stroke-width="1.5"></polygon>
+    <!-- Cube labels -->
+    <text x="78" y="123" text-anchor="middle" font-size="11" fill="rgba(39,46,54,0.65)">H × W</text>
+    <text x="78" y="138" text-anchor="middle" font-size="10" fill="rgba(39,46,54,0.45)">pixels</text>
+    <text x="155" y="78" text-anchor="middle" font-size="10" fill="rgba(39,46,54,0.55)" transform="rotate(-30,155,78)">B bands</text>
+    <!-- Arrow -->
+    <line x1="175" y1="103" x2="225" y2="103" stroke="rgba(39,46,54,0.32)" stroke-width="1.8"></line>
+    <polygon points="221,98 232,103 221,108" fill="rgba(39,46,54,0.32)"></polygon>
+    <text x="203" y="122" text-anchor="middle" font-size="10" fill="rgba(39,46,54,0.45)">reshape</text>
+    <!-- Matrix: band header row -->
+    <rect x="242" y="40" width="248" height="20" fill="rgba(47,111,103,0.14)" stroke="rgba(47,111,103,0.5)" stroke-width="1"></rect>
+    <text x="366" y="54" text-anchor="middle" font-size="10" fill="rgba(39,46,54,0.7)">B = 210 bands (columns)</text>
+    <!-- Matrix: pixel column label -->
+    <rect x="242" y="60" width="20" height="115" fill="rgba(47,111,103,0.1)" stroke="rgba(47,111,103,0.5)" stroke-width="1"></rect>
+    <text x="252" y="121" text-anchor="middle" font-size="10" fill="rgba(39,46,54,0.65)" transform="rotate(-90,252,121)">N = 94,249 pixels (rows)</text>
+    <!-- Matrix: data area -->
+    <rect x="262" y="60" width="228" height="115" fill="rgba(250,248,244,0.85)" stroke="rgba(124,146,137,0.45)" stroke-width="1"></rect>
+    <!-- Grid lines (cols) -->
+    <line x1="319" y1="60" x2="319" y2="175" stroke="rgba(124,146,137,0.28)" stroke-width="0.8"></line>
+    <line x1="376" y1="60" x2="376" y2="175" stroke="rgba(124,146,137,0.28)" stroke-width="0.8"></line>
+    <line x1="433" y1="60" x2="433" y2="175" stroke="rgba(124,146,137,0.28)" stroke-width="0.8"></line>
+    <!-- Grid lines (rows) -->
+    <line x1="262" y1="89" x2="490" y2="89" stroke="rgba(124,146,137,0.28)" stroke-width="0.8"></line>
+    <line x1="262" y1="118" x2="490" y2="118" stroke="rgba(124,146,137,0.28)" stroke-width="0.8"></line>
+    <line x1="262" y1="147" x2="490" y2="147" stroke="rgba(124,146,137,0.28)" stroke-width="0.8"></line>
+    <!-- Highlight: first row = one pixel's spectrum -->
+    <rect x="262" y="60" width="228" height="29" fill="rgba(47,111,103,0.13)" stroke="none"></rect>
+    <text x="376" y="78" text-anchor="middle" font-size="10" fill="rgba(47,111,103,0.88)">← one pixel's full spectrum →</text>
+    <!-- Bottom labels -->
+    <text x="94" y="188" text-anchor="middle" font-size="11" fill="rgba(39,46,54,0.6)" font-weight="600">Cube (B × H × W)</text>
+    <text x="366" y="188" text-anchor="middle" font-size="11" fill="rgba(39,46,54,0.6)" font-weight="600">Matrix (N × B)</text>
+  </svg>
+  <figcaption>Reshaping the cube: every pixel's position (row, col) maps to a single row in the matrix, carrying its full 210-band spectrum. The spectral data is unchanged — only the bookkeeping shape.</figcaption>
+</figure>
 </section>
 <section id="pca-svd" class="level2">
 <h2 class="anchored" data-anchor-id="pca-svd">PCA / SVD</h2>
@@ -1068,13 +1200,13 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb6-20">plt.show()</span></code></pre></div></div>
 </details>
 </div>
-<figure class="figure">
+<figure class="scroll-reveal figure">
 <p><img src="https://rellimylime.github.io/posts/hyperspectral-imaging/figures/scree.png" alt="Scree plot showing how much variance each principal component explains. The first few components account for most of the scene variability." style="display:block; margin:0 auto; width:60%;" class="figure-img"></p>
 <figcaption>
 Scree plot for the HYDICE Urban PCA. The steep early drop is the visual cue that the first few components explain most of the variation.
 </figcaption>
 </figure>
-<figure class="figure">
+<figure class="scroll-reveal figure">
 <p><img src="https://rellimylime.github.io/posts/hyperspectral-imaging/figures/eigenimages.png" alt="Top 6 eigenimages, rendered with a diverging colormap. PC1 captures overall scene brightness. Subsequent components capture spectral contrast between material classes." style="display:block; margin:0 auto; width:100%;" class="figure-img"></p>
 <figcaption>
 Top 6 eigenimages, rendered with a diverging colormap. PC1 captures overall scene brightness. Subsequent components capture spectral contrast between material classes.
@@ -1141,7 +1273,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb7-8">plt.show()</span></code></pre></div></div>
 </details>
 </div>
-<figure class="figure">
+<figure class="scroll-reveal figure">
 <p><img src="https://rellimylime.github.io/posts/hyperspectral-imaging/figures/pca_error.png" alt="Per-pixel reconstruction error for K=12. Bright pixels are where a 12-dimensional subspace fits poorly, typically rare materials, mixed pixels at material boundaries, or sensor noise." style="display:block; margin:0 auto; width:65%;" class="figure-img"></p>
 <figcaption>
 Per-pixel reconstruction error for K=12. Bright pixels are where a 12-dimensional subspace fits poorly, typically rare materials, mixed pixels at material boundaries, or sensor noise.
@@ -1518,13 +1650,19 @@ background-color: null;
 font-style: inherit;">"tight"</span>)</span>
 <span id="cb8-23">plt.show()</span></code></pre></div></div>
 </div>
-<figure class="figure">
+<figure class="scroll-reveal figure">
 <p><img src="https://rellimylime.github.io/posts/hyperspectral-imaging/figures/endmembers.png" alt="Selected endmember spectra. Each represents a pure material type: the vegetation signatures (Grass, Trees) show the characteristic red-edge feature near 700 nm." style="display:block; margin:0 auto; width:85%;" class="figure-img"></p>
 <figcaption>
 Selected endmember spectra. Each represents a pure material type: the vegetation signatures (Grass, Trees) show the characteristic red-edge feature near 700 nm.
 </figcaption>
 </figure>
 <p>These four curves are not “the truth.” They are a small hand-built library. If one important material is missing, the residual map will tell on us later.</p>
+<div class="img-placeholder scroll-reveal">
+  <div class="img-placeholder-icon">📚</div>
+  <strong>Spectral library comparison — image to add</strong>
+  Side-by-side of hand-picked endmember spectra (this scene) vs. USGS or ASTER library references for the same material classes.<br><br>
+  <em>How to get it:</em> download the USGS Spectral Library v7 from <code>https://crustal.usgs.gov/speclab/QueryAll07a.php</code> and query asphalt, grass, and roofing material entries. Export as CSV and overlay with <code>matplotlib</code> against the endmember spectra already saved in this notebook.
+</div>
 </section>
 <section id="solving-for-abundances-fcls" class="level3">
 <h3 class="anchored" data-anchor-id="solving-for-abundances-fcls">Solving for abundances: FCLS</h3>
@@ -1793,7 +1931,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb10-18">plt.show()</span></code></pre></div></div>
 </details>
 </div>
-<figure class="figure">
+<figure class="scroll-reveal figure">
 <p><img src="https://rellimylime.github.io/posts/hyperspectral-imaging/figures/abundance_maps.png" alt="Abundance maps for each endmember plus the per-pixel unmixing residual. Warmer colors indicate higher fractional abundance of that material. High residual highlights pixels the four-endmember model can't explain." style="display:block; margin:0 auto; width:100%;" class="figure-img"></p>
 <figcaption>
 Abundance maps for each endmember plus the per-pixel unmixing residual. Warmer colors indicate higher fractional abundance of that material. High residual highlights pixels the four-endmember model can’t explain.
@@ -2050,13 +2188,13 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb11-35">plt.show()</span></code></pre></div></div>
 </details>
 </div>
-<figure class="figure">
+<figure class="scroll-reveal figure">
 <p><img src="https://rellimylime.github.io/posts/hyperspectral-imaging/figures/nmf_spectra.png" alt="Six learned NMF component spectra. Because they are nonnegative, they read more like additive parts than positive-negative contrast axes." style="display:block; margin:0 auto; width:85%;" class="figure-img"></p>
 <figcaption>
 NMF component spectra. Unlike PCA loadings, these are strictly nonnegative, so they read more like additive parts than contrast directions.
 </figcaption>
 </figure>
-<figure class="figure">
+<figure class="scroll-reveal figure">
 <p><img src="https://rellimylime.github.io/posts/hyperspectral-imaging/figures/nmf_maps.png" alt="Spatial weight maps for the six NMF components. Brighter areas are where each learned component contributes more strongly." style="display:block; margin:0 auto; width:100%;" class="figure-img"></p>
 <figcaption>
 NMF spatial weight maps. Because the weights are nonnegative but not constrained to sum to one, several components can be strong in the same pixel.
@@ -2273,6 +2411,27 @@ font-style: inherit;">"*.npy"</span>))])</span></code></pre></div></div>
 <li>Freeze your environment: <code>conda env export &gt; environment.yml</code> or <code>uv pip freeze &gt; requirements.txt</code>.</li>
 <li>The dataset is freely available from ERDC <span class="citation" data-cites="erdc_hypercube">(U.S. Army Engineer Research and Development Center 2004)</span>; record the access date and use the provided handle as a citation.</li>
 </ul>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const reveals = document.querySelectorAll('.scroll-reveal');
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    reveals.forEach(function (el) { el.classList.add('is-visible'); });
+    return;
+  }
+
+  const observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+  reveals.forEach(function (el) { observer.observe(el); });
+});
+</script>
 </section>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>

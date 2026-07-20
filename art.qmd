@@ -78,7 +78,7 @@ Currently noticing
 ::::::
 -->
 
-## Poetry
+## Poetry & Prose
 
 Words are slower than data and less obedient. That is part of the appeal.
 
@@ -96,6 +96,25 @@ Random line
 
 ```{=html}
 <div class="poetry-stack">
+  <details class="poem-entry">
+    <summary class="poem-summary">
+      <span class="poem-summary-title">What makes me</span>
+      <span class="poem-summary-meta">prose / perspective / self-sculpture</span>
+    </summary>
+    <div class="poem-entry-body">
+      <div class="poem-body prose-body" data-poem-title="What makes me">
+        <div class="poem-stanza">
+          <div class="poem-line"><span class="poem-line-text">I have a way of stepping back from what is and walking around it like a sculpture in a museum,</span><button type="button" class="line-heart" data-line-id="what-makes-me-01" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">looking from different angles,</span><button type="button" class="line-heart" data-line-id="what-makes-me-02" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">feeling the impact,</span><button type="button" class="line-heart" data-line-id="what-makes-me-03" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">revering the way stone can be made to look so soft at the hands of the right artist,</span><button type="button" class="line-heart" data-line-id="what-makes-me-04" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">and I learn from this artist,</span><button type="button" class="line-heart" data-line-id="what-makes-me-05" aria-pressed="false">&#9825;</button></div>
+          <div class="poem-line"><span class="poem-line-text">and I take it home to my own studio and use it to sculpt myself and my creations.</span><button type="button" class="line-heart" data-line-id="what-makes-me-06" aria-pressed="false">&#9825;</button></div>
+        </div>
+      </div>
+    </div>
+  </details>
+
   <details class="poem-entry">
     <summary class="poem-summary">
       <span class="poem-summary-title">A Bad Design</span>

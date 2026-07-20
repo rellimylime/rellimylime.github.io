@@ -8,9 +8,9 @@ body-classes: home-page
   <img class="home-hero-image" src="images/pages/home/hero.jpg" alt="">
   <div class="home-hero-copy">
     <div id="home-hero-headline" class="home-hero-headline">
-      <span class="hero-line hero-line--1" aria-label="What the world reflects.">What the world <span class="word-reflect"><span class="word-reflect-s">s</span>ʇɔǝʅɟǝɹ</span>.</span>
-      <span class="hero-line hero-line--2">What our instruments preserve.</span>
-      <span class="hero-line hero-line--3">What inference can honestly recover.</span>
+      <a class="hero-line hero-line--1" href="posts/hyperspectral-imaging/" aria-label="What the world reflects.">What the world <span class="word-reflect"><span class="word-reflect-s">s</span>ʇɔǝʅɟǝɹ</span>.</a>
+      <a class="hero-line hero-line--2" href="posts/forest-data-compilation/">What our instruments preserve.</a>
+      <a class="hero-line hero-line--3" href="posts/eds241-final/">What inference can honestly recover.</a>
     </div>
   </div>
 </section>

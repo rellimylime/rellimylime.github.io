@@ -34,8 +34,8 @@ Remote sensing, machine learning, and environmental/geospatial data infrastructu
 :::::::: page-shell
 ```{=html}
 <div class="research-overview research-bg-trigger" data-bg-id="intro">
-  <p class="research-kicker">Current work spans irrigation mapping in Sub-Saharan Africa, national-scale forest change analysis, and cloud-accessible wildfire resilience tools.</p>
-  <p class="research-context">That work currently lives across the <a href="https://www.waveslab.org/"><strong>WaVeS Lab</strong></a>, the <a href="https://www.landscapesofchangelab.com/"><strong>LOC Lab</strong></a>, and my capstone with the <a href="https://www.nceas.ucsb.edu/wildfire-resilience-index"><strong>Wildfire Resilience Index</strong></a> team at NCEAS.</p>
+  <p class="research-kicker">Current work centers on national-scale forest thermophilization analysis, a research repository that doubles as a tool, and ongoing manuscript development on irrigation expansion in Sub-Saharan Africa.</p>
+  <p class="research-context">That work currently lives in the <a href="https://www.landscapesofchangelab.com/"><strong>LOC Lab</strong></a> through a pilot MEDS fellowship with Joan Dudney, with continuing ties to the <a href="https://www.waveslab.org/"><strong>WaVeS Lab</strong></a> and recent capstone work with the <a href="https://www.nceas.ucsb.edu/wildfire-resilience-index"><strong>Wildfire Resilience Index</strong></a> team at NCEAS.</p>
 </div>
 ```
 
@@ -44,13 +44,13 @@ Remote sensing, machine learning, and environmental/geospatial data infrastructu
 
 **Lab:** UCSB Water Vegetation and Society (WaVeS) Lab, Prof. Kelly Caylor\
 **Timeline:** June 2024 - Present\
-**Status:** In Progress
+**Status:** Manuscript Development
 
-At WaVeS, I contribute to a broader research program on irrigation expansion, water access, and agricultural change in Sub-Saharan Africa, with several linked papers currently in progress. My part of that work focuses on where irrigation growth is happening: whether expansion over the past two decades has been concentrated inside major command areas or has emerged more diffusely through decentralized systems.
+At WaVeS, I am working toward a first-author manuscript within a broader research program on irrigation expansion, water access, and agricultural change in Sub-Saharan Africa. My part of that work focuses on where irrigation growth is happening: whether expansion over the past two decades has been concentrated inside major command areas or has emerged more diffusely through decentralized systems.
 
 I work closely with Prof. Kelly Caylor and [Anna Boser](https://anna-boser.github.io/), who has been an important advisor and mentor throughout the project. Anna's work on small-scale irrigation and agricultural systems helps ground the broader research agenda, and related technical development in [this pivot-detection repository](https://github.com/Jason-Perez27/SSA-Pivot-Detect) is part of the larger infrastructure that this work can both contribute to and benefit from.
 
-Alongside the paper pipeline, I have also been developing a separate center-pivot segmentation workflow following Chen et al., using CNN and U-Net style semantic segmentation on Landsat imagery. The immediate goal is to build a 2015 detection layer that can be compared on the right temporal footing with existing irrigation and agriculture datasets. That segmentation work is useful supporting infrastructure, but it is not required for the publication track itself.
+Alongside the manuscript pipeline, I have also been developing a separate center-pivot segmentation workflow following Chen et al., using CNN and U-Net style semantic segmentation on Landsat imagery. The immediate goal is to build a 2015 detection layer that can be compared on the right temporal footing with existing irrigation and agriculture datasets. That segmentation work is useful supporting infrastructure, but it is not required for the publication track itself. The manuscript is currently moving at a slower pace while LOC fellowship work is the main focus, but the project remains active.
 
 ```{=html}
 <p class="research-note"><strong>Technical details:</strong> My current WaVeS workflows use Python geospatial pipelines built with Rasterio, GeoPandas, and Shapely to process multiband raster and vector datasets such as aridity indices, AEI layers, and CPIS shapefiles across heterogeneous sources. In parallel, I have been testing a Chen-style center-pivot segmentation workflow to generate a 2015 detection dataset that can support temporally aligned comparisons with existing irrigation and agricultural products.</p>
@@ -60,19 +60,21 @@ Alongside the paper pipeline, I have also been developing a separate center-pivo
 ::: {.research-project .research-bg-trigger data-bg-id="loc"}
 ### Forest Thermophilization & Disturbance Analysis
 
-**Lab:** Landscapes of Change (LOC) Lab, Bren School, UCSB\
+**Lab:** Landscapes of Change (LOC) Lab, Prof. Joan Dudney, Bren School, UCSB\
 **Timeline:** January 2026 - Present\
+**Fellowship:** Pilot MEDS Fellowship, $15,000 project budget\
 **Status:** In Progress
 
-The LOC Lab investigates how forests are changing in response to climate and disturbance: thermophilization (the shift toward warmer-adapted species compositions), fire, insects, drought. I'm building and maintaining the data infrastructure that makes this analysis possible at national scale.
+The LOC Lab investigates how forests are changing in response to climate and disturbance: thermophilization (the shift toward warmer-adapted species compositions), fire, insects, drought. Through a pilot MEDS fellowship with Joan Dudney, I am continuing the national-scale thermophilization analysis and building the data infrastructure that makes this work possible.
 
-The core pipeline integrates five federal datasets, USDA Forest Service aerial disturbance surveys (IDS), TerraClimate, PRISM, WorldClim, and the Forest Inventory and Analysis database (FIA), across \~4.47M records and \~300 GB of processed output. Key elements of the work:
+The core pipeline integrates five federal datasets, USDA Forest Service aerial disturbance surveys (IDS), TerraClimate, PRISM, WorldClim, and the Forest Inventory and Analysis database (FIA), across \~4.47M records and \~300 GB of processed output. The repository is designed to function both as analysis infrastructure and as a navigable tool for future work. Key elements include:
 
 -   **Pixel decomposition architecture** - Spatially links forest disturbance polygon observations to gridded climate data using area-weighted joins, extracting pixel-level values via Google Earth Engine across all climate datasets
 -   **Plot-level FIA summaries** - Tree metrics, diversity indices, disturbance history, and site-level climate records (1958-present) for thermophilization analysis across \~7,000 permanent FIA sites
--   **Reproducible pipeline design** - Centralized YAML configuration, renv for R environment management, config-driven architecture built to be sustained and extended post-project
+-   **Repository and app ecosystem** - Large, documented project repository paired with Streamlit apps for schema navigation, compiled data QA, and project exploration
+-   **Reproducible pipeline design** - Centralized YAML configuration, renv for R environment management, and config-driven architecture built to be sustained and extended
 
-I also built the [FIA Database Schema Navigator](https://fiadb-dashboard.streamlit.app/), a Streamlit tool for exploring the FIADB v9.4 schema without loading the full 70 GB SQLite file, along with two downstream dashboards for compiled data QA and full project exploration. Details in the [blog post](posts/forest-data-compilation/index.qmd) and [repository](https://github.com/rellimylime/forest-data-compilation).
+I also built the [FIA Database Schema Navigator](https://fiadb-dashboard.streamlit.app/), a Streamlit tool for exploring the FIADB v9.4 schema without loading the full 70 GB SQLite file, along with two downstream apps for compiled data QA and full project exploration. Details in the [blog post](posts/forest-data-compilation/index.qmd) and [repository](https://github.com/rellimylime/forest-data-compilation).
 
 ```{=html}
 <p class="research-note"><strong>Technical details:</strong> R and Python pipelines integrating IDS, TerraClimate, PRISM, WorldClim, and FIA. Google Earth Engine pixel decomposition with area-weighted coverage fractions. Streamlit dashboards for schema navigation, data exploration, and project documentation. <code>renv</code> and YAML config-driven reproducibility.</p>
@@ -83,10 +85,10 @@ I also built the [FIA Database Schema Navigator](https://fiadb-dashboard.streaml
 ### Wildfire Resilience Index Data Access & R Package
 
 **Client:** National Center for Ecological Analysis and Synthesis (NCEAS), Dr. Caitlin Fong\
-**Timeline:** January 2026 - Present\
-**Status:** In Progress (MEDS Capstone)
+**Timeline:** January 2026 - June 2026\
+**Status:** Completed (MEDS Capstone)
 
-This capstone project focuses on making the Wildfire Resilience Index (WRI) usable without asking people to download several terabytes of raster data. Working with my capstone team, I am helping turn 100+ wildfire resilience layers into cloud-accessible geospatial assets and build an open-source R package that lets users discover, subset, and visualize the data directly.
+This capstone project focused on making the Wildfire Resilience Index (WRI) usable without asking people to download several terabytes of raster data. Working with my capstone team, I helped turn 100+ wildfire resilience layers into cloud-accessible geospatial assets and build an open-source R package that lets users discover, subset, and visualize the data directly.
 
 Key pieces of the work:
 

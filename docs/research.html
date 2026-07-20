@@ -194,40 +194,42 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div class="page-shell">
 <div class="research-overview research-bg-trigger" data-bg-id="intro">
-  <p class="research-kicker">Current work spans irrigation mapping in Sub-Saharan Africa, national-scale forest change analysis, and cloud-accessible wildfire resilience tools.</p>
-  <p class="research-context">That work currently lives across the <a href="https://www.waveslab.org/"><strong>WaVeS Lab</strong></a>, the <a href="https://www.landscapesofchangelab.com/"><strong>LOC Lab</strong></a>, and my capstone with the <a href="https://www.nceas.ucsb.edu/wildfire-resilience-index"><strong>Wildfire Resilience Index</strong></a> team at NCEAS.</p>
+  <p class="research-kicker">Current work centers on national-scale forest thermophilization analysis, a research repository that doubles as a tool, and ongoing manuscript development on irrigation expansion in Sub-Saharan Africa.</p>
+  <p class="research-context">That work currently lives in the <a href="https://www.landscapesofchangelab.com/"><strong>LOC Lab</strong></a> through a pilot MEDS fellowship with Joan Dudney, with continuing ties to the <a href="https://www.waveslab.org/"><strong>WaVeS Lab</strong></a> and recent capstone work with the <a href="https://www.nceas.ucsb.edu/wildfire-resilience-index"><strong>Wildfire Resilience Index</strong></a> team at NCEAS.</p>
 </div>
 <section id="satellite-based-irrigation-mapping-in-sub-saharan-africa" class="level3 research-project research-bg-trigger" data-bg-id="waves">
 <h3 class="anchored" data-anchor-id="satellite-based-irrigation-mapping-in-sub-saharan-africa">Satellite-Based Irrigation Mapping in Sub-Saharan Africa</h3>
 <p><strong>Lab:</strong> UCSB Water Vegetation and Society (WaVeS) Lab, Prof.&nbsp;Kelly Caylor<br>
 <strong>Timeline:</strong> June 2024 - Present<br>
-<strong>Status:</strong> In Progress</p>
-<p>At WaVeS, I contribute to a broader research program on irrigation expansion, water access, and agricultural change in Sub-Saharan Africa, with several linked papers currently in progress. My part of that work focuses on where irrigation growth is happening: whether expansion over the past two decades has been concentrated inside major command areas or has emerged more diffusely through decentralized systems.</p>
+<strong>Status:</strong> Manuscript Development</p>
+<p>At WaVeS, I am working toward a first-author manuscript within a broader research program on irrigation expansion, water access, and agricultural change in Sub-Saharan Africa. My part of that work focuses on where irrigation growth is happening: whether expansion over the past two decades has been concentrated inside major command areas or has emerged more diffusely through decentralized systems.</p>
 <p>I work closely with Prof.&nbsp;Kelly Caylor and <a href="https://anna-boser.github.io/">Anna Boser</a>, who has been an important advisor and mentor throughout the project. Anna’s work on small-scale irrigation and agricultural systems helps ground the broader research agenda, and related technical development in <a href="https://github.com/Jason-Perez27/SSA-Pivot-Detect">this pivot-detection repository</a> is part of the larger infrastructure that this work can both contribute to and benefit from.</p>
-<p>Alongside the paper pipeline, I have also been developing a separate center-pivot segmentation workflow following Chen et al., using CNN and U-Net style semantic segmentation on Landsat imagery. The immediate goal is to build a 2015 detection layer that can be compared on the right temporal footing with existing irrigation and agriculture datasets. That segmentation work is useful supporting infrastructure, but it is not required for the publication track itself.</p>
+<p>Alongside the manuscript pipeline, I have also been developing a separate center-pivot segmentation workflow following Chen et al., using CNN and U-Net style semantic segmentation on Landsat imagery. The immediate goal is to build a 2015 detection layer that can be compared on the right temporal footing with existing irrigation and agriculture datasets. That segmentation work is useful supporting infrastructure, but it is not required for the publication track itself. The manuscript is currently moving at a slower pace while LOC fellowship work is the main focus, but the project remains active.</p>
 <p class="research-note"><strong>Technical details:</strong> My current WaVeS workflows use Python geospatial pipelines built with Rasterio, GeoPandas, and Shapely to process multiband raster and vector datasets such as aridity indices, AEI layers, and CPIS shapefiles across heterogeneous sources. In parallel, I have been testing a Chen-style center-pivot segmentation workflow to generate a 2015 detection dataset that can support temporally aligned comparisons with existing irrigation and agricultural products.</p>
 </section>
 <section id="forest-thermophilization-disturbance-analysis" class="level3 research-project research-bg-trigger" data-bg-id="loc">
 <h3 class="anchored" data-anchor-id="forest-thermophilization-disturbance-analysis">Forest Thermophilization &amp; Disturbance Analysis</h3>
-<p><strong>Lab:</strong> Landscapes of Change (LOC) Lab, Bren School, UCSB<br>
+<p><strong>Lab:</strong> Landscapes of Change (LOC) Lab, Prof.&nbsp;Joan Dudney, Bren School, UCSB<br>
 <strong>Timeline:</strong> January 2026 - Present<br>
+<strong>Fellowship:</strong> Pilot MEDS Fellowship, $15,000 project budget<br>
 <strong>Status:</strong> In Progress</p>
-<p>The LOC Lab investigates how forests are changing in response to climate and disturbance: thermophilization (the shift toward warmer-adapted species compositions), fire, insects, drought. I’m building and maintaining the data infrastructure that makes this analysis possible at national scale.</p>
-<p>The core pipeline integrates five federal datasets, USDA Forest Service aerial disturbance surveys (IDS), TerraClimate, PRISM, WorldClim, and the Forest Inventory and Analysis database (FIA), across ~4.47M records and ~300 GB of processed output. Key elements of the work:</p>
+<p>The LOC Lab investigates how forests are changing in response to climate and disturbance: thermophilization (the shift toward warmer-adapted species compositions), fire, insects, drought. Through a pilot MEDS fellowship with Joan Dudney, I am continuing the national-scale thermophilization analysis and building the data infrastructure that makes this work possible.</p>
+<p>The core pipeline integrates five federal datasets, USDA Forest Service aerial disturbance surveys (IDS), TerraClimate, PRISM, WorldClim, and the Forest Inventory and Analysis database (FIA), across ~4.47M records and ~300 GB of processed output. The repository is designed to function both as analysis infrastructure and as a navigable tool for future work. Key elements include:</p>
 <ul>
 <li><strong>Pixel decomposition architecture</strong> - Spatially links forest disturbance polygon observations to gridded climate data using area-weighted joins, extracting pixel-level values via Google Earth Engine across all climate datasets</li>
 <li><strong>Plot-level FIA summaries</strong> - Tree metrics, diversity indices, disturbance history, and site-level climate records (1958-present) for thermophilization analysis across ~7,000 permanent FIA sites</li>
-<li><strong>Reproducible pipeline design</strong> - Centralized YAML configuration, renv for R environment management, config-driven architecture built to be sustained and extended post-project</li>
+<li><strong>Repository and app ecosystem</strong> - Large, documented project repository paired with Streamlit apps for schema navigation, compiled data QA, and project exploration</li>
+<li><strong>Reproducible pipeline design</strong> - Centralized YAML configuration, renv for R environment management, and config-driven architecture built to be sustained and extended</li>
 </ul>
-<p>I also built the <a href="https://fiadb-dashboard.streamlit.app/">FIA Database Schema Navigator</a>, a Streamlit tool for exploring the FIADB v9.4 schema without loading the full 70 GB SQLite file, along with two downstream dashboards for compiled data QA and full project exploration. Details in the <a href="./posts/forest-data-compilation/index.html">blog post</a> and <a href="https://github.com/rellimylime/forest-data-compilation">repository</a>.</p>
+<p>I also built the <a href="https://fiadb-dashboard.streamlit.app/">FIA Database Schema Navigator</a>, a Streamlit tool for exploring the FIADB v9.4 schema without loading the full 70 GB SQLite file, along with two downstream apps for compiled data QA and full project exploration. Details in the <a href="./posts/forest-data-compilation/index.html">blog post</a> and <a href="https://github.com/rellimylime/forest-data-compilation">repository</a>.</p>
 <p class="research-note"><strong>Technical details:</strong> R and Python pipelines integrating IDS, TerraClimate, PRISM, WorldClim, and FIA. Google Earth Engine pixel decomposition with area-weighted coverage fractions. Streamlit dashboards for schema navigation, data exploration, and project documentation. <code>renv</code> and YAML config-driven reproducibility.</p>
 </section>
 <section id="wildfire-resilience-index-data-access-r-package" class="level3 research-project research-bg-trigger" data-bg-id="wri">
 <h3 class="anchored" data-anchor-id="wildfire-resilience-index-data-access-r-package">Wildfire Resilience Index Data Access &amp; R Package</h3>
 <p><strong>Client:</strong> National Center for Ecological Analysis and Synthesis (NCEAS), Dr.&nbsp;Caitlin Fong<br>
-<strong>Timeline:</strong> January 2026 - Present<br>
-<strong>Status:</strong> In Progress (MEDS Capstone)</p>
-<p>This capstone project focuses on making the Wildfire Resilience Index (WRI) usable without asking people to download several terabytes of raster data. Working with my capstone team, I am helping turn 100+ wildfire resilience layers into cloud-accessible geospatial assets and build an open-source R package that lets users discover, subset, and visualize the data directly.</p>
+<strong>Timeline:</strong> January 2026 - June 2026<br>
+<strong>Status:</strong> Completed (MEDS Capstone)</p>
+<p>This capstone project focused on making the Wildfire Resilience Index (WRI) usable without asking people to download several terabytes of raster data. Working with my capstone team, I helped turn 100+ wildfire resilience layers into cloud-accessible geospatial assets and build an open-source R package that lets users discover, subset, and visualize the data directly.</p>
 <p>Key pieces of the work:</p>
 <ul>
 <li><strong>Cloud-ready geospatial archive</strong> - Converting 100+ WRI raster layers to Cloud-Optimized GeoTIFFs (COGs), with metadata structured for reproducible public access</li>

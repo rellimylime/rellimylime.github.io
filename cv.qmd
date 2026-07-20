@@ -11,7 +11,7 @@ Condensed version of the formal record. The fuller context for the work itself l
 ```{=html}
 <div class="resume-header">
   <p class="resume-name">Emily Miller</p>
-  <p class="resume-tagline">Environmental data scientist working across remote sensing, geospatial analysis, and reproducible research workflows.</p>
+  <p class="resume-tagline">Environmental data scientist working across remote sensing, geospatial analysis, reproducible research infrastructure, and environmental decision-support tools.</p>
   <div class="resume-contact">
     <a href="mailto:ermiller@ucsb.edu">ermiller@ucsb.edu</a>
     <span>(978) 265-9348</span>
@@ -27,7 +27,7 @@ Condensed version of the formal record. The fuller context for the work itself l
 <details class="page-foldout resume-context-foldout">
   <summary>Current project context</summary>
   <div class="page-foldout-body">
-    <p>Current work is spread across the <a href="https://www.waveslab.org/">WaVeS Lab</a>, the <a href="https://www.landscapesofchangelab.com/">LOC Lab</a>, and a MEDS capstone with the <a href="https://www.nceas.ucsb.edu/wildfire-resilience-index">Wildfire Resilience Index</a> team at NCEAS. The project-level narratives live on the <a href="research.qmd">research</a> page.</p>
+    <p>Current work is centered in the <a href="https://www.landscapesofchangelab.com/">LOC Lab</a> through a pilot MEDS fellowship with Joan Dudney, with continuing manuscript development in the <a href="https://www.waveslab.org/">WaVeS Lab</a> and recent capstone work with the <a href="https://www.nceas.ucsb.edu/wildfire-resilience-index">Wildfire Resilience Index</a> team at NCEAS. The project-level narratives live on the <a href="research.qmd">research</a> page.</p>
   </div>
 </details>
 ```
@@ -42,7 +42,7 @@ Condensed version of the formal record. The fuller context for the work itself l
         <h3 class="resume-entry-title">Master of Environmental Data Science</h3>
         <p class="resume-entry-org">Bren School of Environmental Science &amp; Management, University of California, Santa Barbara</p>
       </div>
-      <p class="resume-date">Expected June 2026</p>
+      <p class="resume-date">June 2026</p>
     </div>
     <p class="resume-detail"><strong>GPA:</strong> 4.00</p>
     <p class="resume-detail"><strong>Highlighted coursework:</strong> Machine Learning in Environmental Science, Geospatial Analysis and Remote Sensing, Environmental Systems Modeling, Environmental Datasets and Data Engineering, Databases and Data Management, Statistics for Environmental Data Science</p>
@@ -71,15 +71,17 @@ Condensed version of the formal record. The fuller context for the work itself l
   <article class="resume-entry">
     <div class="resume-entry-head">
       <div>
-        <h3 class="resume-entry-title">Research Data Analyst</h3>
+        <h3 class="resume-entry-title">Pilot MEDS Fellow / Research Data Analyst</h3>
         <p class="resume-entry-org">Landscapes of Change (LOC) Lab, Bren School of Environmental Science &amp; Management, UCSB</p>
       </div>
       <p class="resume-date">January 2026 - Present</p>
     </div>
     <ul>
+      <li>Awarded pilot MEDS fellowship with Prof. Joan Dudney, supporting national-scale forest thermophilization analysis, research-tool repository development, and companion apps with a $15,000 project budget.</li>
       <li>Built reproducible data pipelines in R and Python integrating five federal datasets including USDA Forest Service aerial surveys, TerraClimate, PRISM, WorldClim, and FIA into analysis-ready formats using centralized YAML configuration and <code>renv</code>.</li>
       <li>Developed pixel decomposition architecture to spatially link forest disturbance observations to gridded climate data via area-weighted joins, extracting pixel-level values through Google Earth Engine with roughly 300 GB of processed output.</li>
       <li>Produced plot-level forest inventory summaries including tree metrics, diversity indices, disturbance history, and site-level climate records from 1958 to present for thermophilization analysis across roughly 7,000 FIA sites.</li>
+      <li>Designed Streamlit apps for FIADB schema navigation, compiled data QA, and full project exploration so collaborators can inspect and extend the repository without loading the full source datasets locally.</li>
     </ul>
   </article>
 

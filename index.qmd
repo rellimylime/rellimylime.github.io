@@ -22,7 +22,7 @@ body-classes: home-page
   </div>
   <div class="home-intro-grid">
     <img class="home-headshot" src="images/pages/home/emily-headshot.png" alt="Emily Miller smiling outdoors.">
-    <p class="home-intro-bio">I build geospatial data pipelines and apply machine learning to satellite imagery to understand how land and climate systems are changing. I'm finishing a Master of Environmental Data Science at UC Santa Barbara's Bren School, expected June 2026, alongside a B.S. in Mathematics. My work sits at the intersection of remote sensing, spatial statistics, and reproducible data engineering. Right now that looks like irrigation mapping, national-scale forest change analysis, and cloud-accessible wildfire resilience tools.</p>
+    <p class="home-intro-bio">I build geospatial data pipelines and decision-ready tools for understanding how land and climate systems are changing. I completed UC Santa Barbara's Master of Environmental Data Science program at the Bren School in June 2026 with a 4.0 GPA, after earning a B.S. in Mathematics. Right now that looks like a pilot MEDS fellowship with Joan Dudney in the LOC Lab: national-scale forest thermophilization analysis, a large research repository that doubles as a tool, and companion apps for navigating the data. I am also continuing toward a first-author manuscript on irrigation expansion in Sub-Saharan Africa.</p>
   </div>
 </section>
 
@@ -37,7 +37,7 @@ body-classes: home-page
       <div class="home-feature-card-copy">
         <p class="home-feature-card-label">LOC Lab</p>
         <h3 class="home-feature-card-title">Forest Thermophilization &amp; Disturbance Analysis</h3>
-        <p class="home-feature-card-summary">National-scale R and Python pipeline linking FIA, IDS, TerraClimate, PRISM, and WorldClim to study how U.S. forests are changing under climate and disturbance.</p>
+        <p class="home-feature-card-summary">Pilot MEDS fellowship work building a national-scale R and Python repository, analysis pipeline, and apps for studying how U.S. forests are changing under climate and disturbance.</p>
         <span class="home-feature-card-link">View project -&gt;</span>
       </div>
     </a>
@@ -55,7 +55,7 @@ body-classes: home-page
       <div class="home-feature-card-copy">
         <p class="home-feature-card-label">NCEAS Capstone</p>
         <h3 class="home-feature-card-title">Wildfire Resilience Index R Package</h3>
-        <p class="home-feature-card-summary">Cloud-accessible wildfire resilience archive and open-source R package work so users can query, subset, and visualize 100+ layers without downloading terabytes locally.</p>
+        <p class="home-feature-card-summary">Recent MEDS capstone work on a cloud-accessible wildfire resilience archive and open-source R package for querying, subsetting, and visualizing 100+ layers.</p>
         <span class="home-feature-card-link">View project -&gt;</span>
       </div>
     </a>

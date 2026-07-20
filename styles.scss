@@ -2117,6 +2117,31 @@ body.js-enhanced.home-page .quote-section.is-visible {
   margin-top: 2.4rem;
 }
 
+.home-intro-grid {
+  display: grid;
+  grid-template-columns: minmax(10rem, 13.5rem) minmax(0, 1fr);
+  gap: 1.35rem 1.6rem;
+  align-items: center;
+  max-width: 66rem;
+}
+
+.home-headshot {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  margin: 0;
+  border: 1px solid rgba($sage-green, 0.95);
+  border-radius: 0.45rem;
+  box-shadow: 0 0.9rem 2rem rgba($deep-purple, 0.14);
+  object-fit: cover;
+  object-position: 52% 42%;
+
+  &:hover {
+    transform: none;
+    box-shadow: 0 0.9rem 2rem rgba($deep-purple, 0.14);
+  }
+}
+
 .home-intro-bio {
   margin: 0;
   max-width: 53rem;
@@ -2903,6 +2928,15 @@ body.outside-lab-page .evolution-links span {
 
   .home-intro {
     margin-top: 2rem;
+  }
+
+  .home-intro-grid {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .home-headshot {
+    width: min(10.5rem, 52vw);
   }
 
   .home-intro-bio {

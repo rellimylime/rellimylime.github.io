@@ -20,7 +20,10 @@ body-classes: home-page
     <p class="home-section-kicker">About</p>
     <h2 id="home-intro-title" class="home-section-title">What I'm working on</h2>
   </div>
-  <p class="home-intro-bio">I build geospatial data pipelines and apply machine learning to satellite imagery to understand how land and climate systems are changing. I'm finishing a Master of Environmental Data Science at UC Santa Barbara's Bren School, expected June 2026, alongside a B.S. in Mathematics. My work sits at the intersection of remote sensing, spatial statistics, and reproducible data engineering. Right now that looks like irrigation mapping, national-scale forest change analysis, and cloud-accessible wildfire resilience tools.</p>
+  <div class="home-intro-grid">
+    <img class="home-headshot" src="images/pages/home/emily-headshot.png" alt="Emily Miller smiling outdoors.">
+    <p class="home-intro-bio">I build geospatial data pipelines and apply machine learning to satellite imagery to understand how land and climate systems are changing. I'm finishing a Master of Environmental Data Science at UC Santa Barbara's Bren School, expected June 2026, alongside a B.S. in Mathematics. My work sits at the intersection of remote sensing, spatial statistics, and reproducible data engineering. Right now that looks like irrigation mapping, national-scale forest change analysis, and cloud-accessible wildfire resilience tools.</p>
+  </div>
 </section>
 
 <section class="home-shell home-featured" aria-labelledby="home-featured-title">

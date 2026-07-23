@@ -74,6 +74,12 @@ body-classes: home-page
 :::::::::::::::::::::::::::::: slider-container
 ::::::::::::::::::::::::::::: click-slider
 ::: slick-slide
+**"Documentation is a love letter that you write to your future self."**
+
+-   Damian Conway
+:::
+
+::: slick-slide
 **"It is my experience that proofs involving matrices can be shortened by 50% if one throws the matrices out."**
 
 -   Emil Artin
@@ -95,12 +101,6 @@ body-classes: home-page
 **"I have no fear of losing my life-if I have to save a koala or a crocodile or a kangaroo or a snake, mate, I will save it."**
 
 -   Steve Irwin
-:::
-
-::: slick-slide
-**"Documentation is a love letter that you write to your future self."**
-
--   Damian Conway
 :::
 
 ::: slick-slide

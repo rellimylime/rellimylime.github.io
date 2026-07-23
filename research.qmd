@@ -74,7 +74,7 @@ The core pipeline integrates five federal datasets, USDA Forest Service aerial d
 -   **Repository and app ecosystem** - Large, documented project repository paired with Streamlit apps for schema navigation, compiled data QA, and project exploration
 -   **Reproducible pipeline design** - Centralized YAML configuration, renv for R environment management, and config-driven architecture built to be sustained and extended
 
-I also built the [FIA Database Schema Navigator](https://fiadb-dashboard.streamlit.app/), a Streamlit tool for exploring the FIADB v9.4 schema without loading the full 70 GB SQLite file, along with two downstream apps for compiled data QA and full project exploration. Details in the [blog post](posts/forest-data-compilation/index.qmd) and [repository](https://github.com/rellimylime/forest-data-compilation).
+I also built the [FIA Database Schema Navigator](https://fiadb-dashboard.streamlit.app/), a Streamlit tool for exploring the FIADB v9.4 schema without loading the full 70 GB SQLite file, along with two downstream apps for [compiled data QA](https://fia-data-compilation.streamlit.app/) and [full project exploration](https://forest-data-compilation-dashboard.streamlit.app/). Details in the [blog post](posts/forest-data-compilation/index.qmd) and [repository](https://github.com/rellimylime/forest-data-compilation).
 
 ```{=html}
 <p class="research-note"><strong>Technical details:</strong> R and Python pipelines integrating IDS, TerraClimate, PRISM, WorldClim, and FIA. Google Earth Engine pixel decomposition with area-weighted coverage fractions. Streamlit dashboards for schema navigation, data exploration, and project documentation. <code>renv</code> and YAML config-driven reproducibility.</p>

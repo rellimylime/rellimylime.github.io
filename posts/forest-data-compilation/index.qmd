@@ -222,7 +222,7 @@ The FIA Compiled Data Explorer is for checking and exploring processed outputs, 
 
 ```{=html}
 <iframe
-  src="https://forest-data-compilation.streamlit.app?embed=true"
+  src="https://forest-data-compilation-dashboard.streamlit.app?embed=true"
   width="100%"
   height="700px"
   frameborder="0"
@@ -231,7 +231,7 @@ The FIA Compiled Data Explorer is for checking and exploring processed outputs, 
 ></iframe>
 ```
 
-[Open the Full Forest Data Compilation Dashboard](https://forest-data-compilation.streamlit.app/)
+[Open the Full Forest Data Compilation Dashboard](https://forest-data-compilation-dashboard.streamlit.app/)
 
 The full project dashboard pulls the same idea one level up, combining FIA outputs with IDS and climate products in one place.
 
@@ -241,7 +241,7 @@ This post is about building the FIA schema navigator. If you want the full data 
 
 -   [FIA Database Schema Navigator](https://fiadb-dashboard.streamlit.app/)
 -   [FIA Compiled Data Explorer](https://fia-data-compilation.streamlit.app/)
--   [Full Forest Data Compilation Dashboard](https://forest-data-compilation.streamlit.app/)
+-   [Full Forest Data Compilation Dashboard](https://forest-data-compilation-dashboard.streamlit.app/)
 -   [Repository README](https://github.com/rellimylime/forest-data-compilation/blob/main/README.md)
 -   [Setup Guide](https://github.com/rellimylime/forest-data-compilation/blob/main/scripts/SETUP.md)
 -   [FIA Workflow Notes](https://github.com/rellimylime/forest-data-compilation/blob/main/05_fia/WORKFLOW.md)

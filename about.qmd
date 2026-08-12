@@ -98,7 +98,7 @@ I care most about work that is useful, rigorous, and materially good for the wor
 <details class="trace-log">
   <summary>Recent traces</summary>
   <ul class="trace-list">
-    <li><span class="trace-date">Present</span><span class="trace-entry">Working on environmental data tools that make large, complicated datasets easier to use without flattening them.</span></li>
+    <li><span class="trace-date">Present</span><span class="trace-entry">Building tools that make large, complicated datasets easier to understand and use without flattening them.</span></li>
     <li><span class="trace-date">Recent years</span><span class="trace-entry">Keep showing up for beach cleanups because care works better as a practice than an identity.</span></li>
     <li><span class="trace-date">General rule</span><span class="trace-entry">If a project is technically clever but not useful to anyone, I lose interest quickly.</span></li>
   </ul>
@@ -109,7 +109,7 @@ I care most about work that is useful, rigorous, and materially good for the wor
 ::: {.word-section .word-section-final}
 ## In Plain Terms {#plain-terms}
 
-I am an environmental data scientist, builder, and creative person with a compulsive fixing instinct. Most of what I do lives somewhere between remote sensing, machine learning, environmental data infrastructure, design, and communication.
+I am a data scientist, builder, and creative person with a compulsive fixing instinct. Most of what I do lives somewhere between complex data systems, remote sensing, machine learning, research infrastructure, design, and communication.
 
 What that looks like in practice is research, code, reproducible workflows, interfaces, poetry, photography, stewardship, and learning whatever the problem requires next.
 

@@ -6,7 +6,7 @@ resources:
 ---
 
 ::: {.page-intro .research-bg-trigger data-bg-id="intro"}
-Remote sensing, machine learning, and environmental/geospatial data infrastructure for projects that need to be useful on the ground and in the lab.
+Remote sensing, machine learning, and scientific/geospatial data infrastructure for projects that need to be useful on the ground and in the lab.
 :::
 
 ```{=html}

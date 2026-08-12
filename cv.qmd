@@ -11,7 +11,7 @@ Condensed version of the formal record. The fuller context for the work itself l
 ```{=html}
 <div class="resume-header">
   <p class="resume-name">Emily Miller</p>
-  <p class="resume-tagline">Environmental data scientist working across remote sensing, geospatial analysis, reproducible research infrastructure, and environmental decision-support tools.</p>
+  <p class="resume-tagline">Data scientist and technical problem solver working across geospatial analysis, reproducible research infrastructure, workflow design, and user-centered tools.</p>
   <div class="resume-contact">
     <a href="mailto:ermiller@ucsb.edu">ermiller@ucsb.edu</a>
     <span>(978) 265-9348</span>
@@ -64,7 +64,7 @@ Condensed version of the formal record. The fuller context for the work itself l
 </section>
 ```
 
-## Research and Data Analysis Experience
+## Research and Technical Experience
 
 ```{=html}
 <section class="resume-section">

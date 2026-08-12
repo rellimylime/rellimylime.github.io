@@ -24,7 +24,7 @@ I am most useful when the problem is real, the scope is clear, and the data are 
 
 ## Ways I Can Help
 
-### Environmental data and remote sensing
+### Data systems and remote sensing
 
 Short-term help with spatial analysis, satellite imagery workflows, data wrangling, reproducible pipelines, and exploratory dashboards.
 
@@ -38,11 +38,11 @@ Python, R, data visualization, reproducible research, remote sensing basics, and
 
 ### Talks and workshops
 
-Practical sessions on environmental data work, Quarto, mapping, reproducibility, or communicating technical results clearly.
+Practical sessions on data workflows, Quarto, mapping, reproducibility, or communicating technical results clearly.
 
 ## Good Fit
 
--   Mission-driven research, public-interest projects, and environmental work
+-   Mission-driven research, public-interest projects, and tools that make complicated work easier
 -   Scoped collaborations, advising, tutoring, or short workshops
 -   People who want honest communication, clean handoffs, and less theater
 

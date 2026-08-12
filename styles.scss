@@ -2,13 +2,14 @@
 /*-- scss:defaults --*/
 
 // Import Google Fonts - editorial serif + quiet sans
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Nunito+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Cormorant+Garamond:wght@400;500;600;700&family=Nunito+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Press+Start+2P&display=swap');
 
 // SCSS Variables - muted, hidden palette
 $header-font: 'Cormorant Garamond', serif;
 $body-font: 'Nunito Sans', sans-serif;
 $mono-font: 'JetBrains Mono', monospace;       // Code-inspired
 $pixel-font: 'Press Start 2P', monospace;
+$hand-font: 'Caveat', 'Segoe Print', cursive;
 
 // Color Palette - soft paper, dusted accents
 $forest-teal: #8A9DB1;
@@ -25,6 +26,14 @@ $text-dark: #25272c;
 $text-mid: #666662;
 
 /*-- scss:rules --*/
+
+@font-face {
+  font-family: 'Ronald Handwriting';
+  src: url('/assets/fonts/ronald/ronald-handwriting.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
 
 // ========================================
 // BASE STYLES
@@ -3114,4 +3123,1050 @@ body.outside-lab-page .evolution-links span {
   .word-threadline {
     font-size: 0.95rem;
   }
+}
+
+// ========================================
+// 2026 PORTFOLIO STORY + PARTICIPATORY ART
+// ========================================
+.home-intro-thesis {
+  max-width: 31ch;
+  margin: 0 0 1.1rem;
+  font-family: $header-font;
+  font-size: clamp(1.45rem, 2.3vw, 2.15rem);
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.home-method-grid,
+.home-process-grid,
+.duck-comparison {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.home-method-card,
+.home-process-grid > div,
+.duck-column,
+.home-documentation,
+.home-urgency,
+.art-viewing-note,
+.poem-builder {
+  padding: clamp(1rem, 2.5vw, 1.6rem);
+  border: 1px solid rgba($deep-purple, 0.3);
+  border-radius: 1rem;
+  background: rgba($bg-light, 0.58);
+}
+
+.home-method-number,
+.duck-column-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: $deep-purple;
+  font-family: $mono-font;
+  font-size: 0.76rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.home-documentation,
+.home-duck,
+.home-urgency {
+  margin-top: 1.5rem;
+}
+
+.duck-column ul {
+  margin-bottom: 0;
+}
+
+.home-poem {
+  max-width: 34rem;
+  margin: 1rem auto 0;
+  font-family: $header-font;
+  font-size: 1.14rem;
+  line-height: 1.45;
+  white-space: pre-line;
+}
+
+.research-margin-note {
+  margin: 1.2rem 0;
+  padding: 0.85rem 1rem;
+  border-left: 2px solid rgba($deep-purple, 0.55);
+  background: rgba($bg-light, 0.4);
+  font-family: $header-font;
+  font-size: 1.06rem;
+  line-height: 1.35;
+}
+
+.research-margin-note .aside-label {
+  font-family: $mono-font;
+  font-size: 0.68rem;
+}
+
+@media (min-width: 1180px) {
+  body.research-page .research-project {
+    position: relative;
+  }
+
+  .research-margin-note {
+    float: right;
+    clear: right;
+    width: 15rem;
+    margin: 0.25rem -17rem 1.5rem 1.5rem;
+    background: transparent;
+  }
+}
+
+.art-viewing-note {
+  max-width: 48rem;
+  margin: 0 auto 2rem;
+}
+
+.poem-builder {
+  margin: 1.25rem 0 2.5rem;
+}
+
+.poem-builder-head,
+.poem-builder-actions,
+.poem-builder-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.poem-builder-head {
+  justify-content: space-between;
+}
+
+.poem-builder-head h3 {
+  margin: 0;
+}
+
+.poem-builder-count,
+.poem-builder-credit {
+  color: $text-mid;
+  font-family: $mono-font;
+  font-size: 0.74rem;
+}
+
+.poem-builder button,
+.body-response-open,
+.body-response-submit,
+.body-response-close {
+  border: 1px solid rgba($deep-purple, 0.5);
+  border-radius: 999px;
+  padding: 0.45rem 0.8rem;
+  background: $bg-light;
+  color: $text-dark;
+  font: 600 0.78rem/1.2 $body-font;
+}
+
+.poem-builder button:not(:disabled):hover,
+.body-response-open:hover,
+.body-response-submit:not(:disabled):hover {
+  background: $text-dark;
+  color: $bg-light;
+}
+
+.poem-builder button:disabled,
+.body-response-submit:disabled {
+  opacity: 0.42;
+}
+
+.poem-builder-output {
+  margin: 1rem 0;
+  padding: 1rem;
+  border-left: 3px solid $forest-teal;
+  font-family: $header-font;
+  font-size: 1.15rem;
+  white-space: pre-line;
+}
+
+.line-heart {
+  min-width: 4.2rem;
+  width: auto;
+  font-family: $mono-font;
+  font-size: 0.68rem;
+  white-space: nowrap;
+}
+
+.art-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: clamp(1.1rem, 3vw, 2rem);
+  margin-top: 1.5rem;
+}
+
+.art-gallery figure {
+  margin: 0;
+  padding: 0.7rem;
+  border: 1px solid rgba($deep-purple, 0.22);
+  border-radius: 0.8rem;
+  background: rgba($bg-light, 0.62);
+}
+
+.art-gallery img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0.45rem;
+}
+
+.art-gallery figcaption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.7rem;
+  margin-top: 0.65rem;
+}
+
+.body-response-dialog {
+  width: min(92vw, 36rem);
+  border: 1px solid rgba($deep-purple, 0.45);
+  border-radius: 1rem;
+  padding: 1.4rem;
+  background: $bg-light;
+  color: $text-dark;
+}
+
+.body-response-dialog::backdrop {
+  background: rgba($text-dark, 0.62);
+}
+
+.body-response-close {
+  float: right;
+}
+
+.body-response-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.body-response-options label {
+  padding: 0.55rem;
+  border: 1px solid rgba($deep-purple, 0.25);
+  border-radius: 0.55rem;
+}
+
+.body-response-meter {
+  display: grid;
+  grid-template-columns: 7rem 1fr auto;
+  gap: 0.6rem;
+  align-items: center;
+  margin: 0.45rem 0;
+  font-size: 0.85rem;
+}
+
+.body-response-meter-bar {
+  display: block;
+  width: 100%;
+  height: 0.55rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, $forest-teal var(--response-share), rgba($forest-teal, 0.18) var(--response-share));
+}
+
+@media (max-width: 700px) {
+  .home-method-grid,
+  .home-process-grid,
+  .duck-comparison,
+  .art-gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .body-response-options {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Whimsical problem map and final screenshot corrections.
+.home-method-documentation {
+  margin-top: 1.5rem;
+  padding: 1.2rem 1.3rem;
+  border-top: 1px dashed rgba($deep-purple, .45);
+  background: rgba($golden-sun, .32);
+}
+.home-method-documentation h3 { margin: .25rem 0 .55rem; }
+.home-method-documentation p:last-child { margin-bottom: 0; }
+
+.home-map-section {
+  margin-top: 2.2rem;
+}
+.home-map-heading {
+  margin: 0 auto 1rem;
+  text-align: center;
+}
+.home-map-heading h2 { margin: .15rem 0; }
+.home-map-heading > p:last-child { margin: 0; color: $text-mid; font-size: .9rem; }
+
+.home-map-section .home-process-map {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-height: 39rem;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid rgba(#6f5d43, .42);
+  border-radius: .6rem;
+  background:
+    radial-gradient(circle at 17% 24%, rgba(#775f3f,.09) 0 1px, transparent 2px),
+    radial-gradient(circle at 78% 67%, rgba(#775f3f,.07) 0 1px, transparent 2px),
+    linear-gradient(112deg, rgba(#fff8df,.92), rgba(#e9d7ae,.68) 48%, rgba(#f6e9c8,.9));
+  box-shadow: inset 0 0 4rem rgba(#765c38,.13), 0 .8rem 2rem rgba($text-dark,.08);
+  isolation: isolate;
+}
+.home-map-section .home-process-map::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: .18;
+  background-image: repeating-linear-gradient(8deg, transparent 0 18px, rgba(#7d6647,.14) 19px, transparent 20px);
+  pointer-events: none;
+}
+.home-map-section .home-process-route {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.home-map-section .home-process-route path {
+  fill: none;
+  stroke: rgba(#4d3f30,.7);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 3 11;
+}
+.map-decoration { position: absolute; opacity: .28; filter: sepia(.65); pointer-events: none; }
+.map-compass { width: 8rem; right: 2rem; bottom: 1.5rem; }
+.map-forest { width: 11rem; left: 2%; top: 5%; }
+.map-swamp { width: 10rem; right: 4%; top: 39%; }
+
+.home-map-section .map-stop {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 11.5rem;
+  margin: 0;
+  padding: .35rem;
+  border: 0;
+  background: transparent;
+  color: #30271f;
+  text-align: center;
+  cursor: help;
+}
+.home-map-section .map-stop img { width: 4.7rem; height: 4rem; object-fit: contain; filter: sepia(.45); transition: transform 180ms ease; }
+.home-map-section .map-stop span { font-family: $header-font; font-size: 1.15rem; font-weight: 700; line-height: 1.05; }
+.home-map-section .map-stop small {
+  position: absolute;
+  top: calc(100% + .25rem);
+  left: 50%;
+  width: 14rem;
+  padding: .65rem .75rem;
+  border: 1px solid rgba(#5b4935,.35);
+  border-radius: .5rem;
+  background: rgba(#fff8e7,.97);
+  box-shadow: 0 .6rem 1.2rem rgba(#3d3024,.16);
+  font: 600 .76rem/1.45 $body-font;
+  opacity: 0;
+  transform: translate(-50%, -.35rem);
+  pointer-events: none;
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+.home-map-section .map-stop:hover img,
+.home-map-section .map-stop:focus-visible img { transform: translateY(-.2rem) rotate(-2deg); }
+.home-map-section .map-stop:hover small,
+.home-map-section .map-stop:focus-visible small { opacity: 1; transform: translate(-50%, 0); }
+.home-map-section .map-stop:focus-visible { outline: 2px dotted #59462f; outline-offset: .2rem; }
+.home-map-section .map-stop--one { left: 1%; top: 69%; }
+.home-map-section .map-stop--two { left: 19%; top: 49%; }
+.home-map-section .map-stop--three { left: 35%; top: 20%; }
+.home-map-section .map-stop--four { left: 49%; top: 39%; }
+.home-map-section .map-stop--five { left: 61%; top: 62%; }
+.home-map-section .map-stop--six { left: 73%; top: 35%; }
+.home-map-section .map-stop--seven { right: 0; top: 8%; }
+
+.line-heart {
+  min-width: 1.8rem;
+  width: 1.8rem;
+  height: 1.8rem;
+  padding: 0;
+  font-size: .9rem;
+}
+.poem-afternotes {
+  margin: .9rem 0 2rem;
+  padding: .85rem 1rem;
+  border-left: 2px solid rgba($deep-purple,.4);
+  color: $text-mid;
+  font-size: .86rem;
+}
+.poem-afternotes p { margin: .25rem 0; }
+
+body.art-page .art-viewing-note {
+  display: block;
+  float: none;
+  position: static;
+  width: 100%;
+  max-width: none;
+  margin: 1rem 0 1.7rem;
+}
+.art-gallery-note {
+  position: static;
+  display: block;
+  float: none;
+  clear: both;
+  width: min(100%, 52rem);
+  max-width: 52rem;
+  margin: 1rem auto 1.7rem;
+  padding: .8rem 1rem;
+  border: 1px solid rgba($deep-purple,.28);
+  border-radius: .45rem;
+  background: rgba($bg-light,.55);
+  color: $text-dark;
+  font-family: $body-font;
+  font-size: .9rem;
+  line-height: 1.55;
+}
+.art-gallery-note p { margin: .2rem 0; }
+.art-gallery {
+  display: block;
+  column-count: 2;
+  column-gap: 1.3rem;
+}
+.art-gallery figure {
+  display: inline-block;
+  width: 100%;
+  margin: 0 0 1.3rem;
+  break-inside: avoid;
+}
+
+@media (max-width: 1499px) {
+  body.research-page .research-margin-note { display: none !important; }
+}
+@media (min-width: 1500px) {
+  .research-margin-note,
+  .research-margin-note.note-left,
+  .research-margin-note.note-right {
+    border-radius: .7rem;
+  }
+  .research-margin-note.note-right { right: -16rem; left: auto; }
+  .research-margin-note.note-left { left: -16rem; right: auto; }
+}
+
+// Integrated field-guide map, literary duck, and poetry interaction refinements.
+.home-intro .home-section-head { margin-bottom: .45rem; }
+.home-intro-grid { align-items: center; }
+
+.home-map-section .home-process-map {
+  min-height: 0;
+  overflow: visible;
+  background: none;
+  border: 0;
+  box-shadow: none;
+}
+.map-viewport {
+  position: relative;
+  height: 39rem;
+  overflow: hidden;
+  border: 1px solid rgba(#6f5d43, .42);
+  border-radius: .6rem;
+  background:
+    radial-gradient(circle at 17% 24%, rgba(#775f3f,.09) 0 1px, transparent 2px),
+    linear-gradient(112deg, rgba(#fff8df,.94), rgba(#e9d7ae,.72) 48%, rgba(#f6e9c8,.92));
+  box-shadow: inset 0 0 4rem rgba(#765c38,.13), 0 .8rem 2rem rgba($text-dark,.08);
+  cursor: grab;
+  touch-action: none;
+}
+.map-viewport.is-panning { cursor: grabbing; }
+.map-canvas {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-origin: 50% 50%;
+  transition: transform 120ms ease-out;
+}
+.map-viewport.is-panning .map-canvas { transition: none; }
+.map-controls {
+  position: absolute;
+  z-index: 10;
+  top: .75rem;
+  right: .75rem;
+  display: flex;
+  gap: .3rem;
+}
+.map-controls button {
+  min-width: 2rem;
+  height: 2rem;
+  padding: 0 .55rem;
+  border: 1px solid rgba(#5b4935,.45);
+  border-radius: .35rem;
+  background: rgba(#fff8e7,.94);
+  color: #30271f;
+  font: 700 .78rem $body-font;
+}
+.map-field-guide {
+  position: absolute;
+  z-index: 4;
+  left: 1rem;
+  top: 1rem;
+  width: min(31rem, 58%);
+  border: 1px solid rgba(#5b4935,.4);
+  border-radius: .45rem;
+  background: rgba(#fff8e7,.94);
+  box-shadow: .3rem .4rem 0 rgba(#6a5133,.1);
+  font-size: .8rem;
+}
+.map-field-guide summary {
+  padding: .65rem .8rem;
+  cursor: pointer;
+  font-family: $header-font;
+  font-size: 1rem;
+  font-weight: 700;
+}
+.map-field-guide-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .75rem; padding: 0 .8rem .8rem; }
+.map-field-guide-grid strong { font-family: $mono-font; font-size: .68rem; text-transform: uppercase; }
+.map-field-guide-grid p { margin: .25rem 0 0; line-height: 1.45; }
+.home-map-caption { margin: .65rem 0 0; text-align: right; color: $text-mid; font-size: .78rem; }
+
+.duck-story {
+  margin: 1.4rem auto 1.8rem;
+  padding: 1.6rem clamp(1.2rem, 4vw, 3rem);
+  border: 1px solid rgba($deep-purple,.25);
+  border-radius: .45rem;
+  background: rgba($bg-light,.62);
+  font-family: $header-font;
+  font-size: 1.28rem;
+  font-style: italic;
+  line-height: 1.55;
+  text-align: left;
+  box-shadow: .35rem .4rem 0 rgba($deep-purple,.06);
+}
+.duck-story p:last-child { margin-bottom: 0; }
+
+.art-floral-divider {
+  display: block;
+  width: min(100%, 44rem);
+  height: auto;
+  max-height: 5rem;
+  margin: .4rem auto 2rem;
+  opacity: .58;
+}
+.poem-insight {
+  margin: 1rem 0 0;
+  padding-top: .75rem;
+  border-top: 1px solid rgba($deep-purple,.2);
+  color: $text-mid;
+  font-size: .82rem;
+  font-style: italic;
+}
+.poem-builder-select-label {
+  display: block;
+  margin-top: 1rem;
+  font-family: $mono-font;
+  font-size: .7rem;
+  text-transform: uppercase;
+}
+.poem-builder select {
+  width: min(100%, 22rem);
+  margin-top: .35rem;
+  padding: .55rem .7rem;
+  border: 1px solid rgba($deep-purple,.42);
+  border-radius: .45rem;
+  background: $bg-light;
+  color: $text-dark;
+  font: 600 .85rem $body-font;
+}
+.poem-builder-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: .35rem 0;
+  padding: .3rem .45rem;
+  border-radius: .3rem;
+}
+.poem-builder-line.is-custom { cursor: grab; border: 1px dashed rgba($deep-purple,.32); }
+.poem-builder-line.is-dragging { opacity: .45; }
+.poem-builder-line-controls { display: flex; gap: .25rem; }
+.poem-builder-line-controls button { width: 1.75rem; height: 1.75rem; padding: 0; }
+
+body.art-page .art-viewing-note {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  width: min(100%, 52rem) !important;
+  max-width: 52rem !important;
+}
+.art-content-warning > summary {
+  padding: .65rem .75rem;
+  border-radius: .4rem;
+  background: rgba($golden-sun,.6);
+  cursor: pointer;
+  font-weight: 700;
+  list-style: none;
+}
+.art-content-warning > summary::-webkit-details-marker { display: none; }
+.art-content-warning > summary small { float: right; color: $text-mid; font-family: $mono-font; font-size: .62rem; text-transform: uppercase; }
+.art-content-warning[open] > summary { margin-bottom: .65rem; }
+
+@media (max-width: 700px) {
+  .map-viewport { height: 58rem; }
+  .map-field-guide { width: calc(100% - 5rem); }
+  .map-field-guide-grid { grid-template-columns: 1fr; }
+  .home-map-caption { text-align: left; }
+}
+
+@media (max-width: 800px) {
+  .home-map-section .home-process-map { min-height: 58rem; }
+  .home-map-section .home-process-route { display: block; }
+  .home-map-section .map-stop { width: 9.5rem; }
+  .home-map-section .map-stop--one { left: 1%; top: 79%; }
+  .home-map-section .map-stop--two { left: 4%; top: 56%; }
+  .home-map-section .map-stop--three { left: 9%; top: 27%; }
+  .home-map-section .map-stop--four { left: 40%; top: 43%; }
+  .home-map-section .map-stop--five { left: 53%; top: 69%; }
+  .home-map-section .map-stop--six { right: 1%; left: auto; top: 39%; }
+  .home-map-section .map-stop--seven { right: 1%; top: 10%; }
+  .map-decoration { opacity: .18; }
+}
+
+@media (max-width: 600px) {
+  .art-gallery { column-count: 1; }
+}
+
+// Final alignment fixes from the wide research-page review.
+body.research-page .page-intro,
+body.research-page .research-overview,
+body.research-page .research-project {
+  width: min(100%, 52rem);
+  max-width: 52rem;
+  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
+}
+.research-margin-label {
+  display: inline;
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: inherit;
+  text-transform: none;
+}
+.research-margin-label::after { content: ': '; }
+@media (min-width: 1500px) {
+  body.research-page .research-margin-note.note-left {
+    left: auto;
+    right: calc(100% + 1.5rem);
+  }
+  body.research-page .research-margin-note.note-right {
+    left: calc(100% + 1.5rem);
+    right: auto;
+  }
+}
+
+body.research-page #title-block-header,
+body.research-page .page-intro,
+body.research-page .page-shell {
+  width: min(100%, 52rem);
+  max-width: 52rem;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+}
+
+.duck-literary-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 9rem;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.4rem auto 1.8rem;
+  padding: 1.3rem 1.4rem 1.3rem 2rem;
+  border: 1px solid rgba($deep-purple,.25);
+  border-radius: .45rem;
+  background: rgba($bg-light,.62);
+  box-shadow: .35rem .4rem 0 rgba($deep-purple,.06);
+}
+.duck-literary-card .duck-story {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  font-family: 'Ronald Handwriting', $hand-font;
+  font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+  font-style: normal;
+  line-height: 1.42;
+}
+.duck-story-drawing {
+  display: block;
+  width: 100%;
+  max-height: 13rem;
+  object-fit: cover;
+  object-position: 50% 25%;
+  border-radius: 45% 45% .35rem .35rem;
+  mix-blend-mode: multiply;
+}
+
+@media (max-width: 600px) {
+  .duck-literary-card { grid-template-columns: 1fr; padding: 1.2rem; }
+  .duck-story-drawing { width: 7rem; justify-self: end; }
+}
+
+body.art-page #title-block-header {
+  margin-bottom: .15rem;
+  text-align: center;
+}
+body.art-page .page-intro {
+  margin: 0 auto .25rem;
+  text-align: center;
+}
+body.art-page .art-floral-divider {
+  max-height: 3.25rem;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  opacity: .42;
+  transform: scaleY(.58);
+  transform-origin: center;
+}
+.poem-builder-minimum {
+  display: inline-block;
+  margin-left: .65rem;
+  color: $text-mid;
+  font-size: .76rem;
+  font-style: italic;
+}
+.poem-builder-minimum[hidden] { display: none; }
+
+// Remove Quarto's page-column grid from research and own the layout explicitly.
+body.research-page main.content {
+  width: 100%;
+  max-width: none;
+}
+body.research-page .page-columns,
+body.research-page .page-full,
+body.research-page section.page-columns,
+body.research-page section.page-full {
+  display: block !important;
+  grid-template-columns: none !important;
+  grid-column: auto !important;
+}
+body.research-page #title-block-header,
+body.research-page .page-intro,
+body.research-page .page-shell {
+  width: min(calc(100% - 2rem), 58rem);
+  max-width: 58rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+body.research-page .research-overview,
+body.research-page .research-project {
+  width: 100%;
+  max-width: none;
+  margin-left: 0;
+  margin-right: 0;
+  box-sizing: border-box;
+}
+
+.thought-fork {
+  position: relative;
+  margin: 2rem auto;
+  padding-top: .5rem;
+  text-align: center;
+}
+.thought-fork-origin {
+  position: relative;
+  display: inline-block;
+  padding: .65rem 1.1rem;
+  border: 1px solid rgba($deep-purple,.42);
+  border-radius: 999px;
+  background: $bg-light;
+  font-family: $mono-font;
+  font-size: .75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.thought-fork-origin::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 1px;
+  height: 1.4rem;
+  background: rgba($deep-purple,.38);
+}
+.thought-fork-branches {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2.5rem;
+  margin-top: 1.4rem;
+}
+.thought-fork-branches::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 25%;
+  right: 25%;
+  height: 1px;
+  background: rgba($deep-purple,.38);
+}
+.thought-path {
+  position: relative;
+  padding-top: 1rem;
+}
+.thought-path::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 1px;
+  height: 1rem;
+  background: rgba($deep-purple,.38);
+}
+.thought-path-label {
+  margin: .25rem 0 .65rem;
+  color: $text-mid;
+  font-family: $mono-font;
+  font-size: .68rem;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+.thought-node {
+  padding: .7rem .85rem;
+  border: 1px solid rgba($deep-purple,.25);
+  border-radius: .6rem;
+  background: rgba($bg-light,.7);
+  font-weight: 600;
+}
+.thought-path--mine .thought-node {
+  border-color: rgba($forest-teal,.65);
+  background: rgba($forest-teal,.1);
+}
+.thought-arrow {
+  display: block;
+  margin: .2rem 0;
+  color: $text-mid;
+}
+
+.poem-builder-actions { margin-top: 1rem; }
+.poem-builder .poem-builder-clear {
+  padding: .3rem .62rem;
+  font-size: .7rem;
+}
+.art-gallery-note {
+  position: relative !important;
+  inset: auto !important;
+  display: block !important;
+  float: none !important;
+  clear: both !important;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 1rem 0 1.7rem !important;
+  columns: auto !important;
+}
+
+// Final small refinements to the duck story, research heading, and art disclosure.
+.duck-literary-card .duck-story,
+.duck-literary-card .duck-story p {
+  font-family: 'Ronald Handwriting', 'Segoe Print', cursive !important;
+  font-size: clamp(1.9rem, 3.2vw, 2.45rem) !important;
+  line-height: 1.3;
+}
+.duck-story-drawing {
+  height: auto;
+  max-height: none;
+  object-fit: contain;
+  object-position: center;
+  border-radius: .35rem;
+}
+body.research-page #title-block-header.quarto-title-block {
+  display: block !important;
+  width: min(calc(100% - 2rem), 58rem) !important;
+  max-width: 58rem !important;
+  margin: 0 auto .85rem !important;
+  padding: 0 !important;
+}
+body.research-page #title-block-header .quarto-title,
+body.research-page #title-block-header .title {
+  display: block !important;
+  width: 100% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  text-align: center !important;
+}
+.art-gallery-note {
+  padding: 0 !important;
+  border: 1px solid rgba($deep-purple,.24);
+  border-radius: .55rem;
+  background: rgba($bg-light,.58);
+}
+.art-gallery-note summary {
+  padding: .75rem 1rem;
+  cursor: pointer;
+  font-family: $header-font;
+  font-size: 1rem;
+  font-weight: 600;
+  list-style-position: inside;
+}
+.art-gallery-note[open] summary {
+  border-bottom: 1px solid rgba($deep-purple,.18);
+}
+.art-gallery-note > p {
+  margin: 0 !important;
+  padding: .9rem 1rem 1rem;
+}
+
+@media (max-width: 650px) {
+  .thought-fork-branches { grid-template-columns: 1fr; gap: 1.25rem; }
+  .thought-fork-branches::before { display: none; }
+}
+
+// Visual QA corrections: authored hierarchy, field-guide map, and margin-note behavior.
+.home-intro-thesis {
+  max-width: none;
+  margin-bottom: 0.65rem;
+  font-family: $body-font;
+  font-size: 1.12rem;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.home-method {
+  display: block;
+  margin-top: 2rem;
+  padding: 0;
+  border: 1px solid rgba($deep-purple, 0.32);
+  border-radius: 1rem;
+  background: rgba($bg-light, 0.46);
+  overflow: hidden;
+}
+
+.home-method-summary {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.2rem;
+  cursor: pointer;
+  list-style: none;
+}
+
+.home-method-summary::-webkit-details-marker { display: none; }
+.home-method-summary-label,
+.home-method-summary-action,
+.map-stop-number {
+  font-family: $mono-font;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.home-method-summary-label { color: $deep-purple; font-weight: 700; }
+.home-method-summary-title { font-family: $header-font; font-size: 1.35rem; font-weight: 600; }
+.home-method-summary-action { text-align: right; }
+.home-method[open] .home-method-summary-action { font-size: 0; }
+.home-method[open] .home-method-summary-action::after { content: 'Close the field guide'; font-size: 0.72rem; }
+.home-method-body { padding: 0 1.2rem 1.4rem; }
+.home-method-grid { gap: 2rem; margin: 1.4rem 0 2rem; }
+.home-method-card { padding: 0; border: 0; border-radius: 0; background: transparent; }
+.home-method-card h3 { font-size: 1.08rem; }
+
+.home-process-map {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  min-height: 23rem;
+  padding: 2.5rem 1rem 1rem;
+}
+.home-process-route { position: absolute; inset: 1rem 0 auto; width: 100%; height: 13rem; overflow: visible; }
+.home-process-route path { fill: none; stroke: rgba($deep-purple, .55); stroke-width: 3; stroke-dasharray: 9 10; }
+.map-stop { position: relative; z-index: 1; align-self: start; padding: .9rem; background: rgba($bg-warm, .88); }
+.map-stop--two { margin-top: 7rem; }
+.map-stop--three { margin-top: 1rem; }
+.map-stop h3 { margin: .2rem 0 .5rem; font-size: 1.15rem; }
+.map-stop p { margin: 0; }
+.map-icon { display: block; font-family: $header-font; font-size: 1.8rem; letter-spacing: -.2em; }
+.map-footprints { letter-spacing: .12em; transform: rotate(-14deg); }
+
+.home-documentation { border-style: dashed; background: transparent; }
+.home-duck { max-width: 48rem; margin: 3rem auto 0; text-align: center; }
+.home-duck .home-section-head { text-align: center; }
+.duck-reactions { margin: 1.8rem auto; text-align: left; border-top: 1px solid rgba($deep-purple,.25); }
+.duck-reactions p { display: grid; grid-template-columns: 1.05fr .9fr 1.35fr; gap: 1rem; margin: 0; padding: 1rem 0; border-bottom: 1px solid rgba($deep-purple,.25); }
+.duck-reactions span { font-weight: 700; }
+.duck-reactions del { color: $text-mid; text-decoration-thickness: 1px; }
+.duck-reactions strong { font-weight: 700; }
+
+body.js-enhanced.home-page .quote-section { opacity: 1; transform: none; }
+
+.poetry-stack { display: flex; flex-direction: column; }
+.poem-entry--bad-design { order: 1; }
+.poem-entry--ocean { order: 2; }
+.poem-entry--urgency { order: 3; }
+.poem-entry--what-makes-me { order: 4; }
+.art-viewing-note { max-width: none; margin: 1rem 0 1.7rem; padding: .75rem 1rem; border-radius: .25rem; }
+.art-viewing-note p { margin: .2rem 0; }
+.art-gallery { align-items: start; }
+.art-gallery figure { align-self: start; }
+.art-gallery img { object-fit: contain; }
+
+body.research-page .research-overview,
+body.research-page .research-project {
+  width: min(100%, 52rem);
+  margin-left: auto;
+  margin-right: auto;
+  background: rgba($bg-light, .78);
+}
+
+.research-annotated-passage {
+  transition: background-color 180ms ease, box-shadow 180ms ease;
+  border-radius: .2rem;
+}
+.research-annotated-passage.is-note-active {
+  background: rgba($golden-sun, .88);
+  box-shadow: 0 0 0 .35rem rgba($golden-sun, .88);
+}
+
+@media (min-width: 1180px) {
+  .research-margin-note,
+  .research-margin-note.note-left,
+  .research-margin-note.note-right {
+    position: absolute;
+    float: none;
+    width: 14.5rem;
+    margin: 0;
+    padding: .75rem .9rem;
+    border: 0;
+    background: rgba($bg-light, 0);
+    font-family: $hand-font;
+    font-size: 1.18rem;
+    line-height: 1.4;
+    opacity: .76;
+    transition: background-color 180ms ease, opacity 180ms ease, box-shadow 180ms ease;
+  }
+  .research-margin-note.note-right { right: -16.5rem; }
+  .research-margin-note.note-left { left: -16.5rem; }
+  .research-margin-note.is-active,
+  .research-margin-note:hover,
+  .research-margin-note:focus-visible {
+    background: rgba($bg-light, .96);
+    box-shadow: 0 .5rem 1.5rem rgba($text-dark,.12);
+    opacity: 1;
+    outline: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .home-method-summary { grid-template-columns: 1fr auto; }
+  .home-method-summary-label { grid-column: 1 / -1; }
+  .home-process-map { grid-template-columns: 1fr; min-height: 0; padding: 1rem 0; }
+  .home-process-route { display: none; }
+  .map-stop, .map-stop--two, .map-stop--three { margin: 0; }
+  .duck-reactions p { grid-template-columns: 1fr; gap: .3rem; }
 }

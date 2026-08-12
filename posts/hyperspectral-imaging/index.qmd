@@ -311,9 +311,9 @@ It is a useful teaching scene because it mixes vegetation, roads, rooftops, bare
 ```{=html}
 <div class="img-placeholder scroll-reveal">
   <div class="img-placeholder-icon">🛰</div>
-  <strong>Geographic context — image to add</strong>
+  <strong>Geographic context, image to add</strong>
   Aerial or satellite overview of the HYDICE Urban scene footprint (~307 × 307 px, 2 m GSD), annotated with labeled land cover zones: vegetation patches, road network, rooftops, shadowed areas.<br><br>
-  <em>How to get it:</em> the HYDICE Urban scene is located near Washington, D.C. (Chantilly, VA area — confirm in ERDC metadata). Overlay the scene bounding box on a Google Earth or Mapbox satellite basemap using the corner coordinates from the <code>.hdr</code> file, then export a labeled screenshot. Alternatively, annotate the RGB composite directly in Python with <code>matplotlib</code> patches and text.
+  <em>How to get it:</em> the HYDICE Urban scene is located near Washington, D.C. (Chantilly, VA area, confirm in ERDC metadata). Overlay the scene bounding box on a Google Earth or Mapbox satellite basemap using the corner coordinates from the <code>.hdr</code> file, then export a labeled screenshot. Alternatively, annotate the RGB composite directly in Python with <code>matplotlib</code> patches and text.
 </div>
 ```
 
@@ -562,7 +562,7 @@ In the real HYDICE scene, that bookkeeping step turns a `307 x 307 x 210` cube i
     <text x="94" y="188" text-anchor="middle" font-size="11" fill="rgba(39,46,54,0.6)" font-weight="600">Cube (B × H × W)</text>
     <text x="366" y="188" text-anchor="middle" font-size="11" fill="rgba(39,46,54,0.6)" font-weight="600">Matrix (N × B)</text>
   </svg>
-  <figcaption>Reshaping the cube: every pixel's position (row, col) maps to a single row in the matrix, carrying its full 210-band spectrum. The spectral data is unchanged — only the bookkeeping shape.</figcaption>
+  <figcaption>Reshaping the cube: every pixel's position (row, col) maps to a single row in the matrix, carrying its full 210-band spectrum. The spectral data is unchanged, only the bookkeeping shape.</figcaption>
 </figure>
 ```
 
@@ -1021,7 +1021,7 @@ These four curves are not "the truth." They are a small hand-built library. If o
 ```{=html}
 <div class="img-placeholder scroll-reveal">
   <div class="img-placeholder-icon">📚</div>
-  <strong>Spectral library comparison — image to add</strong>
+  <strong>Spectral library comparison, image to add</strong>
   Side-by-side of hand-picked endmember spectra (this scene) vs. USGS or ASTER library references for the same material classes.<br><br>
   <em>How to get it:</em> download the USGS Spectral Library v7 from <code>https://crustal.usgs.gov/speclab/QueryAll07a.php</code> and query asphalt, grass, and roofing material entries. Export as CSV and overlay with <code>matplotlib</code> against the endmember spectra already saved in this notebook.
 </div>

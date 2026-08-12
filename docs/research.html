@@ -40,7 +40,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-2d867220b8eab76a45c733f57d7402e3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-9f52eca1c3ba0505578aafe1dd2c6bb3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -149,7 +149,7 @@ ul.task-list li input[type="checkbox"] {
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -192,44 +192,83 @@ ul.task-list li input[type="checkbox"] {
     <img class="research-bg-media" src="images/pages/research/backgrounds/proposed_background.jpg" alt="" loading="eager" decoding="async">
   </div>
 </div>
-<div class="page-shell">
+<div class="page-shell page-columns page-full">
 <div class="research-overview research-bg-trigger" data-bg-id="intro">
   <p class="research-kicker">Current work centers on national-scale forest thermophilization analysis, a research repository that doubles as a tool, and ongoing manuscript development on irrigation expansion in Sub-Saharan Africa.</p>
   <p class="research-context">That work currently lives in the <a href="https://www.landscapesofchangelab.com/"><strong>LOC Lab</strong></a> through a pilot MEDS fellowship with Joan Dudney, with continuing ties to the <a href="https://www.waveslab.org/"><strong>WaVeS Lab</strong></a> and recent capstone work with the <a href="https://www.nceas.ucsb.edu/wildfire-resilience-index"><strong>Wildfire Resilience Index</strong></a> team at NCEAS.</p>
 </div>
-<section id="satellite-based-irrigation-mapping-in-sub-saharan-africa" class="level3 research-project research-bg-trigger" data-bg-id="waves">
+<section id="satellite-based-irrigation-mapping-in-sub-saharan-africa" class="level3 research-project research-bg-trigger page-columns page-full" data-bg-id="waves">
 <h3 class="anchored" data-anchor-id="satellite-based-irrigation-mapping-in-sub-saharan-africa">Satellite-Based Irrigation Mapping in Sub-Saharan Africa</h3>
 <p><strong>Lab:</strong> UCSB Water Vegetation and Society (WaVeS) Lab, Prof.&nbsp;Kelly Caylor<br>
 <strong>Timeline:</strong> June 2024 - Present<br>
 <strong>Status:</strong> Manuscript Development</p>
-<p>At WaVeS, I am working toward a first-author manuscript within a broader research program on irrigation expansion, water access, and agricultural change in Sub-Saharan Africa. My part of that work focuses on where irrigation growth is happening: whether expansion over the past two decades has been concentrated inside major command areas or has emerged more diffusely through decentralized systems.</p>
+<p>Irrigated agriculture is expanding rapidly across arid Sub-Saharan Africa, and large dams are often assumed to be the engine of that growth. This project tests that assumption spatially: as new irrigation appears across the region, is it clustering inside the areas that large dams could plausibly serve, or is it emerging well beyond them? Where the growth falls shapes how we understand who and what is actually driving irrigation expansion.</p>
+<section id="how-i-approached-it" class="level4 page-columns page-full">
+<h4 class="anchored" data-anchor-id="how-i-approached-it">How I approached it</h4>
+<p>The analysis models “command-area” envelopes around large dams - the land each reservoir could realistically irrigate, derived from its storage capacity, surrounding elevation, river-basin structure, and distance - and then measures how much of the region’s growth in area equipped for irrigation from 1980 to 2015 falls inside versus outside those envelopes. It combines gridded irrigation records, center-pivot inventories, dam and reservoir databases, digital elevation and basin data, and aridity and groundwater layers, all processed through a reproducible, versioned pipeline with built-in sensitivity testing.</p>
+<aside class="research-margin-note">
+  <span class="research-margin-label">Grounding</span>
+  It is useful to know where irrigation expanded. I also want to know what we should understand,or do,differently once we know.
+</aside>
 <p>I work closely with Prof.&nbsp;Kelly Caylor and <a href="https://anna-boser.github.io/">Anna Boser</a>, who has been an important advisor and mentor throughout the project. Anna’s work on small-scale irrigation and agricultural systems helps ground the broader research agenda, and related technical development in <a href="https://github.com/Jason-Perez27/SSA-Pivot-Detect">this pivot-detection repository</a> is part of the larger infrastructure that this work can both contribute to and benefit from.</p>
-<p>Alongside the manuscript pipeline, I have also been developing a separate center-pivot segmentation workflow following Chen et al., using CNN and U-Net style semantic segmentation on Landsat imagery. The immediate goal is to build a 2015 detection layer that can be compared on the right temporal footing with existing irrigation and agriculture datasets. That segmentation work is useful supporting infrastructure, but it is not required for the publication track itself. The manuscript is currently moving at a slower pace while LOC fellowship work is the main focus, but the project remains active.</p>
-<p class="research-note"><strong>Technical details:</strong> My current WaVeS workflows use Python geospatial pipelines built with Rasterio, GeoPandas, and Shapely to process multiband raster and vector datasets such as aridity indices, AEI layers, and CPIS shapefiles across heterogeneous sources. In parallel, I have been testing a Chen-style center-pivot segmentation workflow to generate a 2015 detection dataset that can support temporally aligned comparisons with existing irrigation and agricultural products.</p>
 </section>
-<section id="forest-thermophilization-disturbance-analysis" class="level3 research-project research-bg-trigger" data-bg-id="loc">
+<section id="what-i-am-learning-from-the-model" class="level4 page-columns page-full">
+<h4 class="anchored" data-anchor-id="what-i-am-learning-from-the-model">What I am learning from the model</h4>
+<p>The most consequential assumptions are often the ones that turn a concept into a boundary. Sensitivity testing is therefore not an appendix to this analysis; it is how I learn whether the spatial pattern is robust or merely a product of one plausible definition. How much do the results change when the command-area definition changes?</p>
+<aside class="research-margin-note">
+  <span class="research-margin-label">Decision trail</span>
+  An assumption does not become a fact because it is difficult to model. If changing a defensible assumption changes the result, that sensitivity belongs in the interpretation.
+</aside>
+<p class="research-note"><strong>Technical details:</strong> Python geospatial stack (Rasterio, GeoPandas, Shapely) for area-weighted raster extraction and vector processing; Google Earth Engine for continental-scale command-area modeling from dam, elevation, and basin data; a script-first analysis pipeline with input validation, versioned data products, and sensitivity testing for reproducibility.</p>
+</section>
+</section>
+<section id="forest-thermophilization-disturbance-analysis" class="level3 research-project research-bg-trigger page-columns page-full" data-bg-id="loc">
 <h3 class="anchored" data-anchor-id="forest-thermophilization-disturbance-analysis">Forest Thermophilization &amp; Disturbance Analysis</h3>
 <p><strong>Lab:</strong> Landscapes of Change (LOC) Lab, Prof.&nbsp;Joan Dudney, Bren School, UCSB<br>
 <strong>Timeline:</strong> January 2026 - Present<br>
 <strong>Fellowship:</strong> Pilot MEDS Fellowship, $15,000 project budget<br>
 <strong>Status:</strong> In Progress</p>
 <p>The LOC Lab investigates how forests are changing in response to climate and disturbance: thermophilization (the shift toward warmer-adapted species compositions), fire, insects, drought. Through a pilot MEDS fellowship with Joan Dudney, I am continuing the national-scale thermophilization analysis and building the data infrastructure that makes this work possible.</p>
-<p>The core pipeline integrates five federal datasets, USDA Forest Service aerial disturbance surveys (IDS), TerraClimate, PRISM, WorldClim, and the Forest Inventory and Analysis database (FIA), across ~4.47M records and ~300 GB of processed output. The repository is designed to function both as analysis infrastructure and as a navigable tool for future work. Key elements include:</p>
+<p>The central question is whether plant communities are shifting toward species associated with warmer or drier climates, and whether disturbance accelerates that shift. The pipeline builds climate niches for ~4,200 species by summarizing TerraClimate normals across BIEN range maps, joins those niches to FIA seedling, sapling, and tree communities, and calculates a community-weighted climate affinity for each plot visit. Comparing consecutive remeasurements of the same plot then gives an annualized rate of change that can be set against how much of that plot burned, was defoliated, or was otherwise disturbed.</p>
+<section id="what-i-built-around-the-analysis" class="level4 page-columns page-full">
+<h4 class="anchored" data-anchor-id="what-i-built-around-the-analysis">What I built around the analysis</h4>
+<p>The repository is designed to function both as analysis infrastructure and as a navigable tool for future work. Key elements include:</p>
 <ul>
-<li><strong>Pixel decomposition architecture</strong> - Spatially links forest disturbance polygon observations to gridded climate data using area-weighted joins, extracting pixel-level values via Google Earth Engine across all climate datasets</li>
-<li><strong>Plot-level FIA summaries</strong> - Tree metrics, diversity indices, disturbance history, and site-level climate records (1958-present) for thermophilization analysis across ~7,000 permanent FIA sites</li>
-<li><strong>Repository and app ecosystem</strong> - Large, documented project repository paired with Streamlit apps for schema navigation, compiled data QA, and project exploration</li>
-<li><strong>Reproducible pipeline design</strong> - Centralized YAML configuration, renv for R environment management, and config-driven architecture built to be sustained and extended</li>
+<li><strong>Eight linked workstreams</strong> - IDS aerial survey cleaning; TerraClimate, PRISM, and WorldClim extraction; FIA compilation; BIEN species niches; community climate-affinity metrics; and disturbance linkage</li>
+<li><strong>Measured, not asserted, data products</strong> - 83 registered products with 71 confirmed present at their declared row grain, including 1.47M FIA conditions and 33.5M monthly climate records across ~7,000 survey locations</li>
+<li><strong>Disturbance evidence kept separate</strong> - FIA condition disturbance, tree damage agents, MTBS fire perimeters, and IDS aerial detections measure different things, so they are prepared as distinct evidence rather than collapsed into a single severity score</li>
+<li><strong>Conservative remeasurement linkage</strong> - Survey intervals are built only from FIA’s official remeasurement pointer, so plots re-established at a reused location never become spurious change intervals</li>
+<li><strong>Reproducible pipeline design</strong> - Centralized YAML configuration, renv for R environment management, data-contract regression tests, and a product inventory generated from the data rather than maintained by hand</li>
 </ul>
-<p>I also built the <a href="https://fiadb-dashboard.streamlit.app/">FIA Database Schema Navigator</a>, a Streamlit tool for exploring the FIADB v9.4 schema without loading the full 70 GB SQLite file, along with two downstream apps for <a href="https://fia-data-compilation.streamlit.app/">compiled data QA</a> and <a href="https://forest-data-compilation-dashboard.streamlit.app/">full project exploration</a>. Details in the <a href="./posts/forest-data-compilation/index.html">blog post</a> and <a href="https://github.com/rellimylime/forest-data-compilation">repository</a>.</p>
-<p class="research-note"><strong>Technical details:</strong> R and Python pipelines integrating IDS, TerraClimate, PRISM, WorldClim, and FIA. Google Earth Engine pixel decomposition with area-weighted coverage fractions. Streamlit dashboards for schema navigation, data exploration, and project documentation. <code>renv</code> and YAML config-driven reproducibility.</p>
+<aside class="research-margin-note">
+  <span class="research-margin-label">Boundary condition</span>
+  Two datasets can use the same word without measuring the same phenomenon. Names are hints; definitions, collection methods, spatial grain, and timing determine whether evidence can defensibly be combined.
+</aside>
+<p>I also built the <a href="https://forest-data-compilation-dashboard.streamlit.app/" target="_blank" rel="noopener noreferrer">Forest Data Explorer</a>, a Streamlit application with pages for pipeline architecture, a searchable data catalog, FIA and thermophilization outputs, and an <a href="https://forest-data-compilation-dashboard.streamlit.app/FIA_Navigator" target="_blank" rel="noopener noreferrer">FIADB v9.4 schema navigator</a> for exploring the database structure without loading the full database. Details in the <a href="./posts/forest-data-compilation/index.html">blog post</a> and <a href="https://github.com/rellimylime/forest-data-compilation">repository</a>.</p>
+<aside class="research-margin-note">
+  <span class="research-margin-label">Context window</span>
+  If users repeatedly need a diagram to understand the data model, the diagram is not supplementary documentation. It is part of the interface.
+</aside>
 </section>
-<section id="wildfire-resilience-index-data-access-r-package" class="level3 research-project research-bg-trigger" data-bg-id="wri">
+<section id="what-the-next-project-inherits" class="level4 page-columns page-full">
+<h4 class="anchored" data-anchor-id="what-the-next-project-inherits">What the next project inherits</h4>
+<p>The repository now carries more than outputs: it preserves the meaning, provenance, validation status, and intended grain of those outputs. Future analyses can begin with a navigable system rather than reconstructing the same mental model from folders, scripts, and institutional memory.</p>
+<aside class="research-margin-note">
+  <span class="research-margin-label">Failure prevented</span>
+  A reused geographic location is not necessarily the same monitored plot. Preserving FIA's official remeasurement links prevents false ecological change from entering the analysis.
+</aside>
+<p class="research-note"><strong>Technical details:</strong> R and Python pipelines integrating IDS, TerraClimate, PRISM, WorldClim, FIA (FIADB v9.4), and BIEN range maps, with MTBS fire perimeters in preparation. Google Earth Engine for area-weighted climate extraction at survey locations and across species range polygons. Streamlit Forest Data Explorer backed by a generated product registry. <code>renv</code>, YAML config, and <code>testthat</code> data-contract tests for reproducibility.</p>
+</section>
+</section>
+<section id="wildfire-resilience-index-data-access-r-package" class="level3 research-project research-bg-trigger page-columns page-full" data-bg-id="wri">
 <h3 class="anchored" data-anchor-id="wildfire-resilience-index-data-access-r-package">Wildfire Resilience Index Data Access &amp; R Package</h3>
 <p><strong>Client:</strong> National Center for Ecological Analysis and Synthesis (NCEAS), Dr.&nbsp;Caitlin Fong<br>
 <strong>Timeline:</strong> January 2026 - June 2026<br>
 <strong>Status:</strong> Completed (MEDS Capstone)</p>
-<p>This capstone project focused on making the Wildfire Resilience Index (WRI) usable without asking people to download several terabytes of raster data. Working with my capstone team, I helped turn 100+ wildfire resilience layers into cloud-accessible geospatial assets and build an open-source R package that lets users discover, subset, and visualize the data directly.</p>
+<p>This capstone project focused on making the Wildfire Resilience Index (WRI) usable without asking people to download the full archive. Working with my capstone team, I helped make 82 wildfire resilience layers,approximately 25 GB in total,available as cloud-accessible geospatial assets and build an open-source R package that lets users discover, subset, and visualize the data directly.</p>
+<section id="why-access-needed-to-be-designed" class="level4 page-columns page-full">
+<h4 class="anchored" data-anchor-id="why-access-needed-to-be-designed">Why access needed to be designed</h4>
+<p>Hosting files was only part of the problem. People needed to find an appropriate layer, understand what it measured, describe an area of interest in a familiar spatial format, and retrieve only the relevant subset without first becoming experts in the archive’s storage structure.</p>
 <p>Key pieces of the work:</p>
 <ul>
 <li><strong>Cloud-ready geospatial archive</strong> - Converting 100+ WRI raster layers to Cloud-Optimized GeoTIFFs (COGs), with metadata structured for reproducible public access</li>
@@ -237,7 +276,20 @@ ul.task-list li input[type="checkbox"] {
 <li><strong>R package development</strong> - Building functions for catalog queries, spatial subsetting, and visualization so researchers and practitioners can work with the data without managing huge local files</li>
 <li><strong>Client handoff infrastructure</strong> - Documenting the processing pipeline so future WRI releases can be updated and maintained by the client team</li>
 </ul>
+<aside class="research-margin-note">
+  <span class="research-margin-label">Generalizable optimization</span>
+  Move the question to the data instead of moving all the data to the question. A user who needs one layer for one county should not have to download the complete archive first.
+</aside>
+</section>
+<section id="what-became-possible" class="level4 page-columns page-full">
+<h4 class="anchored" data-anchor-id="what-became-possible">What became possible</h4>
+<p>Users can now browse the catalog, inspect layer metadata, provide several common forms of spatial input, and retrieve a bounded result through a small set of documented R functions. The infrastructure remains present and inspectable, but it no longer has to be manually managed for every question.</p>
+<aside class="research-margin-note">
+  <span class="research-margin-label">Aha moment</span>
+  Flexibility does not mean accepting every possible input or operation. Sometimes the most user-centered decision is to make an unsupported request impossible,and explain why.
+</aside>
 <p class="research-note"><strong>Technical details:</strong> R package development with <code>terra</code>, <code>sf</code>, <code>rstac</code>, and <code>testthat</code>, paired with GDAL-based TIFF-to-COG conversion, STAC metadata generation, and public data hosting through the Knowledge Network for Biocomplexity (KNB).</p>
+</section>
 </section>
 <section id="proposed-projects" class="level2 research-project research-bg-trigger" data-bg-id="proposed">
 <h2 class="anchored" data-anchor-id="proposed-projects">Proposed Projects</h2>
@@ -271,14 +323,111 @@ document.addEventListener('DOMContentLoaded', function () {
   document.body.classList.add('js-enhanced');
   initRotators();
   initFavoriteLines();
+  initPoemBuilder();
   initRandomLines();
+  initBodyResponses();
   initBlogListingMeta();
   initPageCompanions();
   initResearchBackgrounds();
+  initResearchMarginNotes();
   initHashLandingAdjustments();
   initBirdSeparators();
   initQuoteFadeIn();
+  initHomepageOrder();
+  initProblemMap();
 });
+
+function initProblemMap() {
+  const viewport = document.querySelector('[data-map-viewport]');
+  const canvas = document.querySelector('[data-map-canvas]');
+  if (!viewport || !canvas) return;
+  const map = viewport.closest('.home-process-map');
+  let scale = 1;
+  let x = 0;
+  let y = 0;
+  let dragging = false;
+  let startX = 0;
+  let startY = 0;
+
+  const apply = () => {
+    canvas.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
+    canvas.style.setProperty('--map-scale', scale);
+  };
+  const zoom = (delta) => {
+    scale = Math.min(2.4, Math.max(1, scale + delta));
+    if (scale === 1) { x = 0; y = 0; }
+    apply();
+  };
+  map.querySelector('[data-map-zoom-in]')?.addEventListener('click', () => zoom(.2));
+  map.querySelector('[data-map-zoom-out]')?.addEventListener('click', () => zoom(-.2));
+  map.querySelector('[data-map-reset]')?.addEventListener('click', () => { scale = 1; x = 0; y = 0; apply(); });
+  viewport.addEventListener('wheel', (event) => {
+    if (!event.ctrlKey && !event.metaKey) return;
+    event.preventDefault();
+    zoom(event.deltaY < 0 ? .15 : -.15);
+  }, { passive: false });
+  viewport.addEventListener('pointerdown', (event) => {
+    if (scale === 1 || event.target.closest('button, details')) return;
+    dragging = true;
+    startX = event.clientX - x;
+    startY = event.clientY - y;
+    viewport.setPointerCapture(event.pointerId);
+    viewport.classList.add('is-panning');
+  });
+  viewport.addEventListener('pointermove', (event) => {
+    if (!dragging) return;
+    x = event.clientX - startX;
+    y = event.clientY - startY;
+    apply();
+  });
+  const stop = () => { dragging = false; viewport.classList.remove('is-panning'); };
+  viewport.addEventListener('pointerup', stop);
+  viewport.addEventListener('pointercancel', stop);
+}
+
+function initHomepageOrder() {
+  const intro = document.querySelector('body.home-page .home-intro');
+  const quoteIntro = document.querySelector('body.home-page .home-quote-intro');
+  const quotes = document.querySelector('body.home-page .quote-section');
+  if (!intro || !quoteIntro || !quotes) return;
+  intro.insertAdjacentElement('afterend', quotes);
+  intro.insertAdjacentElement('afterend', quoteIntro);
+}
+
+function initResearchMarginNotes() {
+  let noteIndex = 0;
+  document.querySelectorAll('.research-project').forEach((project) => {
+    const notes = Array.from(project.querySelectorAll('.research-margin-note'));
+    notes.forEach((note) => {
+      let passage = note.previousElementSibling;
+      while (passage && (passage.matches('h3, h4') || passage.classList.contains('research-margin-note'))) {
+        passage = passage.previousElementSibling;
+      }
+      if (!passage) return;
+      note.classList.add(noteIndex % 2 ? 'note-left' : 'note-right');
+      if (noteIndex % 2) {
+        note.style.left = 'auto';
+        note.style.right = 'calc(100% + 1.5rem)';
+      } else {
+        note.style.left = 'calc(100% + 1.5rem)';
+        note.style.right = 'auto';
+      }
+      noteIndex += 1;
+      note.style.top = passage.offsetTop + 'px';
+      note.tabIndex = 0;
+      note.setAttribute('aria-label', `${note.querySelector('.research-margin-label')?.textContent || 'Margin note'} for the nearby passage`);
+      passage.classList.add('research-annotated-passage');
+      const activate = () => { note.classList.add('is-active'); passage.classList.add('is-note-active'); };
+      const deactivate = () => { note.classList.remove('is-active'); passage.classList.remove('is-note-active'); };
+      note.addEventListener('mouseenter', activate);
+      note.addEventListener('mouseleave', deactivate);
+      note.addEventListener('focus', activate);
+      note.addEventListener('blur', deactivate);
+      passage.addEventListener('mouseenter', activate);
+      passage.addEventListener('mouseleave', deactivate);
+    });
+  });
+}
 
 function initRotators() {
   const rotators = document.querySelectorAll('[data-rotator]');
@@ -333,6 +482,7 @@ function initFavoriteLines() {
       saved[lineId] = nextState;
       updateHeart(button, nextState);
       localStorage.setItem(storageKey, JSON.stringify(saved));
+      document.dispatchEvent(new CustomEvent('fieldnotes:changed'));
     });
   });
 }
@@ -340,8 +490,227 @@ function initFavoriteLines() {
 function updateHeart(button, isFavorite) {
   button.classList.toggle('is-favorite', isFavorite);
   button.setAttribute('aria-pressed', isFavorite ? 'true' : 'false');
-  button.setAttribute('aria-label', isFavorite ? 'Line saved to favorites' : 'Save this line');
-  button.innerHTML = isFavorite ? '&#9829;' : '&#9825;';
+  button.setAttribute('aria-label', isFavorite ? 'Remove line from Build-a-Poem selection' : 'Add line to Build-a-Poem selection');
+  button.textContent = isFavorite ? '✓' : '+';
+}
+
+function initPoemBuilder() {
+  const builder = document.querySelector('[data-poem-builder]');
+  if (!builder) return;
+
+  const count = builder.querySelector('[data-poem-builder-count]');
+  const arrangementSelect = builder.querySelector('[data-poem-arrangement]');
+  const minimumNote = builder.querySelector('[data-poem-minimum]');
+  const output = builder.querySelector('[data-poem-builder-output]');
+  const copy = builder.querySelector('[data-poem-copy]');
+  const clear = builder.querySelector('[data-poem-clear]');
+
+  const keptLines = function () {
+    return Array.from(document.querySelectorAll('.poem-line'))
+      .map((line, index) => {
+        const marker = line.querySelector('.line-heart');
+        const text = line.querySelector('.poem-line-text');
+        return {
+          index,
+          kept: marker && marker.classList.contains('is-favorite'),
+          text: text ? text.textContent.trim() : ''
+        };
+      })
+      .filter((line) => line.kept && line.text);
+  };
+
+  const sync = function () {
+    const lines = keptLines();
+    const ready = lines.length >= 3;
+    count.textContent = lines.length + (lines.length === 1 ? ' line selected' : ' lines selected');
+    arrangementSelect.disabled = !ready;
+    minimumNote.hidden = ready;
+    clear.disabled = lines.length === 0;
+    if (!lines.length) {
+      output.hidden = true;
+      output.replaceChildren();
+      copy.hidden = true;
+    }
+  };
+
+  const arrange = function (mode) {
+    let lines = keptLines();
+    if (mode === 'reverse') lines = lines.reverse();
+    if (mode === 'breath') lines = lines.sort((a, b) => a.text.length - b.text.length);
+    if (mode === 'disturbance') {
+      lines = lines
+        .map((line) => ({ line, order: Math.random() }))
+        .sort((a, b) => a.order - b.order)
+        .map((entry) => entry.line);
+    }
+
+    output.replaceChildren(...lines.map((line) => makePoemBuilderLine(line.text, mode === 'custom')));
+    output.hidden = false;
+    copy.hidden = false;
+  };
+
+  arrangementSelect.addEventListener('change', function () {
+    if (arrangementSelect.value) arrange(arrangementSelect.value);
+  });
+
+  let draggedLine = null;
+  output.addEventListener('dragstart', (event) => {
+    draggedLine = event.target.closest('.poem-builder-line');
+    if (draggedLine) draggedLine.classList.add('is-dragging');
+  });
+  output.addEventListener('dragend', () => {
+    draggedLine?.classList.remove('is-dragging');
+    draggedLine = null;
+  });
+  output.addEventListener('dragover', (event) => {
+    if (!draggedLine) return;
+    event.preventDefault();
+    const target = event.target.closest('.poem-builder-line');
+    if (target && target !== draggedLine) {
+      const after = event.clientY > target.getBoundingClientRect().top + target.offsetHeight / 2;
+      target.insertAdjacentElement(after ? 'afterend' : 'beforebegin', draggedLine);
+    }
+  });
+
+  clear.addEventListener('click', function () {
+    document.querySelectorAll('.line-heart.is-favorite').forEach((button) => {
+      button.click();
+    });
+    localStorage.removeItem('favoriteLines.v1');
+    sync();
+  });
+
+  copy.addEventListener('click', async function () {
+    const poem = Array.from(output.querySelectorAll('.poem-builder-line-text')).map((line) => line.textContent).join('\n');
+    try {
+      await navigator.clipboard.writeText(poem);
+      copy.textContent = 'Copied';
+      window.setTimeout(() => { copy.textContent = 'Copy poem'; }, 1200);
+    } catch (error) {
+      copy.textContent = 'Copy unavailable';
+    }
+  });
+
+  document.addEventListener('fieldnotes:changed', sync);
+  sync();
+}
+
+function makePoemBuilderLine(text, custom) {
+  const row = document.createElement('div');
+  row.className = 'poem-builder-line';
+  row.draggable = custom;
+  const line = document.createElement('span');
+  line.className = 'poem-builder-line-text';
+  line.textContent = text;
+  row.appendChild(line);
+  if (custom) {
+    row.classList.add('is-custom');
+  }
+  return row;
+}
+
+function initBodyResponses() {
+  const dialog = document.querySelector('[data-response-dialog]');
+  const openers = document.querySelectorAll('[data-response-open]');
+  if (!dialog || !openers.length) return;
+
+  const locations = ['Jaw', 'Throat', 'Chest', 'Gut', 'Back', 'Hands', 'Skin', 'Head', 'Somewhere else', 'Nowhere yet'];
+  const options = dialog.querySelector('[data-response-options]');
+  const submit = dialog.querySelector('[data-response-submit]');
+  const status = dialog.querySelector('[data-response-status]');
+  const results = dialog.querySelector('[data-response-results]');
+  const endpoint = window.EMILY_BODY_RESPONSE_API || '';
+  const voterKey = 'emily.body.responses.voter.v1';
+  let voterId = localStorage.getItem(voterKey);
+  if (!voterId) {
+    voterId = window.crypto && crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random();
+    localStorage.setItem(voterKey, voterId);
+  }
+  let activePiece = '';
+
+  locations.forEach((location) => {
+    const label = document.createElement('label');
+    const input = document.createElement('input');
+    const span = document.createElement('span');
+    input.type = 'checkbox';
+    input.value = location.toLowerCase().replace(/\s+/g, '-');
+    span.textContent = location;
+    label.append(input, span);
+    options.appendChild(label);
+  });
+
+  const selected = function () {
+    return Array.from(options.querySelectorAll('input:checked')).map((input) => input.value);
+  };
+
+  options.addEventListener('change', function () {
+    submit.disabled = selected().length === 0;
+  });
+
+  openers.forEach((button) => {
+    button.addEventListener('click', async function () {
+      activePiece = button.dataset.responseOpen;
+      options.querySelectorAll('input').forEach((input) => { input.checked = false; });
+      submit.disabled = true;
+      status.textContent = endpoint ? 'Choose every place that registered.' : 'The collective tally is being connected; the interface is ready, but responses are not being collected yet.';
+      results.hidden = true;
+      results.replaceChildren();
+      dialog.showModal();
+    });
+  });
+
+  submit.addEventListener('click', async function () {
+    if (!endpoint || !activePiece) {
+      status.textContent = 'Shared voting is not connected yet, so nothing was stored.';
+      return;
+    }
+    submit.disabled = true;
+    status.textContent = 'Adding your response…';
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ art_id: activePiece, locations: selected(), voter_id: voterId })
+      });
+      if (!response.ok) throw new Error('Vote request failed');
+      const data = await response.json();
+      renderBodyResponseResults(data, results);
+      status.textContent = 'Your response joined the collective tally.';
+    } catch (error) {
+      status.textContent = 'The response could not be saved. Nothing was recorded,please try again later.';
+      submit.disabled = false;
+    }
+  });
+}
+
+async function loadBodyResponseResults(endpoint, artId, results, status) {
+  try {
+    const response = await fetch(endpoint + '?art_id=' + encodeURIComponent(artId));
+    if (!response.ok) throw new Error('Results request failed');
+    renderBodyResponseResults(await response.json(), results);
+    status.textContent = 'Vote to add your response and see where this piece landed for everyone.';
+  } catch (error) {
+    status.textContent = 'The collective tally is temporarily unavailable.';
+  }
+}
+
+function renderBodyResponseResults(data, container) {
+  const counts = data.counts || {};
+  const max = Math.max(1, ...Object.values(counts));
+  container.replaceChildren(...Object.entries(counts).map(([location, value]) => {
+    const row = document.createElement('div');
+    const label = document.createElement('span');
+    const meter = document.createElement('span');
+    const count = document.createElement('strong');
+    label.textContent = location.replace(/-/g, ' ');
+    row.className = 'body-response-meter';
+    meter.className = 'body-response-meter-bar';
+    meter.style.setProperty('--response-share', ((value / max) * 100) + '%');
+    count.textContent = value;
+    row.append(label, meter, count);
+    return row;
+  }));
+  container.hidden = false;
 }
 
 function initRandomLines() {
@@ -1007,13 +1376,13 @@ function initBirdSeparators() {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>Made with Quarto, GitHub Pages, and love.</p>
+<p>Designed, written, built, broken, and repaired by Emily.</p>
 </div>   
     <div class="nav-footer-center">
       &nbsp;
     </div>
     <div class="nav-footer-right">
-<p><a href=".\colophon.html">Colophon</a></p>
+<p><a href=".\colophon.html">How this place works →</a></p>
 </div>
   </div>
 </footer>

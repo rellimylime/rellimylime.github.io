@@ -4,24 +4,34 @@ body-classes: text-page colophon-page
 ---
 
 ::: {.page-intro}
-Notes on how this site is built and maintained.
+The machinery behind this particular small corner of the internet.
 :::
 
 ::: {.page-shell}
 
-## Stack
+## Why it looks like this
+
+This is a portfolio, but I did not want it to behave like a waiting room for my résumé. It is meant to reveal how I notice, question, build, write, and occasionally become personally invested in the repair of an inanimate object.
+
+The visual system borrows from field notes, research notebooks, maps, marginalia, and things made carefully by hand. The interactions are not decoration; each should help someone explore, keep, compare, or respond.
+
+## Underneath
 
 -   Built with Quarto
 -   Styled with `styles.scss`
 -   A small `site-scripts.html` file handles the interactive pieces
 -   Published from GitHub to GitHub Pages
 
-## Structure
+## Where things live
 
 Most pages are written in `.qmd` files. Posts live in `posts/`, and the site is generated into `docs/` for GitHub Pages.
 
-## Maintenance
+## Maintenance philosophy
 
-I try to keep the setup simple enough that I can update a page, publish a post, or change the design without turning the site itself into a second project.
+I try to keep the setup simple enough that I can update a page, publish a post, or change the design without turning the site itself into a second job. Inevitably, I occasionally ignore this principle because I have thought of something fun.
+
+## A note on access
+
+The site is designed to remain readable without its small interactive surprises. Keyboard focus, reduced motion, useful image descriptions, and legible contrast are part of the build,not cleanup assigned to some future version of me.
 
 :::

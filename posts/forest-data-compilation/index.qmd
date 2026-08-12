@@ -44,7 +44,7 @@ The app runs in **metadata-only mode** when no database is connected - the relat
 
 ```{=html}
 <iframe
-  src="https://fiadb-dashboard.streamlit.app?embed=true"
+  src="https://forest-data-compilation-dashboard.streamlit.app?embed=true"
   width="100%"
   height="700px"
   frameborder="0"
@@ -52,7 +52,7 @@ The app runs in **metadata-only mode** when no database is connected - the relat
 ></iframe>
 ```
 
-[Open the FIA Database Schema Navigator](https://fiadb-dashboard.streamlit.app/)
+<a href="https://forest-data-compilation-dashboard.streamlit.app/" target="_blank" rel="noopener noreferrer">Open the FIA Database Schema Navigator</a>
 
 ``` python
 import sqlite3
@@ -205,7 +205,7 @@ I built the schema navigator first, but the project kept growing. Once I had a f
 
 ```{=html}
 <iframe
-  src="https://fia-data-compilation.streamlit.app?embed=true"
+  src="https://forest-data-compilation-dashboard.streamlit.app?embed=true"
   width="100%"
   height="700px"
   frameborder="0"
@@ -214,7 +214,7 @@ I built the schema navigator first, but the project kept growing. Once I had a f
 ></iframe>
 ```
 
-[Open the FIA Compiled Data Explorer](https://fia-data-compilation.streamlit.app/)
+<a href="https://forest-data-compilation-dashboard.streamlit.app/" target="_blank" rel="noopener noreferrer">Open the FIA Compiled Data Explorer</a>
 
 The FIA Compiled Data Explorer is for checking and exploring processed outputs, not raw schema. It reads the compiled FIA summaries produced in the `forest-data-compilation.Rproj` workflow, then surfaces them in map and chart views for QA and exploratory analysis.
 
@@ -231,7 +231,7 @@ The FIA Compiled Data Explorer is for checking and exploring processed outputs, 
 ></iframe>
 ```
 
-[Open the Full Forest Data Compilation Dashboard](https://forest-data-compilation-dashboard.streamlit.app/)
+<a href="https://forest-data-compilation-dashboard.streamlit.app/" target="_blank" rel="noopener noreferrer">Open the Full Forest Data Compilation Dashboard</a>
 
 The full project dashboard pulls the same idea one level up, combining FIA outputs with IDS and climate products in one place.
 
@@ -239,9 +239,9 @@ The full project dashboard pulls the same idea one level up, combining FIA outpu
 
 This post is about building the FIA schema navigator. If you want the full data workflow, setup details, and run instructions for `forest-data-compilation.Rproj`, they are documented in the project repo:
 
--   [FIA Database Schema Navigator](https://fiadb-dashboard.streamlit.app/)
--   [FIA Compiled Data Explorer](https://fia-data-compilation.streamlit.app/)
--   [Full Forest Data Compilation Dashboard](https://forest-data-compilation-dashboard.streamlit.app/)
+-   <a href="https://forest-data-compilation-dashboard.streamlit.app/" target="_blank" rel="noopener noreferrer">FIA Database Schema Navigator</a>
+-   <a href="https://forest-data-compilation-dashboard.streamlit.app/" target="_blank" rel="noopener noreferrer">FIA Compiled Data Explorer</a>
+-   <a href="https://forest-data-compilation-dashboard.streamlit.app/" target="_blank" rel="noopener noreferrer">Full Forest Data Compilation Dashboard</a>
 -   [Repository README](https://github.com/rellimylime/forest-data-compilation/blob/main/README.md)
 -   [Setup Guide](https://github.com/rellimylime/forest-data-compilation/blob/main/scripts/SETUP.md)
 -   [FIA Workflow Notes](https://github.com/rellimylime/forest-data-compilation/blob/main/05_fia/WORKFLOW.md)

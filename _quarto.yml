@@ -1,6 +1,8 @@
 project:
   type: website
   output-dir: docs
+  resources:
+    - "assets/fonts/**"
   render:
     - "*.qmd"
     - "posts/**/index.qmd"
@@ -11,8 +13,8 @@ website:
   title: "Emily Miller"
   site-url: https://rellimylime.github.io
   page-footer:
-    left: "Made with Quarto, GitHub Pages, and love."
-    right: "[Colophon](/colophon.html)"
+    left: "Designed, written, built, broken, and repaired by Emily."
+    right: "[How this place works →](/colophon.html)"
   navbar:
     left:
       - href: index.qmd

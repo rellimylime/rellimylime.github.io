@@ -15,20 +15,49 @@ body-classes: home-page
   </div>
 </section>
 
-<section class="home-shell home-intro" aria-labelledby="home-intro-title">
+<section class="home-shell home-intro" aria-label="About Emily">
   <div class="home-section-head">
-    <p class="home-section-kicker">About</p>
-    <h2 id="home-intro-title" class="home-section-title">What I'm working on</h2>
+    <p class="home-section-kicker">What I do</p>
   </div>
   <div class="home-intro-grid">
     <img class="home-headshot" src="images/pages/home/emily-headshot.png" alt="Emily Miller smiling outdoors.">
-    <p class="home-intro-bio">I build geospatial data pipelines and decision-ready tools for understanding how land and climate systems are changing. I completed UC Santa Barbara's Master of Environmental Data Science program at the Bren School in June 2026 with a 4.0 GPA, after earning a B.S. in Mathematics. Right now that looks like a pilot MEDS fellowship with Joan Dudney in the LOC Lab: national-scale forest thermophilization analysis, a large research repository that doubles as a tool, and companion apps for navigating the data. I am also continuing toward a first-author manuscript on irrigation expansion in Sub-Saharan Africa.</p>
+    <div class="home-intro-copy">
+      <p class="home-intro-thesis">I learn complex systems, find the part making life difficult, and build solutions around the people who actually need to use them.</p>
+      <p class="home-intro-bio">My background is in mathematics and environmental data science. What I really do is make complex data accessible: I ground a problem in why it matters, learn what the people and systems around it need, strip away the noise until I can see the root, and build outward from there.</p>
+      <p class="home-intro-bio">I add complexity back only when it earns its place.</p>
+    </div>
   </div>
+</section>
+
+<section class="home-shell home-duck" aria-labelledby="home-duck-title">
+  <div class="home-section-head">
+    <p class="home-section-kicker">The Duck Problem</p>
+    <h2 id="home-duck-title" class="home-section-title">A small origin story about agency</h2>
+  </div>
+  <div class="duck-literary-card"><div class="duck-story"><p>When I was a little girl, I knew another little girl who could draw tiny ducks. I could not. She appeared to possess some mysterious duck-drawing faculty that had passed me over. But I had seen proof that a duck could be drawn, so I kept trying until I could draw one too.</p></div><img class="duck-story-drawing" src="images/pages/home/duck-drawing.png" alt="A softly colored pencil drawing of a duck."></div>
+  <p>I did not recognize until recently that my response to the duck was an early version of a larger pattern in how I meet problems. The fork usually looks something like this:</p>
+  <div class="thought-fork" aria-label="Two paths of thought after encountering the inconvenient, unexpected, or unknown">
+    <div class="thought-fork-origin"><span>The inconvenient, unexpected, or unknown</span></div>
+    <div class="thought-fork-branches">
+      <div class="thought-path thought-path--away">
+        <p class="thought-path-label">The usual path I observe</p>
+        <div class="thought-node">This sucks.</div><span class="thought-arrow">↓</span>
+        <div class="thought-node">Can someone else fix it?</div>
+      </div>
+      <div class="thought-path thought-path--mine">
+        <p class="thought-path-label">Where my brain goes</p>
+        <div class="thought-node">Dude, awesome.</div><span class="thought-arrow">↓</span>
+        <div class="thought-node">Can I fix it?</div>
+      </div>
+    </div>
+  </div>
+  <p>What draws me is the pause in which that constant becomes a question. What is happening here? What can I learn? Where can I intervene? That pause is increasingly difficult to find inside the urgency pandemic of modern life, which trains us to keep moving before curiosity has time to become agency.</p>
+  <p>Repair begins by believing there may be something worth noticing before we discard the object, the process, or the possibility that we have the capacity to understand it. Sometimes the reward is another ten years with a favorite shirt. Sometimes it is a better system. Either way, the pause matters. It is also the subject of one of my poems, <a href="art.html#urgency"><em>Urgency</em></a>.</p>
 </section>
 
 <section class="home-shell home-featured" aria-labelledby="home-featured-title">
   <div class="home-section-head">
-    <p class="home-section-kicker">Featured Work</p>
+    <p class="home-section-kicker">Selected Solutions</p>
     <h2 id="home-featured-title" class="home-section-title">Selected projects</h2>
   </div>
   <div class="home-featured-grid">
@@ -74,15 +103,15 @@ body-classes: home-page
 :::::::::::::::::::::::::::::: slider-container
 ::::::::::::::::::::::::::::: click-slider
 ::: slick-slide
-**"Documentation is a love letter that you write to your future self."**
-
--   Damian Conway
-:::
-
-::: slick-slide
 **"It is my experience that proofs involving matrices can be shortened by 50% if one throws the matrices out."**
 
 -   Emil Artin
+:::
+
+::: slick-slide
+**"Documentation is a love letter that you write to your future self."**
+
+-   Damian Conway
 :::
 
 ::: slick-slide

@@ -4,23 +4,14 @@ body-classes: text-page art-page
 ---
 
 ::: {.page-intro}
-Poems, photographs, and visual work from the same brain that likes maps, systems, repair manuals, and the exact shade of light before evening fully commits.
+Poems, drawings, paintings, and other evidence.
 :::
 
-::: {.page-shell}
-
 ```{=html}
-<details class="page-foldout">
-  <summary>Why this page exists</summary>
-  <div class="page-foldout-body">
-    <p>I do not think creative work lives in a separate room from technical work. It comes from the same habits: attention, structure, revision, and the need to make something legible.</p>
-  </div>
-</details>
+<img class="art-floral-divider" src="images/pages/art/floral-divider.svg" alt="" aria-hidden="true">
 ```
 
-## Studio Note
-
-I use poems, images, and design experiments to work on the same questions that show up elsewhere on this site. What deserves attention. What can be said plainly. What refuses to stay plain.
+::: {.page-shell}
 
 <!--
 ```{=html}
@@ -80,23 +71,10 @@ Currently noticing
 
 ## Poetry & Prose
 
-Words are slower than data and less obedient. That is part of the appeal.
-
-::: {.random-line-panel}
-::: aside-label
-Random line
-:::
-
-```{=html}
-<blockquote data-random-output="">Press the button and let the page choose a line worth keeping.</blockquote>
-<p class="random-line-source" data-random-source=""></p>
-<button type="button" class="random-line-trigger">Pull a line</button>
-```
-:::
 
 ```{=html}
 <div class="poetry-stack">
-  <details class="poem-entry">
+  <details class="poem-entry poem-entry--what-makes-me">
     <summary class="poem-summary">
       <span class="poem-summary-title">What makes me</span>
       <span class="poem-summary-meta">prose / perspective / self-sculpture</span>
@@ -115,13 +93,12 @@ Random line
     </div>
   </details>
 
-  <details class="poem-entry">
+  <details class="poem-entry poem-entry--bad-design">
     <summary class="poem-summary">
       <span class="poem-summary-title">A Bad Design</span>
       <span class="poem-summary-meta">poem / objects / engineering with feelings</span>
     </summary>
     <div class="poem-entry-body">
-      <p class="poem-reader-note">Tap the heart on a line you want to keep.</p>
       <div class="poem-body" data-poem-title="A Bad Design">
         <div class="poem-stanza">
           <div class="poem-line"><span class="poem-line-text">My heels leak,</span><button type="button" class="line-heart" data-line-id="bad-design-01" aria-pressed="false">&#9825;</button></div>
@@ -188,20 +165,16 @@ Random line
           <div class="poem-line"><span class="poem-line-text">Or I find the heart to throw you out.</span><button type="button" class="line-heart" data-line-id="bad-design-46" aria-pressed="false">&#9825;</button></div>
         </div>
       </div>
-      <details class="marginalia">
-        <summary>Marginalia</summary>
-        <p>This started with a pair of shoes. I don't have them anymore.</p>
-      </details>
+      <p class="poem-insight"><strong>Resolution:</strong> Kept the laces for my MacGyver kit, but threw the shoes. I no longer buy Nikes.</p>
     </div>
   </details>
 
-  <details class="poem-entry">
+  <details class="poem-entry poem-entry--ocean">
     <summary class="poem-summary">
       <span class="poem-summary-title">The Ocean Listened</span>
       <span class="poem-summary-meta">poem / coast / indifference as comfort</span>
     </summary>
     <div class="poem-entry-body">
-      <p class="poem-reader-note">The quiet lines can keep their teeth too.</p>
       <div class="poem-body" data-poem-title="The Ocean Listened">
         <div class="poem-stanza">
           <div class="poem-line"><span class="poem-line-text">I cried to the ocean today</span><button type="button" class="line-heart" data-line-id="ocean-listened-01" aria-pressed="false">&#9825;</button></div>
@@ -226,36 +199,147 @@ Random line
           <div class="poem-line"><span class="poem-line-text">I have never felt more loved.</span><button type="button" class="line-heart" data-line-id="ocean-listened-12" aria-pressed="false">&#9825;</button></div>
         </div>
       </div>
-      <details class="marginalia">
-        <summary>Marginalia</summary>
-        <p>I like that this one refuses to make comfort sentimental. The love arrives through reverence, not reassurance.</p>
-      </details>
+      <p class="poem-insight"><strong>Finding:</strong> Feeling loved, not by being coddled, but by being part of a larger whole.</p>
+    </div>
+  </details>
+  <details class="poem-entry poem-entry--urgency" id="urgency">
+    <summary class="poem-summary">
+      <span class="poem-summary-title">Urgency</span>
+      <span class="poem-summary-meta">poem / current / the quiet</span>
+    </summary>
+    <div class="poem-entry-body">
+      <div class="poem-body" data-poem-title="Urgency">
+        <div class="poem-stanza"><div class="poem-line"><span class="poem-line-text">No wonder we're tired.</span><button type="button" class="line-heart" data-line-id="urgency-01" aria-pressed="false">&#9825;</button></div></div>
+        <div class="poem-stanza"><div class="poem-line"><span class="poem-line-text">Designed as a current, but taught like a wire.</span><button type="button" class="line-heart" data-line-id="urgency-02" aria-pressed="false">&#9825;</button></div><div class="poem-line"><span class="poem-line-text">Stay drawn, Stay going, One channel, Keep flowing.</span><button type="button" class="line-heart" data-line-id="urgency-03" aria-pressed="false">&#9825;</button></div></div>
+        <div class="poem-stanza"><div class="poem-line"><span class="poem-line-text">Don't blow a fuse, or short a circuit;</span><button type="button" class="line-heart" data-line-id="urgency-04" aria-pressed="false">&#9825;</button></div><div class="poem-line"><span class="poem-line-text">But with voltage this strong, it's hard to resurface.</span><button type="button" class="line-heart" data-line-id="urgency-05" aria-pressed="false">&#9825;</button></div></div>
+        <div class="poem-stanza"><div class="poem-line"><span class="poem-line-text">From time to time, now and again,</span><button type="button" class="line-heart" data-line-id="urgency-05a" aria-pressed="false">&#9825;</button></div><div class="poem-line"><span class="poem-line-text">The wattage will get to us, but a truth will set in;</span><button type="button" class="line-heart" data-line-id="urgency-05b" aria-pressed="false">&#9825;</button></div></div>
+        <div class="poem-stanza"><div class="poem-line"><span class="poem-line-text">We're chasing a power we already own</span><button type="button" class="line-heart" data-line-id="urgency-06" aria-pressed="false">&#9825;</button></div><div class="poem-line"><span class="poem-line-text">and all that we seek, we've already known.</span><button type="button" class="line-heart" data-line-id="urgency-07" aria-pressed="false">&#9825;</button></div></div>
+        <div class="poem-stanza"><div class="poem-line"><span class="poem-line-text">Take a break from the current, and those who supply it.</span><button type="button" class="line-heart" data-line-id="urgency-08" aria-pressed="false">&#9825;</button></div><div class="poem-line"><span class="poem-line-text">I'm amazed what we find, alone in the quiet.</span><button type="button" class="line-heart" data-line-id="urgency-09" aria-pressed="false">&#9825;</button></div></div>
+      </div>
     </div>
   </details>
 </div>
 ```
 
-## Visual Work
-
-I am building this section more selectively than I used to. 
-
-Photography and visual work are coming next!
-
-## Leave a Note
-
-Comments on this page run through GitHub. If you want to leave a note on the work, that is the room.
+::: {.random-line-panel}
+::: aside-label
+Random line
+:::
 
 ```{=html}
-<div class="comment-shell">
-  <script src="https://utteranc.es/client.js"
-          repo="rellimylime/rellimylime.github.io"
-          issue-term="pathname"
-          label="site-comment"
-          theme="github-light"
-          crossorigin="anonymous"
-          async>
-  </script>
+<blockquote data-random-output="">Press the button and let the page choose a line.</blockquote>
+<p class="random-line-source" data-random-source=""></p>
+<button type="button" class="random-line-trigger">Pull a line</button>
+```
+:::
+
+```{=html}
+<section class="poem-builder" data-poem-builder>
+  <div class="poem-builder-head">
+    <div>
+      <p class="aside-label">Unauthorized poetry franchise</p>
+      <h3>Build-a-Poem™</h3>
+    </div>
+    <span class="poem-builder-count" data-poem-builder-count>0 lines selected</span>
+  </div>
+  <p>Use the <strong>+</strong> beside any line you want. Once you have three, arrange them by original order, reverse them, move from the shortest breath to the longest, or introduce a little controlled disturbance.</p>
+  <label class="poem-builder-select-label" for="poem-arrangement">Arrangement</label>
+  <select id="poem-arrangement" data-poem-arrangement disabled>
+    <option value="">Choose an arrangement</option>
+    <option value="original">Original order</option>
+    <option value="reverse">Reverse</option>
+    <option value="breath">Shortest breath</option>
+    <option value="disturbance">Controlled disturbance</option>
+    <option value="custom">Custom, drag it yourself</option>
+  </select>
+  <span class="poem-builder-minimum" data-poem-minimum>Select at least 3 lines above to choose an arrangement.</span>
+  <div class="poem-builder-output" data-poem-builder-output hidden aria-live="polite"></div>
+  <div class="poem-builder-actions">
+    <button type="button" class="poem-builder-copy" data-poem-copy hidden>Copy poem</button>
+    <button type="button" class="poem-builder-clear" data-poem-clear disabled>Clear selections</button>
+  </div>
+  <p class="poem-builder-credit">Made from Emily's lines, selected and reassembled by you.</p>
+</section>
+```
+
+## Visual Work
+
+These pieces do not all speak in the same medium or volume. They do keep returning to bodies under pressure, shelter, coexistence, observation, decay, play, nature, and the uncomfortable edge of recognition.
+
+```{=html}
+<details class="art-gallery-note">
+  <summary>A note before looking</summary>
+  <p>I like art that makes me feel something, sometimes reverence or recognition, sometimes unease. If a piece registers before you have words for it, notice where it arrives: jaw, throat, chest, gut, back, hands. You do not have to decide what it means. Noticing is enough.</p>
+</details>
+```
+
+```{=html}
+<div class="art-gallery">
+  <figure class="art-piece" data-art-id="remains">
+    <a href="images/pages/art/full/remains.jpg"><img src="images/pages/art/thumbs/remains.jpg" alt="Intricate black ink drawing combining a skull, snake, mushrooms, leaves, cloth, and jewelry-like forms."></a>
+    <figcaption><span>Remains</span><button type="button" class="body-response-open" data-response-open="remains">Where did this land?</button></figcaption>
+  </figure>
+  <figure class="art-piece" data-art-id="still-see-you">
+    <a href="images/pages/art/full/istillseeyou.jpg"><img src="images/pages/art/thumbs/istillseeyou.jpg" alt="Graphite portrait with hands covering a face; multiple eyes appear across one palm."></a>
+    <figcaption><span>I Still See You</span><button type="button" class="body-response-open" data-response-open="still-see-you">Where did this land?</button></figcaption>
+  </figure>
+  <figure class="art-piece" data-art-id="agony">
+    <a href="images/pages/art/full/agony.jpg"><img src="images/pages/art/thumbs/agony.jpg" alt="Loose black ink drawing of a partially separated skeleton suspended above a scribbled shadow."></a>
+    <figcaption><span>Agony</span><button type="button" class="body-response-open" data-response-open="agony">Where did this land?</button></figcaption>
+  </figure>
+  <figure class="art-piece" data-art-id="pained-smile">
+    <a href="images/pages/art/full/pained_smile.jpg"><img src="images/pages/art/thumbs/pained_smile.jpg" alt="Graphite drawing of a wide mouth whose upper surface contains burning skeletal figures."></a>
+    <figcaption><span>Pained Smile</span><button type="button" class="body-response-open" data-response-open="pained-smile">Where did this land?</button></figcaption>
+  </figure>
+  <figure class="art-piece" data-art-id="candy-clown">
+    <details class="art-content-warning"><summary title="Graphic content warning"><span aria-hidden="true">⚠</span> Candy Clown <small>graphic content</small></summary><a href="images/pages/art/full/candy_clown.jpg"><img src="images/pages/art/thumbs/candy_clown.jpg" alt="Ink drawing of a thin seated clown holding a balloon and spilling small pieces of candy."></a><figcaption><span>Candy Clown</span><button type="button" class="body-response-open" data-response-open="candy-clown">Where did this land?</button></figcaption></details>
+  </figure>
+  <figure class="art-piece" data-art-id="sheltered">
+    <a href="images/pages/art/full/sheltered.jpg"><img src="images/pages/art/thumbs/sheltered.jpg" alt="Painted seated figure sheltered beneath an oversized luminous pink and blue mushroom."></a>
+    <figcaption><span>Sheltered</span><button type="button" class="body-response-open" data-response-open="sheltered">Where did this land?</button></figcaption>
+  </figure>
+  <figure class="art-piece" data-art-id="happy-place">
+    <a href="images/pages/art/full/happy_place.jpg"><img src="images/pages/art/thumbs/happy_place.jpg" alt="Colorful painted forest opening onto bright turquoise water and a waterfall."></a>
+    <figcaption><span>Happy Place</span><button type="button" class="body-response-open" data-response-open="happy-place">Where did this land?</button></figcaption>
+  </figure>
+  <figure class="art-piece" data-art-id="octo-tangle">
+    <a href="images/pages/art/full/octo_tangle.jpg"><img src="images/pages/art/thumbs/octo_tangle.jpg" alt="Purple octopus painted over a vivid yellow, orange, and pink background."></a>
+    <figcaption><span>Octo Tangle</span><button type="button" class="body-response-open" data-response-open="octo-tangle">Where did this land?</button></figcaption>
+  </figure>
+  <figure class="art-piece" data-art-id="artists-collab">
+    <a href="images/pages/art/full/artists_collab.jpg"><img src="images/pages/art/thumbs/artists_collab.jpg" alt="Collaborative line drawing of two human figures and two bird-like figures surrounded by colored movement lines."></a>
+    <figcaption><span>Artists' Collaboration</span><button type="button" class="body-response-open" data-response-open="artists-collab">Where did this land?</button></figcaption>
+  </figure>
+  <figure class="art-piece" data-art-id="akin"><a href="images/pages/art/full/akin.jpg"><img src="images/pages/art/thumbs/akin.jpg" alt="Artwork titled Akin."></a><figcaption><span>Akin</span><button type="button" class="body-response-open" data-response-open="akin">Where did this land?</button></figcaption></figure>
+  <figure class="art-piece" data-art-id="ancient-bond"><a href="images/pages/art/full/ancient_bond.jpg"><img src="images/pages/art/thumbs/ancient_bond.jpg" alt="Artwork titled Ancient Bond."></a><figcaption><span>Ancient Bond</span><button type="button" class="body-response-open" data-response-open="ancient-bond">Where did this land?</button></figcaption></figure>
+  <figure class="art-piece" data-art-id="maternal-patience"><a href="images/pages/art/full/maternal_patience.jpg"><img src="images/pages/art/thumbs/maternal_patience.jpg" alt="Artwork titled Maternal Patience."></a><figcaption><span>Maternal Patience</span><button type="button" class="body-response-open" data-response-open="maternal-patience">Where did this land?</button></figcaption></figure>
+  <figure class="art-piece" data-art-id="natural-interior"><a href="images/pages/art/full/natural_interior.jpg"><img src="images/pages/art/thumbs/natural_interior.jpg" alt="Artwork titled Natural Interior."></a><figcaption><span>Natural Interior</span><button type="button" class="body-response-open" data-response-open="natural-interior">Where did this land?</button></figcaption></figure>
+  <figure class="art-piece" data-art-id="ocean-painting"><a href="images/pages/art/full/ocean_painting.jpg"><img src="images/pages/art/thumbs/ocean_painting.jpg" alt="Ocean painting."></a><figcaption><span>Ocean</span><button type="button" class="body-response-open" data-response-open="ocean-painting">Where did this land?</button></figcaption></figure>
+  <figure class="art-piece" data-art-id="smoking-woman"><a href="images/pages/art/full/smoking_woman.jpg"><img src="images/pages/art/thumbs/smoking_woman.jpg" alt="Artwork titled Smoking Woman."></a><figcaption><span>Smoking Woman</span><button type="button" class="body-response-open" data-response-open="smoking-woman">Where did this land?</button></figcaption></figure>
+  <figure class="art-piece" data-art-id="twisted-pose"><a href="images/pages/art/full/twisted_pose.jpg"><img src="images/pages/art/thumbs/twisted_pose.jpg" alt="Artwork titled Twisted Pose."></a><figcaption><span>Twisted Pose</span><button type="button" class="body-response-open" data-response-open="twisted-pose">Where did this land?</button></figcaption></figure>
+  <figure class="art-piece" data-art-id="what-god"><details class="art-content-warning"><summary title="Graphic content warning"><span aria-hidden="true">⚠</span> What God <small>graphic content</small></summary><a href="images/pages/art/full/what_god.jpg"><img src="images/pages/art/thumbs/what_god.jpg" alt="Artwork titled What God."></a><figcaption><span>What God</span><button type="button" class="body-response-open" data-response-open="what-god">Where did this land?</button></figcaption></details></figure>
 </div>
+
+<dialog class="body-response-dialog" data-response-dialog aria-labelledby="body-response-title">
+  <form method="dialog">
+    <button class="body-response-close" aria-label="Close">×</button>
+  </form>
+  <p class="aside-label">Body response</p>
+  <h3 id="body-response-title">Where did this piece land?</h3>
+  <p>Select every place that registered. Shared totals will appear after you vote once the collective response service is connected.</p>
+  <div class="body-response-options" data-response-options></div>
+  <button type="button" class="body-response-submit" data-response-submit disabled>Submit response</button>
+  <p class="body-response-status" data-response-status aria-live="polite"></p>
+  <div class="body-response-results" data-response-results hidden></div>
+</dialog>
+```
+
+## Something stayed with you?
+
+Tell me the line, image, or thought you are taking with you. I would genuinely like to know.
+
+```{=html}
+<p class="art-note-link"><a href="mailto:ermiller@ucsb.edu?subject=Something%20stayed%20with%20me">Send me a note →</a></p>
 ```
 
 :::

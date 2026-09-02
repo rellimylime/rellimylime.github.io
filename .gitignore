@@ -65,3 +65,6 @@ posts/federal-grant-watch/data/*
 # Locally archived media that are intentionally not part of the published site
 images/unused/
 
+# Private writing reference (voice samples, transcripts) - never published
+notes/
+

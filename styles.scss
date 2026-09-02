@@ -10,6 +10,7 @@ $body-font: 'Nunito Sans', sans-serif;
 $mono-font: 'JetBrains Mono', monospace;       // Code-inspired
 $pixel-font: 'Press Start 2P', monospace;
 $hand-font: 'Caveat', 'Segoe Print', cursive;
+$quote-font: 'Mayonice', 'Cormorant Garamond', cursive;  // self-hosted script, pull-quote only
 
 // Color Palette - soft paper, dusted accents
 $forest-teal: #8A9DB1;
@@ -30,6 +31,28 @@ $text-mid: #666662;
 @font-face {
   font-family: 'Ronald Handwriting';
   src: url('/assets/fonts/ronald/ronald-handwriting.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+// Ships as a single Regular master with italicAngle 0 - there is no italic file, so
+// nothing should ask for `font-style: italic` here or the browser will fake a slant.
+@font-face {
+  font-family: 'Mayonice';
+  src: url('/assets/fonts/mayonice/Mayonice.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+// Emily's own handwriting, made with Calligraphr. Registered under a descriptive family
+// name because the file's internal name is just "Myfont". 70 glyphs, no kern table and
+// no ligatures, so it needs no feature settings - and any character it lacks (hyphen,
+// digits, parentheses, ampersand) silently falls through to the next family below.
+@font-face {
+  font-family: 'Emily Handwriting';
+  src: url('/assets/fonts/myhandwriting/Myfont-Regular.ttf') format('truetype');
   font-style: normal;
   font-weight: 400;
   font-display: swap;
@@ -2026,6 +2049,19 @@ a.hero-line {
   line-height: 1.02;
 }
 
+// This section trades type treatments with its foldout below: the heading is set as a
+// quiet kicker and the control carries the display face. The `!important` flags only
+// exist to beat the same flags on `.home-section-title`.
+#home-duck-title {
+  font-family: $mono-font !important;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: rgba($deep-purple, 0.8) !important;
+}
+
 .home-section-title::before,
 .home-section-title::after {
   content: none !important;
@@ -2167,19 +2203,24 @@ a.hero-line {
   margin-top: 2.4rem;
 }
 
+// Float rather than grid so the bio wraps around the headshot instead of sitting in a
+// fixed column beside it. The ::after clears the float so the section still contains it.
 .home-intro-grid {
-  display: grid;
-  grid-template-columns: minmax(10rem, 13.5rem) minmax(0, 1fr);
-  gap: 1.35rem 1.6rem;
-  align-items: center;
+  display: block;
   max-width: 66rem;
+}
+.home-intro-grid::after {
+  content: '';
+  display: block;
+  clear: both;
 }
 
 .home-headshot {
   display: block;
-  width: 100%;
+  float: left;
+  width: clamp(6.5rem, 16vw, 13.5rem);
+  margin: 0.2rem 1.6rem 1.1rem 0;
   aspect-ratio: 1 / 1;
-  margin: 0;
   border: 1px solid rgba($sage-green, 0.95);
   border-radius: 0.45rem;
   box-shadow: 0 0.9rem 2rem rgba($deep-purple, 0.14);
@@ -2980,13 +3021,8 @@ body.outside-lab-page .evolution-links span {
     margin-top: 2rem;
   }
 
-  .home-intro-grid {
-    grid-template-columns: 1fr;
-    align-items: start;
-  }
-
   .home-headshot {
-    width: min(10.5rem, 52vw);
+    margin: 0.2rem 1.1rem 0.7rem 0;
   }
 
   .home-intro-bio {
@@ -3780,11 +3816,10 @@ body.research-page .page-shell {
   box-sizing: border-box;
 }
 
+// Block rather than grid so the story text wraps around the floated duck. The ::after
+// clears the float, otherwise a short story lets the duck hang out past the card border.
 .duck-literary-card {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 9rem;
-  align-items: center;
-  gap: 1rem;
+  display: block;
   margin: 1.4rem auto 1.8rem;
   padding: 1.3rem 1.4rem 1.3rem 2rem;
   border: 1px solid rgba($deep-purple,.25);
@@ -3792,16 +3827,21 @@ body.research-page .page-shell {
   background: rgba($bg-light,.62);
   box-shadow: .35rem .4rem 0 rgba($deep-purple,.06);
 }
+.duck-literary-card::after {
+  content: '';
+  display: block;
+  clear: both;
+}
 .duck-literary-card .duck-story {
   margin: 0;
   padding: 0;
   border: 0;
   background: transparent;
   box-shadow: none;
-  font-family: 'Ronald Handwriting', $hand-font;
+  font-family: 'Emily Handwriting', $hand-font;
   font-size: clamp(1.35rem, 2.2vw, 1.75rem);
   font-style: normal;
-  line-height: 1.42;
+  line-height: 1.5;
 }
 .duck-story-drawing {
   display: block;
@@ -3814,8 +3854,7 @@ body.research-page .page-shell {
 }
 
 @media (max-width: 600px) {
-  .duck-literary-card { grid-template-columns: 1fr; padding: 1.2rem; }
-  .duck-story-drawing { width: 7rem; justify-self: end; }
+  .duck-literary-card { padding: 1.2rem; }
 }
 
 body.art-page #title-block-header {
@@ -3974,16 +4013,43 @@ body.research-page .research-project {
 // Final small refinements to the duck story, research heading, and art disclosure.
 .duck-literary-card .duck-story,
 .duck-literary-card .duck-story p {
-  font-family: 'Ronald Handwriting', 'Segoe Print', cursive !important;
-  font-size: clamp(1.9rem, 3.2vw, 2.45rem) !important;
-  line-height: 1.3;
+  font-family: 'Emily Handwriting', 'Segoe Print', cursive !important;
+  font-size: clamp(1.25rem, 2vw, 1.6rem) !important;
+  // Looser than the serif needs: this face runs to 1.33em tall (asc 860 / desc -381),
+  // so its descenders collide with the next line at anything tighter.
+  line-height: 1.5;
 }
+// No frame: the art is a transparent cut-out, so it sits directly on the card.
+// Sized by height rather than width because the drawing is tall and narrow (0.56:1) -
+// constraining the width instead makes it tower over a three-line story.
+//
+// `shape-outside` pointed at the image itself makes the text follow the duck's actual
+// outline rather than its bounding box, which only works because the PNG has real alpha.
+// Browsers without it fall back to a plain rectangular wrap.
 .duck-story-drawing {
-  height: auto;
+  float: right;
+  width: auto;
+  height: clamp(6.5rem, 15vw, 13rem);
   max-height: none;
+  margin: .1rem 0 .7rem 1.3rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
   object-fit: contain;
-  object-position: center;
-  border-radius: .35rem;
+  mix-blend-mode: normal;
+  shape-outside: url('/images/pages/home/duck-drawing-no-background.png');
+  shape-image-threshold: .5;
+  shape-margin: .7rem;
+}
+
+// Must live after the rule above, not with the other mobile overrides further up: same
+// specificity, so source order decides and the desktop height would otherwise win here.
+@media (max-width: 600px) {
+  .duck-story-drawing {
+    margin: .1rem 0 .5rem 1rem;
+    shape-margin: .45rem;
+  }
 }
 body.research-page #title-block-header.quarto-title-block {
   display: block !important;
@@ -4028,13 +4094,130 @@ body.research-page #title-block-header .title {
 }
 
 // Visual QA corrections: authored hierarchy, field-guide map, and margin-note behavior.
+// The intro is a bio: a quiet lead line, prose, then a closing block. The opening line
+// is deliberately close to body size - it sets up the paragraph rather than shouting
+// over it, so the section reads as writing instead of as a slogan.
+// flow-root so the cap below measures the usable line rather than the container: this
+// sits beside the floated headshot, and without it `max-width` is counted from the
+// container's left edge, most of which the float occupies - that is what was breaking
+// the sentence across two lines. `!important` beats the global `p, li` font-family.
 .home-intro-thesis {
+  display: flow-root;
+  max-width: 36rem;
+  margin: 0 0 0.7rem;
+  font-family: $header-font !important;
+  font-size: clamp(1.45rem, 2.1vw, 1.85rem);
+  font-weight: 600;
+  line-height: 1.24;
+  color: rgba($text-dark, .95);
+  text-wrap: balance;
+}
+
+// flow-root keeps this block from overlapping the floated headshot, so its top border
+// starts clear of the image instead of striking through it.
+//
+// The left indent repeats the headshot's own clamp plus its margin, so this line and the
+// links below hold the bio's left edge instead of snapping back to the page margin once
+// they clear the photo. Expressed in the margin shorthand rather than as a separate
+// margin-left rule, which a later shorthand would silently reset to zero.
+.home-intro-coda {
+  display: flow-root;
   max-width: none;
-  margin-bottom: 0.65rem;
-  font-family: $body-font;
-  font-size: 1.12rem;
-  font-weight: 700;
-  line-height: 1.45;
+  margin: 1.15rem 0 0 calc(clamp(6.5rem, 16vw, 13.5rem) + 1.6rem);
+  padding-top: 1.05rem;
+  border-top: 1px solid rgba($deep-purple, .28);
+  font-family: $header-font !important;
+  font-size: 1.1rem;
+  font-style: italic;
+  line-height: 1.35;
+  color: rgba($text-dark, .9);
+  text-wrap: balance;
+}
+
+.home-intro-links {
+  margin: 0.55rem 0 0 calc(clamp(6.5rem, 16vw, 13.5rem) + 1.6rem);
+  font-size: 0.95rem;
+  color: rgba($text-mid, .95);
+}
+
+// Affects: the standalone quote that bridges the intro and the duck story. Deliberately
+// unboxed - the surrounding air is what makes it read as a breath between sections.
+// `display: block` is explicit because Quarto tags this with Bootstrap's `.figure`,
+// which ships an `inline-block` rule that would collapse the auto-margin centering.
+// The rules above and below are what make this read as a divider between two sections
+// rather than as trailing copy belonging to whichever section it sits nearer.
+// The rules stop well short of the 76rem `.home-shell` width on purpose: the visible
+// gap on either side is what separates this from body copy and makes it read as a
+// divider rather than as a stray paragraph belonging to the section above or below.
+.home-pullquote {
+  display: block;
+  max-width: 58rem;
+  margin: 4rem auto;
+  padding: 2.2rem 1.25rem 1.9rem;
+  border-top: 1px solid rgba($deep-purple, .32);
+  border-bottom: 1px solid rgba($deep-purple, .32);
+  text-align: center;
+}
+
+// Set in Mayonice, self-hosted. Kerning and ligatures are switched on explicitly: the
+// font carries `kern` and `liga` and a script face falls apart visually without them.
+// Line-height is a little looser than a serif would need to clear its deep descenders.
+.home-pullquote blockquote {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: $quote-font;
+  font-size: clamp(1.65rem, 3vw, 2.45rem);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.38;
+  font-kerning: normal;
+  font-variant-ligatures: common-ligatures;
+  color: rgba($text-dark, .93);
+  text-wrap: balance;
+}
+
+.home-pullquote blockquote::before { display: none; }
+
+// The global `p, li` rule sets font-size, line-height, and an `!important` font-family
+// directly on the paragraph, so nothing set on the blockquote above reaches the text by
+// inheritance. This selector outranks it and hands inheritance back. The `!important` on
+// font-family is required to beat the one in that global rule, not decoration - the duck
+// card overrides the same rule the same way.
+.home-pullquote blockquote p {
+  margin: 0;
+  font-family: inherit !important;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+// Deliberately small and wide-tracked so it recedes: the attribution is a footnote to
+// the quote, and the size gap between the two is doing most of the work.
+.home-pullquote figcaption {
+  margin-top: 1.1rem;
+  font-family: $mono-font;
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba($deep-purple, 0.75);
+}
+
+@media (max-width: 768px) {
+  .home-pullquote {
+    margin: 3.6rem auto;
+    padding: 2.4rem 1rem 2.1rem;
+  }
+  .home-pullquote figcaption { margin-top: 1.1rem; }
+}
+
+@media (max-width: 768px) {
+  .home-intro-thesis,
+  .home-intro-coda { max-width: none; }
+
+  // No indent on narrow screens: the photo is small and the column has no room to spare.
+  .home-intro-coda { margin-left: 0; }
+  .home-intro-links { margin-left: 0; }
 }
 
 .home-method {
@@ -4097,6 +4280,62 @@ body.research-page #title-block-header .title {
 .home-documentation { border-style: dashed; background: transparent; }
 .home-duck { max-width: 48rem; margin: 3rem auto 0; text-align: center; }
 .home-duck .home-section-head { text-align: center; }
+
+// Affects: the homepage foldout that hides the duck essay behind the duck story.
+.duck-foldout {
+  margin: 0 auto;
+  border-top: 1px solid rgba($deep-purple, .22);
+}
+
+// align-items overrides the section's `text-align: center`, which the label alone opts
+// out of - the story card and heading above it stay centred.
+.duck-foldout-summary {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: .3rem;
+  padding: .95rem .5rem;
+  text-align: left;
+  cursor: pointer;
+  list-style: none;
+}
+
+.duck-foldout-summary::-webkit-details-marker { display: none; }
+
+// Sized a touch larger than a standard kicker: it is the only thing in the summary now
+// that the subtitle is gone, so it has to carry the whole control on its own.
+.duck-foldout-label {
+  font-family: $header-font;
+  font-size: clamp(1.2rem, 1.5vw, 1.5rem);
+  font-weight: 600;
+  letter-spacing: normal;
+  line-height: 1.15;
+  text-transform: none;
+  color: $text-dark;
+}
+
+// Scaled in em so the caret tracks the label rather than dwarfing it, and nudged up
+// because a triangle sits optically low against a serif cap height.
+.duck-foldout-label::after {
+  content: ' \25be';
+  display: inline-block;
+  font-size: .5em;
+  vertical-align: .3em;
+  transition: transform 180ms ease;
+}
+
+// Closed, the prints walk away from the label. Open, they have turned around.
+.duck-foldout[open] .duck-foldout-label::after { transform: rotate(180deg); }
+
+.duck-foldout-summary:hover .duck-foldout-label,
+.duck-foldout-summary:focus-visible .duck-foldout-label { color: $forest-teal; }
+
+.duck-foldout-body { padding-bottom: .5rem; text-align: left; }
+.duck-foldout-body > p:last-child { margin-bottom: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .duck-foldout-label::after { transition: none; }
+}
 .duck-reactions { margin: 1.8rem auto; text-align: left; border-top: 1px solid rgba($deep-purple,.25); }
 .duck-reactions p { display: grid; grid-template-columns: 1.05fr .9fr 1.35fr; gap: 1rem; margin: 0; padding: 1rem 0; border-bottom: 1px solid rgba($deep-purple,.25); }
 .duck-reactions span { font-weight: 700; }
@@ -4169,4 +4408,82 @@ body.research-page .research-project {
   .home-process-route { display: none; }
   .map-stop, .map-stop--two, .map-stop--three { margin: 0; }
   .duck-reactions p { grid-template-columns: 1fr; gap: .3rem; }
+}
+
+// ========================================
+// INLINE SIDE NOTE
+// ========================================
+// Affects: any phrase that carries a quieter second thought. Hover or keyboard focus
+// reveals it.
+//
+//   <span class="side-note" tabindex="0">can do attitude<span
+//     class="side-note-body">for a truly tragic lack of a better phrase</span></span>
+//
+// The note is real text in the DOM rather than a `data-` attribute or CSS `content`, so
+// screen readers announce it and it is searchable. It is only ever revealed, never
+// inserted. `tabindex="0"` is what makes it reachable without a mouse - and on touch,
+// where there is no hover at all, tapping focuses the phrase and shows the note.
+.side-note {
+  position: relative;
+  font-style: italic;
+  text-decoration: underline dotted rgba($deep-purple, .55);
+  text-underline-offset: .18em;
+  cursor: help;
+}
+
+.side-note:hover,
+.side-note:focus-visible {
+  text-decoration-color: rgba($warm-coral, .95);
+  outline: none;
+}
+
+.side-note-body {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + .5rem);
+  z-index: 30;
+  width: max-content;
+  max-width: min(20rem, 74vw);
+  padding: .55rem .8rem;
+  transform: translate(-50%, .25rem);
+  border: 1px solid rgba($deep-purple, .3);
+  border-radius: .35rem;
+  background: $bg-light;
+  box-shadow: 0 .5rem 1.4rem rgba($deep-purple, .18);
+  // Reset inherited voice: the trigger is italic and may sit inside larger display type,
+  // but the note itself is always quiet body text.
+  font-family: $body-font;
+  font-size: .85rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.45;
+  text-align: left;
+  color: rgba($text-dark, .9);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 140ms ease, transform 140ms ease;
+}
+
+.side-note:hover .side-note-body,
+.side-note:focus .side-note-body,
+.side-note:focus-within .side-note-body {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .side-note-body { transition: none; }
+}
+
+// Touch devices have no hover, and these asides are a bonus rather than load-bearing
+// content, so they do not appear there at all: the phrase reads as ordinary italic text
+// with no affordance promising something a tap cannot deliver. Keyed to `hover: none`
+// rather than a width breakpoint so a narrow desktop window keeps them.
+@media (hover: none) and (pointer: coarse) {
+  .side-note {
+    text-decoration: none;
+    cursor: auto;
+  }
+  .side-note-body { display: none; }
 }

@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', function () {
   initHashLandingAdjustments();
   initBirdSeparators();
   initQuoteFadeIn();
-  initHomepageOrder();
   initProblemMap();
 });
 
@@ -63,15 +62,6 @@ function initProblemMap() {
   const stop = () => { dragging = false; viewport.classList.remove('is-panning'); };
   viewport.addEventListener('pointerup', stop);
   viewport.addEventListener('pointercancel', stop);
-}
-
-function initHomepageOrder() {
-  const intro = document.querySelector('body.home-page .home-intro');
-  const quoteIntro = document.querySelector('body.home-page .home-quote-intro');
-  const quotes = document.querySelector('body.home-page .quote-section');
-  if (!intro || !quoteIntro || !quotes) return;
-  intro.insertAdjacentElement('afterend', quotes);
-  intro.insertAdjacentElement('afterend', quoteIntro);
 }
 
 function initResearchMarginNotes() {
